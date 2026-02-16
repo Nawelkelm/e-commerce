@@ -1,0 +1,4 @@
+ALTER TABLE "Orders" DROP COLUMN IF EXISTS "shippingMethodId";
+ALTER TABLE "Orders" ADD COLUMN "shippingMethodId" UUID REFERENCES "ShippingMethods"(id) ON DELETE SET NULL;
+ALTER TABLE "Orders" ADD COLUMN IF NOT EXISTS "shippingMethodCode" VARCHAR(255);
+ALTER TABLE "Orders" ADD COLUMN IF NOT EXISTS "shippingMethodName" VARCHAR(255);

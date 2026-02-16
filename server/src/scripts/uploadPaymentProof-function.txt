@@ -1,0 +1,61 @@
+// Agregar esto ANTES del module.exports en orderController.js
+
+// Subir comprobante de transferencia
+const uploadPaymentProof = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    // Verificar que se haya subido un archivo
+    if (!req.file) {
+      return res.status(400).json({ message: 'No se ha subido ningún archivo' });
+    }
+
+    // Buscar la orden y verificar que pertenezca al usuario
+    const order = await Order.findOne({
+      where: { id, userId }
+    });
+
+    if (!order) {
+      return res.status(404).json({ message: 'Pedido no encontrado' });
+    }
+
+    // Verificar que el método de pago sea transferencia
+    if (!order.paymentMethod || !order.paymentMethod.toLowerCase().includes('transferencia')) {
+      return res.status(400).json({ 
+        message: 'Este pedido no requiere comprobante de transferencia' 
+      });
+    }
+
+    // Verificar que no esté ya pagado
+    if (order.paymentStatus === 'paid') {
+      return res.status(400).json({ 
+        message: 'Este pedido ya ha sido pagado' 
+      });
+    }
+
+    // Guardar la URL del comprobante
+    const proofUrl = `/uploads/payment-proofs/${req.file.filename}`;
+    
+    await order.update({
+      paymentProofUrl: proofUrl,
+      paymentProofUploadedAt: new Date(),
+      paymentStatus: 'pending' // Cambiar a pendiente de verificación
+    });
+
+    res.json({
+      message: 'Comprobante subido exitosamente. Verificaremos tu pago en las próximas 24 horas.',
+      order
+    });
+
+  } catch (error) {
+    console.error('Error al subir comprobante:', error);
+    res.status(500).json({ 
+      message: 'Error al subir el comprobante',
+      error: error.message 
+    });
+  }
+};
+
+// MODIFICAR el module.exports para incluir:
+// uploadPaymentProof

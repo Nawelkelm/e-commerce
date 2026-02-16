@@ -1,0 +1,398 @@
+import React, { useState, useEffect } from 'react'
+import { 
+  CogIcon, 
+  PhotoIcon,
+  CheckIcon
+} from '@heroicons/react/24/outline'
+import { useAuthStore } from '../../store/authStore'
+
+const Settings = () => {
+  const [activeTab, setActiveTab] = useState('general')
+  const [settings, setSettings] = useState({})
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [success, setSuccess] = useState('')
+  const { token } = useAuthStore()
+
+  // Load settings
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch('/api/admin/settings', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        
+        if (response.ok) {
+          const data = await response.json()
+          setSettings(data)
+        }
+      } catch (error) {
+        console.error('Error loading settings:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    if (token) {
+      loadSettings()
+    }
+  }, [token])
+
+  const tabs = [
+    { id: 'general', name: 'General', icon: CogIcon },
+    { id: 'appearance', name: 'Apariencia', icon: PhotoIcon },
+  ]
+
+  const handleSave = async (key, value) => {
+    try {
+      setSaving(true)
+      const response = await fetch(`/api/admin/settings/${key}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ value })
+      })
+      
+      if (response.ok) {
+        setSuccess('Configuración guardada exitosamente')
+        setTimeout(() => setSuccess(''), 3000)
+        
+        // Update local state
+        setSettings(prev => ({
+          ...prev,
+          [key]: { ...prev[key], value }
+        }))
+      }
+    } catch (error) {
+      console.error('Error saving setting:', error)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const renderGeneralSettings = () => (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium text-gray-900 mb-4">Información de la Tienda</h3>
+        <div className="grid grid-cols-1 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Nombre de la tienda
+            </label>
+            <input
+              type="text"
+              value={settings.storeName}
+              onChange={(e) => setSettings({...settings, storeName: e.target.value})}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Descripción
+            </label>
+            <textarea
+              value={settings.storeDescription}
+              onChange={(e) => setSettings({...settings, storeDescription: e.target.value})}
+              rows={3}
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Moneda
+              </label>
+              <select
+                value={settings.currency}
+                onChange={(e) => setSettings({...settings, currency: e.target.value})}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="ARS">ARS - Peso Argentino</option>
+                <option value="USD">USD - Dólar Estadounidense</option>
+                <option value="EUR">EUR - Euro</option>
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Zona Horaria
+              </label>
+              <select
+                value={settings.timezone}
+                onChange={(e) => setSettings({...settings, timezone: e.target.value})}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="America/Argentina/Buenos_Aires">Buenos Aires</option>
+                <option value="America/Argentina/Cordoba">Córdoba</option>
+                <option value="America/Argentina/Mendoza">Mendoza</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button
+        onClick={() => handleSave('general')}
+        className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+      >
+        Guardar Cambios
+      </button>
+    </div>
+  )
+
+  const renderPaymentSettings = () => (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium text-gray-900 mb-4">Métodos de Pago</h3>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between p-4 border rounded-lg">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-8 bg-blue-500 rounded flex items-center justify-center">
+                <span className="text-white font-bold text-sm">MP</span>
+              </div>
+              <div>
+                <p className="font-medium">MercadoPago</p>
+                <p className="text-sm text-gray-500">Pagos con tarjeta y transferencias</p>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                checked={settings.mercadopagoEnabled}
+                onChange={(e) => setSettings({...settings, mercadopagoEnabled: e.target.checked})}
+                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              />
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-between p-4 border rounded-lg opacity-50">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-8 bg-purple-500 rounded flex items-center justify-center">
+                <span className="text-white font-bold text-sm">S</span>
+              </div>
+              <div>
+                <p className="font-medium">Stripe</p>
+                <p className="text-sm text-gray-500">Próximamente disponible</p>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                checked={settings.stripeEnabled}
+                disabled
+                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <h3 className="text-lg font-medium text-gray-900 mb-4">Configuración Fiscal</h3>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Tasa de IVA (%)
+          </label>
+          <input
+            type="number"
+            value={settings.taxRate}
+            onChange={(e) => setSettings({...settings, taxRate: parseFloat(e.target.value)})}
+            className="mt-1 block w-32 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+      </div>
+      
+      <button
+        onClick={() => handleSave('payments')}
+        className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+      >
+        Guardar Cambios
+      </button>
+    </div>
+  )
+
+  const renderNotificationSettings = () => (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium text-gray-900 mb-4">Preferencias de Notificaciones</h3>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-medium">Notificaciones por Email</p>
+              <p className="text-sm text-gray-500">Recibir notificaciones importantes por correo</p>
+            </div>
+            <input
+              type="checkbox"
+              checked={settings.emailNotifications}
+              onChange={(e) => setSettings({...settings, emailNotifications: e.target.checked})}
+              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-medium">Alertas de Nuevas Órdenes</p>
+              <p className="text-sm text-gray-500">Notificar cuando se reciban nuevos pedidos</p>
+            </div>
+            <input
+              type="checkbox"
+              checked={settings.orderNotifications}
+              onChange={(e) => setSettings({...settings, orderNotifications: e.target.checked})}
+              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-medium">Alertas de Stock Bajo</p>
+              <p className="text-sm text-gray-500">Notificar cuando los productos estén agotándose</p>
+            </div>
+            <input
+              type="checkbox"
+              checked={settings.stockAlerts}
+              onChange={(e) => setSettings({...settings, stockAlerts: e.target.checked})}
+              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Umbral de Stock Bajo
+        </label>
+        <input
+          type="number"
+          value={settings.lowStockThreshold}
+          onChange={(e) => setSettings({...settings, lowStockThreshold: parseInt(e.target.value)})}
+          className="mt-1 block w-32 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        />
+        <p className="text-sm text-gray-500 mt-1">Alertar cuando el stock sea menor a este número</p>
+      </div>
+      
+      <button
+        onClick={() => handleSave('notifications')}
+        className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+      >
+        Guardar Cambios
+      </button>
+    </div>
+  )
+
+  const renderShippingSettings = () => (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium text-gray-900 mb-4">Configuración de Envíos</h3>
+        <div className="grid grid-cols-1 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Costo de Envío (ARS)
+            </label>
+            <input
+              type="number"
+              value={settings.shippingCost}
+              onChange={(e) => setSettings({...settings, shippingCost: parseFloat(e.target.value)})}
+              className="mt-1 block w-32 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Umbral para Envío Gratis (ARS)
+            </label>
+            <input
+              type="number"
+              value={settings.freeShippingThreshold}
+              onChange={(e) => setSettings({...settings, freeShippingThreshold: parseFloat(e.target.value)})}
+              className="mt-1 block w-40 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <p className="text-sm text-gray-500 mt-1">
+              Envío gratis para compras mayores a este monto
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <button
+        onClick={() => handleSave('shipping')}
+        className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+      >
+        Guardar Cambios
+      </button>
+    </div>
+  )
+
+  const renderSecuritySettings = () => (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium text-gray-900 mb-4">Configuración de Seguridad</h3>
+        <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
+          <div className="flex">
+            <ShieldCheckIcon className="h-5 w-5 text-yellow-400" />
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-yellow-800">
+                Configuración Avanzada
+              </h3>
+              <div className="mt-2 text-sm text-yellow-700">
+                <p>
+                  Las configuraciones de seguridad avanzadas están disponibles en el archivo .env del servidor.
+                  Contacta al administrador del sistema para realizar cambios.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <div>
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">Configuración</h1>
+        <p className="text-gray-600">Administra la configuración de tu tienda</p>
+      </div>
+
+      <div className="bg-white shadow rounded-lg">
+        <div className="border-b border-gray-200">
+          <nav className="-mb-px flex space-x-8 px-6">
+            {tabs.map((tab) => {
+              const Icon = tab.icon
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center py-4 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === tab.id
+                      ? 'border-indigo-500 text-indigo-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  <Icon className="h-5 w-5 mr-2" />
+                  {tab.name}
+                </button>
+              )
+            })}
+          </nav>
+        </div>
+        
+        <div className="p-6">
+          {activeTab === 'general' && renderGeneralSettings()}
+          {activeTab === 'payments' && renderPaymentSettings()}
+          {activeTab === 'notifications' && renderNotificationSettings()}
+          {activeTab === 'shipping' && renderShippingSettings()}
+          {activeTab === 'security' && renderSecuritySettings()}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Settings
