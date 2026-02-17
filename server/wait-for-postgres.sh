@@ -8,10 +8,11 @@ host="$DB_HOST"
 port="${DB_PORT:-5432}"
 shift
 
+echo "PostgreSQL está disponible. Iniciando el backend..."
 until nc -z "$host" "$port"; do
   echo "Esperando a que PostgreSQL ($host:$port) esté disponible..."
   sleep 2
 done
 
 echo "PostgreSQL está disponible. Iniciando el backend..."
-exec "$@"
+exec node src/index.js
