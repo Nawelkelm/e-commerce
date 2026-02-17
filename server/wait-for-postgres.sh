@@ -9,7 +9,9 @@ port="${DB_PORT:-5432}"
 shift
 
 echo "PostgreSQL está disponible. Iniciando el backend..."
-until nc -z "$host" "$port"; do
+
+# Esperar a que el puerto esté disponible usando wget
+until wget --spider --quiet "tcp://$host:$port"; do
   echo "Esperando a que PostgreSQL ($host:$port) esté disponible..."
   sleep 2
 done
