@@ -30,5 +30,9 @@ USER nodejs
 # Exponer puerto
 EXPOSE 5000
 
-# Comando para iniciar la aplicación
+# Dar permisos de ejecución al script de espera
+RUN chmod +x wait-for-postgres.sh
+
+# Usar el script como entrypoint para esperar la base de datos
+ENTRYPOINT ["sh", "wait-for-postgres.sh"]
 CMD ["node", "src/index.js"]
