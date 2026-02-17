@@ -10,8 +10,9 @@ shift
 
 echo "PostgreSQL está disponible. Iniciando el backend..."
 
-# Esperar a que el puerto esté disponible usando wget
-until wget --spider --quiet "tcp://$host:$port"; do
+
+# Esperar a que PostgreSQL esté disponible usando pg_isready
+until pg_isready -h "$host" -p "$port"; do
   echo "Esperando a que PostgreSQL ($host:$port) esté disponible..."
   sleep 2
 done

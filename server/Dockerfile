@@ -1,8 +1,8 @@
 # Dockerfile para el servidor backend
 FROM node:18-alpine
 
-# Instalar curl y wget para healthchecks y espera de servicios
-RUN apk add --no-cache curl wget
+# Instalar curl, wget y postgresql-client para healthchecks y espera de servicios
+RUN apk add --no-cache curl wget postgresql-client
 
 # Crear directorio de la aplicación
 WORKDIR /app
