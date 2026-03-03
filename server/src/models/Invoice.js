@@ -65,9 +65,10 @@ const Invoice = sequelize.define('Invoice', {
     comment: 'Fecha de vencimiento del CAE'
   },
   invoiceType: {
-    type: DataTypes.ENUM('A', 'B', 'C', 'E', 'M'),
+    type: DataTypes.STRING,
     allowNull: false,
     defaultValue: 'B',
+    validate: { isIn: [['A', 'B', 'C', 'E', 'M']] },
     comment: 'Tipo de comprobante fiscal'
   },
   pointOfSale: {
@@ -77,9 +78,10 @@ const Invoice = sequelize.define('Invoice', {
     comment: 'Punto de venta de AFIP'
   },
   afipStatus: {
-    type: DataTypes.ENUM('pending', 'authorized', 'rejected', 'error', 'not_required'),
+    type: DataTypes.STRING,
     allowNull: false,
     defaultValue: 'pending',
+    validate: { isIn: [['pending', 'authorized', 'rejected', 'error', 'not_required']] },
     comment: 'Estado de autorización en AFIP'
   },
   afipResponse: {
@@ -93,15 +95,10 @@ const Invoice = sequelize.define('Invoice', {
     comment: 'Fecha de solicitud a AFIP'
   },
   customerTaxCategory: {
-    type: DataTypes.ENUM(
-      'responsable_inscripto',
-      'responsable_monotributo',
-      'exento',
-      'no_responsable',
-      'consumidor_final'
-    ),
+    type: DataTypes.STRING,
     allowNull: false,
     defaultValue: 'consumidor_final',
+    validate: { isIn: [['responsable_inscripto', 'responsable_monotributo', 'exento', 'no_responsable', 'consumidor_final']] },
     comment: 'Categoría tributaria del cliente'
   },
   customerCuit: {
@@ -174,9 +171,10 @@ const Invoice = sequelize.define('Invoice', {
   
   // Estado de la factura
   status: {
-    type: DataTypes.ENUM('draft', 'issued', 'paid', 'cancelled', 'refunded'),
+    type: DataTypes.STRING,
     defaultValue: 'issued',
-    allowNull: false
+    allowNull: false,
+    validate: { isIn: [['draft', 'issued', 'paid', 'cancelled', 'refunded']] }
   },
   
   // Fechas importantes
