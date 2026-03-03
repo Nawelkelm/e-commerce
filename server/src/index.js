@@ -63,13 +63,18 @@ app.use(helmet({
 }));
 app.use(compression());
 
-// General API rate limiting - more restrictive
+// General API rate limiting
 const generalLimiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 300, // Aumentado para desarrollo
+  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 1000,
   message: 'Demasiadas solicitudes desde esta IP, intenta de nuevo más tarde.',
   standardHeaders: true,
   legacyHeaders: false,
+  // Skip rate limiting for public read-only endpoints (they get hit a lot)
+  skip: (req) => {
+    const publicPaths = ['/api/settings/public', '/api/home-settings', '/api/categories', '/api/coupons/public'];
+    return req.method === 'GET' && publicPaths.some(p => req.path.startsWith(p));
+  }
 });
 
 // Strict rate limiting for authentication endpoints
