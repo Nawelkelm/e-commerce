@@ -9,6 +9,12 @@ const sequelize = new Sequelize({
   password: process.env.DB_PASSWORD || 'postgres123',
   dialect: 'postgres',
   logging: (msg) => logger.debug(msg),
+  dialectOptions: {
+    ssl: process.env.NODE_ENV === 'production' ? {
+      require: true,
+      rejectUnauthorized: false
+    } : false
+  },
   pool: {
     max: 5,
     min: 0,
