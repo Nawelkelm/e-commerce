@@ -178,20 +178,30 @@ const getProducts = async (req, res) => {
     const validSortBy = allowedSortFields.includes(sortBy) ? sortBy : 'createdAt';
     const validSortOrder = ['ASC', 'DESC'].includes(sortOrder.toUpperCase()) ? sortOrder.toUpperCase() : 'DESC';
 
+    const includeModels = [
+      {
+        model: Category,
+        as: 'category',
+        attributes: ['id', 'name', 'slug']
+      }
+    ];
+
+    // Only include Supplier if table exists
+    try {
+      await Supplier.describe();
+      includeModels.push({
+        model: Supplier,
+        as: 'supplier',
+        attributes: ['id', 'name', 'contactPerson'],
+        required: false
+      });
+    } catch (e) {
+      // Supplier table doesn't exist yet, skip
+    }
+
     const { count, rows: products } = await Product.findAndCountAll({
       where,
-      include: [
-        {
-          model: Category,
-          as: 'category',
-          attributes: ['id', 'name', 'slug']
-        },
-        {
-          model: Supplier,
-          as: 'supplier',
-          attributes: ['id', 'name', 'contactPerson']
-        }
-      ],
+      include: includeModels,
       limit: parseInt(limit),
       offset,
       order: [[validSortBy, validSortOrder]],

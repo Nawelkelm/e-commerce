@@ -278,6 +278,7 @@ const Home = () => {
                 src={slide.image}
                 alt={slide.title || `Slide ${index + 1}`}
                 className="w-full h-full object-cover"
+                onError={(e) => { e.target.style.display = 'none' }}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
