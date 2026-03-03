@@ -17,20 +17,32 @@ const getUserPermissions = async (userId) => {
   }
 
   try {
-    const user = await User.findByPk(userId, {
-      include: {
-        model: Role,
-        as: 'userRole',
-        include: {
-          model: Permission,
-          through: { attributes: [] }
-        }
-      }
-    });
-
+    let user;
     let permissions = [];
+
+    // Try full query with role and permissions
+    try {
+      user = await User.findByPk(userId, {
+        include: {
+          model: Role,
+          as: 'userRole',
+          include: {
+            model: Permission,
+            through: { attributes: [] }
+          }
+        }
+      });
+    } catch (includeError) {
+      logger.warn('Error loading role/permissions associations, falling back to basic user query:', includeError.message);
+      // Fallback: load user without associations
+      user = await User.findByPk(userId);
+    }
+
+    if (!user) {
+      return [];
+    }
     
-    if (user?.userRole?.Permissions) {
+    if (user?.userRole?.Permissions && user.userRole.Permissions.length > 0) {
       permissions = user.userRole.Permissions.map(p => p.name);
     } else if (user?.role === 'admin') {
       // Fallback to legacy role system - admin has all permissions
@@ -49,6 +61,16 @@ const getUserPermissions = async (userId) => {
     return permissions;
   } catch (error) {
     logger.error('Error fetching user permissions:', error);
+    
+    // Last resort fallback - try to get basic user info
+    try {
+      const basicUser = await User.findByPk(userId, { attributes: ['id', 'role'] });
+      if (basicUser?.role === 'admin') {
+        return ['*'];
+      }
+    } catch (e) {
+      logger.error('Critical: Cannot even fetch basic user info:', e.message);
+    }
     return [];
   }
 };

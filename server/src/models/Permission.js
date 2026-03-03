@@ -12,7 +12,7 @@ const Permission = sequelize.define('Permission', {
     allowNull: false,
     unique: true,
     validate: {
-      len: [2, 100]
+      len: [1, 100]
     }
   },
   resource: {
