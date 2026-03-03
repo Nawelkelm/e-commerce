@@ -34,7 +34,7 @@ exports.getAllTemplates = async (req, res) => {
       offset: parseInt(offset),
       order: [['createdAt', 'DESC']],
       include: [{
-        model: require('./User'),
+        model: require('../models/User'),
         as: 'creator',
         attributes: ['id', 'name', 'email']
       }]
@@ -65,7 +65,7 @@ exports.getTemplateById = async (req, res) => {
     
     const template = await EmailTemplate.findByPk(id, {
       include: [{
-        model: require('./User'),
+        model: require('../models/User'),
         as: 'creator',
         attributes: ['id', 'name', 'email']
       }]

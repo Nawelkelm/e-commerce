@@ -1,4 +1,5 @@
 const { sequelize, Role, Permission, User } = require('../models');
+const { Op } = require('sequelize');
 const logger = require('../config/logger');
 
 const defaultPermissions = [
@@ -160,7 +161,7 @@ const initializeRolesAndPermissions = async () => {
           permissionsToAssign = [allPermission];
         } else {
           permissionsToAssign = await Permission.findAll({
-            where: { name: { [sequelize.Sequelize.Op.in]: rolePermissions } },
+            where: { name: { [Op.in]: rolePermissions } },
             transaction
           });
         }

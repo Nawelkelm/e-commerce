@@ -207,6 +207,7 @@ const startServer = async () => {
       await assignSuperAdminRole();
       logger.info('Roles and permissions initialized successfully.');
     } catch (error) {
+      console.error('PERMISSION INIT ERROR:', error.message, error.stack);
       logger.error('Error initializing roles and permissions:', error);
       // Don't stop the server, but log the error
     }
