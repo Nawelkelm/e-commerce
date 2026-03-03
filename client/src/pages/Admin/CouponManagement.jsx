@@ -82,7 +82,7 @@ const CouponManagement = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/coupons/${couponId}`, {
+      const response = await fetch(`/api/coupons/${couponId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -105,7 +105,7 @@ const CouponManagement = () => {
   const handleToggleStatus = async (couponId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/coupons/${couponId}/toggle`, {
+      const response = await fetch(`/api/coupons/${couponId}/toggle`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`

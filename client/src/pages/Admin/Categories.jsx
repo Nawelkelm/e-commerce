@@ -22,7 +22,7 @@ const Categories = () => {
   const fetchCategories = async () => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:5000/api/admin/categories', {
+      const response = await fetch('/api/admin/categories', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -46,8 +46,8 @@ const Categories = () => {
     
     try {
       const url = editingCategory 
-        ? `http://localhost:5000/api/admin/categories/${editingCategory.id}`
-        : 'http://localhost:5000/api/admin/categories'
+        ? `/api/admin/categories/${editingCategory.id}`
+        : '/api/admin/categories'
       
       const method = editingCategory ? 'PUT' : 'POST'
       
@@ -89,7 +89,7 @@ const Categories = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/categories/${categoryId}`, {
+      const response = await fetch(`/api/admin/categories/${categoryId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

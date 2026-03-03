@@ -44,7 +44,7 @@ const ReviewList = ({ productId }) => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/products/${productId}/reviews?${params}`,
+        `/api/products/${productId}/reviews?${params}`,
         { headers }
       );
 
@@ -71,7 +71,7 @@ const ReviewList = ({ productId }) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/reviews/${reviewId}/vote`, {
+      const response = await fetch(`/api/reviews/${reviewId}/vote`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

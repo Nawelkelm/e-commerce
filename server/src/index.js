@@ -98,7 +98,9 @@ app.use(cors({
   origin: [
     process.env.FRONTEND_URL || 'http://localhost:3000',
     'http://localhost:3000',
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'https://e-commerce-frontend-rlvt.onrender.com',
+    'https://e-commerce-7q25.onrender.com'
   ],
   credentials: true
 }));

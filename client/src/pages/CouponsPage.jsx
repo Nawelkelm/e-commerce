@@ -23,7 +23,7 @@ const CouponsPage = () => {
 
   const fetchPublicCoupons = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/coupons/public');
+      const response = await fetch('/api/coupons/public');
       if (response.ok) {
         const data = await response.json();
         setCoupons(data.coupons || []);

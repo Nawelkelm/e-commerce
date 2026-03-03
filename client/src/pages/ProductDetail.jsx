@@ -71,7 +71,7 @@ const ProductDetail = () => {
 
   const fetchReviewStats = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${product.id}/reviews/stats`)
+      const response = await fetch(`/api/products/${product.id}/reviews/stats`)
       if (response.ok) {
         const data = await response.json()
         setReviewStats(data)

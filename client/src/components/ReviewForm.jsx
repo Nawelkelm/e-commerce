@@ -78,7 +78,7 @@ const ReviewForm = ({ productId, onSuccess, onCancel }) => {
     setSubmitting(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${productId}/reviews`, {
+      const response = await fetch(`/api/products/${productId}/reviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

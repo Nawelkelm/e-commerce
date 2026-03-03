@@ -14,7 +14,7 @@ const CouponStats = ({ couponId, onClose }) => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/coupons/${couponId}/stats`, {
+      const response = await fetch(`/api/coupons/${couponId}/stats`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

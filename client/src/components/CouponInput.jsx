@@ -19,7 +19,7 @@ const CouponInput = ({ cartTotal, cartItems = [], onCouponApplied, onCouponRemov
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/coupons/validate', {
+      const response = await fetch('/api/coupons/validate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -25,8 +25,8 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Copiar configuración de nginx personalizada
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exponer puerto
-EXPOSE 3000
+# Exponer puerto (Render espera 10000 por defecto para Docker)
+EXPOSE 10000
 
 # Comando para iniciar nginx
 CMD ["nginx", "-g", "daemon off;"]

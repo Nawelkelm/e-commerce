@@ -106,8 +106,8 @@ const CouponForm = ({ coupon, onClose }) => {
     try {
       const token = localStorage.getItem('token');
       const url = coupon
-        ? `http://localhost:5000/api/coupons/${coupon.id}`
-        : 'http://localhost:5000/api/coupons';
+        ? `/api/coupons/${coupon.id}`
+        : '/api/coupons';
       
       const method = coupon ? 'PUT' : 'POST';
 

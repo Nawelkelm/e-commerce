@@ -108,8 +108,8 @@ const EmailTemplateForm = ({ template, onClose, onSave }) => {
     try {
       const token = localStorage.getItem('token');
       const url = template 
-        ? `http://localhost:5000/api/emails/templates/${template.id}`
-        : 'http://localhost:5000/api/emails/templates';
+        ? `/api/emails/templates/${template.id}`
+        : '/api/emails/templates';
       
       const method = template ? 'PUT' : 'POST';
 
