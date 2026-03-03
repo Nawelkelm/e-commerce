@@ -199,6 +199,13 @@ app.use(errorHandler);
 // Database connection and server start
 const startServer = async () => {
   try {
+    // Verify critical env vars
+    if (!process.env.JWT_SECRET) {
+      logger.error('FATAL: JWT_SECRET environment variable is NOT set! Auth will fail.');
+    } else {
+      logger.info('JWT_SECRET is configured.');
+    }
+
     await sequelize.authenticate();
     logger.info('Database connection established successfully.');
     
