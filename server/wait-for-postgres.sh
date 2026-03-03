@@ -6,10 +6,8 @@ set -e
 
 host="$DB_HOST"
 port="${DB_PORT:-5432}"
-shift
 
-echo "PostgreSQL está disponible. Iniciando el backend..."
-
+echo "Esperando conexión con PostgreSQL ($host:$port)..."
 
 # Esperar a que PostgreSQL esté disponible usando pg_isready
 until pg_isready -h "$host" -p "$port"; do

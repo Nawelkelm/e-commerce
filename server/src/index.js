@@ -254,6 +254,7 @@ const startServer = async () => {
       logger.info(`Environment: ${process.env.NODE_ENV}`);
     });
   } catch (error) {
+    console.error('Unable to start server:', error);
     logger.error('Unable to start server:', error);
     process.exit(1);
   }
