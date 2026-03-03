@@ -6,20 +6,11 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs').promises;
 const excelService = require('../services/excelService');
+const { productStorage, deleteImage } = require('../config/cloudinary');
 
-// Configure multer for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/products');
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
-
+// Configure multer for image uploads (Cloudinary)
 const upload = multer({
-  storage: storage,
+  storage: productStorage,
   limits: {
     fileSize: 5 * 1024 * 1024 // 5MB limit
   },
@@ -312,7 +303,7 @@ const createProduct = async (req, res) => {
     let images = [];
     if (req.files && req.files.length > 0) {
       images = req.files.map((file, index) => ({
-        url: `/uploads/products/${file.filename}`,
+        url: file.path, // Cloudinary URL
         alt: `${name} - Image ${index + 1}`,
         isPrimary: index === 0
       }));
@@ -405,7 +396,7 @@ const updateProduct = async (req, res) => {
     // Handle new image uploads
     if (req.files && req.files.length > 0) {
       const newImages = req.files.map((file, index) => ({
-        url: `/uploads/products/${file.filename}`,
+        url: file.path, // Cloudinary URL
         alt: `${updateData.name || product.name} - Image ${index + 1}`,
         isPrimary: false
       }));
@@ -421,19 +412,18 @@ const updateProduct = async (req, res) => {
         }
       }
       
-      // Identificar imágenes eliminadas para borrar archivos físicos
+      // Identificar imágenes eliminadas para borrar de Cloudinary
       const oldImageUrls = (product.images || []).map(img => img.url);
       const keptImageUrls = existingImages.map(img => img.url);
       const deletedImageUrls = oldImageUrls.filter(url => !keptImageUrls.includes(url));
       
-      // Eliminar archivos físicos de imágenes removidas
+      // Eliminar imágenes removidas de Cloudinary
       for (const imageUrl of deletedImageUrls) {
         try {
-          const imagePath = path.join(__dirname, '../../', imageUrl);
-          await fs.unlink(imagePath);
-          logger.info(`Deleted image file: ${imagePath}`);
+          await deleteImage(imageUrl);
+          logger.info(`Deleted image from Cloudinary: ${imageUrl}`);
         } catch (error) {
-          logger.error(`Error deleting image file ${imageUrl}:`, error);
+          logger.error(`Error deleting image ${imageUrl}:`, error);
         }
       }
       
@@ -451,18 +441,17 @@ const updateProduct = async (req, res) => {
       try {
         const existingImages = JSON.parse(req.body.existingImages);
         
-        // Identificar y eliminar archivos físicos de imágenes removidas
+        // Identificar y eliminar imágenes removidas de Cloudinary
         const oldImageUrls = (product.images || []).map(img => img.url);
         const keptImageUrls = existingImages.map(img => img.url);
         const deletedImageUrls = oldImageUrls.filter(url => !keptImageUrls.includes(url));
         
         for (const imageUrl of deletedImageUrls) {
           try {
-            const imagePath = path.join(__dirname, '../../', imageUrl);
-            await fs.unlink(imagePath);
-            logger.info(`Deleted image file: ${imagePath}`);
+            await deleteImage(imageUrl);
+            logger.info(`Deleted image from Cloudinary: ${imageUrl}`);
           } catch (error) {
-            logger.error(`Error deleting image file ${imageUrl}:`, error);
+            logger.error(`Error deleting image ${imageUrl}:`, error);
           }
         }
         

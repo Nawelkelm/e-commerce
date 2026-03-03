@@ -666,8 +666,8 @@ const uploadPaymentProof = async (req, res) => {
       });
     }
 
-    // Actualizar orden con el comprobante
-    const paymentProofUrl = `/uploads/payment-proofs/${req.file.filename}`;
+    // Actualizar orden con el comprobante (Cloudinary URL)
+    const paymentProofUrl = req.file.path;
     await order.update({
       paymentProofUrl,
       paymentProofUploadedAt: new Date(),

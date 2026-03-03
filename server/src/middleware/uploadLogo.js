@@ -1,28 +1,5 @@
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs').promises;
-const { v4: uuidv4 } = require('uuid');
-const logger = require('../config/logger');
-
-// Configure multer for logo uploads
-const storage = multer.diskStorage({
-  destination: async (req, file, cb) => {
-    const uploadDir = path.join(__dirname, '../../uploads/logos');
-    
-    try {
-      await fs.mkdir(uploadDir, { recursive: true });
-      cb(null, uploadDir);
-    } catch (error) {
-      logger.error('Error creating upload directory:', error);
-      cb(error);
-    }
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const filename = `logo-${uuidv4()}${ext}`;
-    cb(null, filename);
-  }
-});
+const { logoStorage } = require('../config/cloudinary');
 
 // File filter
 const fileFilter = (req, file, cb) => {
@@ -36,7 +13,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  storage,
+  storage: logoStorage,
   fileFilter,
   limits: {
     fileSize: 5 * 1024 * 1024 // 5MB max

@@ -1,5 +1,6 @@
 const { Setting } = require('../models');
 const logger = require('../config/logger');
+const { deleteImage } = require('../config/cloudinary');
 
 // Get all settings
 const getSettings = async (req, res) => {
@@ -103,25 +104,16 @@ const uploadLogo = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    // Construct the logo URL
-    const logoUrl = `/uploads/logos/${req.file.filename}`;
+    // Cloudinary URL from multer-storage-cloudinary
+    const logoUrl = req.file.path;
 
     // Update site_logo setting
     const setting = await Setting.findOne({ where: { key: 'site_logo' } });
     
     if (setting) {
-      // Delete old logo file if exists
-      if (setting.value && setting.value.startsWith('/uploads/logos/')) {
-        const fs = require('fs').promises;
-        const path = require('path');
-        const oldLogoPath = path.join(__dirname, '../../', setting.value);
-        
-        try {
-          await fs.unlink(oldLogoPath);
-        } catch (err) {
-          // Ignore if file doesn't exist
-          logger.warn('Could not delete old logo:', err.message);
-        }
+      // Delete old logo from Cloudinary if exists
+      if (setting.value) {
+        await deleteImage(setting.value);
       }
 
       await setting.update({ value: logoUrl });
@@ -155,25 +147,16 @@ const uploadFavicon = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    // Construct the favicon URL
-    const faviconUrl = `/uploads/logos/${req.file.filename}`;
+    // Cloudinary URL from multer-storage-cloudinary
+    const faviconUrl = req.file.path;
 
     // Update site_favicon setting
     const setting = await Setting.findOne({ where: { key: 'site_favicon' } });
     
     if (setting) {
-      // Delete old favicon file if exists
-      if (setting.value && setting.value.startsWith('/uploads/logos/')) {
-        const fs = require('fs').promises;
-        const path = require('path');
-        const oldFaviconPath = path.join(__dirname, '../../', setting.value);
-        
-        try {
-          await fs.unlink(oldFaviconPath);
-        } catch (err) {
-          // Ignore if file doesn't exist
-          logger.warn('Could not delete old favicon:', err.message);
-        }
+      // Delete old favicon from Cloudinary if exists
+      if (setting.value) {
+        await deleteImage(setting.value);
       }
 
       await setting.update({ value: faviconUrl });

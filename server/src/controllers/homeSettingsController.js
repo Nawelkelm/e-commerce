@@ -1,8 +1,7 @@
 const { HomeSettings, Setting } = require('../models');
 const logger = require('../config/logger');
-const path = require('path');
-const fs = require('fs').promises;
-const sharp = require('sharp');
+const { cloudinary, deleteImage } = require('../config/cloudinary');
+const streamifier = require('streamifier');
 
 const HOME_SETTINGS_ID = '00000000-0000-0000-0000-000000000001';
 
@@ -58,16 +57,28 @@ const updateHomeSettings = async (req, res) => {
 const uploadCarouselImage = async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ message: 'No se proporciono ninguna imagen' });
+      return res.status(400).json({ message: 'No se proporcionó ninguna imagen' });
     }
-    const uploadsDir = path.join(__dirname, '../../uploads/carousel');
-    await fs.mkdir(uploadsDir, { recursive: true });
-    const timestamp = Date.now();
-    const filename = 'carousel-' + timestamp + '.webp';
-    const filepath = path.join(uploadsDir, filename);
-    await sharp(req.file.buffer).resize(1920, 600, { fit: 'cover', position: 'center' }).webp({ quality: 85 }).toFile(filepath);
-    const imageUrl = '/uploads/carousel/' + filename;
-    logger.info('Carousel image uploaded:', imageUrl);
+    
+    // Upload to Cloudinary with transformations
+    const result = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'ecommerce/carousel',
+          transformation: [
+            { width: 1920, height: 600, crop: 'fill', gravity: 'center', quality: 85, format: 'webp' }
+          ]
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
+    });
+
+    const imageUrl = result.secure_url;
+    logger.info('Carousel image uploaded to Cloudinary:', imageUrl);
     res.json({ message: 'Imagen subida exitosamente', url: imageUrl });
   } catch (error) {
     logger.error('Upload carousel image error:', error);
@@ -81,14 +92,11 @@ const deleteCarouselImage = async (req, res) => {
     if (!imageUrl) {
       return res.status(400).json({ message: 'URL de imagen no proporcionada' });
     }
-    const filename = imageUrl.split('/').pop();
-    const filepath = path.join(__dirname, '../../uploads/carousel', filename);
-    try {
-      await fs.unlink(filepath);
-      logger.info('Carousel image deleted:', imageUrl);
-    } catch (err) {
-      logger.warn('File not found for deletion:', imageUrl);
-    }
+    
+    // Delete from Cloudinary
+    await deleteImage(imageUrl);
+    logger.info('Carousel image deleted from Cloudinary:', imageUrl);
+    
     res.json({ message: 'Imagen eliminada exitosamente' });
   } catch (error) {
     logger.error('Delete carousel image error:', error);

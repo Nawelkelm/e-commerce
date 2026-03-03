@@ -686,7 +686,7 @@ const Products = () => {
                                 ? (product.images[0].startsWith('http://') || product.images[0].startsWith('https://') 
                                     ? product.images[0] 
                                     : `/api${product.images[0].startsWith('/uploads') ? product.images[0] : '/uploads/' + product.images[0]}`)
-                                : product.images[0].url)
+                                : (product.images[0].url?.startsWith('http') ? product.images[0].url : `/api${product.images[0].url}`))
                             : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="60" height="60"%3E%3Crect fill="%23ddd" width="60" height="60"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle" font-size="12"%3ESin imagen%3C/text%3E%3C/svg%3E'
                         }
                         alt={product.name}
