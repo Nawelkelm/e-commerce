@@ -72,9 +72,9 @@ npm run install:all
 npm run docker:up
 
 # La aplicación estará disponible en:
-# Frontend: http://localhost:3000
-# Backend: http://localhost:5000
-# PostgreSQL: localhost:5432
+# Frontend: https://e-commerce-frontend-rlvt.onrender.com
+# Backend: https://e-commerce-7q25.onrender.com
+# PostgreSQL: Render PostgreSQL
 ```
 
 #### Producción
@@ -83,7 +83,7 @@ npm run docker:up
 docker-compose --profile production up -d
 
 # Con Nginx como proxy reverso
-# Aplicación disponible en: http://localhost
+# Aplicación disponible en: https://e-commerce-frontend-rlvt.onrender.com
 ```
 
 ### 4. Instalación Manual (Sin Docker)
@@ -176,11 +176,11 @@ e-commerce/
 
 ```bash
 # Base de datos
-DB_HOST=localhost
+DB_HOST=dpg-xxxxx.oregon-postgres.render.com
 DB_PORT=5432
 DB_NAME=ecommerce_db
 DB_USER=postgres
-DB_PASSWORD=postgres123
+DB_PASSWORD=your_password
 
 # JWT
 JWT_SECRET=your-super-secret-jwt-key
@@ -193,7 +193,8 @@ MERCADOPAGO_WEBHOOK_SECRET=your-webhook-secret
 
 # Servidor
 PORT=5000
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=https://e-commerce-frontend-rlvt.onrender.com
+BACKEND_URL=https://e-commerce-7q25.onrender.com
 
 # Email (para recuperación de contraseña)
 EMAIL_HOST=smtp.gmail.com

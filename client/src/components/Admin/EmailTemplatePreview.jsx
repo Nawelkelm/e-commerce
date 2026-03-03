@@ -8,8 +8,8 @@ const EmailTemplatePreview = ({ template, onClose }) => {
   const getTestData = (type) => {
     const baseData = {
       customerName: 'Juan Pérez',
-      loginUrl: 'http://localhost:3000/login',
-      shopUrl: 'http://localhost:3000/products',
+      loginUrl: 'https://e-commerce-frontend-rlvt.onrender.com/login',
+      shopUrl: 'https://e-commerce-frontend-rlvt.onrender.com/products',
       supportEmail: 'soporte@tienda.com'
     };
 
@@ -33,7 +33,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
             </tr>
           `,
           shippingAddress: 'Calle Falsa 123, Ciudad, País',
-          trackingUrl: 'http://localhost:3000/orders/track'
+          trackingUrl: 'https://e-commerce-frontend-rlvt.onrender.com/orders/track'
         };
 
       case 'order_shipped':
@@ -41,7 +41,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           ...baseData,
           orderNumber: 'ORD-2024-001',
           trackingNumber: 'TRACK123456789',
-          trackingUrl: 'http://localhost:3000/orders/track',
+          trackingUrl: 'https://e-commerce-frontend-rlvt.onrender.com/orders/track',
           estimatedDelivery: '5-7 días hábiles'
         };
 
@@ -50,7 +50,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           ...baseData,
           orderNumber: 'ORD-2024-001',
           deliveryDate: new Date().toLocaleDateString('es-ES'),
-          reviewUrl: 'http://localhost:3000/orders/review'
+          reviewUrl: 'https://e-commerce-frontend-rlvt.onrender.com/orders/review'
         };
 
       case 'abandoned_cart':
@@ -71,7 +71,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           cartTotal: '$500.00',
           couponCode: 'VUELVE10',
           discountAmount: '10%',
-          checkoutUrl: 'http://localhost:3000/cart'
+          checkoutUrl: 'https://e-commerce-frontend-rlvt.onrender.com/cart'
         };
 
       case 'welcome':
@@ -80,7 +80,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
       case 'password_reset':
         return {
           ...baseData,
-          resetUrl: 'http://localhost:3000/reset-password?token=example123',
+          resetUrl: 'https://e-commerce-frontend-rlvt.onrender.com/reset-password?token=example123',
           expiryTime: '1 hora'
         };
 
@@ -91,7 +91,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           promoDescription: 'Aprovecha hasta 50% de descuento en productos seleccionados',
           promoImage: 'https://via.placeholder.com/600x300',
           couponCode: 'PROMO50',
-          promoUrl: 'http://localhost:3000/promo',
+          promoUrl: 'https://e-commerce-frontend-rlvt.onrender.com/promo',
           expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES')
         };
 
@@ -100,7 +100,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           ...baseData,
           message: 'Este es un mensaje de notificación personalizado',
           actionText: 'Ver Detalles',
-          actionUrl: 'http://localhost:3000'
+          actionUrl: 'https://e-commerce-frontend-rlvt.onrender.com'
         };
 
       default:

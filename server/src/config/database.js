@@ -2,7 +2,7 @@ const { Sequelize, Op } = require('sequelize');
 const logger = require('./logger');
 
 const sequelize = new Sequelize({
-  host: process.env.DB_HOST || 'localhost',
+  host: process.env.DB_HOST || 'dpg-d69npv3uibrs739kfqkg-a.oregon-postgres.render.com',
   port: process.env.DB_PORT || 5432,
   database: process.env.DB_NAME || 'ecommerce_db',
   username: process.env.DB_USER || 'postgres',

@@ -113,7 +113,7 @@ const createPayment = async (req, res) => {
         pending: `${process.env.FRONTEND_URL}/payment/pending?order=${order.id}`
       },
       external_reference: order.orderNumber,
-      notification_url: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/payments/webhook`,
+      notification_url: `${process.env.BACKEND_URL || 'https://e-commerce-7q25.onrender.com'}/api/payments/webhook`,
       statement_descriptor: 'E-COMMERCE'
     };
 

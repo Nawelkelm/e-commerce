@@ -1,1 +1,0 @@
-SELECT key FROM "HomeSettings";
