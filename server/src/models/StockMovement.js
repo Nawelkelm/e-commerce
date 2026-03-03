@@ -17,17 +17,11 @@ const StockMovement = sequelize.define('StockMovement', {
     }
   },
   type: {
-    type: DataTypes.ENUM(
-      'purchase',        // Compra a proveedor
-      'sale',           // Venta a cliente
-      'adjustment',     // Ajuste manual
-      'return',         // Devolución
-      'damage',         // Merma/Daño
-      'transfer_in',    // Transferencia entrada
-      'transfer_out',   // Transferencia salida
-      'import'          // Importación Excel
-    ),
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [['purchase', 'sale', 'adjustment', 'return', 'damage', 'transfer_in', 'transfer_out', 'import']]
+    }
   },
   quantity: {
     type: DataTypes.INTEGER,
@@ -62,8 +56,11 @@ const StockMovement = sequelize.define('StockMovement', {
     allowNull: true
   },
   referenceType: {
-    type: DataTypes.ENUM('order', 'purchase_order', 'transfer', 'import', 'manual', 'other'),
-    allowNull: true
+    type: DataTypes.STRING,
+    allowNull: true,
+    validate: {
+      isIn: [['order', 'purchase_order', 'transfer', 'import', 'manual', 'other']]
+    }
   },
   referenceId: {
     type: DataTypes.STRING,

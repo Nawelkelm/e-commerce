@@ -13,13 +13,15 @@ const ShippingMethod = sequelize.define('ShippingMethod', {
   },
   code: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   type: {
-    type: DataTypes.ENUM('carrier', 'custom', 'pickup', 'agreement'),
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'custom'
+    defaultValue: 'custom',
+    validate: {
+      isIn: [['carrier', 'custom', 'pickup', 'agreement']]
+    }
     // carrier: Andreani, OCA, Correo Argentino
     // custom: Envío propio del vendedor
     // pickup: Retiro en local
@@ -91,7 +93,10 @@ const ShippingMethod = sequelize.define('ShippingMethod', {
   }
 }, {
   tableName: 'ShippingMethods',
-  timestamps: true
+  timestamps: true,
+  indexes: [
+    { unique: true, fields: ['code'] }
+  ]
 });
 
 module.exports = ShippingMethod;

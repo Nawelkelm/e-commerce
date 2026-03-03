@@ -10,7 +10,6 @@ const Permission = sequelize.define('Permission', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
       len: [1, 100]
     }
@@ -45,7 +44,7 @@ const Permission = sequelize.define('Permission', {
 }, {
   timestamps: true,
   indexes: [
-    { fields: ['name'] },
+    { unique: true, fields: ['name'] },
     { fields: ['resource', 'action'] },
     { fields: ['category'] }
   ]

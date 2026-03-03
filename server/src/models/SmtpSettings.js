@@ -50,17 +50,23 @@ const SmtpSettings = sequelize.define('SmtpSettings', {
     allowNull: true
   },
   provider: {
-    type: DataTypes.ENUM('gmail', 'outlook', 'sendgrid', 'mailgun', 'custom'),
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'gmail'
+    defaultValue: 'gmail',
+    validate: {
+      isIn: [['gmail', 'outlook', 'sendgrid', 'mailgun', 'custom']]
+    }
   },
   lastTestedAt: {
     type: DataTypes.DATE,
     allowNull: true
   },
   testStatus: {
-    type: DataTypes.ENUM('pending', 'success', 'failed'),
-    allowNull: true
+    type: DataTypes.STRING,
+    allowNull: true,
+    validate: {
+      isIn: [['pending', 'success', 'failed']]
+    }
   },
   testError: {
     type: DataTypes.TEXT,

@@ -18,8 +18,7 @@ const RefreshToken = sequelize.define('RefreshToken', {
   },
   token: {
     type: DataTypes.STRING(500),
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   expiresAt: {
     type: DataTypes.DATE,
@@ -41,7 +40,7 @@ const RefreshToken = sequelize.define('RefreshToken', {
   timestamps: true,
   indexes: [
     { fields: ['userId'] },
-    { fields: ['token'] },
+    { unique: true, fields: ['token'] },
     { fields: ['expiresAt'] },
     { fields: ['isRevoked'] }
   ]

@@ -24,7 +24,6 @@ const User = sequelize.define('User', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
       isEmail: true
     }
@@ -67,8 +66,11 @@ const User = sequelize.define('User', {
     comment: 'Dirección de facturación Argentina: {firstName, lastName, street, city, state, postalCode, country, phone, cuit, companyName, fiscalCondition}'
   },
   role: {
-    type: DataTypes.ENUM('customer', 'admin'),
-    defaultValue: 'customer'
+    type: DataTypes.STRING,
+    defaultValue: 'customer',
+    validate: {
+      isIn: [['customer', 'admin']]
+    }
   },
   roleId: {
     type: DataTypes.UUID,
@@ -102,7 +104,7 @@ const User = sequelize.define('User', {
 }, {
   timestamps: true,
   indexes: [
-    { fields: ['email'] },
+    { unique: true, fields: ['email'] },
     { fields: ['role'] }
   ]
 });

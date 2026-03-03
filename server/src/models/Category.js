@@ -10,7 +10,6 @@ const Category = sequelize.define('Category', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
       len: [2, 100]
     }
@@ -22,7 +21,6 @@ const Category = sequelize.define('Category', {
   slug: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
       is: /^[a-z0-9]+(?:-[a-z0-9]+)*$/
     }
@@ -45,7 +43,8 @@ const Category = sequelize.define('Category', {
 }, {
   timestamps: true,
   indexes: [
-    { fields: ['slug'] },
+    { unique: true, fields: ['name'] },
+    { unique: true, fields: ['slug'] },
     { fields: ['isActive'] },
     { fields: ['sortOrder'] }
   ]

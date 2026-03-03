@@ -47,8 +47,11 @@ const AuditLog = sequelize.define('AuditLog', {
     allowNull: true
   },
   status: {
-    type: DataTypes.ENUM('success', 'failure'),
-    defaultValue: 'success'
+    type: DataTypes.STRING,
+    defaultValue: 'success',
+    validate: {
+      isIn: [['success', 'failure']]
+    }
   },
   errorMessage: {
     type: DataTypes.TEXT,

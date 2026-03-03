@@ -15,8 +15,11 @@ const BankAccount = sequelize.define('BankAccount', {
     }
   },
   accountType: {
-    type: DataTypes.ENUM('Cuenta Corriente', 'Caja de Ahorro'),
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [['Cuenta Corriente', 'Caja de Ahorro']]
+    }
   },
   accountNumber: {
     type: DataTypes.STRING,

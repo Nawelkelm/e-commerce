@@ -9,17 +9,19 @@ const Coupon = sequelize.define('Coupon', {
   },
   code: {
     type: DataTypes.STRING(50),
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   description: {
     type: DataTypes.TEXT,
     allowNull: true
   },
   discountType: {
-    type: DataTypes.ENUM('percentage', 'fixed', 'freeShipping'),
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'percentage'
+    defaultValue: 'percentage',
+    validate: {
+      isIn: [['percentage', 'fixed', 'freeShipping']]
+    }
   },
   discountValue: {
     type: DataTypes.DECIMAL(10, 2),
@@ -98,7 +100,10 @@ const Coupon = sequelize.define('Coupon', {
   }
 }, {
   tableName: 'Coupons',
-  timestamps: true
+  timestamps: true,
+  indexes: [
+    { unique: true, fields: ['code'] }
+  ]
 });
 
 module.exports = Coupon;

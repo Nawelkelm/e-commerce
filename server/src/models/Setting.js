@@ -9,7 +9,6 @@ const Setting = sequelize.define('Setting', {
   },
   key: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false
   },
   value: {
@@ -34,7 +33,10 @@ const Setting = sequelize.define('Setting', {
   }
 }, {
   tableName: 'Settings',
-  timestamps: true
+  timestamps: true,
+  indexes: [
+    { unique: true, fields: ['key'] }
+  ]
 });
 
 module.exports = Setting;

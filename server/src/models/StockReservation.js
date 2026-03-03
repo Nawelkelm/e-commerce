@@ -42,8 +42,11 @@ const StockReservation = sequelize.define('StockReservation', {
     comment: 'Reservation expires after 15 minutes'
   },
   status: {
-    type: DataTypes.ENUM('active', 'completed', 'expired', 'cancelled'),
-    defaultValue: 'active'
+    type: DataTypes.STRING,
+    defaultValue: 'active',
+    validate: {
+      isIn: [['active', 'completed', 'expired', 'cancelled']]
+    }
   }
 }, {
   timestamps: true,

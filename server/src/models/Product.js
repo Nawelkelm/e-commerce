@@ -25,15 +25,13 @@ const Product = sequelize.define('Product', {
   slug: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
       is: /^[a-z0-9]+(?:-[a-z0-9]+)*$/
     }
   },
   sku: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   price: {
     type: DataTypes.DECIMAL(10, 2),
@@ -157,8 +155,8 @@ const Product = sequelize.define('Product', {
 }, {
   timestamps: true,
   indexes: [
-    { fields: ['slug'] },
-    { fields: ['sku'] },
+    { unique: true, fields: ['slug'] },
+    { unique: true, fields: ['sku'] },
     { fields: ['categoryId'] },
     { fields: ['isActive'] },
     { fields: ['isFeatured'] },

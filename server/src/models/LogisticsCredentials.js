@@ -8,9 +8,11 @@ const LogisticsCredentials = sequelize.define('LogisticsCredentials', {
     primaryKey: true
   },
   carrier: {
-    type: DataTypes.ENUM('Andreani', 'OCA', 'Correo Argentino'),
+    type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    validate: {
+      isIn: [['Andreani', 'OCA', 'Correo Argentino']]
+    }
   },
   isActive: {
     type: DataTypes.BOOLEAN,
@@ -30,8 +32,11 @@ const LogisticsCredentials = sequelize.define('LogisticsCredentials', {
     allowNull: true
   },
   syncStatus: {
-    type: DataTypes.ENUM('success', 'error', 'pending', 'never'),
-    defaultValue: 'never'
+    type: DataTypes.STRING,
+    defaultValue: 'never',
+    validate: {
+      isIn: [['success', 'error', 'pending', 'never']]
+    }
   },
   lastError: {
     type: DataTypes.TEXT,
@@ -44,7 +49,10 @@ const LogisticsCredentials = sequelize.define('LogisticsCredentials', {
   }
 }, {
   tableName: 'LogisticsCredentials',
-  timestamps: true
+  timestamps: true,
+  indexes: [
+    { unique: true, fields: ['carrier'] }
+  ]
 });
 
 module.exports = LogisticsCredentials;

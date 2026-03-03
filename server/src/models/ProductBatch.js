@@ -67,8 +67,11 @@ const ProductBatch = sequelize.define('ProductBatch', {
     comment: 'Storage location code'
   },
   status: {
-    type: DataTypes.ENUM('active', 'depleted', 'expired', 'recalled'),
-    defaultValue: 'active'
+    type: DataTypes.STRING,
+    defaultValue: 'active',
+    validate: {
+      isIn: [['active', 'depleted', 'expired', 'recalled']]
+    }
   },
   notes: {
     type: DataTypes.TEXT,

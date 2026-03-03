@@ -16,7 +16,6 @@ const AfipCredential = sequelize.define('AfipCredential', {
   cuit: {
     type: DataTypes.STRING(11),
     allowNull: false,
-    unique: true,
     validate: {
       is: /^[0-9]{11}$/,
       notEmpty: true
@@ -55,15 +54,12 @@ const AfipCredential = sequelize.define('AfipCredential', {
     comment: 'true = Producción, false = Homologación/Testing'
   },
   taxCategory: {
-    type: DataTypes.ENUM(
-      'responsable_inscripto',
-      'responsable_monotributo',
-      'exento',
-      'no_responsable',
-      'consumidor_final'
-    ),
+    type: DataTypes.STRING,
     allowNull: false,
     defaultValue: 'responsable_inscripto',
+    validate: {
+      isIn: [['responsable_inscripto', 'responsable_monotributo', 'exento', 'no_responsable', 'consumidor_final']]
+    },
     comment: 'Categoría tributaria del emisor'
   },
   address: {
@@ -102,8 +98,11 @@ const AfipCredential = sequelize.define('AfipCredential', {
     comment: 'Última vez que se probó la conexión con AFIP'
   },
   connectionStatus: {
-    type: DataTypes.ENUM('not_configured', 'connected', 'error', 'testing'),
+    type: DataTypes.STRING,
     defaultValue: 'not_configured',
+    validate: {
+      isIn: [['not_configured', 'connected', 'error', 'testing']]
+    },
     comment: 'Estado de la conexión con AFIP'
   },
   lastError: {

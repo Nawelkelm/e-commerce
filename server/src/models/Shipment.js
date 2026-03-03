@@ -9,8 +9,7 @@ const Shipment = sequelize.define('Shipment', {
   },
   trackingNumber: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   carrier: {
     type: DataTypes.STRING,
@@ -23,18 +22,11 @@ const Shipment = sequelize.define('Shipment', {
     // Standard, Express, Next Day, etc.
   },
   status: {
-    type: DataTypes.ENUM(
-      'pending',           // Pendiente de envío
-      'label_created',     // Etiqueta creada
-      'picked_up',         // Recogido por transportista
-      'in_transit',        // En tránsito
-      'out_for_delivery',  // En reparto
-      'delivered',         // Entregado
-      'failed_delivery',   // Intento de entrega fallido
-      'returned',          // Devuelto
-      'cancelled'          // Cancelado
-    ),
-    defaultValue: 'pending'
+    type: DataTypes.STRING,
+    defaultValue: 'pending',
+    validate: {
+      isIn: [['pending', 'label_created', 'picked_up', 'in_transit', 'out_for_delivery', 'delivered', 'failed_delivery', 'returned', 'cancelled']]
+    }
   },
   shippingCost: {
     type: DataTypes.DECIMAL(10, 2),
@@ -141,7 +133,7 @@ const Shipment = sequelize.define('Shipment', {
   tableName: 'shipments',
   timestamps: true,
   indexes: [
-    { fields: ['trackingNumber'] },
+    { unique: true, fields: ['trackingNumber'] },
     { fields: ['carrier'] },
     { fields: ['status'] },
     { fields: ['estimatedDeliveryDate'] },

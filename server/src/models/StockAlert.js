@@ -17,12 +17,18 @@ const StockAlert = sequelize.define('StockAlert', {
     }
   },
   type: {
-    type: DataTypes.ENUM('low_stock', 'out_of_stock', 'overstock', 'expiring_soon'),
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [['low_stock', 'out_of_stock', 'overstock', 'expiring_soon']]
+    }
   },
   severity: {
-    type: DataTypes.ENUM('info', 'warning', 'critical'),
-    defaultValue: 'warning'
+    type: DataTypes.STRING,
+    defaultValue: 'warning',
+    validate: {
+      isIn: [['info', 'warning', 'critical']]
+    }
   },
   message: {
     type: DataTypes.STRING,

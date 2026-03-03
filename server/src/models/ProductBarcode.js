@@ -22,8 +22,11 @@ const ProductBarcode = sequelize.define('ProductBarcode', {
     comment: 'Barcode number (EAN, UPC, etc.)'
   },
   barcodeType: {
-    type: DataTypes.ENUM('EAN13', 'EAN8', 'UPC', 'CODE128', 'QR', 'CODE39', 'ITF14'),
-    defaultValue: 'EAN13'
+    type: DataTypes.STRING,
+    defaultValue: 'EAN13',
+    validate: {
+      isIn: [['EAN13', 'EAN8', 'UPC', 'CODE128', 'QR', 'CODE39', 'ITF14']]
+    }
   },
   isPrimary: {
     type: DataTypes.BOOLEAN,

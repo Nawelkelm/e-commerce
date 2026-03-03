@@ -10,7 +10,6 @@ const EmailTemplate = sequelize.define('EmailTemplate', {
   name: {
     type: DataTypes.STRING(100),
     allowNull: false,
-    unique: true,
     validate: {
       notEmpty: true,
       len: [3, 100]
@@ -35,17 +34,11 @@ const EmailTemplate = sequelize.define('EmailTemplate', {
     allowNull: true
   },
   type: {
-    type: DataTypes.ENUM(
-      'order_confirmation',
-      'order_shipped',
-      'order_delivered',
-      'abandoned_cart',
-      'welcome',
-      'password_reset',
-      'promotional',
-      'custom'
-    ),
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [['order_confirmation', 'order_shipped', 'order_delivered', 'abandoned_cart', 'welcome', 'password_reset', 'promotional', 'custom']]
+    }
   },
   variables: {
     type: DataTypes.ARRAY(DataTypes.STRING),
@@ -67,7 +60,10 @@ const EmailTemplate = sequelize.define('EmailTemplate', {
   }
 }, {
   tableName: 'EmailTemplates',
-  timestamps: true
+  timestamps: true,
+  indexes: [
+    { unique: true, fields: ['name'] }
+  ]
 });
 
 module.exports = EmailTemplate;

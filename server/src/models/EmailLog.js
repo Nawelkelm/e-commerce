@@ -31,9 +31,12 @@ const EmailLog = sequelize.define('EmailLog', {
     allowNull: false
   },
   status: {
-    type: DataTypes.ENUM('pending', 'sent', 'failed', 'bounced'),
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'pending'
+    defaultValue: 'pending',
+    validate: {
+      isIn: [['pending', 'sent', 'failed', 'bounced']]
+    }
   },
   sentAt: {
     type: DataTypes.DATE,

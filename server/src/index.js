@@ -202,37 +202,34 @@ const startServer = async () => {
     await sequelize.authenticate();
     logger.info('Database connection established successfully.');
     
-    // Fix Invoice ENUM columns → VARCHAR before sync (ENUMs break alter)
+    // Convert ALL ENUM columns to VARCHAR before sync (ENUMs break alter)
     try {
       await sequelize.query(`
         DO $$
+        DECLARE
+          r RECORD;
         BEGIN
-          -- Convert ENUM columns to VARCHAR if they exist as ENUMs
-          IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'Invoices' AND column_name = 'status' AND udt_name LIKE 'enum_%') THEN
-            ALTER TABLE "Invoices" ALTER COLUMN "status" DROP DEFAULT;
-            ALTER TABLE "Invoices" ALTER COLUMN "status" TYPE VARCHAR(255) USING "status"::VARCHAR;
-            ALTER TABLE "Invoices" ALTER COLUMN "status" SET DEFAULT 'issued';
-          END IF;
-          IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'Invoices' AND column_name = 'invoiceType' AND udt_name LIKE 'enum_%') THEN
-            ALTER TABLE "Invoices" ALTER COLUMN "invoiceType" DROP DEFAULT;
-            ALTER TABLE "Invoices" ALTER COLUMN "invoiceType" TYPE VARCHAR(255) USING "invoiceType"::VARCHAR;
-            ALTER TABLE "Invoices" ALTER COLUMN "invoiceType" SET DEFAULT 'B';
-          END IF;
-          IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'Invoices' AND column_name = 'afipStatus' AND udt_name LIKE 'enum_%') THEN
-            ALTER TABLE "Invoices" ALTER COLUMN "afipStatus" DROP DEFAULT;
-            ALTER TABLE "Invoices" ALTER COLUMN "afipStatus" TYPE VARCHAR(255) USING "afipStatus"::VARCHAR;
-            ALTER TABLE "Invoices" ALTER COLUMN "afipStatus" SET DEFAULT 'pending';
-          END IF;
-          IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'Invoices' AND column_name = 'customerTaxCategory' AND udt_name LIKE 'enum_%') THEN
-            ALTER TABLE "Invoices" ALTER COLUMN "customerTaxCategory" DROP DEFAULT;
-            ALTER TABLE "Invoices" ALTER COLUMN "customerTaxCategory" TYPE VARCHAR(255) USING "customerTaxCategory"::VARCHAR;
-            ALTER TABLE "Invoices" ALTER COLUMN "customerTaxCategory" SET DEFAULT 'consumidor_final';
-          END IF;
+          FOR r IN
+            SELECT c.table_name, c.column_name, c.column_default
+            FROM information_schema.columns c
+            WHERE c.table_schema = 'public'
+              AND c.data_type = 'USER-DEFINED'
+              AND c.udt_name LIKE 'enum_%'
+          LOOP
+            -- Drop default before type change
+            EXECUTE format('ALTER TABLE %I ALTER COLUMN %I DROP DEFAULT', r.table_name, r.column_name);
+            -- Convert ENUM to VARCHAR
+            EXECUTE format('ALTER TABLE %I ALTER COLUMN %I TYPE VARCHAR(255) USING %I::VARCHAR(255)', r.table_name, r.column_name, r.column_name);
+            -- Restore default if it existed
+            IF r.column_default IS NOT NULL THEN
+              EXECUTE format('ALTER TABLE %I ALTER COLUMN %I SET DEFAULT %s', r.table_name, r.column_name, r.column_default);
+            END IF;
+          END LOOP;
         END $$;
       `);
-      logger.info('Invoice ENUM columns migrated to VARCHAR.');
+      logger.info('All ENUM columns migrated to VARCHAR.');
     } catch (err) {
-      logger.warn('Invoice ENUM migration skipped (table may not exist):', err.message);
+      logger.warn('ENUM migration skipped:', err.message);
     }
     
     // Sync database models (alter: true ensures schema matches models)

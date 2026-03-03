@@ -10,7 +10,6 @@ const Role = sequelize.define('Role', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
       len: [2, 50]
     }
@@ -38,7 +37,7 @@ const Role = sequelize.define('Role', {
 }, {
   timestamps: true,
   indexes: [
-    { fields: ['name'] },
+    { unique: true, fields: ['name'] },
     { fields: ['isActive'] }
   ]
 });

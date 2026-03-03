@@ -9,16 +9,21 @@ const Order = sequelize.define('Order', {
   },
   orderNumber: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   status: {
-    type: DataTypes.ENUM('pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'),
-    defaultValue: 'pending'
+    type: DataTypes.STRING,
+    defaultValue: 'pending',
+    validate: {
+      isIn: [['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded']]
+    }
   },
   paymentStatus: {
-    type: DataTypes.ENUM('pending', 'paid', 'failed', 'refunded', 'partially_refunded', 'pending_verification'),
-    defaultValue: 'pending'
+    type: DataTypes.STRING,
+    defaultValue: 'pending',
+    validate: {
+      isIn: [['pending', 'paid', 'failed', 'refunded', 'partially_refunded', 'pending_verification']]
+    }
   },
   paymentMethod: {
     type: DataTypes.STRING,
@@ -157,7 +162,7 @@ const Order = sequelize.define('Order', {
 }, {
   timestamps: true,
   indexes: [
-    { fields: ['orderNumber'] },
+    { unique: true, fields: ['orderNumber'] },
     { fields: ['userId'] },
     { fields: ['status'] },
     { fields: ['paymentStatus'] },
