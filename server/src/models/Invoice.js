@@ -10,7 +10,6 @@ const Invoice = sequelize.define('Invoice', {
   invoiceNumber: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     comment: 'Número de factura único (ej: INV-2025-00001)'
   },
   orderId: {
