@@ -6,9 +6,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs').promises;
 const excelService = require('../services/excelService');
-const { productStorage, deleteImage } = require('../config/cloudinary');
+const { productStorage, getFileUrl, deleteImage } = require('../config/cloudinary');
 
-// Configure multer for image uploads (Cloudinary)
+// Configure multer for image uploads (Cloudinary or local disk - auto-detected)
 const upload = multer({
   storage: productStorage,
   limits: {
@@ -303,7 +303,7 @@ const createProduct = async (req, res) => {
     let images = [];
     if (req.files && req.files.length > 0) {
       images = req.files.map((file, index) => ({
-        url: file.path, // Cloudinary URL
+        url: getFileUrl(file, 'products'),
         alt: `${name} - Image ${index + 1}`,
         isPrimary: index === 0
       }));
@@ -396,7 +396,7 @@ const updateProduct = async (req, res) => {
     // Handle new image uploads
     if (req.files && req.files.length > 0) {
       const newImages = req.files.map((file, index) => ({
-        url: file.path, // Cloudinary URL
+        url: getFileUrl(file, 'products'),
         alt: `${updateData.name || product.name} - Image ${index + 1}`,
         isPrimary: false
       }));

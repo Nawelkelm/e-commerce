@@ -666,8 +666,9 @@ const uploadPaymentProof = async (req, res) => {
       });
     }
 
-    // Actualizar orden con el comprobante (Cloudinary URL)
-    const paymentProofUrl = req.file.path;
+    // Actualizar orden con el comprobante (Cloudinary o local - auto-detectado)
+    const { getFileUrl } = require('../config/cloudinary');
+    const paymentProofUrl = getFileUrl(req.file, 'payment-proofs');
     await order.update({
       paymentProofUrl,
       paymentProofUploadedAt: new Date(),

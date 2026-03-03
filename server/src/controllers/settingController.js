@@ -1,6 +1,6 @@
 const { Setting } = require('../models');
 const logger = require('../config/logger');
-const { deleteImage } = require('../config/cloudinary');
+const { getFileUrl, deleteImage } = require('../config/cloudinary');
 
 // Get all settings
 const getSettings = async (req, res) => {
@@ -104,8 +104,8 @@ const uploadLogo = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    // Cloudinary URL from multer-storage-cloudinary
-    const logoUrl = req.file.path;
+    // Get URL (Cloudinary or local - auto-detected)
+    const logoUrl = getFileUrl(req.file, 'logos');
 
     // Update site_logo setting
     const setting = await Setting.findOne({ where: { key: 'site_logo' } });
@@ -147,8 +147,8 @@ const uploadFavicon = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    // Cloudinary URL from multer-storage-cloudinary
-    const faviconUrl = req.file.path;
+    // Get URL (Cloudinary or local - auto-detected)
+    const faviconUrl = getFileUrl(req.file, 'logos');
 
     // Update site_favicon setting
     const setting = await Setting.findOne({ where: { key: 'site_favicon' } });

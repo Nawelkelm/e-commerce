@@ -1,7 +1,6 @@
 const { HomeSettings, Setting } = require('../models');
 const logger = require('../config/logger');
-const { cloudinary, deleteImage } = require('../config/cloudinary');
-const streamifier = require('streamifier');
+const { uploadBuffer, deleteImage } = require('../config/cloudinary');
 
 const HOME_SETTINGS_ID = '00000000-0000-0000-0000-000000000001';
 
@@ -60,25 +59,11 @@ const uploadCarouselImage = async (req, res) => {
       return res.status(400).json({ message: 'No se proporcionó ninguna imagen' });
     }
     
-    // Upload to Cloudinary with transformations
-    const result = await new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
-        {
-          folder: 'ecommerce/carousel',
-          transformation: [
-            { width: 1920, height: 600, crop: 'fill', gravity: 'center', quality: 85, format: 'webp' }
-          ]
-        },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      );
-      streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
-    });
+    // Upload buffer to Cloudinary or local disk (auto-detected)
+    const filename = `carousel-${Date.now()}.webp`;
+    const imageUrl = await uploadBuffer(req.file.buffer, 'carousel', filename);
 
-    const imageUrl = result.secure_url;
-    logger.info('Carousel image uploaded to Cloudinary:', imageUrl);
+    logger.info('Carousel image uploaded:', imageUrl);
     res.json({ message: 'Imagen subida exitosamente', url: imageUrl });
   } catch (error) {
     logger.error('Upload carousel image error:', error);
@@ -93,9 +78,9 @@ const deleteCarouselImage = async (req, res) => {
       return res.status(400).json({ message: 'URL de imagen no proporcionada' });
     }
     
-    // Delete from Cloudinary
+    // Delete from Cloudinary or local disk
     await deleteImage(imageUrl);
-    logger.info('Carousel image deleted from Cloudinary:', imageUrl);
+    logger.info('Carousel image deleted:', imageUrl);
     
     res.json({ message: 'Imagen eliminada exitosamente' });
   } catch (error) {
