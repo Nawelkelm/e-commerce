@@ -151,7 +151,8 @@ const initializeRolesAndPermissions = async () => {
         transaction
       });
 
-      if (created || process.env.FORCE_ROLE_UPDATE === 'true') {
+      // Always ensure correct permissions are assigned (idempotent)
+      {
         // Find permissions to assign
         let permissionsToAssign = [];
         
@@ -164,10 +165,18 @@ const initializeRolesAndPermissions = async () => {
           });
         }
 
-        // Assign permissions to role
-        await role.setPermissions(permissionsToAssign, { transaction });
+        // Get current permissions
+        const currentPermissions = await role.getPermissions({ transaction });
+        const currentNames = currentPermissions.map(p => p.name).sort();
+        const targetNames = permissionsToAssign.map(p => p.name).sort();
         
-        logger.info(`${created ? 'Created' : 'Updated'} role: ${role.name} with ${permissionsToAssign.length} permissions`);
+        // Only update if permissions differ
+        if (JSON.stringify(currentNames) !== JSON.stringify(targetNames)) {
+          await role.setPermissions(permissionsToAssign, { transaction });
+          logger.info(`${created ? 'Created' : 'Updated'} role: ${role.name} with ${permissionsToAssign.length} permissions`);
+        } else if (created) {
+          logger.info(`Created role: ${role.name} with ${permissionsToAssign.length} permissions`);
+        }
       }
     }
 
