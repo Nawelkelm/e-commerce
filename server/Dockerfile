@@ -17,7 +17,7 @@ RUN npm ci --only=production
 COPY . .
 
 # Crear directorios necesarios
-RUN mkdir -p uploads logs
+RUN mkdir -p uploads/products uploads/logos uploads/carousel uploads/payment-proofs uploads/temp logs
 
 # Crear usuario no root
 RUN addgroup -g 1001 -S nodejs && \

@@ -29,9 +29,10 @@ if (useCloudinary) {
     api_secret: process.env.CLOUDINARY_API_SECRET
   });
 
-  logger.info('📦 Image storage: Cloudinary (cloud)');
+  logger.info('📦 Image storage: Cloudinary (cloud) - cloud_name: ' + process.env.CLOUDINARY_CLOUD_NAME);
 } else {
-  logger.info('📦 Image storage: Local disk');
+  logger.info('📦 Image storage: Local disk (no CLOUDINARY_CLOUD_NAME detected)');
+  logger.info('📦 Env vars present: CLOUD_NAME=' + !!process.env.CLOUDINARY_CLOUD_NAME + ' API_KEY=' + !!process.env.CLOUDINARY_API_KEY + ' API_SECRET=' + !!process.env.CLOUDINARY_API_SECRET);
 }
 
 // ─── Helper: ensure local directory exists ───
