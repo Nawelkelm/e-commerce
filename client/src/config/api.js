@@ -5,7 +5,7 @@
 const isDevelopment = import.meta.env.DEV;
 const isDocker = window.location.port === '3000'; // Puerto del frontend en Docker
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://e-commerce-7q25.onrender.com/api';
 
 export const getApiUrl = (endpoint) => {
   // Si el endpoint ya incluye /api, no lo duplicar
