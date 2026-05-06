@@ -19,3 +19,4 @@ BEGIN
         ON CONFLICT DO NOTHING;
     END LOOP;
 END $$;
+    
