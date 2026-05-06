@@ -1,0 +1,50 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: e-commerce-backend
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node src/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        value: postgresql://admin:L1SeQLXsrnAUTyPRNGanF3p2xeW23Z2C@dpg-d7tkbsrbc2fs738d09t0-a/ecommerce_db_o3gp
+      - key: DB_HOST
+        value: dpg-d7tkbsrbc2fs738d09t0-a
+      - key: DB_PORT
+        value: 5432
+      - key: DB_NAME
+        value: ecommerce_db_o3gp
+      - key: DB_USER
+        value: admin
+      - key: DB_PASSWORD
+        value: L1SeQLXsrnAUTyPRNGanF3p2xeW23Z2C
+      - key: JWT_SECRET
+        value: mi-secreto-jwt-super-seguro-para-e-commerce-b2c-2024
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: MERCADOPAGO_ACCESS_TOKEN
+        value: APP_USR-1672602615646810-100806-3fea5d455aa8d5a509501cd6735b7f38-2911609370
+      - key: MERCADOPAGO_PUBLIC_KEY
+        value: APP_USR-48ddd74f-1972-44d6-8a08-63fd1b7825a5
+      - key: MERCADOPAGO_WEBHOOK_SECRET
+        value: 8f56a01a2e5d386f02e7d52b3aaec557bc1442ecfbdf0d61062101af7b2c010f
+      - key: FRONTEND_URL
+        value: https://e-commerce-1-i86x.onrender.com
+      - key: BACKEND_URL
+        value: https://e-commerce-7q25.onrender.com
+
+  # Frontend Static Site
+  - type: web
+    name: e-commerce-frontend
+    runtime: node
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://e-commerce-7q25.onrender.com/api
