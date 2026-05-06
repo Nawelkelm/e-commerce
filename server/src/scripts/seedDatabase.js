@@ -17,6 +17,7 @@ const seedDatabase = async () => {
         password: adminPassword,
         role: 'admin',
         isActive: true,
+        emailVerified: true,
         phone: '1234567890',
         address: 'Dirección del administrador'
       }
@@ -33,6 +34,7 @@ const seedDatabase = async () => {
         password: customerPassword,
         role: 'customer',
         isActive: true,
+        emailVerified: true,
         phone: '0987654321',
         address: 'chacra 134 calle 76 6851'
       }
