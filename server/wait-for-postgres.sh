@@ -10,7 +10,7 @@ port="${DB_PORT:-5432}"
 echo "Esperando conexión con PostgreSQL ($host:$port)..."
 
 # Esperar a que PostgreSQL esté disponible usando pg_isready
-until pg_isready -h "$host" -p "$port"; do
+until pg_isready -h "$host" -p "$port" -U "${DB_USER:-admin}"; do
   echo "Esperando a que PostgreSQL ($host:$port) esté disponible..."
   sleep 2
 done

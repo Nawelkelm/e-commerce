@@ -101,9 +101,10 @@ app.use('/api/', generalLimiter);
 // CORS configuration
 app.use(cors({
   origin: [
-    process.env.FRONTEND_URL || 'https://e-commerce-frontend-rlvt.onrender.com',
-    'https://e-commerce-frontend-rlvt.onrender.com',
-    'https://e-commerce-7q25.onrender.com'
+    process.env.FRONTEND_URL || 'https://e-commerce-1-i86x.onrender.com',
+    'https://e-commerce-1-i86x.onrender.com',
+    'https://e-commerce-7q25.onrender.com',
+    'http://localhost:3000'
   ],
   credentials: true
 }));
