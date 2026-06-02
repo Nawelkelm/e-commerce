@@ -163,7 +163,7 @@ const ReviewList = ({ productId }) => {
                 <UserCircleIcon className="user-icon" />
                 <div>
                   <div className="user-name">
-                    {review.User?.name || 'Usuario'}
+                    {review.User ? `${review.User.firstName || ''} ${review.User.lastName || ''}`.trim() || 'Usuario' : 'Usuario'}
                     {review.isVerifiedPurchase && (
                       <CheckBadgeIcon className="verified-badge" title="Compra verificada" />
                     )}

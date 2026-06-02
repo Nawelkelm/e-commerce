@@ -91,7 +91,7 @@ const getProductReviews = async (req, res) => {
       where,
       include: [{
         model: User,
-        attributes: ['id', 'name', 'email']
+        attributes: ['id', 'firstName', 'lastName', 'email']
       }],
       order,
       limit: parseInt(limit),
@@ -419,7 +419,7 @@ const getAllReviews = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['id', 'name', 'email']
+          attributes: ['id', 'firstName', 'lastName', 'email']
         },
         {
           model: Product,
