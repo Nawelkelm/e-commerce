@@ -144,12 +144,19 @@ const getCarrierQuote = async (carrier, quoteData) => {
     }
 
     // Preparar datos para cotización
-    const packages = quoteData.items.map(item => ({
-      weight: item.weight || 1,
-      height: item.height || 10,
-      width: item.width || 10,
-      length: item.length || 10
-    }));
+    // weight viene en gramos desde el frontend → convertir a kg para OCA
+    const packages = quoteData.items.map(item => {
+      const weightGrams = parseFloat(item.weight) || 500;
+      const weightKg = weightGrams >= 100 ? weightGrams / 1000 : weightGrams; // si >= 100 asumimos gramos
+      // dimensions puede venir anidado { length, width, height } o plano
+      const dims = item.dimensions || {};
+      return {
+        weight: Math.max(0.1, weightKg),
+        height: parseFloat(item.height || dims.height) || 10,
+        width: parseFloat(item.width || dims.width) || 10,
+        length: parseFloat(item.length || dims.length) || 20
+      };
+    });
 
     const quote = await logisticsIntegrationService.getQuote(carrier, {
       originPostalCode: process.env.ORIGIN_POSTAL_CODE || '1000',
