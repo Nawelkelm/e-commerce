@@ -545,7 +545,11 @@ const ProductDetail = () => {
                 {product.dimensions && (
                   <div className="flex justify-between py-3 border-b border-gray-200 dark:border-gray-700">
                     <span className="font-medium text-gray-700 dark:text-gray-300">Dimensiones:</span>
-                    <span className="text-gray-900 dark:text-white">{product.dimensions}</span>
+                    <span className="text-gray-900 dark:text-white">
+                      {typeof product.dimensions === 'object'
+                        ? `${product.dimensions.length ?? '-'} × ${product.dimensions.width ?? '-'} × ${product.dimensions.height ?? '-'} cm`
+                        : product.dimensions}
+                    </span>
                   </div>
                 )}
               </div>
