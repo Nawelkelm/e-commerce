@@ -53,3 +53,9 @@ public/uploads/
 
 # Docker
 .docker/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
