@@ -11,15 +11,43 @@ const OCA_URLS = {
 class OCAService {
   constructor() {
     this.cuit = process.env.OCA_CUIT;
-    this.operativa = process.env.OCA_OPERATIVA;
     this.password = process.env.OCA_PASSWORD;
     this.originPostalCode = process.env.OCA_ORIGIN_POSTAL_CODE || process.env.ORIGIN_POSTAL_CODE || '1000';
+    // Operativas disponibles
+    this.operativas = {
+      p2p: process.env.OCA_OPERATIVA_P2P || process.env.OCA_OPERATIVA || '0',
+      p2s: process.env.OCA_OPERATIVA_P2S || process.env.OCA_OPERATIVA || '0',
+      s2p: process.env.OCA_OPERATIVA_S2P || process.env.OCA_OPERATIVA || '0',
+      s2s: process.env.OCA_OPERATIVA_S2S || process.env.OCA_OPERATIVA || '0',
+    };
+    // Operativa por defecto para e-commerce: Puerta a Puerta
+    this.operativa = this.operativas.p2p;
+  }
+
+  /**
+   * Cotizar todas las modalidades disponibles
+   */
+  async getAllQuotes(quoteData) {
+    const modalidades = [
+      { key: 'p2p', label: 'Puerta a Puerta' },
+      { key: 'p2s', label: 'Puerta a Sucursal' },
+    ];
+    const results = [];
+    for (const mod of modalidades) {
+      const operativa = this.operativas[mod.key];
+      if (!operativa || operativa === '0') continue;
+      const result = await this.getQuote(quoteData, operativa);
+      if (result.success) {
+        results.push({ ...result, modalidad: mod.label, operativa });
+      }
+    }
+    return results;
   }
 
   /**
    * Obtener cotización de envío - usa API pública (no requiere credenciales)
    */
-  async getQuote(quoteData) {
+  async getQuote(quoteData, operativaOverride = null) {
     try {
       const pesoTotal = quoteData.packages.reduce((sum, pkg) => sum + (parseFloat(pkg.weight) || 0.5), 0);
       const volumenTotal = quoteData.packages.reduce((sum, pkg) => {
@@ -36,9 +64,9 @@ class OCAService {
         return { success: false, error: 'Código postal destino requerido' };
       }
 
-      // Usar operativa pública si no hay credenciales configuradas
+      // Usar credenciales corporativas si están configuradas, sino operativa pública
       const cuit = this.cuit || '0';
-      const operativa = this.operativa || '0';
+      const operativa = operativaOverride || this.operativa || '0';
 
       const soapRequest = `<?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
