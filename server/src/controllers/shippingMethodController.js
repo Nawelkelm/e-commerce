@@ -140,6 +140,7 @@ const getCarrierQuote = async (carrier, quoteData, methodRestrictions = {}) => {
     });
 
     if (!credentials) {
+      logger.warn(`[ShippingQuote] No active credentials found for carrier: ${carrier}`);
       return { success: false, error: 'Carrier not active' };
     }
 
@@ -168,6 +169,7 @@ const getCarrierQuote = async (carrier, quoteData, methodRestrictions = {}) => {
       operativaKey
     });
 
+    logger.info(`[ShippingQuote] ${carrier} result:`, JSON.stringify(quote));
     return quote;
   } catch (error) {
     logger.error(`Error getting carrier quote from ${carrier}:`, error);

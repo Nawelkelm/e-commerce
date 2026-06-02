@@ -22,6 +22,7 @@ class OCAService {
     };
     // Operativa por defecto para e-commerce: Puerta a Puerta
     this.operativa = this.operativas.p2p;
+    logger.info(`[OCAService] Init - CUIT: ${this.cuit ? 'OK' : 'MISSING'}, P2P: ${this.operativas.p2p}, P2S: ${this.operativas.p2s}, CP origen: ${this.originPostalCode}`);
   }
 
   /**
@@ -54,19 +55,21 @@ class OCAService {
         const alto = parseFloat(pkg.height) || 10;
         const ancho = parseFloat(pkg.width) || 10;
         const largo = parseFloat(pkg.length) || 10;
-        return sum + (alto * ancho * largo / 1000000); // cmÂ³ a mÂ³
+        return sum + (alto * ancho * largo / 1000000); // cm³ a m³
       }, 0);
 
       const originCP = quoteData.originPostalCode || this.originPostalCode;
       const destCP = quoteData.destinationPostalCode;
 
       if (!destCP) {
-        return { success: false, error: 'CÃ³digo postal destino requerido' };
+        return { success: false, error: 'Código postal destino requerido' };
       }
 
-      // Usar credenciales corporativas si estÃ¡n configuradas, sino operativa pÃºblica
+      // Usar credenciales corporativas si están configuradas, sino operativa pública
       const cuit = this.cuit || '0';
       const operativa = operativaOverride || this.operativa || '0';
+
+      logger.info(`[OCAService] getQuote - origen: ${originCP}, destino: ${destCP}, peso: ${pesoTotal}kg, volumen: ${volumenTotal}m³, operativa: ${operativa}, cuit: ${cuit ? 'set' : 'missing'}`);
 
       const soapRequest = `<?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
