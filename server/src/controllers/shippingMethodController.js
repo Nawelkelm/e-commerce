@@ -67,7 +67,7 @@ const getShippingQuote = async (req, res) => {
           const carrierQuote = await getCarrierQuote(method.carrier, {
             destinationPostalCode: postalCode,
             items
-          });
+          }, method.restrictions);
 
           if (carrierQuote.success) {
             quote.price = carrierQuote.price;
@@ -132,7 +132,7 @@ const checkIfInZone = (postalCode, city, state, zones) => {
 };
 
 // Helper: Obtener cotización de carrier
-const getCarrierQuote = async (carrier, quoteData) => {
+const getCarrierQuote = async (carrier, quoteData, methodRestrictions = {}) => {
   try {
     // Verificar que el carrier esté activo
     const credentials = await LogisticsCredentials.findOne({
@@ -158,10 +158,14 @@ const getCarrierQuote = async (carrier, quoteData) => {
       };
     });
 
+    // Pasar operativaKey al servicio (para OCA P2P vs P2S, etc.)
+    const operativaKey = methodRestrictions?.operativaKey || null;
+
     const quote = await logisticsIntegrationService.getQuote(carrier, {
       originPostalCode: process.env.ORIGIN_POSTAL_CODE || '1000',
       destinationPostalCode: quoteData.destinationPostalCode,
-      packages
+      packages,
+      operativaKey
     });
 
     return quote;

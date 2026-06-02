@@ -180,7 +180,12 @@ class LogisticsIntegrationService {
   async getQuote(carrier, quoteData) {
     try {
       const provider = this.getProvider(carrier);
-      const result = await provider.getQuote(quoteData);
+      // Si el carrier soporta operativas (ej: OCA), resolverla desde el key
+      let operativaOverride = null;
+      if (quoteData.operativaKey && provider.operativas) {
+        operativaOverride = provider.operativas[quoteData.operativaKey] || null;
+      }
+      const result = await provider.getQuote(quoteData, operativaOverride);
       
       return result;
     } catch (error) {
