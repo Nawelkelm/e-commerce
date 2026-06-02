@@ -17,7 +17,9 @@ import {
   XCircleIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  PencilSquareIcon
+  PencilSquareIcon,
+  MapPinIcon,
+  BuildingStorefrontIcon
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartIconSolid, StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
 import { toast } from 'react-hot-toast'
@@ -36,6 +38,15 @@ const ProductDetail = () => {
   const [addingToCart, setAddingToCart] = useState(false)
   const [showReviewForm, setShowReviewForm] = useState(false)
   const [reviewStats, setReviewStats] = useState(null)
+
+  // Cotizador de envío
+  const [shippingPostalCode, setShippingPostalCode] = useState('')
+  const [shippingCity, setShippingCity] = useState('')
+  const [shippingState, setShippingState] = useState('')
+  const [shippingQuotes, setShippingQuotes] = useState([])
+  const [shippingLoading, setShippingLoading] = useState(false)
+  const [shippingError, setShippingError] = useState('')
+  const [shippingQuoted, setShippingQuoted] = useState(false)
 
   useEffect(() => {
     fetchProduct()
@@ -103,7 +114,9 @@ const ProductDetail = () => {
         name: product.name,
         price: parseFloat(getCurrentPrice()),
         image: imageUrl,
-        quantity: quantity
+        quantity: quantity,
+        weight: product.weight ? parseFloat(product.weight) * 1000 : 500,
+        dimensions: product.dimensions || { length: 20, width: 20, height: 10 }
       })
       
       toast.success('Producto agregado al carrito')
@@ -169,6 +182,45 @@ const ProductDetail = () => {
     const salePrice = parseFloat(product.salePrice)
     const regularPrice = parseFloat(product.price)
     return Math.round(((regularPrice - salePrice) / regularPrice) * 100)
+  }
+
+  const handleShippingQuote = async () => {
+    if (!shippingPostalCode || !shippingCity || !shippingState) {
+      setShippingError('Completá código postal, ciudad y provincia')
+      return
+    }
+    setShippingError('')
+    setShippingLoading(true)
+    try {
+      const dims = product.dimensions || {}
+      const response = await fetch('/api/shipping-methods/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          postalCode: shippingPostalCode,
+          city: shippingCity,
+          state: shippingState,
+          items: [{
+            productId: product.id,
+            quantity: 1,
+            weight: product.weight ? parseFloat(product.weight) * 1000 : 500,
+            dimensions: dims
+          }],
+          subtotal: parseFloat(product.salePrice || product.price || 0)
+        })
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setShippingQuotes(data.quotes || [])
+        setShippingQuoted(true)
+      } else {
+        setShippingError('No se pudo obtener la cotización')
+      }
+    } catch {
+      setShippingError('Error al conectar con el servicio de envío')
+    } finally {
+      setShippingLoading(false)
+    }
   }
 
   const renderRating = (rating = 4.5) => {
@@ -555,6 +607,134 @@ const ProductDetail = () => {
               </div>
             </div>
           )}
+
+          {/* Cotizador de Envío */}
+          <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+              <TruckIcon className="h-7 w-7 text-indigo-600 dark:text-indigo-400" />
+              Cotizar Envío
+            </h2>
+
+            {!shippingQuoted ? (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Código Postal <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={shippingPostalCode}
+                      onChange={(e) => setShippingPostalCode(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                      placeholder="Ej: 1425"
+                      maxLength={8}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Ciudad <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={shippingCity}
+                      onChange={(e) => setShippingCity(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                      placeholder="Ej: Buenos Aires"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Provincia <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={shippingState}
+                      onChange={(e) => setShippingState(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                      placeholder="Ej: Buenos Aires"
+                    />
+                  </div>
+                </div>
+
+                {shippingError && (
+                  <p className="text-red-600 dark:text-red-400 text-sm">{shippingError}</p>
+                )}
+
+                <button
+                  onClick={handleShippingQuote}
+                  disabled={shippingLoading}
+                  className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  {shippingLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                      Cotizando...
+                    </>
+                  ) : (
+                    <>
+                      <MapPinIcon className="h-5 w-5" />
+                      Ver opciones de envío
+                    </>
+                  )}
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <span className="font-medium">Destino:</span> {shippingCity}, {shippingState} (CP: {shippingPostalCode})
+                  </p>
+                  <button
+                    onClick={() => { setShippingQuoted(false); setShippingQuotes([]) }}
+                    className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+                  >
+                    Cambiar
+                  </button>
+                </div>
+
+                {shippingQuotes.length === 0 ? (
+                  <p className="text-gray-500 dark:text-gray-400 py-4 text-center">
+                    No hay opciones de envío disponibles para tu zona
+                  </p>
+                ) : (
+                  <div className="space-y-3">
+                    {shippingQuotes.map((quote) => (
+                      <div key={quote.id} className="flex items-center justify-between border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                        <div className="flex items-center gap-3">
+                          {quote.type === 'pickup' ? (
+                            <BuildingStorefrontIcon className="h-6 w-6 text-green-600 dark:text-green-400 flex-shrink-0" />
+                          ) : (
+                            <TruckIcon className="h-6 w-6 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
+                          )}
+                          <div>
+                            <p className="font-medium text-gray-900 dark:text-white">{quote.name}</p>
+                            {quote.estimatedDays && (
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                                Entrega estimada: {quote.estimatedDays} {quote.estimatedDays === 1 ? 'día hábil' : 'días hábiles'}
+                              </p>
+                            )}
+                            {quote.description && (
+                              <p className="text-xs text-gray-500 dark:text-gray-400">{quote.description}</p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="font-bold text-lg text-gray-900 dark:text-white text-right ml-4">
+                          {quote.type === 'agreement' || quote.price === null ? (
+                            <span className="text-yellow-600 dark:text-yellow-400 text-sm">A acordar</span>
+                          ) : quote.price === 0 ? (
+                            <span className="text-green-600 dark:text-green-400">Gratis</span>
+                          ) : (
+                            `$${parseFloat(quote.price).toFixed(2)}`
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
           {/* Reviews Section */}
           <div className="mt-8">
