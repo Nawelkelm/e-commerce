@@ -8,8 +8,8 @@ const EmailTemplatePreview = ({ template, onClose }) => {
   const getTestData = (type) => {
     const baseData = {
       customerName: 'Juan Pérez',
-      loginUrl: 'https://e-commerce-frontend-rlvt.onrender.com/login',
-      shopUrl: 'https://e-commerce-frontend-rlvt.onrender.com/products',
+      loginUrl: 'https://www.dojiprint.com.ar/login',
+      shopUrl: 'https://www.dojiprint.com.ar/products',
       supportEmail: 'soporte@tienda.com'
     };
 
@@ -33,7 +33,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
             </tr>
           `,
           shippingAddress: 'Calle Falsa 123, Ciudad, País',
-          trackingUrl: 'https://e-commerce-frontend-rlvt.onrender.com/orders/track'
+          trackingUrl: 'https://www.dojiprint.com.ar/orders/track'
         };
 
       case 'order_shipped':
@@ -41,7 +41,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           ...baseData,
           orderNumber: 'ORD-2024-001',
           trackingNumber: 'TRACK123456789',
-          trackingUrl: 'https://e-commerce-frontend-rlvt.onrender.com/orders/track',
+          trackingUrl: 'https://www.dojiprint.com.ar/orders/track',
           estimatedDelivery: '5-7 días hábiles'
         };
 
@@ -50,7 +50,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           ...baseData,
           orderNumber: 'ORD-2024-001',
           deliveryDate: new Date().toLocaleDateString('es-ES'),
-          reviewUrl: 'https://e-commerce-frontend-rlvt.onrender.com/orders/review'
+          reviewUrl: 'https://www.dojiprint.com.ar/orders/review'
         };
 
       case 'abandoned_cart':
@@ -71,7 +71,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           cartTotal: '$500.00',
           couponCode: 'VUELVE10',
           discountAmount: '10%',
-          checkoutUrl: 'https://e-commerce-frontend-rlvt.onrender.com/cart'
+          checkoutUrl: 'https://www.dojiprint.com.ar/cart'
         };
 
       case 'welcome':
@@ -80,7 +80,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
       case 'password_reset':
         return {
           ...baseData,
-          resetUrl: 'https://e-commerce-frontend-rlvt.onrender.com/reset-password?token=example123',
+          resetUrl: 'https://www.dojiprint.com.ar/reset-password?token=example123',
           expiryTime: '1 hora'
         };
 
@@ -91,7 +91,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           promoDescription: 'Aprovecha hasta 50% de descuento en productos seleccionados',
           promoImage: 'https://via.placeholder.com/600x300',
           couponCode: 'PROMO50',
-          promoUrl: 'https://e-commerce-frontend-rlvt.onrender.com/promo',
+          promoUrl: 'https://www.dojiprint.com.ar/promo',
           expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES')
         };
 
@@ -100,7 +100,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           ...baseData,
           message: 'Este es un mensaje de notificación personalizado',
           actionText: 'Ver Detalles',
-          actionUrl: 'https://e-commerce-frontend-rlvt.onrender.com'
+          actionUrl: 'https://www.dojiprint.com.ar'
         };
 
       default:
