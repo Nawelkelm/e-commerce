@@ -1,15 +1,30 @@
 const { Sequelize, Op } = require('sequelize');
 const logger = require('./logger');
 
+// La cadena de conexión SIEMPRE viene de variables de entorno.
+// Nunca hardcodear credenciales (riesgo de filtración en el repo).
+const DATABASE_URL = process.env.DATABASE_URL;
+if (!DATABASE_URL) {
+  logger.error('FATAL: DATABASE_URL no está definida. Configúrala en el entorno (.env / Coolify).');
+  throw new Error('DATABASE_URL is required');
+}
+
+// SSL: requerido en producción gestionada (Render/Coolify con TLS).
+// DB_SSL_REJECT_UNAUTHORIZED=true para validar el certificado (recomendado
+// cuando el proveedor expone una CA válida). Por defecto se acepta el
+// certificado autofirmado del proveedor cloud.
+const useSsl = process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production';
+const rejectUnauthorized = process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
+
 const sequelize = new Sequelize(
-  process.env.DATABASE_URL || 'postgresql://admin:L1SeQLXsrnAUTyPRNGanF3p2xeW23Z2C@dpg-d7tkbsrbc2fs738d09t0-a/ecommerce_db_o3gp',
+  DATABASE_URL,
   {
     dialect: 'postgres',
     logging: (msg) => logger.debug(msg),
     dialectOptions: {
-      ssl: process.env.NODE_ENV === 'production' ? {
+      ssl: useSsl ? {
         require: true,
-        rejectUnauthorized: false
+        rejectUnauthorized
       } : false
     },
     pool: {

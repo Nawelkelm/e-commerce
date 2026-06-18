@@ -99,13 +99,18 @@ const registerLimiter = rateLimit({
 app.use('/api/', generalLimiter);
 
 // CORS configuration
+// Orígenes permitidos vía env. CORS_ORIGINS es una lista separada por comas;
+// si no está, se usan FRONTEND_URL / BACKEND_URL + localhost para desarrollo.
+const allowedOrigins = (
+  process.env.CORS_ORIGINS
+    ? process.env.CORS_ORIGINS.split(',')
+    : [process.env.FRONTEND_URL, process.env.BACKEND_URL, 'http://localhost:3000']
+)
+  .filter(Boolean)
+  .map((o) => o.trim());
+
 app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL || 'https://e-commerce-1-i86x.onrender.com',
-    'https://e-commerce-1-i86x.onrender.com',
-    'https://e-commerce-7q25.onrender.com',
-    'http://localhost:3000'
-  ],
+  origin: allowedOrigins,
   credentials: true
 }));
 
@@ -184,9 +189,18 @@ app.use('/api/logistics-credentials', logisticsCredentialsRoutes);
 app.use('/api/shipping-methods', shippingMethodRoutes);
 app.use('/api/bank-accounts', bankAccountRoutes);
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+// Health check (verifica conectividad real con la base de datos)
+app.get('/api/health', async (req, res) => {
+  const health = { status: 'OK', timestamp: new Date().toISOString(), db: 'unknown' };
+  try {
+    await sequelize.authenticate();
+    health.db = 'up';
+    res.json(health);
+  } catch (err) {
+    health.status = 'ERROR';
+    health.db = 'down';
+    res.status(503).json(health);
+  }
 });
 
 // 404 handler (must be after all routes)
