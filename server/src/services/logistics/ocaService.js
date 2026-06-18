@@ -1,12 +1,19 @@
 ﻿const axios = require('axios');
 const logger = require('../../config/logger');
 
-// URLs correctas del webservice OCA
+// URLs del webservice OCA ePak.
+// Tarifar_Envio_Corporativo, Tracking_Pieza e IngresoOR viven todos en
+// Oep_TrackEPak.asmx (verificado contra el WSDL). El antiguo endpoint
+// /oep_quoute/webservice.asmx devuelve 404.
 const OCA_URLS = {
-  TARIFAR: 'https://webservice.oca.com.ar/oep_quoute/webservice.asmx',
+  TARIFAR: 'https://webservice.oca.com.ar/epak_tracking/Oep_TrackEPak.asmx',
   TRACKING: 'https://webservice.oca.com.ar/epak_tracking/Oep_TrackEPak.asmx',
-  INGRESO: 'https://webservice.oca.com.ar/Oep_OEPickUp/OEPickUp.asmx'
+  INGRESO: 'https://webservice.oca.com.ar/epak_tracking/Oep_TrackEPak.asmx'
 };
+
+// Detecta valores vacíos o placeholders típicos del .env de ejemplo
+const isPlaceholder = (v) =>
+  !v || /^your[_-]/i.test(v) || v === '0' || v.trim() === '';
 
 class OCAService {
   constructor() {
@@ -22,7 +29,13 @@ class OCAService {
     };
     // Operativa por defecto para e-commerce: Puerta a Puerta
     this.operativa = this.operativas.p2p;
-    logger.info(`[OCAService] Init - CUIT: ${this.cuit ? 'OK' : 'MISSING'}, P2P: ${this.operativas.p2p}, P2S: ${this.operativas.p2s}, CP origen: ${this.originPostalCode}`);
+    // ¿Las credenciales son utilizables? (CUIT y operativa válidos)
+    this.configured = !isPlaceholder(this.cuit) && !isPlaceholder(this.operativa);
+    if (!this.configured) {
+      logger.warn(`[OCAService] Credenciales OCA no configuradas o con valores placeholder (CUIT/Operativa). La cotización OCA quedará deshabilitada hasta configurar OCA_CUIT y OCA_OPERATIVA.`);
+    } else {
+      logger.info(`[OCAService] Configurado - operativa P2P: ${this.operativas.p2p}, CP origen: ${this.originPostalCode}`);
+    }
   }
 
   /**
@@ -50,6 +63,12 @@ class OCAService {
    */
   async getQuote(quoteData, operativaOverride = null) {
     try {
+      // OCA requiere CUIT + operativa corporativa para tarifar; sin eso, fallar con error claro.
+      const effectiveOperativa = operativaOverride || this.operativa;
+      if (isPlaceholder(this.cuit) || isPlaceholder(effectiveOperativa)) {
+        return { success: false, error: 'OCA no configurado: falta OCA_CUIT / OCA_OPERATIVA' };
+      }
+
       const pesoTotal = quoteData.packages.reduce((sum, pkg) => sum + (parseFloat(pkg.weight) || 0.5), 0);
       const volumenTotal = quoteData.packages.reduce((sum, pkg) => {
         const alto = parseFloat(pkg.height) || 10;
@@ -65,23 +84,26 @@ class OCAService {
         return { success: false, error: 'Código postal destino requerido' };
       }
 
-      // Usar credenciales corporativas si están configuradas, sino operativa pública
-      const cuit = this.cuit || '0';
-      const operativa = operativaOverride || this.operativa || '0';
+      const cuit = this.cuit;
+      const operativa = effectiveOperativa;
+      // Valor declarado del envío (para seguro). OCA lo exige en el request.
+      const valorDeclarado = parseFloat(quoteData.declaredValue) || 0;
 
-      logger.info(`[OCAService] getQuote - origen: ${originCP}, destino: ${destCP}, peso: ${pesoTotal}kg, volumen: ${volumenTotal}m³, operativa: ${operativa}, cuit: ${cuit ? 'set' : 'missing'}`);
+      logger.debug(`[OCAService] getQuote - origen: ${originCP}, destino: ${destCP}, peso: ${pesoTotal}kg, volumen: ${volumenTotal}m³, operativa: ${operativa}, cuit: ${cuit ? 'set' : 'missing'}`);
 
+      // El orden de los campos respeta la secuencia del WSDL (ASMX es sensible al orden).
       const soapRequest = `<?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <Tarifar_Envio_Corporativo xmlns="http://webservice.oca.com.ar/">
+    <Tarifar_Envio_Corporativo xmlns="#Oca_e_Pak">
       <PesoTotal>${pesoTotal.toFixed(2)}</PesoTotal>
       <VolumenTotal>${volumenTotal.toFixed(6)}</VolumenTotal>
       <CodigoPostalOrigen>${originCP}</CodigoPostalOrigen>
       <CodigoPostalDestino>${destCP}</CodigoPostalDestino>
       <CantidadPaquetes>${quoteData.packages.length}</CantidadPaquetes>
+      <ValorDeclarado>${valorDeclarado.toFixed(2)}</ValorDeclarado>
       <Cuit>${cuit}</Cuit>
       <Operativa>${operativa}</Operativa>
     </Tarifar_Envio_Corporativo>
@@ -94,23 +116,28 @@ class OCAService {
         {
           headers: {
             'Content-Type': 'text/xml; charset=utf-8',
-            'SOAPAction': 'http://webservice.oca.com.ar/Tarifar_Envio_Corporativo'
+            'SOAPAction': '#Oca_e_Pak/Tarifar_Envio_Corporativo'
           },
           timeout: 10000
         }
       );
 
-      // Parsear respuesta XML
+      // OCA devuelve un DataSet (diffgram). Primero detectar error de negocio.
       const xml = response.data;
-      const precio = xml.match(/<Precio>([\d.,]+)<\/Precio>/)?.[1];
-      const plazo = xml.match(/<PlazoEntrega>(\d+)<\/PlazoEntrega>/)?.[1];
-      const idTipoServicio = xml.match(/<IdTipoServicio>(\d+)<\/IdTipoServicio>/)?.[1];
+      const ocaError = xml.match(/<Error>(.*?)<\/Error>/i)?.[1];
+      if (ocaError && ocaError.trim()) {
+        logger.warn(`OCA quote rechazado: ${ocaError}`);
+        return { success: false, error: ocaError.trim() };
+      }
+
+      // El precio puede venir como <Total> o <Precio> según la operativa.
+      const precio = (xml.match(/<Total>([\d.,]+)<\/Total>/i) || xml.match(/<Precio>([\d.,]+)<\/Precio>/i))?.[1];
+      const plazo = xml.match(/<PlazoEntrega>(\d+)<\/PlazoEntrega>/i)?.[1];
+      const idTipoServicio = xml.match(/<idTipoServicio>(\d+)<\/idTipoServicio>/i)?.[1];
 
       if (!precio) {
-        // Intentar extraer error del XML
-        const errorMsg = xml.match(/<string[^>]*>(.*?)<\/string>/)?.[1];
-        logger.warn('OCA quote - sin precio en respuesta:', errorMsg || xml.substring(0, 200));
-        return { success: false, error: errorMsg || 'Sin respuesta de precio de OCA' };
+        logger.warn('OCA quote - sin precio en respuesta:', xml.substring(0, 300));
+        return { success: false, error: 'Sin respuesta de precio de OCA' };
       }
 
       const precioNum = parseFloat(precio.replace(',', '.'));

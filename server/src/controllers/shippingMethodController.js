@@ -169,7 +169,7 @@ const getCarrierQuote = async (carrier, quoteData, methodRestrictions = {}) => {
       operativaKey
     });
 
-    logger.info(`[ShippingQuote] ${carrier} result:`, JSON.stringify(quote));
+    logger.debug(`[ShippingQuote] ${carrier} result:`, JSON.stringify(quote));
     return quote;
   } catch (error) {
     logger.error(`Error getting carrier quote from ${carrier}:`, error);
