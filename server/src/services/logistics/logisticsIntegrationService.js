@@ -51,7 +51,7 @@ class LogisticsIntegrationService {
       await shipment.update({
         status: trackingData.status,
         estimatedDeliveryDate: trackingData.estimatedDeliveryDate
-      });
+       });
 
       // Obtener eventos existentes
       const existingEvents = await ShipmentTracking.findAll({

@@ -57,14 +57,14 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <header className="bg-white dark:bg-surface-800 shadow-sm border-b border-surface-200 dark:border-surface-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
                 <span className="text-2xl font-bold text-primary-600">
-                  E-Commerce
+                  TiendaKit
                 </span>
               </Link>
             </div>
@@ -75,7 +75,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
+                  className="text-surface-700 dark:text-surface-300 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors"
                 >
                   {item.name}
                 </Link>
@@ -91,9 +91,9 @@ const Header = () => {
                     placeholder="Buscar productos..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
-                  <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                  <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-surface-400" />
                 </div>
               </form>
             </div>
@@ -103,7 +103,7 @@ const Header = () => {
               {/* Carrito */}
               <button
                 onClick={() => setCartSidebarOpen(true)}
-                className="relative p-2 text-gray-600 hover:text-primary-600 transition-colors"
+                className="relative p-2 text-surface-600 dark:text-surface-400 hover:text-primary-600 transition-colors"
               >
                 <ShoppingCartIcon className="h-6 w-6" />
                 {itemCount > 0 && (
@@ -118,7 +118,7 @@ const Header = () => {
                 <div className="relative">
                   <button
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors"
+                    className="flex items-center space-x-2 text-surface-700 dark:text-surface-300 hover:text-primary-600 transition-colors"
                   >
                     <UserIcon className="h-6 w-6" />
                     <span className="hidden md:block text-sm font-medium">
@@ -128,17 +128,17 @@ const Header = () => {
 
                   {/* Menú desplegable de usuario */}
                   {userMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-surface-800 rounded-md shadow-lg py-1 z-50">
                       <Link
                         to="/perfil"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="block px-4 py-2 text-sm text-surface-700 dark:text-surface-300 hover:bg-surface-100 dark:bg-surface-800"
                         onClick={() => setUserMenuOpen(false)}
                       >
                         Mi Perfil
                       </Link>
                       <Link
                         to="/pedidos"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="block px-4 py-2 text-sm text-surface-700 dark:text-surface-300 hover:bg-surface-100 dark:bg-surface-800"
                         onClick={() => setUserMenuOpen(false)}
                       >
                         Mis Pedidos
@@ -146,7 +146,7 @@ const Header = () => {
                       {user?.role === 'admin' && (
                         <Link
                           to="/admin"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          className="block px-4 py-2 text-sm text-surface-700 dark:text-surface-300 hover:bg-surface-100 dark:bg-surface-800"
                           onClick={() => setUserMenuOpen(false)}
                         >
                           Administración
@@ -155,7 +155,7 @@ const Header = () => {
                       <hr className="my-1" />
                       <button
                         onClick={handleLogout}
-                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-surface-100 dark:bg-surface-800"
                       >
                         Cerrar Sesión
                       </button>
@@ -166,7 +166,7 @@ const Header = () => {
                 <div className="flex items-center space-x-2">
                   <Link
                     to="/login"
-                    className="text-gray-700 hover:text-primary-600 text-sm font-medium transition-colors"
+                    className="text-surface-700 dark:text-surface-300 hover:text-primary-600 text-sm font-medium transition-colors"
                   >
                     Iniciar Sesión
                   </Link>
@@ -182,7 +182,7 @@ const Header = () => {
               {/* Menú móvil */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 text-gray-600 hover:text-primary-600"
+                className="md:hidden p-2 text-surface-600 dark:text-surface-400 hover:text-primary-600"
               >
                 {mobileMenuOpen ? (
                   <XMarkIcon className="h-6 w-6" />
@@ -195,7 +195,7 @@ const Header = () => {
 
           {/* Menú móvil */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-gray-200">
+            <div className="md:hidden py-4 border-t border-surface-200 dark:border-surface-700">
               {/* Búsqueda móvil */}
               <form onSubmit={handleSearch} className="mb-4">
                 <div className="relative">
@@ -204,9 +204,9 @@ const Header = () => {
                     placeholder="Buscar productos..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
-                  <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                  <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-surface-400" />
                 </div>
               </form>
 
@@ -216,7 +216,7 @@ const Header = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md"
+                    className="block px-3 py-2 text-surface-700 dark:text-surface-300 hover:text-primary-600 hover:bg-surface-50 dark:bg-surface-900 rounded-md"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}

@@ -25,6 +25,12 @@ const LogisticsCredentials = require('./LogisticsCredentials');
 const ShippingMethod = require('./ShippingMethod');
 const BankAccount = require('./BankAccount');
 
+// Import review and email models
+const Review = require('./Review');
+const ReviewHelpful = require('./ReviewHelpful');
+const EmailTemplate = require('./EmailTemplate');
+const EmailLog = require('./EmailLog');
+
 // Import new stock management models
 const StockReservation = require('./StockReservation');
 const StockMovement = require('./StockMovement');
@@ -142,6 +148,27 @@ Product.hasMany(ProductBarcode, { foreignKey: 'productId' });
 ProductBatch.belongsTo(Product, { foreignKey: 'productId' });
 Product.hasMany(ProductBatch, { foreignKey: 'productId' });
 
+// Review associations
+Review.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+Review.belongsTo(Product, { foreignKey: 'productId', as: 'product' });
+Review.hasMany(ReviewHelpful, { foreignKey: 'reviewId', as: 'helpfulVotes' });
+User.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
+Product.hasMany(Review, { foreignKey: 'productId', as: 'reviews' });
+
+// ReviewHelpful associations
+ReviewHelpful.belongsTo(Review, { foreignKey: 'reviewId' });
+ReviewHelpful.belongsTo(User, { foreignKey: 'userId' });
+
+// EmailTemplate associations
+EmailTemplate.belongsTo(User, { foreignKey: 'createdBy', as: 'creator' });
+User.hasMany(EmailTemplate, { foreignKey: 'createdBy', as: 'emailTemplates' });
+
+// EmailLog associations
+EmailLog.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+EmailLog.belongsTo(EmailTemplate, { foreignKey: 'templateId' });
+User.hasMany(EmailLog, { foreignKey: 'userId', as: 'emailLogs' });
+EmailTemplate.hasMany(EmailLog, { foreignKey: 'templateId' });
+
 // Shipment associations
 Shipment.belongsTo(Order, { foreignKey: 'orderId', as: 'order' });
 Shipment.hasMany(ShipmentTracking, { foreignKey: 'shipmentId', as: 'trackingHistory' });
@@ -181,5 +208,9 @@ module.exports = {
   ShipmentTracking,
   LogisticsCredentials,
   ShippingMethod,
-  BankAccount
+  BankAccount,
+  Review,
+  ReviewHelpful,
+  EmailTemplate,
+  EmailLog
 };

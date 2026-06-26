@@ -40,22 +40,24 @@ router.get('/', productController.getProducts);
 router.get('/search/suggestions', productController.searchSuggestions);
 router.get('/search/filters', productController.getFilterOptions);
 router.get('/featured', productController.getFeaturedProducts);
-router.get('/:slug', productController.getProductBySlug);
 
-// Admin routes
-router.post('/', adminAuth, productController.upload.array('images', 10), productValidation, productController.createProduct);
-router.put('/:id', adminAuth, productController.upload.array('images', 10), productValidation, productController.updateProduct);
-router.delete('/:id', adminAuth, productController.deleteProduct);
-router.patch('/:id/stock', adminAuth, stockValidation, productController.updateStock);
-
-// Excel import/export routes
+// Excel import/export routes (must be before /:slug)
 router.get('/excel/template', adminAuth, productController.downloadTemplate);
 router.get('/excel/export', adminAuth, productController.exportToExcel);
 router.post('/excel/preview', adminAuth, productController.uploadExcel.single('file'), productController.previewImport);
 router.post('/excel/import', adminAuth, productController.confirmImport);
 
-// Stock management routes
+// Stock management routes (must be before /:slug)
 router.get('/stock/low', adminAuth, productController.getLowStockProducts);
+
+// Slug catch-all (must come after all /specific-path routes)
+router.get('/:slug', productController.getProductBySlug);
+
+// Admin CRUD routes
+router.post('/', adminAuth, productController.upload.array('images', 10), productValidation, productController.createProduct);
+router.put('/:id', adminAuth, productController.upload.array('images', 10), productValidation, productController.updateProduct);
+router.delete('/:id', adminAuth, productController.deleteProduct);
+router.patch('/:id/stock', adminAuth, stockValidation, productController.updateStock);
 
 // Barcode routes (Admin only)
 router.get('/:id/barcodes', adminAuth, stockController.getProductBarcodes);

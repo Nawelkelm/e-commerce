@@ -28,8 +28,8 @@ const SEVERITY_CONFIG = {
   },
   info: {
     label: 'Información',
-    color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-    borderColor: 'border-blue-500',
+    color: 'bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200',
+    borderColor: 'border-primary-500',
     icon: InformationCircleIcon
   }
 };
@@ -146,7 +146,7 @@ const StockAlertsPanel = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     );
   }
@@ -155,60 +155,60 @@ const StockAlertsPanel = () => {
     <div className="space-y-6">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Alertas</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats.total}</p>
+              <p className="text-sm text-surface-600 dark:text-surface-400">Total Alertas</p>
+              <p className="text-3xl font-bold text-surface-900 dark:text-white">{stats.total}</p>
             </div>
-            <BellAlertIcon className="h-12 w-12 text-gray-400" />
+            <BellAlertIcon className="h-12 w-12 text-surface-400" />
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Críticas</p>
+              <p className="text-sm text-surface-600 dark:text-surface-400">Críticas</p>
               <p className="text-3xl font-bold text-red-600">{stats.critical}</p>
             </div>
             <ExclamationTriangleIcon className="h-12 w-12 text-red-400" />
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Advertencias</p>
+              <p className="text-sm text-surface-600 dark:text-surface-400">Advertencias</p>
               <p className="text-3xl font-bold text-yellow-600">{stats.warning}</p>
             </div>
             <ExclamationCircleIcon className="h-12 w-12 text-yellow-400" />
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Información</p>
-              <p className="text-3xl font-bold text-blue-600">{stats.info}</p>
+              <p className="text-sm text-surface-600 dark:text-surface-400">Información</p>
+              <p className="text-3xl font-bold text-primary-600">{stats.info}</p>
             </div>
-            <InformationCircleIcon className="h-12 w-12 text-blue-400" />
+            <InformationCircleIcon className="h-12 w-12 text-primary-400" />
           </div>
         </div>
       </div>
 
       {/* Main Panel */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+      <div className="bg-white dark:bg-surface-800 rounded-lg shadow-lg">
         {/* Header */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="p-6 border-b border-surface-200 dark:border-surface-700">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-white flex items-center gap-2">
               <BellAlertIcon className="h-7 w-7" />
               Alertas de Stock
             </h2>
             <div className="flex gap-2">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 text-surface-700 dark:text-surface-300 rounded-lg hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors"
               >
                 <FunnelIcon className="h-5 w-5" />
                 Filtros
@@ -216,7 +216,7 @@ const StockAlertsPanel = () => {
               <select
                 value={filters.status}
                 onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white"
               >
                 <option value="active">Activas</option>
                 <option value="resolved">Resueltas</option>
@@ -228,16 +228,16 @@ const StockAlertsPanel = () => {
 
         {/* Filters Panel */}
         {showFilters && (
-          <div className="p-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+          <div className="p-4 bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 border-b border-surface-200 dark:border-surface-700 dark:border-surface-600">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                   Severidad
                 </label>
                 <select
                   value={filters.severity}
                   onChange={(e) => setFilters(prev => ({ ...prev, severity: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-surface-800 text-surface-900 dark:text-white"
                 >
                   <option value="">Todas</option>
                   <option value="critical">Crítica</option>
@@ -247,13 +247,13 @@ const StockAlertsPanel = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                   Tipo de Alerta
                 </label>
                 <select
                   value={filters.type}
                   onChange={(e) => setFilters(prev => ({ ...prev, type: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-surface-800 text-surface-900 dark:text-white"
                 >
                   <option value="">Todos</option>
                   {Object.entries(ALERT_TYPES).map(([key, label]) => (
@@ -265,13 +265,13 @@ const StockAlertsPanel = () => {
               <div className="flex items-end gap-2">
                 <button
                   onClick={applyFilters}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="flex-1 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
                 >
                   Aplicar
                 </button>
                 <button
                   onClick={clearFilters}
-                  className="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
+                  className="px-4 py-2 bg-surface-300 dark:bg-surface-600 text-surface-700 dark:text-surface-300 rounded-lg hover:bg-surface-400 dark:hover:bg-surface-500 transition-colors"
                 >
                   <XMarkIcon className="h-5 w-5" />
                 </button>
@@ -285,7 +285,7 @@ const StockAlertsPanel = () => {
           {alerts.length === 0 ? (
             <div className="text-center py-12">
               <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto mb-4" />
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-surface-600 dark:text-surface-400">
                 {filters.status === 'active' ? '¡Todo en orden! No hay alertas activas.' : 'No hay alertas para mostrar.'}
               </p>
             </div>
@@ -298,7 +298,7 @@ const StockAlertsPanel = () => {
                 return (
                   <div
                     key={alert.id}
-                    className={`border-l-4 ${config.borderColor} bg-white dark:bg-gray-800 rounded-r-lg shadow p-4 hover:shadow-md transition-shadow`}
+                    className={`border-l-4 ${config.borderColor} bg-white dark:bg-surface-800 rounded-r-lg shadow p-4 hover:shadow-md transition-shadow`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex gap-4 flex-1">
@@ -311,34 +311,34 @@ const StockAlertsPanel = () => {
                             <span className={`px-2 py-1 rounded text-xs font-medium ${config.color}`}>
                               {config.label}
                             </span>
-                            <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                            <span className="text-xs text-surface-500 dark:text-surface-400 flex items-center gap-1">
                               <ClockIcon className="h-3 w-3" />
                               {getTimeAgo(alert.createdAt)}
                             </span>
                           </div>
                           
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                          <h3 className="text-lg font-semibold text-surface-900 dark:text-white mb-1">
                             {ALERT_TYPES[alert.type] || alert.type}
                           </h3>
                           
-                          <p className="text-gray-700 dark:text-gray-300 mb-2">
+                          <p className="text-surface-700 dark:text-surface-300 mb-2">
                             {alert.message}
                           </p>
                           
                           {alert.product && (
                             <Link
                               to={`/products/${alert.product.id}`}
-                              className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                              className="inline-flex items-center gap-2 text-sm text-primary-600 dark:text-primary-400 hover:underline"
                             >
                               <span className="font-medium">{alert.product.name}</span>
-                              <span className="text-gray-500 dark:text-gray-400">
+                              <span className="text-surface-500 dark:text-surface-400">
                                 (SKU: {alert.product.sku})
                               </span>
                             </Link>
                           )}
                           
                           {alert.metadata && (
-                            <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                            <div className="mt-2 text-sm text-surface-600 dark:text-surface-400">
                               {alert.metadata.currentStock !== undefined && (
                                 <span>Stock actual: <strong>{alert.metadata.currentStock}</strong></span>
                               )}
@@ -364,14 +364,14 @@ const StockAlertsPanel = () => {
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleResolveAlert(alert.id, 'Gestionado manualmente')}
-                            className="p-2 text-green-600 hover:bg-green-50 dark:text-green-400 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                            className="p-2 text-green-600 hover:bg-green-50 dark:text-green-400 dark:hover:bg-surface-700 rounded-lg transition-colors"
                             title="Marcar como resuelta"
                           >
                             <CheckCircleIcon className="h-5 w-5" />
                           </button>
                           <button
                             onClick={() => handleDismissAlert(alert.id)}
-                            className="p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                            className="p-2 text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-400 dark:hover:bg-surface-700 rounded-lg transition-colors"
                             title="Descartar"
                           >
                             <XMarkIcon className="h-5 w-5" />

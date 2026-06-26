@@ -219,9 +219,9 @@ const Orders = () => {
       case 'pending':
         return 'bg-yellow-100 text-yellow-800'
       case 'confirmed':
-        return 'bg-blue-100 text-blue-800'
+        return 'bg-primary-100 text-primary-800'
       case 'processing':
-        return 'bg-indigo-100 text-indigo-800'
+        return 'bg-primary-100 text-primary-800'
       case 'shipped':
         return 'bg-purple-100 text-purple-800'
       case 'delivered':
@@ -229,9 +229,9 @@ const Orders = () => {
       case 'cancelled':
         return 'bg-red-100 text-red-800'
       case 'refunded':
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-surface-100 dark:bg-surface-800 text-surface-800'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-surface-100 dark:bg-surface-800 text-surface-800'
     }
   }
 
@@ -259,7 +259,7 @@ const Orders = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     )
   }
@@ -284,18 +284,18 @@ const Orders = () => {
     <div>
       <div className="sm:flex sm:items-center mb-8">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Pedidos</h1>
-          <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+          <h1 className="text-2xl font-bold text-surface-900 dark:text-white">Pedidos</h1>
+          <p className="mt-2 text-sm text-surface-700 dark:text-surface-300">
             Lista de todos los pedidos de tu tienda ({orders.length} total)
           </p>
         </div>
       </div>
 
       {/* Filtros */}
-      <div className="mb-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+      <div className="mb-6 bg-white dark:bg-surface-800 p-4 rounded-lg shadow">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label htmlFor="search" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="search" className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
               Buscar
             </label>
             <input
@@ -305,12 +305,12 @@ const Orders = () => {
               placeholder="ID de orden o cliente..."
               value={filters.search}
               onChange={(e) => setFilters({...filters, search: e.target.value})}
-              className="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="block w-full rounded-md border-surface-300 dark:border-surface-600 dark:bg-surface-700 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
             />
           </div>
           
           <div>
-            <label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="status" className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
               Estado
             </label>
             <select 
@@ -318,7 +318,7 @@ const Orders = () => {
               name="status"
               value={filters.status}
               onChange={(e) => setFilters({...filters, status: e.target.value})}
-              className="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="block w-full rounded-md border-surface-300 dark:border-surface-600 dark:bg-surface-700 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
             >
               <option value="">Todos los estados</option>
               {orderStatuses.map(status => (
@@ -328,7 +328,7 @@ const Orders = () => {
           </div>
           
           <div>
-            <label htmlFor="dateFrom" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="dateFrom" className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
               Desde
             </label>
             <input
@@ -337,12 +337,12 @@ const Orders = () => {
               id="dateFrom"
               value={filters.dateFrom}
               onChange={(e) => setFilters({...filters, dateFrom: e.target.value})}
-              className="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="block w-full rounded-md border-surface-300 dark:border-surface-600 dark:bg-surface-700 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
             />
           </div>
           
           <div>
-            <label htmlFor="dateTo" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="dateTo" className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
               Hasta
             </label>
             <input
@@ -351,19 +351,19 @@ const Orders = () => {
               id="dateTo"
               value={filters.dateTo}
               onChange={(e) => setFilters({...filters, dateTo: e.target.value})}
-              className="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="block w-full rounded-md border-surface-300 dark:border-surface-600 dark:bg-surface-700 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
             />
           </div>
         </div>
         
         {(filters.search || filters.status || filters.dateFrom || filters.dateTo) && (
           <div className="mt-4 flex items-center justify-between">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-surface-500 dark:text-surface-400">
               Mostrando {filteredOrders.length} de {orders.length} pedidos
             </p>
             <button
               onClick={() => setFilters({ status: '', dateFrom: '', dateTo: '', search: '' })}
-              className="text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
+              className="text-sm text-primary-600 hover:text-primary-500 dark:text-primary-400"
             >
               Limpiar filtros
             </button>
@@ -371,71 +371,71 @@ const Orders = () => {
         )}
       </div>
 
-      <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead className="bg-gray-50 dark:bg-gray-700">
+      <div className="bg-white dark:bg-surface-800 shadow rounded-lg overflow-x-auto">
+        <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
+          <thead className="bg-surface-50 dark:bg-surface-900 dark:bg-surface-700">
             <tr>
-              <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap">
+              <th className="px-3 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider whitespace-nowrap">
                 Pedido
               </th>
-              <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap">
+              <th className="px-3 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider whitespace-nowrap">
                 Cliente
               </th>
-              <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap">
+              <th className="px-3 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider whitespace-nowrap">
                 Fecha
               </th>
-              <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap">
+              <th className="px-3 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider whitespace-nowrap">
                 Estado
               </th>
-              <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap">
+              <th className="px-3 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider whitespace-nowrap">
                 Pago
               </th>
-              <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap">
+              <th className="px-3 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider whitespace-nowrap">
                 Items
               </th>
-              <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap">
+              <th className="px-3 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider whitespace-nowrap">
                 Total
               </th>
-              <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider whitespace-nowrap">
+              <th className="px-3 py-3 text-center text-xs font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider whitespace-nowrap">
                 Acciones
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody className="bg-white dark:bg-surface-800 divide-y divide-surface-200 dark:divide-surface-700">
             {filteredOrders.length === 0 ? (
               <tr>
-                <td colSpan="8" className="px-3 py-8 text-center text-gray-500 dark:text-gray-400">
+                <td colSpan="8" className="px-3 py-8 text-center text-surface-500 dark:text-surface-400">
                   {orders.length === 0 ? 'No hay pedidos aún' : 'No se encontraron pedidos con los filtros aplicados'}
                 </td>
               </tr>
             ) : (
               filteredOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                <tr key={order.id} className="hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-700">
                   <td className="px-3 py-3 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                    <div className="text-sm font-medium text-surface-900 dark:text-white">
                       {order.orderNumber}
                     </div>
                     {order.trackingNumber && (
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-xs text-surface-500 dark:text-surface-400">
                         Track: {order.trackingNumber.substring(0, 10)}...
                       </div>
                     )}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap max-w-xs">
-                    <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                    <div className="text-sm font-medium text-surface-900 dark:text-white truncate">
                       {order.user ? `${order.user.firstName} ${order.user.lastName}` : 'Usuario no disponible'}
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                    <div className="text-xs text-surface-500 dark:text-surface-400 truncate">
                       {order.user?.email || 'N/A'}
                     </div>
                   </td>
-                  <td className="px-3 py-3 whitespace-nowrap text-xs text-gray-900 dark:text-white">
+                  <td className="px-3 py-3 whitespace-nowrap text-xs text-surface-900 dark:text-white">
                     {new Date(order.createdAt).toLocaleDateString('es-ES', { 
                       year: 'numeric', 
                       month: 'short', 
                       day: 'numeric'
                     })}
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                    <div className="text-xs text-surface-500 dark:text-surface-400">
                       {new Date(order.createdAt).toLocaleTimeString('es-ES', { 
                         hour: '2-digit',
                         minute: '2-digit'
@@ -450,13 +450,13 @@ const Orders = () => {
                     </span>
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
-                    <div className="text-xs text-gray-900 dark:text-white">
+                    <div className="text-xs text-surface-900 dark:text-white">
                       {order.paymentMethod === 'bank_transfer' ? 'Transferencia' : order.paymentMethod || 'MercadoPago'}
                     </div>
                     {order.paymentMethod && order.paymentMethod.toLowerCase().includes('transfer') && (
                       <div className="mt-1">
                         {order.paymentProofUrl ? (
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-xs font-medium rounded-full bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200">
                             <PhotoIcon className="h-3 w-3" />
                             Con comp.
                           </span>
@@ -469,24 +469,24 @@ const Orders = () => {
                       </div>
                     )}
                   </td>
-                  <td className="px-3 py-3 whitespace-nowrap text-sm text-center text-gray-900 dark:text-white">
+                  <td className="px-3 py-3 whitespace-nowrap text-sm text-center text-surface-900 dark:text-white">
                     {order.items?.length || 0}
                   </td>
-                  <td className="px-3 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                  <td className="px-3 py-3 whitespace-nowrap text-sm font-medium text-surface-900 dark:text-white">
                     ${Number(order.total).toFixed(2)}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap text-sm font-medium">
                     <div className="flex justify-center items-center gap-1">
                       <button
                         onClick={() => handleViewDetails(order)}
-                        className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        className="text-primary-600 hover:text-indigo-900 dark:text-primary-400 dark:hover:text-primary-300 p-1 rounded hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-700 transition-colors"
                         title="Ver detalles"
                       >
                         <EyeIcon className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleStatusUpdate(order)}
-                        className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 p-1 rounded hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-700 transition-colors"
                         title="Cambiar estado"
                       >
                         <PencilIcon className="h-4 w-4" />
@@ -501,18 +501,18 @@ const Orders = () => {
       </div>
 
       {/* Paginación */}
-      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 mt-4 rounded-lg">
+      <div className="bg-white dark:bg-surface-800 px-4 py-3 flex items-center justify-between border-t border-surface-200 dark:border-surface-700 sm:px-6 mt-4 rounded-lg">
         <div className="flex-1 flex justify-between sm:hidden">
-          <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+          <button className="relative inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 text-sm font-medium rounded-md text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 hover:bg-surface-50 dark:bg-surface-900">
             Anterior
           </button>
-          <button className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+          <button className="ml-3 relative inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 text-sm font-medium rounded-md text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 hover:bg-surface-50 dark:bg-surface-900">
             Siguiente
           </button>
         </div>
         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-surface-700 dark:text-surface-300">
               Mostrando <span className="font-medium">1</span> a{' '}
               <span className="font-medium">4</span> de{' '}
               <span className="font-medium">4</span> pedidos
@@ -520,13 +520,13 @@ const Orders = () => {
           </div>
           <div>
             <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
-              <button className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <button className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 text-sm font-medium text-surface-500 dark:text-surface-400 hover:bg-surface-50 dark:bg-surface-900">
                 Anterior
               </button>
-              <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-indigo-50 text-sm font-medium text-indigo-600">
+              <button className="relative inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 bg-primary-50 text-sm font-medium text-primary-600">
                 1
               </button>
-              <button className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <button className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 text-sm font-medium text-surface-500 dark:text-surface-400 hover:bg-surface-50 dark:bg-surface-900">
                 Siguiente
               </button>
             </nav>
@@ -537,15 +537,15 @@ const Orders = () => {
       {/* Modal de detalles de orden */}
       {showModal && selectedOrder && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-screen overflow-y-auto">
+          <div className="bg-white dark:bg-surface-800 rounded-lg max-w-4xl w-full max-h-screen overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-surface-900 dark:text-white">
                   Detalles del Pedido #{selectedOrder.id}
                 </h2>
                 <button
                   onClick={() => setShowModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-surface-400 hover:text-surface-600 dark:text-surface-400"
                 >
                   <XMarkIcon className="h-6 w-6" />
                 </button>
@@ -553,62 +553,62 @@ const Orders = () => {
 
               {/* Información del cliente y orden */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-medium text-gray-900 mb-2">Información del Cliente</h3>
-                  <p className="text-sm text-gray-600">
+                <div className="bg-surface-50 dark:bg-surface-900 p-4 rounded-lg">
+                  <h3 className="font-medium text-surface-900 dark:text-white mb-2">Información del Cliente</h3>
+                  <p className="text-sm text-surface-600 dark:text-surface-400">
                     Nombre: {selectedOrder.user ? `${selectedOrder.user.firstName} ${selectedOrder.user.lastName}` : 'N/A'}
                   </p>
-                  <p className="text-sm text-gray-600">Email: {selectedOrder.user?.email || 'N/A'}</p>
+                  <p className="text-sm text-surface-600 dark:text-surface-400">Email: {selectedOrder.user?.email || 'N/A'}</p>
                   {selectedOrder.user?.phone && (
-                    <p className="text-sm text-gray-600">Teléfono: {selectedOrder.user.phone}</p>
+                    <p className="text-sm text-surface-600 dark:text-surface-400">Teléfono: {selectedOrder.user.phone}</p>
                   )}
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-medium text-gray-900 mb-2">Información de Envío</h3>
+                <div className="bg-surface-50 dark:bg-surface-900 p-4 rounded-lg">
+                  <h3 className="font-medium text-surface-900 dark:text-white mb-2">Información de Envío</h3>
                   {selectedOrder.shippingAddress ? (
                     <>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-surface-600 dark:text-surface-400">
                         Nombre: {selectedOrder.shippingAddress.firstName} {selectedOrder.shippingAddress.lastName}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-surface-600 dark:text-surface-400">
                         Dirección: {selectedOrder.shippingAddress.street}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-surface-600 dark:text-surface-400">
                         Ciudad: {selectedOrder.shippingAddress.city}, {selectedOrder.shippingAddress.state}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-surface-600 dark:text-surface-400">
                         CP: {selectedOrder.shippingAddress.postalCode}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-surface-600 dark:text-surface-400">
                         País: {selectedOrder.shippingAddress.country}
                       </p>
                       {selectedOrder.shippingAddress.phone && (
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-surface-600 dark:text-surface-400">
                           Teléfono: {selectedOrder.shippingAddress.phone}
                         </p>
                       )}
                     </>
                   ) : (
-                    <p className="text-sm text-gray-600">No hay información de envío</p>
+                    <p className="text-sm text-surface-600 dark:text-surface-400">No hay información de envío</p>
                   )}
                   {selectedOrder.trackingNumber && (
-                    <p className="text-sm text-gray-600 mt-2 pt-2 border-t border-gray-200">
+                    <p className="text-sm text-surface-600 dark:text-surface-400 mt-2 pt-2 border-t border-surface-200 dark:border-surface-700">
                       Tracking: {selectedOrder.trackingNumber}
                     </p>
                   )}
                   
                   {/* Método de Envío */}
                   {selectedOrder.shippingMethodName && (
-                    <div className="mt-2 pt-2 border-t border-gray-200">
-                      <p className="text-sm font-medium text-gray-700 mb-1">Método de Envío:</p>
-                      <p className="text-sm text-gray-900">{selectedOrder.shippingMethodName}</p>
+                    <div className="mt-2 pt-2 border-t border-surface-200 dark:border-surface-700">
+                      <p className="text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Método de Envío:</p>
+                      <p className="text-sm text-surface-900 dark:text-white">{selectedOrder.shippingMethodName}</p>
                       {selectedOrder.shippingMethodCode && (
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-surface-500 dark:text-surface-400">
                           ({selectedOrder.shippingMethodCode})
                         </p>
                       )}
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="text-sm text-surface-600 dark:text-surface-400 mt-1">
                         Costo: {parseFloat(selectedOrder.shippingAmount) === 0 ? (
                           <span className="text-green-600 font-medium">Gratis</span>
                         ) : (
@@ -622,20 +622,20 @@ const Orders = () => {
 
               {/* Información de pago y comprobante de transferencia */}
               {selectedOrder.paymentMethod && selectedOrder.paymentMethod.toLowerCase().includes('transferencia') && (
-                <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h3 className="font-medium text-blue-900 mb-3 flex items-center gap-2">
+                <div className="mb-6 bg-primary-50 border border-primary-200 rounded-lg p-4">
+                  <h3 className="font-medium text-primary-900 mb-3 flex items-center gap-2">
                     <DocumentTextIcon className="h-5 w-5" />
                     Información de Pago - Transferencia Bancaria
                   </h3>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-blue-800">
+                      <p className="text-sm text-primary-800">
                         <strong>Estado del pago:</strong>{' '}
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                           selectedOrder.paymentStatus === 'paid' ? 'bg-green-100 text-green-800' :
                           selectedOrder.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-gray-100 text-gray-800'
+                          'bg-surface-100 dark:bg-surface-800 text-surface-800'
                         }`}>
                           {selectedOrder.paymentStatus === 'paid' ? 'Pagado' : 
                            selectedOrder.paymentStatus === 'pending' ? 'Pendiente de verificación' : 
@@ -644,7 +644,7 @@ const Orders = () => {
                       </p>
                       
                       {selectedOrder.paymentProofUploadedAt && (
-                        <p className="text-sm text-blue-700 mt-2">
+                        <p className="text-sm text-primary-700 mt-2">
                           <strong>Comprobante subido:</strong>{' '}
                           {new Date(selectedOrder.paymentProofUploadedAt).toLocaleString('es-AR')}
                         </p>
@@ -653,13 +653,13 @@ const Orders = () => {
 
                     {selectedOrder.paymentProofUrl && (
                       <div>
-                        <p className="text-sm text-blue-800 mb-2"><strong>Comprobante:</strong></p>
+                        <p className="text-sm text-primary-800 mb-2"><strong>Comprobante:</strong></p>
                         <div className="flex gap-2">
                           <a
                             href={selectedOrder.paymentProofUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"
+                            className="inline-flex items-center gap-1 px-3 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors text-sm"
                           >
                             <EyeIcon className="h-4 w-4" />
                             Ver Comprobante
@@ -667,7 +667,7 @@ const Orders = () => {
                           <a
                             href={selectedOrder.paymentProofUrl}
                             download
-                            className="inline-flex items-center gap-1 px-3 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm"
+                            className="inline-flex items-center gap-1 px-3 py-2 bg-surface-600 text-white rounded-md hover:bg-surface-700 transition-colors text-sm"
                           >
                             <ArrowDownTrayIcon className="h-4 w-4" />
                             Descargar
@@ -709,18 +709,18 @@ const Orders = () => {
 
               {/* Items del pedido */}
               <div className="mb-6">
-                <h3 className="font-medium text-gray-900 mb-4">Items del Pedido</h3>
+                <h3 className="font-medium text-surface-900 dark:text-white mb-4">Items del Pedido</h3>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
+                  <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
+                    <thead className="bg-surface-50 dark:bg-surface-900">
                       <tr>
-                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Producto</th>
-                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Cantidad</th>
-                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Precio</th>
-                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Subtotal</th>
+                        <th className="px-4 py-2 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase">Producto</th>
+                        <th className="px-4 py-2 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase">Cantidad</th>
+                        <th className="px-4 py-2 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase">Precio</th>
+                        <th className="px-4 py-2 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase">Subtotal</th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody className="bg-white dark:bg-surface-800 divide-y divide-surface-200 dark:divide-surface-700">
                       {selectedOrder.items?.map((item, index) => {
                         // Función para obtener la URL de la imagen
                         const getImageUrl = (images) => {
@@ -754,13 +754,13 @@ const Orders = () => {
                                   />
                                 )}
                                 <div>
-                                  <p className="text-sm font-medium text-gray-900">{item.product?.name || 'Producto eliminado'}</p>
+                                  <p className="text-sm font-medium text-surface-900 dark:text-white">{item.product?.name || 'Producto eliminado'}</p>
                                 </div>
                               </div>
                             </td>
-                            <td className="px-4 py-2 text-sm text-gray-900">{item.quantity}</td>
-                            <td className="px-4 py-2 text-sm text-gray-900">{formatCurrency(item.unitPrice)}</td>
-                            <td className="px-4 py-2 text-sm text-gray-900">{formatCurrency(item.totalPrice)}</td>
+                            <td className="px-4 py-2 text-sm text-surface-900 dark:text-white">{item.quantity}</td>
+                            <td className="px-4 py-2 text-sm text-surface-900 dark:text-white">{formatCurrency(item.unitPrice)}</td>
+                            <td className="px-4 py-2 text-sm text-surface-900 dark:text-white">{formatCurrency(item.totalPrice)}</td>
                           </tr>
                         );
                       })}
@@ -770,7 +770,7 @@ const Orders = () => {
               </div>
 
               {/* Total y estado */}
-              <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+              <div className="flex justify-between items-center pt-4 border-t border-surface-200 dark:border-surface-700">
                 <div>
                   <span
                     className={`inline-flex px-3 py-1 text-sm font-medium rounded-full ${getStatusColor(selectedOrder.status)}`}
@@ -779,10 +779,10 @@ const Orders = () => {
                   </span>
                 </div>
                 <div className="text-right">
-                  <p className="text-lg font-bold text-gray-900">
+                  <p className="text-lg font-bold text-surface-900 dark:text-white">
                     Total: {formatCurrency(selectedOrder.total)}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-surface-500 dark:text-surface-400">
                     Fecha: {formatDate(selectedOrder.created_at)}
                   </p>
                 </div>
@@ -802,15 +802,15 @@ const Orders = () => {
       {/* Modal de cambio de estado */}
       {showStatusModal && selectedOrder && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full">
+          <div className="bg-white dark:bg-surface-800 rounded-lg max-w-md w-full">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-surface-900 dark:text-white">
                   Cambiar Estado
                 </h2>
                 <button
                   onClick={() => setShowStatusModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-surface-400 hover:text-surface-600 dark:text-surface-400"
                 >
                   <XMarkIcon className="h-6 w-6" />
                 </button>
@@ -827,14 +827,14 @@ const Orders = () => {
               }}>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Estado *
                     </label>
                     <select
                       value={statusForm.status}
                       onChange={(e) => setStatusForm({...statusForm, status: e.target.value})}
                       required
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-surface-300 dark:border-surface-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                     >
                       {orderStatuses.map(status => (
                         <option key={status.value} value={status.value}>{status.label}</option>
@@ -843,7 +843,7 @@ const Orders = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Número de Seguimiento
                     </label>
                     <input
@@ -851,12 +851,12 @@ const Orders = () => {
                       value={statusForm.trackingNumber}
                       onChange={(e) => setStatusForm({...statusForm, trackingNumber: e.target.value})}
                       placeholder="Opcional - número de tracking"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-surface-300 dark:border-surface-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Notas del Administrador
                     </label>
                     <textarea
@@ -864,7 +864,7 @@ const Orders = () => {
                       value={statusForm.adminNotes}
                       onChange={(e) => setStatusForm({...statusForm, adminNotes: e.target.value})}
                       placeholder="Notas internas opcionales..."
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-surface-300 dark:border-surface-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                     />
                   </div>
                 </div>
@@ -873,13 +873,13 @@ const Orders = () => {
                   <button
                     type="button"
                     onClick={() => setShowStatusModal(false)}
-                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                    className="px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-600 rounded-md hover:bg-surface-50 dark:bg-surface-900"
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700"
+                    className="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700"
                   >
                     Actualizar Estado
                   </button>

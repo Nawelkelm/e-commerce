@@ -150,7 +150,7 @@ const Checkout = () => {
       }
 
     } catch (error) {
-      console.error('Error en checkout:', error)
+      // Error logged via toast/alert below
       const message = error.response?.data?.message || error.message || 'Error desconocido'
       alert('Error al procesar la orden: ' + message)
     } finally {
@@ -164,126 +164,126 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-surface-50 dark:bg-surface-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Checkout</h1>
+        <h1 className="text-3xl font-bold text-surface-900 dark:text-white mb-8">Checkout</h1>
 
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Checkout Form */}
           <div className="lg:col-span-8">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-              <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-6">Información de envío</h2>
+            <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-6">
+              <h2 className="text-lg font-medium text-surface-900 dark:text-white mb-6">Información de envío</h2>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form id="checkout-form" onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Nombre</label>
                     <input
                       type="text"
                       name="firstName"
                       required
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Apellido</label>
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Apellido</label>
                     <input
                       type="text"
                       name="lastName"
                       required
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Email</label>
                   <input
                     type="email"
                     name="email"
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Teléfono</label>
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Teléfono</label>
                   <input
                     type="tel"
                     name="phone"
                     required
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Dirección</label>
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Dirección</label>
                   <input
                     type="text"
                     name="street"
                     required
                     value={formData.street}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     placeholder="Calle y número"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Ciudad</label>
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Ciudad</label>
                     <input
                       type="text"
                       name="city"
                       required
                       value={formData.city}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Provincia/Estado</label>
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Provincia/Estado</label>
                     <input
                       type="text"
                       name="state"
                       required
                       value={formData.state}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Código Postal</label>
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Código Postal</label>
                     <input
                       type="text"
                       name="postalCode"
                       required
                       value={formData.postalCode}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">País</label>
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">País</label>
                     <select
                       name="country"
                       value={formData.country}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     >
                       <option value="Argentina">Argentina</option>
                       <option value="Chile">Chile</option>
@@ -293,27 +293,27 @@ const Checkout = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Comentarios adicionales (opcional)</label>
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Comentarios adicionales (opcional)</label>
                   <textarea
                     name="customerNotes"
                     value={formData.customerNotes}
                     onChange={handleInputChange}
                     rows={3}
-                    className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-surface-300 dark:border-surface-600 rounded-md px-3 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     placeholder="Instrucciones de entrega, referencias, etc."
                   />
                 </div>
 
                 {/* Método de Pago */}
-                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Método de Pago</h3>
+                <div className="mt-8 pt-8 border-t border-surface-200 dark:border-surface-700">
+                  <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">Método de Pago</h3>
                   
                   <div className="space-y-4">
                     {/* MercadoPago */}
                     <label className={`relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
                       paymentMethod === 'mercadopago'
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                        : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
+                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                        : 'border-surface-300 dark:border-surface-600 hover:border-surface-400'
                     }`}>
                       <input
                         type="radio"
@@ -321,18 +321,18 @@ const Checkout = () => {
                         value="mercadopago"
                         checked={paymentMethod === 'mercadopago'}
                         onChange={(e) => setPaymentMethod(e.target.value)}
-                        className="w-4 h-4 text-blue-600"
+                        className="w-4 h-4 text-primary-600"
                       />
                       <div className="ml-4 flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-900 dark:text-white">MercadoPago</span>
+                          <span className="text-sm font-medium text-surface-900 dark:text-white">MercadoPago</span>
                           <img 
                             src="https://http2.mlstatic.com/storage/logos-api-admin/51b446b0-571c-11e8-9a2d-4b2bd7b1bf77-xl@2x.png" 
                             alt="MercadoPago"
                             className="h-6"
                           />
                         </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        <p className="text-xs text-surface-500 dark:text-surface-400 mt-1">
                           Paga con tarjeta, débito o crédito en cuotas
                         </p>
                       </div>
@@ -341,8 +341,8 @@ const Checkout = () => {
                     {/* Transferencia Bancaria */}
                     <label className={`relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
                       paymentMethod === 'transfer'
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                        : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
+                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                        : 'border-surface-300 dark:border-surface-600 hover:border-surface-400'
                     }`}>
                       <input
                         type="radio"
@@ -350,16 +350,16 @@ const Checkout = () => {
                         value="transfer"
                         checked={paymentMethod === 'transfer'}
                         onChange={(e) => setPaymentMethod(e.target.value)}
-                        className="w-4 h-4 text-blue-600"
+                        className="w-4 h-4 text-primary-600"
                       />
                       <div className="ml-4 flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-900 dark:text-white">Transferencia Bancaria</span>
-                          <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <span className="text-sm font-medium text-surface-900 dark:text-white">Transferencia Bancaria</span>
+                          <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                           </svg>
                         </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        <p className="text-xs text-surface-500 dark:text-surface-400 mt-1">
                           Recibirás los datos bancarios para realizar la transferencia
                         </p>
                       </div>
@@ -390,8 +390,8 @@ const Checkout = () => {
 
           {/* Order Summary */}
           <div className="lg:col-span-4 mt-8 lg:mt-0">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-              <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-6">Resumen de la orden</h2>
+            <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-6">
+              <h2 className="text-lg font-medium text-surface-900 dark:text-white mb-6">Resumen de la orden</h2>
               
               <div className="space-y-4">
                 {cart.map((item) => (
@@ -399,16 +399,16 @@ const Checkout = () => {
                     <img
                       src={getImageUrl(item.image)}
                       alt={item.name}
-                      className="h-12 w-12 rounded object-cover bg-gray-100 dark:bg-gray-700"
+                      className="h-12 w-12 rounded object-cover bg-surface-100 dark:bg-surface-800 dark:bg-surface-700"
                       onError={(e) => {
                         e.target.src = PLACEHOLDER_IMAGE
                       }}
                     />
                     <div className="flex-1">
-                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">{item.name}</h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Cantidad: {item.quantity}</p>
+                      <h4 className="text-sm font-medium text-surface-900 dark:text-white">{item.name}</h4>
+                      <p className="text-sm text-surface-500 dark:text-surface-400">Cantidad: {item.quantity}</p>
                     </div>
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                    <div className="text-sm font-medium text-surface-900 dark:text-white">
                       ${(item.price * item.quantity).toFixed(2)}
                     </div>
                   </div>
@@ -425,10 +425,10 @@ const Checkout = () => {
                 />
               </div>
               
-              <div className="border-t border-gray-200 dark:border-gray-700 mt-6 pt-6 space-y-3">
+              <div className="border-t border-surface-200 dark:border-surface-700 mt-6 pt-6 space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Subtotal</span>
-                  <span className="font-medium dark:text-gray-300">${getCartTotal().toFixed(2)}</span>
+                  <span className="text-surface-600 dark:text-surface-400">Subtotal</span>
+                  <span className="font-medium dark:text-surface-300">${getCartTotal().toFixed(2)}</span>
                 </div>
                 
                 {appliedCoupon && calculateDiscount() > 0 && (
@@ -444,8 +444,8 @@ const Checkout = () => {
                 )}
                 
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Envío</span>
-                  <span className="font-medium dark:text-gray-300">
+                  <span className="text-surface-600 dark:text-surface-400">Envío</span>
+                  <span className="font-medium dark:text-surface-300">
                     {appliedCoupon?.discountType === 'freeShipping' ? (
                       <span className="text-green-600 dark:text-green-400">Gratis</span>
                     ) : shippingMethod ? (
@@ -457,24 +457,24 @@ const Checkout = () => {
                         `$${parseFloat(shippingMethod.price).toFixed(2)}`
                       )
                     ) : (
-                      <span className="text-gray-500 dark:text-gray-400">No seleccionado</span>
+                      <span className="text-surface-500 dark:text-surface-400">No seleccionado</span>
                     )}
                   </span>
                 </div>
                 
                 {shippingMethod && (
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+                  <div className="bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 rounded-lg p-3">
                     <div className="text-sm">
-                      <div className="font-medium text-gray-900 dark:text-white">
+                      <div className="font-medium text-surface-900 dark:text-white">
                         {shippingMethod.name}
                       </div>
                       {shippingMethod.description && (
-                        <div className="text-gray-600 dark:text-gray-400 mt-1">
+                        <div className="text-surface-600 dark:text-surface-400 mt-1">
                           {shippingMethod.description}
                         </div>
                       )}
                       {shippingMethod.estimatedDays && (
-                        <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                        <div className="text-xs text-surface-500 dark:text-surface-400 dark:text-surface-500 dark:text-surface-400 mt-1">
                           Entrega estimada: {shippingMethod.estimatedDays} {shippingMethod.estimatedDays === 1 ? 'día' : 'días'}
                         </div>
                       )}
@@ -482,27 +482,28 @@ const Checkout = () => {
                   </div>
                 )}
                 
-                <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
+                <div className="border-t border-surface-200 dark:border-surface-700 pt-3">
                   <div className="flex justify-between">
-                    <span className="text-lg font-medium text-gray-900 dark:text-white">Total</span>
-                    <span className="text-lg font-medium text-gray-900 dark:text-white">${calculateTotal().toFixed(2)}</span>
+                    <span className="text-lg font-medium text-surface-900 dark:text-white">Total</span>
+                    <span className="text-lg font-medium text-surface-900 dark:text-white">${calculateTotal().toFixed(2)}</span>
                   </div>
                 </div>
               </div>
               
               <button
-                onClick={handleSubmit}
+                type="submit"
+                form="checkout-form"
                 disabled={loading}
                 className={`w-full mt-6 py-3 px-4 rounded-lg font-medium transition-colors ${
                   loading
-                    ? 'bg-gray-400 cursor-not-allowed'
+                    ? 'bg-surface-400 cursor-not-allowed'
                     : 'bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
                 } text-white`}
               >
                 {loading ? 'Procesando...' : 'Realizar pedido'}
               </button>
               
-              <p className="mt-4 text-xs text-gray-500 text-center">
+              <p className="mt-4 text-xs text-surface-500 dark:text-surface-400 text-center">
                 Al hacer clic en "Realizar pedido", aceptas nuestros términos y condiciones.
               </p>
             </div>

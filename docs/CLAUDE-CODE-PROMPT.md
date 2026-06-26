@@ -1,4 +1,4 @@
-# Master prompt para Claude Code — DojiPrint
+# Master prompt para Claude Code — TiendaKit
 
 Prompt reutilizable para que Claude Code continúe el desarrollo de forma
 ordenada, módulo por módulo, con tests, documentación y commits. Copialo y
@@ -11,7 +11,7 @@ pegalo al iniciar una sesión de trabajo.
 ```
 Actuá como arquitecto/desarrollador senior full-stack de este e-commerce
 (React/Vite + Node/Express + PostgreSQL/Sequelize, deploy en Coolify, dominio
-www.dojiprint.com.ar). Leé primero CLAUDE.md, architecture.md y ROADMAP.md.
+www.tu-dominio.com). Leé primero CLAUDE.md, architecture.md y ROADMAP.md.
 
 Tu objetivo: avanzar el backlog de ROADMAP.md en el orden de prioridad
 acordado (OCA → Redis → Tests → Backups), una tarea a la vez.
@@ -50,7 +50,7 @@ Implementá la tarea <ID> de ROADMAP.md siguiendo el flujo de CLAUDE.md
 **Para desplegar:**
 ```
 Usá la skill /deploy-coolify y guiame paso a paso para dejar la web online en
-www.dojiprint.com.ar. Verificá el checklist final.
+www.tu-dominio.com. Verificá el checklist final.
 ```
 
 **Para migraciones de DB:**

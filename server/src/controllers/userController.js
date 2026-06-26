@@ -284,7 +284,7 @@ const updateProfile = async (req, res) => {
       user: userWithoutPassword
     });
   } catch (error) {
-    console.error('Update profile error:', error);
+    logger.error('Update profile error:', error);
     res.status(500).json({ message: 'Error al actualizar perfil', error: error.message });
   }
 };
@@ -441,7 +441,7 @@ const getDashboardStats = async (req, res) => {
       }))
     });
   } catch (error) {
-    console.error('Get dashboard stats error:', error);
+    logger.error('Get dashboard stats error:', error);
     res.status(500).json({ message: 'Server error', details: error.message });
   }
 };

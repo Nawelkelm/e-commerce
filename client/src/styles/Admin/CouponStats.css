@@ -281,6 +281,32 @@
   color: #666;
 }
 
+/* ─── Dark Mode ─── */
+.dark .coupon-code-title { color: #a78bfa; }
+.dark .stats-section h3 { color: #fafafa; }
+.dark .stat-card { background: #262626; border-color: #404040; }
+.dark .stat-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+.dark .stat-content h4 { color: #737373; }
+.dark .stat-value { color: #fafafa; }
+.dark .stat-detail { color: #737373; }
+.dark .progress-bar-container { background: #404040; }
+.dark .progress-detail { color: #a3a3a3; }
+.dark .usages-table-container { background: #262626; border-color: #404040; }
+.dark .usages-table thead { background: #1a1a1a; }
+.dark .usages-table th { color: #a3a3a3; border-bottom-color: #404040; }
+.dark .usages-table td { border-bottom-color: #333; color: #e5e5e5; }
+.dark .usages-table tbody tr:hover { background: #1a1a1a; }
+.dark .user-name { color: #fafafa; }
+.dark .user-email { color: #737373; }
+.dark .order-id { color: #a78bfa; }
+.dark .order-total { color: #a3a3a3; }
+.dark .discount-amount { color: #4ade80; }
+.dark .usage-date { color: #a3a3a3; }
+.dark .text-muted { color: #737373; }
+.dark .stats-modal .empty-state p { color: #737373; }
+.dark .stats-modal .loading-state .spinner { border-color: #404040; border-top-color: #7c3aed; }
+.dark .stats-modal .loading-state p { color: #a3a3a3; }
+
 /* Responsive */
 @media (max-width: 768px) {
   .stats-grid {

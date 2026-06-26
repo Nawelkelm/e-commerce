@@ -228,12 +228,12 @@ const Orders = () => {
       processing: { 
         icon: CreditCardIcon, 
         text: 'Procesando', 
-        color: 'text-blue-600 bg-blue-50' 
+        color: 'text-primary-600 bg-primary-50' 
       },
       shipped: { 
         icon: TruckIcon, 
         text: 'Enviado', 
-        color: 'text-indigo-600 bg-indigo-50' 
+        color: 'text-primary-600 bg-primary-50' 
       },
       delivered: { 
         icon: CheckCircleIcon, 
@@ -251,10 +251,10 @@ const Orders = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-surface-50 dark:bg-surface-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando pedidos...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+          <p className="mt-4 text-surface-600 dark:text-surface-400">Cargando pedidos...</p>
         </div>
       </div>
     )
@@ -262,13 +262,13 @@ const Orders = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-surface-50 dark:bg-surface-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <p className="text-red-600 mb-4">{error}</p>
             <button 
               onClick={fetchOrders}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700"
             >
               Reintentar
             </button>
@@ -279,30 +279,30 @@ const Orders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-surface-50 dark:bg-surface-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Mis Pedidos</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">Gestiona y rastrea tus compras</p>
+          <h1 className="text-3xl font-bold text-surface-900 dark:text-white">Mis Pedidos</h1>
+          <p className="mt-2 text-surface-600 dark:text-surface-400 dark:text-surface-300">Gestiona y rastrea tus compras</p>
         </div>
 
         {orders.length > 0 && (
           <>
             {/* Barra de búsqueda y filtros */}
-            <div className="mb-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+            <div className="mb-6 bg-white dark:bg-surface-800 rounded-lg shadow-sm p-4">
               <div className="flex flex-col sm:flex-row gap-4">
                 {/* Búsqueda */}
                 <div className="flex-1 relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+                    <MagnifyingGlassIcon className="h-5 w-5 text-surface-400" />
                   </div>
                   <input
                     type="text"
                     placeholder="Buscar por número de pedido o producto..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="block w-full pl-10 pr-3 py-2.5 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                 </div>
 
@@ -312,8 +312,8 @@ const Orders = () => {
                     onClick={() => setSelectedStatus('all')}
                     className={`px-4 py-2.5 rounded-lg font-medium whitespace-nowrap transition-all ${
                       selectedStatus === 'all'
-                        ? 'bg-indigo-600 text-white shadow-md'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                        ? 'bg-primary-600 text-white shadow-md'
+                        : 'bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 text-surface-700 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600'
                     }`}
                   >
                     Todos ({orders.length})
@@ -323,7 +323,7 @@ const Orders = () => {
                     className={`px-4 py-2.5 rounded-lg font-medium whitespace-nowrap transition-all ${
                       selectedStatus === 'pending'
                         ? 'bg-yellow-500 text-white shadow-md'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                        : 'bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 text-surface-700 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600'
                     }`}
                   >
                     Pendientes ({orders.filter(o => o.status === 'pending').length})
@@ -332,8 +332,8 @@ const Orders = () => {
                     onClick={() => setSelectedStatus('processing')}
                     className={`px-4 py-2.5 rounded-lg font-medium whitespace-nowrap transition-all ${
                       selectedStatus === 'processing'
-                        ? 'bg-blue-500 text-white shadow-md'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                        ? 'bg-primary-500 text-white shadow-md'
+                        : 'bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 text-surface-700 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600'
                     }`}
                   >
                     En proceso ({orders.filter(o => o.status === 'processing').length})
@@ -342,8 +342,8 @@ const Orders = () => {
                     onClick={() => setSelectedStatus('shipped')}
                     className={`px-4 py-2.5 rounded-lg font-medium whitespace-nowrap transition-all ${
                       selectedStatus === 'shipped'
-                        ? 'bg-indigo-500 text-white shadow-md'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                        ? 'bg-primary-500 text-white shadow-md'
+                        : 'bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 text-surface-700 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600'
                     }`}
                   >
                     Enviados ({orders.filter(o => o.status === 'shipped').length})
@@ -353,7 +353,7 @@ const Orders = () => {
                     className={`px-4 py-2.5 rounded-lg font-medium whitespace-nowrap transition-all ${
                       selectedStatus === 'delivered'
                         ? 'bg-green-500 text-white shadow-md'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                        : 'bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 text-surface-700 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600'
                     }`}
                   >
                     Entregados ({orders.filter(o => o.status === 'delivered').length})
@@ -365,24 +365,24 @@ const Orders = () => {
         )}
 
         {orders.length === 0 ? (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-12 text-center">
-            <ShoppingBagIcon className="mx-auto h-16 w-16 text-gray-400" />
-            <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">No tienes pedidos aún</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">Cuando realices una compra, aparecerá aquí</p>
+          <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-12 text-center">
+            <ShoppingBagIcon className="mx-auto h-16 w-16 text-surface-400" />
+            <h3 className="mt-4 text-lg font-medium text-surface-900 dark:text-white">No tienes pedidos aún</h3>
+            <p className="mt-2 text-surface-600 dark:text-surface-400 dark:text-surface-300">Cuando realices una compra, aparecerá aquí</p>
             <div className="mt-6">
               <Link
                 to="/productos"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700"
               >
                 Explorar productos
               </Link>
             </div>
           </div>
         ) : filteredOrders.length === 0 ? (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-12 text-center">
-            <ShoppingBagIcon className="mx-auto h-16 w-16 text-gray-400" />
-            <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">No se encontraron pedidos</h3>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">Intenta con otros filtros o búsqueda</p>
+          <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-12 text-center">
+            <ShoppingBagIcon className="mx-auto h-16 w-16 text-surface-400" />
+            <h3 className="mt-4 text-lg font-medium text-surface-900 dark:text-white">No se encontraron pedidos</h3>
+            <p className="mt-2 text-surface-600 dark:text-surface-400 dark:text-surface-300">Intenta con otros filtros o búsqueda</p>
           </div>
         ) : (
           <div className="space-y-6">
@@ -391,7 +391,7 @@ const Orders = () => {
               const StatusIcon = statusInfo.icon
               
               return (
-                <div key={order.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div key={order.id} className="bg-white dark:bg-surface-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                   {/* Header mejorado del pedido */}
                   <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-4">
                     <div className="flex flex-wrap items-center justify-between gap-4">
@@ -431,7 +431,7 @@ const Orders = () => {
                   </div>
 
                   {/* Timeline de seguimiento */}
-                  <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-600">
+                  <div className="px-6 py-4 bg-surface-50 dark:bg-surface-900 dark:bg-surface-700/50 border-b border-surface-200 dark:border-surface-700 dark:border-surface-600">
                     <div className="flex items-center justify-between">
                       {['pending', 'processing', 'shipped', 'delivered'].map((step, index) => {
                         const stepInfo = getStatusInfo(step)
@@ -444,22 +444,22 @@ const Orders = () => {
                             <div className="flex flex-col items-center">
                               <div className={`flex items-center justify-center w-10 h-10 rounded-full transition-all ${
                                 isCurrent 
-                                  ? 'bg-indigo-600 text-white ring-4 ring-indigo-200 scale-110' 
+                                  ? 'bg-primary-600 text-white ring-4 ring-primary-200 scale-110' 
                                   : isActive 
                                   ? 'bg-green-500 text-white' 
-                                  : 'bg-gray-200 dark:bg-gray-600 text-gray-400'
+                                  : 'bg-surface-200 dark:bg-surface-600 text-surface-400'
                               }`}>
                                 <StepIcon className="h-5 w-5" />
                               </div>
                               <p className={`mt-2 text-xs font-medium ${
-                                isActive ? 'text-gray-900 dark:text-white' : 'text-gray-400'
+                                isActive ? 'text-surface-900 dark:text-white' : 'text-surface-400'
                               }`}>
                                 {stepInfo.text}
                               </p>
                             </div>
                             {index < 3 && (
                               <div className={`flex-1 h-1 mx-2 ${
-                                isActive ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-600'
+                                isActive ? 'bg-green-500' : 'bg-surface-200 dark:bg-surface-600'
                               }`} />
                             )}
                           </React.Fragment>
@@ -470,38 +470,38 @@ const Orders = () => {
 
                   {/* Items del pedido mejorados */}
                   <div className="px-6 py-4">
-                    <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                    <h3 className="text-sm font-semibold text-surface-700 dark:text-surface-300 mb-3">
                       Productos ({order.OrderItems?.length || 0})
                     </h3>
                     <div className="space-y-3">
                       {order.OrderItems && order.OrderItems.map((item) => (
-                        <div key={item.id} className="flex items-center gap-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <div key={item.id} className="flex items-center gap-4 p-3 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700/50 hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-700 transition-colors">
                           <div className="flex-shrink-0">
                             <img
                               src={item.Product?.images?.[0] ? getImageUrl(item.Product.images[0]) : PLACEHOLDER_IMAGE}
                               alt={item.productName}
-                              className="h-20 w-20 rounded-lg object-cover bg-gray-100 dark:bg-gray-700 shadow-sm"
+                              className="h-20 w-20 rounded-lg object-cover bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 shadow-sm"
                               onError={(e) => {
                                 e.target.src = PLACEHOLDER_IMAGE
                               }}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                            <p className="text-sm font-semibold text-surface-900 dark:text-white">
                               {item.productName}
                             </p>
                             <div className="flex items-center gap-2 mt-1">
-                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-indigo-200">
                                 Cantidad: {item.quantity}
                               </span>
-                              <span className="text-sm text-gray-500 dark:text-gray-400">
+                              <span className="text-sm text-surface-500 dark:text-surface-400">
                                 ${parseFloat(item.unitPrice).toFixed(2)} c/u
                               </span>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="text-sm text-gray-500 dark:text-gray-400">Subtotal</p>
-                            <p className="text-lg font-bold text-gray-900 dark:text-white">
+                            <p className="text-sm text-surface-500 dark:text-surface-400">Subtotal</p>
+                            <p className="text-lg font-bold text-surface-900 dark:text-white">
                               ${parseFloat(item.totalPrice).toFixed(2)}
                             </p>
                           </div>
@@ -511,33 +511,33 @@ const Orders = () => {
                   </div>
 
                   {/* Resumen de costos */}
-                  <div className="px-6 py-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-200 dark:border-gray-600">
+                  <div className="px-6 py-4 bg-surface-50 dark:bg-surface-900 dark:bg-surface-700/50 border-t border-surface-200 dark:border-surface-700 dark:border-surface-600">
                     <div className="space-y-2 max-w-sm ml-auto">
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Subtotal:</span>
-                        <span className="font-medium text-gray-900 dark:text-white">
+                        <span className="text-surface-600 dark:text-surface-400">Subtotal:</span>
+                        <span className="font-medium text-surface-900 dark:text-white">
                           ${parseFloat(order.subtotal || order.total).toFixed(2)}
                         </span>
                       </div>
                       {order.tax > 0 && (
                         <div className="flex justify-between text-sm">
-                          <span className="text-gray-600 dark:text-gray-400">Impuestos:</span>
-                          <span className="font-medium text-gray-900 dark:text-white">
+                          <span className="text-surface-600 dark:text-surface-400">Impuestos:</span>
+                          <span className="font-medium text-surface-900 dark:text-white">
                             ${parseFloat(order.tax).toFixed(2)}
                           </span>
                         </div>
                       )}
                       {order.shippingCost > 0 && (
                         <div className="flex justify-between text-sm">
-                          <span className="text-gray-600 dark:text-gray-400">Envío:</span>
-                          <span className="font-medium text-gray-900 dark:text-white">
+                          <span className="text-surface-600 dark:text-surface-400">Envío:</span>
+                          <span className="font-medium text-surface-900 dark:text-white">
                             ${parseFloat(order.shippingCost).toFixed(2)}
                           </span>
                         </div>
                       )}
-                      <div className="flex justify-between text-base font-bold pt-2 border-t border-gray-300 dark:border-gray-600">
-                        <span className="text-gray-900 dark:text-white">Total:</span>
-                        <span className="text-indigo-600 dark:text-indigo-400">
+                      <div className="flex justify-between text-base font-bold pt-2 border-t border-surface-300 dark:border-surface-600">
+                        <span className="text-surface-900 dark:text-white">Total:</span>
+                        <span className="text-primary-600 dark:text-primary-400">
                           ${parseFloat(order.total).toFixed(2)}
                         </span>
                       </div>
@@ -545,13 +545,13 @@ const Orders = () => {
                   </div>
 
                   {/* Footer con dirección y acciones mejoradas */}
-                  <div className="px-6 py-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-600">
+                  <div className="px-6 py-4 bg-white dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 dark:border-surface-600">
                     <div className="flex flex-wrap items-center justify-between gap-4">
                       <div className="flex-1">
-                        <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                        <p className="text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
                           📍 Dirección de envío
                         </p>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 space-y-0.5">
+                        <div className="text-sm text-surface-600 dark:text-surface-400 space-y-0.5">
                           {order.shippingAddress?.street && (
                             <>
                               <p>{order.shippingAddress.street}</p>
@@ -584,7 +584,7 @@ const Orders = () => {
                             href={order.paymentProofUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors shadow-sm"
                           >
                             <PhotoIcon className="h-5 w-5" />
                             <span className="font-medium">Ver Comprobante</span>
@@ -593,7 +593,7 @@ const Orders = () => {
 
                         {/* Badge de comprobante subido */}
                         {order.paymentProofUrl && (order.paymentStatus === 'pending' || order.paymentStatus === 'pending_verification') && (
-                          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-lg border border-blue-300">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 text-primary-800 rounded-lg border border-blue-300">
                             <CheckCircleIcon className="h-5 w-5" />
                             <span className="font-medium text-sm">En verificación</span>
                           </div>
@@ -623,7 +623,7 @@ const Orders = () => {
                         {/* Botón ver detalles */}
                         <Link
                           to={`/pedidos/${order.id}`}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors shadow-sm"
                         >
                           <EyeIcon className="h-5 w-5" />
                           <span className="font-medium">Ver Detalles</span>
@@ -636,13 +636,13 @@ const Orders = () => {
                             disabled={cancellingOrderId === order.id}
                             className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 font-medium transition-all ${
                               cancellingOrderId === order.id
-                                ? 'bg-gray-100 text-gray-400 border-gray-300 cursor-not-allowed'
-                                : 'bg-white text-red-600 border-red-300 hover:bg-red-50 hover:border-red-400 shadow-sm'
+                                ? 'bg-surface-100 dark:bg-surface-800 text-surface-400 border-surface-300 dark:border-surface-600 cursor-not-allowed'
+                                : 'bg-white dark:bg-surface-800 text-red-600 border-red-300 hover:bg-red-50 hover:border-red-400 shadow-sm'
                             }`}
                           >
                             {cancellingOrderId === order.id ? (
                               <>
-                                <div className="animate-spin h-4 w-4 border-2 border-gray-400 border-t-transparent rounded-full"></div>
+                                <div className="animate-spin h-4 w-4 border-2 border-surface-400 border-t-transparent rounded-full"></div>
                                 Cancelando...
                               </>
                             ) : (
@@ -666,15 +666,15 @@ const Orders = () => {
       {/* Modal para subir comprobante */}
       {uploadModal.isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-lg w-full">
+          <div className="bg-white dark:bg-surface-800 rounded-xl shadow-2xl max-w-lg w-full">
             {/* Header del modal */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            <div className="flex items-center justify-between p-6 border-b border-surface-200 dark:border-surface-700">
+              <h3 className="text-xl font-bold text-surface-900 dark:text-white">
                 Subir Comprobante de Transferencia
               </h3>
               <button
                 onClick={closeUploadModal}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                className="text-surface-400 hover:text-surface-600 dark:text-surface-400 dark:hover:text-surface-300 transition-colors"
               >
                 <XMarkIcon className="h-6 w-6" />
               </button>
@@ -682,11 +682,11 @@ const Orders = () => {
 
             {/* Body del modal */}
             <div className="p-6 space-y-4">
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                <p className="text-sm text-blue-800 dark:text-blue-300">
+              <div className="bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-blue-800 rounded-lg p-4">
+                <p className="text-sm text-primary-800 dark:text-primary-300">
                   <strong>Pedido:</strong> #{uploadModal.orderNumber}
                 </p>
-                <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                <p className="text-xs text-primary-600 dark:text-primary-400 mt-1">
                   Sube una foto o captura del comprobante de transferencia bancaria
                 </p>
               </div>
@@ -694,7 +694,7 @@ const Orders = () => {
               {/* Zona de selección de archivo */}
               <div className="space-y-3">
                 <label className="block">
-                  <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-indigo-500 dark:hover:border-indigo-400 transition-colors cursor-pointer">
+                  <div className="border-2 border-dashed border-surface-300 dark:border-surface-600 rounded-lg p-6 text-center hover:border-primary-500 dark:hover:border-indigo-400 transition-colors cursor-pointer">
                     <input
                       type="file"
                       accept="image/jpeg,image/jpg,image/png,application/pdf"
@@ -709,24 +709,24 @@ const Orders = () => {
                           alt="Preview"
                           className="max-h-48 mx-auto rounded-lg shadow-md"
                         />
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-sm text-surface-600 dark:text-surface-400">
                           {selectedFile?.name}
                         </p>
                       </div>
                     ) : selectedFile ? (
                       <div className="space-y-2">
-                        <PhotoIcon className="h-12 w-12 mx-auto text-gray-400" />
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <PhotoIcon className="h-12 w-12 mx-auto text-surface-400" />
+                        <p className="text-sm text-surface-600 dark:text-surface-400">
                           {selectedFile.name}
                         </p>
                       </div>
                     ) : (
                       <div className="space-y-2">
-                        <ArrowUpTrayIcon className="h-12 w-12 mx-auto text-gray-400" />
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <ArrowUpTrayIcon className="h-12 w-12 mx-auto text-surface-400" />
+                        <p className="text-sm text-surface-600 dark:text-surface-400">
                           Haz clic para seleccionar un archivo
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-500">
+                        <p className="text-xs text-surface-500 dark:text-surface-400 dark:text-surface-500 dark:text-surface-400">
                           JPG, PNG o PDF (máx. 5MB)
                         </p>
                       </div>
@@ -763,18 +763,18 @@ const Orders = () => {
             </div>
 
             {/* Footer del modal */}
-            <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-end gap-3 p-6 border-t border-surface-200 dark:border-surface-700">
               <button
                 onClick={closeUploadModal}
                 disabled={uploadingFile}
-                className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 text-surface-700 dark:text-surface-300 bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 rounded-lg hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleUploadProof}
                 disabled={!selectedFile || uploadingFile}
-                className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 {uploadingFile ? (
                   <>

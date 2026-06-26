@@ -303,6 +303,35 @@
   font-size: 16px;
 }
 
+/* ─── Dark Mode ─── */
+.dark .page-header { border-bottom-color: #404040; }
+.dark .page-header h1 { color: #fafafa; }
+.dark .page-header h1 .icon { color: #a78bfa; }
+.dark .page-header p { color: #a3a3a3; }
+.dark .test-status.success { background: #052e16; color: #4ade80; }
+.dark .test-status.failed { background: #450a0a; color: #f87171; }
+.dark .smtp-form { background: #262626; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.dark .form-section { border-bottom-color: #404040; }
+.dark .form-section h2 { color: #fafafa; }
+.dark .provider-btn { background: #262626; border-color: #404040; }
+.dark .provider-btn .icon { color: #a3a3a3; }
+.dark .provider-btn span { color: #e5e5e5; }
+.dark .provider-btn:hover { border-color: #7c3aed; background: #2e1065; }
+.dark .info-box { background: #451a03; border-left-color: #f59e0b; }
+.dark .info-box .icon { color: #fbbf24; }
+.dark .info-box p { color: #fcd34d; }
+.dark .form-group label { color: #e5e5e5; }
+.dark .form-group label .icon { color: #a78bfa; }
+.dark .form-group input[type="text"],
+.dark .form-group input[type="email"],
+.dark .form-group input[type="password"],
+.dark .form-group input[type="number"] { background: #1a1a1a; border-color: #404040; color: #fafafa; }
+.dark .form-group input:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.2); }
+.dark .form-group small { color: #737373; }
+.dark .checkbox-group span { color: #e5e5e5; }
+.dark .form-actions { background: #1a1a1a; }
+.dark .loading { color: #a3a3a3; }
+
 @media (max-width: 768px) {
   .smtp-settings {
     padding: 15px;

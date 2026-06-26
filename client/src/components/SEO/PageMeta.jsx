@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async'
 
 const PageMeta = ({ title, description, keywords }) => {
-  const siteName = 'E-Commerce'
+  const siteName = 'TiendaKit'
   const fullTitle = title ? `${title} - ${siteName}` : siteName
   
   return (

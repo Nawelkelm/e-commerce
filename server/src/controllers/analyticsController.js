@@ -1,6 +1,7 @@
 const { sequelize } = require('../config/database');
 const { Order, OrderItem, Product, User } = require('../models');
 const { Op } = require('sequelize');
+const logger = require('../config/logger');
 
 // Obtener analytics de ventas
 exports.getSalesAnalytics = async (req, res) => {
@@ -190,7 +191,7 @@ exports.getSalesAnalytics = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error fetching sales analytics:', error);
+    logger.error('Error fetching sales analytics:', error);
     res.status(500).json({ 
       message: 'Error al obtener analytics de ventas',
       error: error.message 
@@ -230,7 +231,7 @@ exports.getInventoryAlerts = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error fetching inventory alerts:', error);
+    logger.error('Error fetching inventory alerts:', error);
     res.status(500).json({ 
       message: 'Error al obtener alertas de inventario',
       error: error.message 

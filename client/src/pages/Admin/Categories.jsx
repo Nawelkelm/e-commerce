@@ -109,7 +109,7 @@ const Categories = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
       </div>
     )
   }
@@ -120,7 +120,7 @@ const Categories = () => {
         <p className="text-red-600 text-lg mb-4">Error: {error}</p>
         <button 
           onClick={fetchCategories}
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+          className="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
         >
           Intentar nuevamente
         </button>
@@ -142,14 +142,14 @@ const Categories = () => {
                 Categorías
               </h1>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 ml-14">
+            <p className="text-sm text-surface-600 dark:text-surface-400 ml-14">
               Organiza tus productos en categorías
             </p>
           </div>
           <div className="mt-4 sm:mt-0">
             <button
               onClick={() => setShowModal(true)}
-              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-xl hover:scale-105"
+              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-xl hover:scale-105"
             >
               <PlusIcon className="h-5 w-5 mr-2" />
               Nueva Categoría
@@ -161,12 +161,12 @@ const Categories = () => {
       {/* Grid de categorías mejorado */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.length === 0 ? (
-          <div className="col-span-full text-center py-12 bg-white dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700">
-            <TagIcon className="mx-auto h-12 w-12 text-gray-400" />
-            <p className="mt-4 text-gray-500 dark:text-gray-400">No hay categorías disponibles</p>
+          <div className="col-span-full text-center py-12 bg-white dark:bg-surface-800 rounded-xl border-2 border-dashed border-surface-300 dark:border-surface-600 dark:border-surface-700">
+            <TagIcon className="mx-auto h-12 w-12 text-surface-400" />
+            <p className="mt-4 text-surface-500 dark:text-surface-400">No hay categorías disponibles</p>
             <button
               onClick={() => setShowModal(true)}
-              className="mt-4 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 font-medium"
+              className="mt-4 text-primary-600 dark:text-primary-400 hover:text-primary-700 font-medium"
             >
               Crear la primera categoría
             </button>
@@ -175,16 +175,16 @@ const Categories = () => {
           categories.map((category) => (
             <div
               key={category.id}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 overflow-hidden border border-gray-200 dark:border-gray-700 hover:scale-105"
+              className="bg-white dark:bg-surface-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 overflow-hidden border border-surface-200 dark:border-surface-700 hover:scale-105"
             >
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <div className="p-2 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-lg">
-                        <TagIcon className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                        <TagIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
                       </div>
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                      <h3 className="text-lg font-bold text-surface-900 dark:text-white">
                         {category.name}
                       </h3>
                     </div>
@@ -200,7 +200,7 @@ const Categories = () => {
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => handleEdit(category)}
-                      className="p-2 text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-all"
+                      className="p-2 text-primary-600 hover:text-indigo-900 dark:text-primary-400 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all"
                       title="Editar"
                     >
                       <PencilIcon className="h-5 w-5" />
@@ -215,14 +215,14 @@ const Categories = () => {
                   </div>
                 </div>
                 {category.description && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+                  <p className="text-sm text-surface-600 dark:text-surface-400 mb-3 line-clamp-2">
                     {category.description}
                   </p>
                 )}
-                <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
+                <div className="pt-3 border-t border-surface-200 dark:border-surface-700">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Productos</span>
-                    <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                    <span className="text-surface-500 dark:text-surface-400">Productos</span>
+                    <span className="font-bold text-primary-600 dark:text-primary-400">
                       {category.productCount || 0}
                     </span>
                   </div>
@@ -236,7 +236,7 @@ const Categories = () => {
 
       {/* Modal mejorado */}
       {showModal && (
-        <div className="fixed inset-0 bg-gray-900/75 dark:bg-black/85 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-surface-900/75 dark:bg-black/85 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="w-full max-w-lg">
             {/* Header del modal */}
             <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-t-2xl px-6 py-5 shadow-xl">
@@ -267,31 +267,31 @@ const Categories = () => {
             </div>
             
             {/* Contenido del modal */}
-            <div className="bg-white dark:bg-gray-800 rounded-b-2xl shadow-2xl">
+            <div className="bg-white dark:bg-surface-800 rounded-b-2xl shadow-2xl">
               <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
                     Nombre <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                    className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                     placeholder="Ej: Electrónica"
                     required
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
                     Descripción
                   </label>
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
                     rows={3}
-                    className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all resize-none"
+                    className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all resize-none"
                     placeholder="Descripción opcional de la categoría..."
                   />
                 </div>
@@ -302,15 +302,15 @@ const Categories = () => {
                       type="checkbox"
                       checked={formData.isActive}
                       onChange={(e) => setFormData({...formData, isActive: e.target.checked})}
-                      className="h-5 w-5 text-indigo-600 focus:ring-2 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 rounded transition-all"
+                      className="h-5 w-5 text-primary-600 focus:ring-2 focus:ring-primary-500 border-surface-300 dark:border-surface-600 rounded transition-all"
                     />
-                    <label className="ml-3 block text-sm font-medium text-gray-900 dark:text-gray-100">
+                    <label className="ml-3 block text-sm font-medium text-surface-900 dark:text-white dark:text-surface-100">
                       Categoría activa
                     </label>
                   </div>
                 </div>
               
-                <div className="flex justify-end space-x-4 pt-4 border-t-2 border-gray-200 dark:border-gray-700">
+                <div className="flex justify-end space-x-4 pt-4 border-t-2 border-surface-200 dark:border-surface-700">
                   <button
                     type="button"
                     onClick={() => {
@@ -318,7 +318,7 @@ const Categories = () => {
                       setEditingCategory(null)
                       setFormData({ name: '', description: '', isActive: true })
                     }}
-                    className="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg text-sm font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all shadow-sm hover:shadow-md"
+                    className="px-6 py-3 border-2 border-surface-300 dark:border-surface-600 rounded-lg text-sm font-semibold text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600 transition-all shadow-sm hover:shadow-md"
                   >
                     Cancelar
                   </button>

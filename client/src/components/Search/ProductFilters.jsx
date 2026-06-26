@@ -120,25 +120,25 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
 
   if (isLoading) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-6">
         <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+          <div className="h-4 bg-surface-200 dark:bg-surface-700 rounded w-3/4"></div>
+          <div className="h-4 bg-surface-200 dark:bg-surface-700 rounded w-1/2"></div>
+          <div className="h-4 bg-surface-200 dark:bg-surface-700 rounded w-2/3"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+    <div className="bg-white dark:bg-surface-800 rounded-lg shadow">
       {/* Header */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+      <div className="p-4 border-b border-surface-200 dark:border-surface-700 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <FunnelIcon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-          <h3 className="font-semibold text-gray-900 dark:text-white">Filtros</h3>
+          <FunnelIcon className="h-5 w-5 text-surface-600 dark:text-surface-400" />
+          <h3 className="font-semibold text-surface-900 dark:text-white">Filtros</h3>
           {hasActiveFilters() && (
-            <span className="px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs font-medium rounded-full">
+            <span className="px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-indigo-200 text-xs font-medium rounded-full">
               {localFilters.categories.length + 
                (localFilters.minPrice || localFilters.maxPrice ? 1 : 0) +
                (localFilters.inStock ? 1 : 0) +
@@ -150,25 +150,25 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
         {hasActiveFilters() && (
           <button
             onClick={clearAllFilters}
-            className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium"
+            className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium"
           >
             Limpiar todo
           </button>
         )}
       </div>
 
-      <div className="divide-y divide-gray-200 dark:divide-gray-700">
+      <div className="divide-y divide-surface-200 dark:divide-surface-700">
         {/* Categories */}
         <div className="p-4">
           <button
             onClick={() => toggleSection('categories')}
             className="w-full flex items-center justify-between text-left mb-3"
           >
-            <span className="font-medium text-gray-900 dark:text-white">Categorías</span>
+            <span className="font-medium text-surface-900 dark:text-white">Categorías</span>
             {expandedSections.categories ? (
-              <ChevronUpIcon className="h-5 w-5 text-gray-500" />
+              <ChevronUpIcon className="h-5 w-5 text-surface-500 dark:text-surface-400" />
             ) : (
-              <ChevronDownIcon className="h-5 w-5 text-gray-500" />
+              <ChevronDownIcon className="h-5 w-5 text-surface-500 dark:text-surface-400" />
             )}
           </button>
 
@@ -183,12 +183,12 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
                     type="checkbox"
                     checked={localFilters.categories.includes(category.id)}
                     onChange={() => handleCategoryToggle(category.id)}
-                    className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                    className="w-4 h-4 text-primary-600 border-surface-300 dark:border-surface-600 rounded focus:ring-primary-500"
                   />
-                  <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 flex-1">
+                  <span className="text-sm text-surface-700 dark:text-surface-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 flex-1">
                     {category.name}
                   </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="text-xs text-surface-500 dark:text-surface-400">
                     ({category.count})
                   </span>
                 </label>
@@ -203,22 +203,22 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
             onClick={() => toggleSection('price')}
             className="w-full flex items-center justify-between text-left mb-3"
           >
-            <span className="font-medium text-gray-900 dark:text-white">Rango de precio</span>
+            <span className="font-medium text-surface-900 dark:text-white">Rango de precio</span>
             {expandedSections.price ? (
-              <ChevronUpIcon className="h-5 w-5 text-gray-500" />
+              <ChevronUpIcon className="h-5 w-5 text-surface-500 dark:text-surface-400" />
             ) : (
-              <ChevronDownIcon className="h-5 w-5 text-gray-500" />
+              <ChevronDownIcon className="h-5 w-5 text-surface-500 dark:text-surface-400" />
             )}
           </button>
 
           {expandedSections.price && filterOptions?.priceRange && (
             <div className="space-y-3">
-              <div className="text-xs text-gray-500 dark:text-gray-400">
+              <div className="text-xs text-surface-500 dark:text-surface-400">
                 {formatPrice(filterOptions.priceRange.min)} - {formatPrice(filterOptions.priceRange.max)}
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">
+                  <label className="block text-xs text-surface-600 dark:text-surface-400 mb-1">
                     Mínimo
                   </label>
                   <input
@@ -229,11 +229,11 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
                     placeholder="0"
                     min={filterOptions.priceRange.min}
                     max={filterOptions.priceRange.max}
-                    className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-2 py-1.5 text-sm border border-surface-300 dark:border-surface-600 rounded focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">
+                  <label className="block text-xs text-surface-600 dark:text-surface-400 mb-1">
                     Máximo
                   </label>
                   <input
@@ -244,13 +244,13 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
                     placeholder={filterOptions.priceRange.max.toString()}
                     min={filterOptions.priceRange.min}
                     max={filterOptions.priceRange.max}
-                    className="w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-2 py-1.5 text-sm border border-surface-300 dark:border-surface-600 rounded focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                   />
                 </div>
               </div>
               <button
                 onClick={applyPriceFilter}
-                className="w-full px-3 py-1.5 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
+                className="w-full px-3 py-1.5 text-sm bg-primary-600 text-white rounded hover:bg-primary-700 transition-colors"
               >
                 Aplicar
               </button>
@@ -264,11 +264,11 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
             onClick={() => toggleSection('availability')}
             className="w-full flex items-center justify-between text-left mb-3"
           >
-            <span className="font-medium text-gray-900 dark:text-white">Disponibilidad</span>
+            <span className="font-medium text-surface-900 dark:text-white">Disponibilidad</span>
             {expandedSections.availability ? (
-              <ChevronUpIcon className="h-5 w-5 text-gray-500" />
+              <ChevronUpIcon className="h-5 w-5 text-surface-500 dark:text-surface-400" />
             ) : (
-              <ChevronDownIcon className="h-5 w-5 text-gray-500" />
+              <ChevronDownIcon className="h-5 w-5 text-surface-500 dark:text-surface-400" />
             )}
           </button>
 
@@ -279,9 +279,9 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
                   type="checkbox"
                   checked={localFilters.inStock}
                   onChange={() => handleToggleFilter('inStock')}
-                  className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                  className="w-4 h-4 text-primary-600 border-surface-300 dark:border-surface-600 rounded focus:ring-primary-500"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                <span className="text-sm text-surface-700 dark:text-surface-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">
                   Solo en stock
                 </span>
               </label>
@@ -291,9 +291,9 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
                   type="checkbox"
                   checked={localFilters.onSale}
                   onChange={() => handleToggleFilter('onSale')}
-                  className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                  className="w-4 h-4 text-primary-600 border-surface-300 dark:border-surface-600 rounded focus:ring-primary-500"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                <span className="text-sm text-surface-700 dark:text-surface-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">
                   En oferta
                 </span>
               </label>
@@ -303,9 +303,9 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
                   type="checkbox"
                   checked={localFilters.featured}
                   onChange={() => handleToggleFilter('featured')}
-                  className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                  className="w-4 h-4 text-primary-600 border-surface-300 dark:border-surface-600 rounded focus:ring-primary-500"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                <span className="text-sm text-surface-700 dark:text-surface-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">
                   Destacados
                 </span>
               </label>
@@ -319,11 +319,11 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
             onClick={() => toggleSection('sort')}
             className="w-full flex items-center justify-between text-left mb-3"
           >
-            <span className="font-medium text-gray-900 dark:text-white">Ordenar por</span>
+            <span className="font-medium text-surface-900 dark:text-white">Ordenar por</span>
             {expandedSections.sort ? (
-              <ChevronUpIcon className="h-5 w-5 text-gray-500" />
+              <ChevronUpIcon className="h-5 w-5 text-surface-500 dark:text-surface-400" />
             ) : (
-              <ChevronDownIcon className="h-5 w-5 text-gray-500" />
+              <ChevronDownIcon className="h-5 w-5 text-surface-500 dark:text-surface-400" />
             )}
           </button>
 
@@ -331,7 +331,7 @@ const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {
             <select
               value={`${localFilters.sortBy}:${localFilters.sortOrder}`}
               onChange={(e) => handleSortChange(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-3 py-2 text-sm border border-surface-300 dark:border-surface-600 rounded focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
             >
               {filterOptions.sortOptions.map(option => (
                 <option key={option.value} value={option.value}>

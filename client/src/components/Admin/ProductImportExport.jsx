@@ -190,7 +190,7 @@ const ProductImportExport = ({ onImportSuccess }) => {
       <div className="flex flex-wrap gap-3">
         <button
           onClick={handleDownloadTemplate}
-          className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm text-sm font-medium text-surface-700 dark:text-surface-300 dark:text-surface-200 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
         >
           <DocumentArrowDownIcon className="h-5 w-5 mr-2" />
           Plantilla Excel
@@ -207,7 +207,7 @@ const ProductImportExport = ({ onImportSuccess }) => {
         <button
           onClick={handleExport}
           disabled={exporting}
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
           {exporting ? 'Exportando...' : 'Exportar Excel'}
@@ -218,14 +218,14 @@ const ProductImportExport = ({ onImportSuccess }) => {
       {showImportModal && (
         <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 bg-gray-500 dark:bg-gray-900 bg-opacity-75 dark:bg-opacity-75 transition-opacity" aria-hidden="true" onClick={() => setShowImportModal(false)}></div>
+            <div className="fixed inset-0 bg-surface-500 dark:bg-surface-900 bg-opacity-75 dark:bg-opacity-75 transition-opacity" aria-hidden="true" onClick={() => setShowImportModal(false)}></div>
 
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-            <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full sm:p-6">
+            <div className="inline-block align-bottom bg-white dark:bg-surface-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full sm:p-6">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                  <h3 className="text-lg leading-6 font-medium text-surface-900 dark:text-white">
                     Importar Productos desde Excel
                   </h3>
                   <button
@@ -234,19 +234,19 @@ const ProductImportExport = ({ onImportSuccess }) => {
                       setSelectedFile(null)
                       setPreview(null)
                     }}
-                    className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+                    className="text-surface-400 hover:text-surface-500 dark:text-surface-400 dark:hover:text-surface-300"
                   >
                     <XCircleIcon className="h-6 w-6" />
                   </button>
                 </div>
 
                 <div className="mt-4">
-                  <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6">
+                  <div className="border-2 border-dashed border-surface-300 dark:border-surface-600 rounded-lg p-6">
                     <div className="text-center">
-                      <ArrowUpTrayIcon className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
+                      <ArrowUpTrayIcon className="mx-auto h-12 w-12 text-surface-400 dark:text-surface-500 dark:text-surface-400" />
                       <div className="mt-4">
                         <label htmlFor="file-upload" className="cursor-pointer">
-                          <span className="mt-2 block text-sm font-medium text-gray-900 dark:text-white">
+                          <span className="mt-2 block text-sm font-medium text-surface-900 dark:text-white">
                             {selectedFile ? selectedFile.name : 'Selecciona un archivo Excel'}
                           </span>
                           <input
@@ -257,12 +257,12 @@ const ProductImportExport = ({ onImportSuccess }) => {
                             className="sr-only"
                             onChange={handleFileSelect}
                           />
-                          <span className="mt-1 block text-sm text-gray-500 dark:text-gray-400">
+                          <span className="mt-1 block text-sm text-surface-500 dark:text-surface-400">
                             o arrastra y suelta
                           </span>
                         </label>
                       </div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                      <p className="text-xs text-surface-500 dark:text-surface-400 mt-2">
                         Archivos .xlsx o .xls hasta 10MB
                       </p>
                     </div>
@@ -272,7 +272,7 @@ const ProductImportExport = ({ onImportSuccess }) => {
                         <button
                           onClick={handlePreview}
                           disabled={importing}
-                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
                         >
                           {importing ? 'Procesando...' : 'Vista Previa'}
                         </button>
@@ -283,8 +283,8 @@ const ProductImportExport = ({ onImportSuccess }) => {
                   {/* Preview Results */}
                   {preview && (
                     <div className="mt-6 space-y-4">
-                      <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">
+                      <div className="bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 rounded-lg p-4">
+                        <h4 className="text-sm font-medium text-surface-900 dark:text-white mb-3">
                           Resumen de Importación
                         </h4>
                         <div className="grid grid-cols-3 gap-4">
@@ -292,19 +292,19 @@ const ProductImportExport = ({ onImportSuccess }) => {
                             <p className="text-2xl font-bold text-green-600 dark:text-green-400">
                               {preview.successCount}
                             </p>
-                            <p className="text-sm text-gray-600 dark:text-gray-300">Productos válidos</p>
+                            <p className="text-sm text-surface-600 dark:text-surface-400 dark:text-surface-300">Productos válidos</p>
                           </div>
                           <div className="text-center">
                             <p className="text-2xl font-bold text-red-600 dark:text-red-400">
                               {preview.errorCount}
                             </p>
-                            <p className="text-sm text-gray-600 dark:text-gray-300">Errores</p>
+                            <p className="text-sm text-surface-600 dark:text-surface-400 dark:text-surface-300">Errores</p>
                           </div>
                           <div className="text-center">
                             <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
                               {preview.warningCount}
                             </p>
-                            <p className="text-sm text-gray-600 dark:text-gray-300">Advertencias</p>
+                            <p className="text-sm text-surface-600 dark:text-surface-400 dark:text-surface-300">Advertencias</p>
                           </div>
                         </div>
                       </div>
@@ -395,7 +395,7 @@ const ProductImportExport = ({ onImportSuccess }) => {
                       setSelectedFile(null)
                       setPreview(null)
                     }}
-                    className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm text-sm font-medium text-surface-700 dark:text-surface-300 dark:text-surface-200 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                   >
                     Cancelar
                   </button>

@@ -50,7 +50,7 @@ const WishlistButton = ({
         ${sizeClasses[size]}
         ${inWishlist 
           ? 'bg-red-50 text-red-600 hover:bg-red-100' 
-          : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-300'
+          : 'bg-white dark:bg-surface-800 text-surface-600 dark:text-surface-400 hover:bg-surface-50 dark:bg-surface-900 border border-surface-300'
         }
         rounded-full
         flex items-center justify-center

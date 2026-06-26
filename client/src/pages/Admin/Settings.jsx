@@ -325,79 +325,79 @@ const Settings = () => {
   const renderGeneralSettings = () => (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Información de la Tienda</h3>
+        <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">Información de la Tienda</h3>
         <div className="grid grid-cols-1 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">
               Nombre de la tienda
             </label>
             <input
               type="text"
               value={settings.site_name?.value || ''}
               onChange={(e) => setSettings({...settings, site_name: {...settings.site_name, value: e.target.value}})}
-              className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
             />
             <button
               onClick={() => handleSave('site_name', settings.site_name?.value)}
               disabled={saving}
-              className="mt-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 disabled:opacity-50"
+              className="mt-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
             >
               {saving ? 'Guardando...' : 'Guardar Nombre'}
             </button>
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">
               Descripción
             </label>
             <textarea
               value={settings.site_description?.value || ''}
               onChange={(e) => setSettings({...settings, site_description: {...settings.site_description, value: e.target.value}})}
               rows={3}
-              className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
             />
             <button
               onClick={() => handleSave('site_description', settings.site_description?.value)}
               disabled={saving}
-              className="mt-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 disabled:opacity-50"
+              className="mt-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
             >
               {saving ? 'Guardando...' : 'Guardar Descripción'}
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">
               Email de Contacto
             </label>
             <input
               type="email"
               value={settings.site_email?.value || ''}
               onChange={(e) => setSettings({...settings, site_email: {...settings.site_email, value: e.target.value}})}
-              className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
             />
             <button
               onClick={() => handleSave('site_email', settings.site_email?.value)}
               disabled={saving}
-              className="mt-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 disabled:opacity-50"
+              className="mt-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
             >
               {saving ? 'Guardando...' : 'Guardar Email'}
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">
               Teléfono
             </label>
             <input
               type="text"
               value={settings.site_phone?.value || ''}
               onChange={(e) => setSettings({...settings, site_phone: {...settings.site_phone, value: e.target.value}})}
-              className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
             />
             <button
               onClick={() => handleSave('site_phone', settings.site_phone?.value)}
               disabled={saving}
-              className="mt-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 disabled:opacity-50"
+              className="mt-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
             >
               {saving ? 'Guardando...' : 'Guardar Teléfono'}
             </button>
@@ -410,15 +410,15 @@ const Settings = () => {
   const renderAppearanceSettings = () => (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Logo de la Tienda</h3>
+        <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">Logo de la Tienda</h3>
         
         {/* Logo Preview */}
         {logoPreview && (
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
               Vista Previa
             </label>
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+            <div className="border-2 border-dashed border-surface-300 dark:border-surface-600 rounded-lg p-4 bg-surface-50 dark:bg-surface-900 dark:bg-surface-800">
               <img 
                 src={logoPreview} 
                 alt="Logo preview" 
@@ -433,13 +433,13 @@ const Settings = () => {
 
         {/* Upload Logo */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
             Subir Nuevo Logo
           </label>
           <div className="flex items-center space-x-4">
-            <label className="flex items-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-600">
-              <CloudArrowUpIcon className="h-5 w-5 text-gray-400 dark:text-gray-300 mr-2" />
-              <span className="text-sm text-gray-700 dark:text-gray-300">
+            <label className="flex items-center px-4 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm cursor-pointer hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600">
+              <CloudArrowUpIcon className="h-5 w-5 text-surface-400 dark:text-surface-300 mr-2" />
+              <span className="text-sm text-surface-700 dark:text-surface-300">
                 {uploading ? 'Subiendo...' : 'Seleccionar Archivo'}
               </span>
               <input
@@ -450,7 +450,7 @@ const Settings = () => {
                 className="hidden"
               />
             </label>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
+            <span className="text-sm text-surface-500 dark:text-surface-400">
               JPG, PNG, GIF, SVG o WebP (máx. 5MB)
             </span>
           </div>
@@ -458,7 +458,7 @@ const Settings = () => {
 
         {/* URL Logo Alternative */}
         <div className="mt-6">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">
             O ingresa una URL
           </label>
           <div className="mt-1 flex space-x-2">
@@ -471,12 +471,12 @@ const Settings = () => {
                 setLogoPreview(newValue)
               }}
               placeholder="https://ejemplo.com/logo.png"
-              className="flex-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              className="flex-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
             />
             <button
               onClick={() => handleSave('site_logo', settings.site_logo?.value)}
               disabled={saving}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 disabled:opacity-50"
+              className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
             >
               {saving ? 'Guardando...' : 'Guardar'}
             </button>
@@ -489,14 +489,14 @@ const Settings = () => {
   const renderHomeSettings = () => (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Sliders del Home</h3>
+        <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">Sliders del Home</h3>
         
         {/* Existing Sliders */}
         <div className="space-y-4 mb-6">
           {sliders.map((slider, index) => (
-            <div key={slider.id} className="border border-gray-300 dark:border-gray-600 rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+            <div key={slider.id} className="border border-surface-300 dark:border-surface-600 rounded-lg p-4 bg-surface-50 dark:bg-surface-900 dark:bg-surface-800">
               <div className="flex items-start justify-between mb-4">
-                <h4 className="text-md font-medium text-gray-900 dark:text-white">Slider #{index + 1}</h4>
+                <h4 className="text-md font-medium text-surface-900 dark:text-white">Slider #{index + 1}</h4>
                 <button
                   onClick={() => handleDeleteSlider(slider.id)}
                   className="text-red-600 hover:text-red-800 dark:text-red-400"
@@ -507,52 +507,52 @@ const Settings = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Título</label>
                   <input
                     type="text"
                     value={slider.title}
                     onChange={(e) => handleUpdateSlider(slider.id, 'title', e.target.value)}
-                    className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Subtítulo</label>
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Subtítulo</label>
                   <input
                     type="text"
                     value={slider.subtitle || ''}
                     onChange={(e) => handleUpdateSlider(slider.id, 'subtitle', e.target.value)}
-                    className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">URL de Imagen</label>
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">URL de Imagen</label>
                   <input
                     type="url"
                     value={slider.image}
                     onChange={(e) => handleUpdateSlider(slider.id, 'image', e.target.value)}
-                    className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Enlace (opcional)</label>
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Enlace (opcional)</label>
                   <input
                     type="url"
                     value={slider.link || ''}
                     onChange={(e) => handleUpdateSlider(slider.id, 'link', e.target.value)}
-                    className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Orden</label>
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Orden</label>
                   <input
                     type="number"
                     value={slider.order || 0}
                     onChange={(e) => handleUpdateSlider(slider.id, 'order', parseInt(e.target.value))}
-                    className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                   />
                 </div>
               </div>
@@ -571,61 +571,61 @@ const Settings = () => {
         )}
 
         {/* Add New Slider */}
-        <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6">
-          <h4 className="text-md font-medium text-gray-900 dark:text-white mb-4">Agregar Nuevo Slider</h4>
+        <div className="border-2 border-dashed border-surface-300 dark:border-surface-600 rounded-lg p-6">
+          <h4 className="text-md font-medium text-surface-900 dark:text-white mb-4">Agregar Nuevo Slider</h4>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Título *</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Título *</label>
               <input
                 type="text"
                 value={newSlider.title}
                 onChange={(e) => setNewSlider({...newSlider, title: e.target.value})}
                 placeholder="Título del slider"
-                className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Subtítulo</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Subtítulo</label>
               <input
                 type="text"
                 value={newSlider.subtitle}
                 onChange={(e) => setNewSlider({...newSlider, subtitle: e.target.value})}
                 placeholder="Subtítulo del slider"
-                className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">URL de Imagen *</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">URL de Imagen *</label>
               <input
                 type="url"
                 value={newSlider.image}
                 onChange={(e) => setNewSlider({...newSlider, image: e.target.value})}
                 placeholder="https://ejemplo.com/imagen.jpg"
-                className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Enlace (opcional)</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Enlace (opcional)</label>
               <input
                 type="url"
                 value={newSlider.link}
                 onChange={(e) => setNewSlider({...newSlider, link: e.target.value})}
                 placeholder="https://ejemplo.com/destino"
-                className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Orden</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Orden</label>
               <input
                 type="number"
                 value={newSlider.order}
                 onChange={(e) => setNewSlider({...newSlider, order: parseInt(e.target.value)})}
-                className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
               />
             </div>
           </div>
@@ -633,7 +633,7 @@ const Settings = () => {
           <button
             onClick={handleAddSlider}
             disabled={saving}
-            className="mt-4 flex items-center bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 disabled:opacity-50"
+            className="mt-4 flex items-center bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
           >
             <PlusIcon className="h-5 w-5 mr-2" />
             Agregar Slider
@@ -642,31 +642,31 @@ const Settings = () => {
 
         {/* Featured Products Section Toggle */}
         <div className="mt-8">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Productos Destacados</h3>
+          <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">Productos Destacados</h3>
           <div className="flex items-center">
             <input
               type="checkbox"
               id="show_featured"
               checked={settings.show_featured_products?.value === 'true' || settings.show_featured_products?.value === true}
               onChange={(e) => handleSave('show_featured_products', e.target.checked.toString())}
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-surface-300 dark:border-surface-600 rounded"
             />
-            <label htmlFor="show_featured" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+            <label htmlFor="show_featured" className="ml-2 block text-sm text-surface-700 dark:text-surface-300">
               Mostrar productos destacados en el home
             </label>
           </div>
         </div>
 
         {/* Additional Sections */}
-        <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Secciones Adicionales</h3>
+        <div className="mt-8 border-t border-surface-200 dark:border-surface-700 pt-8">
+          <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">Secciones Adicionales</h3>
           
           {/* Existing Sections */}
           <div className="space-y-4 mb-6">
             {sections.map((section, index) => {
               const IconComponent = getIconComponent(section.icon)
               return (
-                <div key={section.id} className="border border-gray-300 dark:border-gray-600 rounded-lg p-6 bg-gray-50 dark:bg-gray-800">
+                <div key={section.id} className="border border-surface-300 dark:border-surface-600 rounded-lg p-6 bg-surface-50 dark:bg-surface-900 dark:bg-surface-800">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center space-x-3">
                       <div 
@@ -679,17 +679,17 @@ const Settings = () => {
                         />
                       </div>
                       <div>
-                        <h4 className="text-md font-medium text-gray-900 dark:text-white">Sección #{index + 1}</h4>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{section.title}</p>
+                        <h4 className="text-md font-medium text-surface-900 dark:text-white">Sección #{index + 1}</h4>
+                        <p className="text-sm text-surface-500 dark:text-surface-400">{section.title}</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <label className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                      <label className="flex items-center space-x-2 text-sm text-surface-700 dark:text-surface-300">
                         <input
                           type="checkbox"
                           checked={section.enabled !== false}
                           onChange={(e) => handleUpdateSection(section.id, 'enabled', e.target.checked)}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                          className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-surface-300 dark:border-surface-600 rounded"
                         />
                         <span>Activa</span>
                       </label>
@@ -704,31 +704,31 @@ const Settings = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Título</label>
                       <input
                         type="text"
                         value={section.title}
                         onChange={(e) => handleUpdateSection(section.id, 'title', e.target.value)}
-                        className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                        className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Subtítulo</label>
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Subtítulo</label>
                       <input
                         type="text"
                         value={section.subtitle || ''}
                         onChange={(e) => handleUpdateSection(section.id, 'subtitle', e.target.value)}
-                        className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                        className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Icono</label>
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Icono</label>
                       <select
                         value={section.icon}
                         onChange={(e) => handleUpdateSection(section.id, 'icon', e.target.value)}
-                        className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                        className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                       >
                         {availableIcons.map(icon => (
                           <option key={icon} value={icon}>
@@ -739,79 +739,79 @@ const Settings = () => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color de Fondo</label>
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Color de Fondo</label>
                       <div className="mt-1 flex items-center space-x-2">
                         <input
                           type="color"
                           value={section.backgroundColor}
                           onChange={(e) => handleUpdateSection(section.id, 'backgroundColor', e.target.value)}
-                          className="h-10 w-20 border-gray-300 dark:border-gray-600 rounded cursor-pointer"
+                          className="h-10 w-20 border-surface-300 dark:border-surface-600 rounded cursor-pointer"
                         />
                         <input
                           type="text"
                           value={section.backgroundColor}
                           onChange={(e) => handleUpdateSection(section.id, 'backgroundColor', e.target.value)}
-                          className="flex-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white text-sm"
+                          className="flex-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white text-sm"
                           placeholder="#f3f4f6"
                         />
                       </div>
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color de Texto/Icono</label>
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Color de Texto/Icono</label>
                       <div className="mt-1 flex items-center space-x-2">
                         <input
                           type="color"
                           value={section.textColor}
                           onChange={(e) => handleUpdateSection(section.id, 'textColor', e.target.value)}
-                          className="h-10 w-20 border-gray-300 dark:border-gray-600 rounded cursor-pointer"
+                          className="h-10 w-20 border-surface-300 dark:border-surface-600 rounded cursor-pointer"
                         />
                         <input
                           type="text"
                           value={section.textColor}
                           onChange={(e) => handleUpdateSection(section.id, 'textColor', e.target.value)}
-                          className="flex-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white text-sm"
+                          className="flex-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white text-sm"
                           placeholder="#111827"
                         />
                       </div>
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Texto del Botón</label>
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Texto del Botón</label>
                       <input
                         type="text"
                         value={section.buttonText || ''}
                         onChange={(e) => handleUpdateSection(section.id, 'buttonText', e.target.value)}
                         placeholder="Ver más"
-                        className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                        className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Enlace del Botón</label>
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Enlace del Botón</label>
                       <input
                         type="url"
                         value={section.buttonLink || ''}
                         onChange={(e) => handleUpdateSection(section.id, 'buttonLink', e.target.value)}
                         placeholder="/productos"
-                        className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                        className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                       />
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Orden</label>
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Orden</label>
                       <input
                         type="number"
                         value={section.order || 0}
                         onChange={(e) => handleUpdateSection(section.id, 'order', parseInt(e.target.value))}
-                        className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                        className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                       />
                     </div>
                   </div>
                   
                   {/* Preview */}
-                  <div className="mt-4 p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Vista Previa:</p>
+                  <div className="mt-4 p-4 border-2 border-dashed border-surface-300 dark:border-surface-600 rounded-lg">
+                    <p className="text-xs text-surface-500 dark:text-surface-400 mb-2">Vista Previa:</p>
                     <div 
                       className="p-4 rounded-lg text-center"
                       style={{ backgroundColor: section.backgroundColor }}
@@ -853,38 +853,38 @@ const Settings = () => {
           )}
 
           {/* Add New Section */}
-          <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6">
-            <h4 className="text-md font-medium text-gray-900 dark:text-white mb-4">Agregar Nueva Sección</h4>
+          <div className="border-2 border-dashed border-surface-300 dark:border-surface-600 rounded-lg p-6">
+            <h4 className="text-md font-medium text-surface-900 dark:text-white mb-4">Agregar Nueva Sección</h4>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Título *</label>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Título *</label>
                 <input
                   type="text"
                   value={newSection.title}
                   onChange={(e) => setNewSection({...newSection, title: e.target.value})}
                   placeholder="Envío Gratis"
-                  className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                  className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Subtítulo</label>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Subtítulo</label>
                 <input
                   type="text"
                   value={newSection.subtitle}
                   onChange={(e) => setNewSection({...newSection, subtitle: e.target.value})}
                   placeholder="En compras mayores a $50"
-                  className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                  className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Icono</label>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Icono</label>
                 <select
                   value={newSection.icon}
                   onChange={(e) => setNewSection({...newSection, icon: e.target.value})}
-                  className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                  className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                 >
                   {availableIcons.map(icon => (
                     <option key={icon} value={icon}>
@@ -895,70 +895,70 @@ const Settings = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color de Fondo</label>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Color de Fondo</label>
                 <div className="mt-1 flex items-center space-x-2">
                   <input
                     type="color"
                     value={newSection.backgroundColor}
                     onChange={(e) => setNewSection({...newSection, backgroundColor: e.target.value})}
-                    className="h-10 w-20 border-gray-300 dark:border-gray-600 rounded cursor-pointer"
+                    className="h-10 w-20 border-surface-300 dark:border-surface-600 rounded cursor-pointer"
                   />
                   <input
                     type="text"
                     value={newSection.backgroundColor}
                     onChange={(e) => setNewSection({...newSection, backgroundColor: e.target.value})}
-                    className="flex-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white text-sm"
+                    className="flex-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white text-sm"
                   />
                 </div>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color de Texto/Icono</label>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Color de Texto/Icono</label>
                 <div className="mt-1 flex items-center space-x-2">
                   <input
                     type="color"
                     value={newSection.textColor}
                     onChange={(e) => setNewSection({...newSection, textColor: e.target.value})}
-                    className="h-10 w-20 border-gray-300 dark:border-gray-600 rounded cursor-pointer"
+                    className="h-10 w-20 border-surface-300 dark:border-surface-600 rounded cursor-pointer"
                   />
                   <input
                     type="text"
                     value={newSection.textColor}
                     onChange={(e) => setNewSection({...newSection, textColor: e.target.value})}
-                    className="flex-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white text-sm"
+                    className="flex-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white text-sm"
                   />
                 </div>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Texto del Botón</label>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Texto del Botón</label>
                 <input
                   type="text"
                   value={newSection.buttonText}
                   onChange={(e) => setNewSection({...newSection, buttonText: e.target.value})}
                   placeholder="Ver más"
-                  className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                  className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Enlace del Botón</label>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Enlace del Botón</label>
                 <input
                   type="url"
                   value={newSection.buttonLink}
                   onChange={(e) => setNewSection({...newSection, buttonLink: e.target.value})}
                   placeholder="/productos"
-                  className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                  className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Orden</label>
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300">Orden</label>
                 <input
                   type="number"
                   value={newSection.order}
                   onChange={(e) => setNewSection({...newSection, order: parseInt(e.target.value)})}
-                  className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                  className="mt-1 block w-full border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                 />
               </div>
             </div>
@@ -966,7 +966,7 @@ const Settings = () => {
             <button
               onClick={handleAddSection}
               disabled={saving}
-              className="mt-4 flex items-center bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 disabled:opacity-50"
+              className="mt-4 flex items-center bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
             >
               <PlusIcon className="h-5 w-5 mr-2" />
               Agregar Sección
@@ -980,7 +980,7 @@ const Settings = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     )
   }
@@ -989,8 +989,8 @@ const Settings = () => {
     <div>
       <div className="sm:flex sm:items-center mb-8">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Configuración</h1>
-          <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+          <h1 className="text-2xl font-bold text-surface-900 dark:text-white">Configuración</h1>
+          <p className="mt-2 text-sm text-surface-700 dark:text-surface-300">
             Personaliza la configuración de tu tienda
           </p>
         </div>
@@ -1019,7 +1019,7 @@ const Settings = () => {
       )}
 
       {/* Tabs */}
-      <div className="border-b border-gray-200 mb-6">
+      <div className="border-b border-surface-200 dark:border-surface-700 mb-6">
         <nav className="-mb-px flex space-x-8">
           {tabs.map((tab) => {
             const Icon = tab.icon
@@ -1030,8 +1030,8 @@ const Settings = () => {
                 className={`
                   flex items-center py-4 px-1 border-b-2 font-medium text-sm
                   ${activeTab === tab.id
-                    ? 'border-indigo-500 text-indigo-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-primary-500 text-primary-600'
+                    : 'border-transparent text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:text-surface-300 hover:border-surface-300'
                   }
                 `}
               >
@@ -1044,7 +1044,7 @@ const Settings = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+      <div className="bg-white dark:bg-surface-800 shadow rounded-lg p-6">
         {activeTab === 'general' && renderGeneralSettings()}
         {activeTab === 'appearance' && renderAppearanceSettings()}
       </div>

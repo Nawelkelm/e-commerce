@@ -122,7 +122,7 @@ function App() {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <Router>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen bg-surface-50 dark:bg-surface-900">
             <Routes>
             {/* Rutas públicas */}
             <Route path="/" element={<Layout />}>
@@ -206,22 +206,22 @@ function App() {
             toastOptions={{
               duration: 4000,
               style: {
-                background: '#363636',
-                color: '#fff',
+                background: '#171717',
+                color: '#fafafa',
+                borderRadius: '12px',
+                padding: '12px 16px',
+                fontSize: '14px',
+                fontWeight: '500',
+                boxShadow: '0 12px 40px -8px rgba(0,0,0,0.3)',
+                border: '1px solid rgba(255,255,255,0.06)',
               },
               success: {
                 duration: 3000,
-                iconTheme: {
-                  primary: '#4ade80',
-                  secondary: '#fff',
-                },
+                iconTheme: { primary: '#22c55e', secondary: '#fff' },
               },
               error: {
                 duration: 5000,
-                iconTheme: {
-                  primary: '#ef4444',
-                  secondary: '#fff',
-                },
+                iconTheme: { primary: '#ef4444', secondary: '#fff' },
               },
             }}
           />

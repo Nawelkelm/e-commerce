@@ -3,6 +3,8 @@ const EmailLog = require('../models/EmailLog');
 const { sendEmail, sendTemplateEmail } = require('../services/emailServiceHelpers');
 const { replaceVariables } = require('../services/emailServiceHelpers');
 const { Op } = require('sequelize');
+const { sequelize } = require('../config/database');
+const logger = require('../config/logger');
 
 // Get all email templates
 exports.getAllTemplates = async (req, res) => {
@@ -36,7 +38,7 @@ exports.getAllTemplates = async (req, res) => {
       include: [{
         model: require('../models/User'),
         as: 'creator',
-        attributes: ['id', 'name', 'email']
+        attributes: ['id', 'firstName', 'lastName', 'email']
       }]
     });
     
@@ -49,7 +51,7 @@ exports.getAllTemplates = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error fetching email templates:', error);
+    logger.error('Error fetching email templates:', error);
     res.status(500).json({
       success: false,
       message: 'Error al obtener plantillas de email',
@@ -67,7 +69,7 @@ exports.getTemplateById = async (req, res) => {
       include: [{
         model: require('../models/User'),
         as: 'creator',
-        attributes: ['id', 'name', 'email']
+        attributes: ['id', 'firstName', 'lastName', 'email']
       }]
     });
     
@@ -84,7 +86,7 @@ exports.getTemplateById = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error fetching email template:', error);
+    logger.error('Error fetching email template:', error);
     res.status(500).json({
       success: false,
       message: 'Error al obtener plantilla',
@@ -141,7 +143,7 @@ exports.createTemplate = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error creating email template:', error);
+    logger.error('Error creating email template:', error);
     res.status(500).json({
       success: false,
       message: 'Error al crear plantilla',
@@ -201,7 +203,7 @@ exports.updateTemplate = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error updating email template:', error);
+    logger.error('Error updating email template:', error);
     res.status(500).json({
       success: false,
       message: 'Error al actualizar plantilla',
@@ -232,7 +234,7 @@ exports.deleteTemplate = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error deleting email template:', error);
+    logger.error('Error deleting email template:', error);
     res.status(500).json({
       success: false,
       message: 'Error al eliminar plantilla',
@@ -264,7 +266,7 @@ exports.toggleTemplateStatus = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error toggling template status:', error);
+    logger.error('Error toggling template status:', error);
     res.status(500).json({
       success: false,
       message: 'Error al cambiar estado de plantilla',
@@ -348,7 +350,7 @@ exports.sendTestEmail = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error sending test email:', error);
+    logger.error('Error sending test email:', error);
     res.status(500).json({
       success: false,
       message: 'Error al enviar email de prueba',
@@ -398,7 +400,7 @@ exports.getEmailLogs = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error fetching email logs:', error);
+    logger.error('Error fetching email logs:', error);
     res.status(500).json({
       success: false,
       message: 'Error al obtener logs de emails',
@@ -449,14 +451,14 @@ exports.getEmailStats = async (req, res) => {
       where: { createdAt: { [Op.gte]: startDate } },
       attributes: [
         'templateId',
-        [sequelize.fn('COUNT', sequelize.col('id')), 'count']
+        [sequelize.fn('COUNT', sequelize.col('EmailLog.id')), 'count']
       ],
       include: [{
         model: EmailTemplate,
         attributes: ['name', 'type']
       }],
       group: ['templateId', 'EmailTemplate.id'],
-      order: [[sequelize.fn('COUNT', sequelize.col('id')), 'DESC']],
+      order: [[sequelize.fn('COUNT', sequelize.col('EmailLog.id')), 'DESC']],
       limit: 10
     });
     
@@ -477,7 +479,7 @@ exports.getEmailStats = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error fetching email stats:', error);
+    logger.error('Error fetching email stats:', error);
     res.status(500).json({
       success: false,
       message: 'Error al obtener estadísticas de emails',

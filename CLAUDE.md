@@ -4,10 +4,11 @@ Guía para Claude Code (y cualquier agente) al trabajar en este repositorio.
 
 ## Qué es este proyecto
 
-E-commerce B2C full-stack para Argentina. Frontend React/Vite, backend
-Node/Express, PostgreSQL + Sequelize. Pagos con MercadoPago y transferencia,
-facturación AFIP, logística OCA/Andreani/Correo Argentino. Panel admin extenso.
-Dominio de producción: **www.dojiprint.com.ar** / API **api.dojiprint.com.ar**.
+**TiendaKit** — Plataforma e-commerce white-label para PyMEs argentinas.
+Frontend React/Vite, backend Node/Express, PostgreSQL + Sequelize.
+Pagos con MercadoPago y transferencia, facturación AFIP, logística
+OCA/Andreani/Correo Argentino. Panel admin extenso.
+Cada cliente despliega con su propio dominio (configurar en `.env`).
 
 Ver `architecture.md` (arquitectura) y `ROADMAP.md` (backlog y prioridades).
 
@@ -61,7 +62,7 @@ npm run docker:rebuild          # reconstruye
 3. **No** introducir nuevos `sequelize.sync({ alter: true })` ni depender de él en producción. Usar migraciones versionadas (ver `ROADMAP.md` V1.3).
 4. **No** dejar `console.log`/debug en commits (limpiar antes de cerrar tarea).
 5. **No** romper la compatibilidad con Docker/Coolify (servicios, puertos, healthchecks).
-6. **No** apuntar URLs ni CORS a dominios de Render; el objetivo es dojiprint.com.ar vía Coolify.
+6. **No** apuntar URLs ni CORS a dominios de Render; usar el dominio del cliente vía Coolify.
 7. Antes de borrar/sobrescribir un archivo, verificá que no esté importado.
 
 ## Flujo de trabajo por tarea (definición de "hecho")

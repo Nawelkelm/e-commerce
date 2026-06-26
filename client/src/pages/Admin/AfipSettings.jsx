@@ -178,34 +178,34 @@ const AfipSettings = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-surface-50 dark:bg-surface-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-bold text-surface-900 dark:text-white">
             Configuración AFIP
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">
+          <p className="mt-2 text-surface-600 dark:text-surface-400 dark:text-surface-300">
             Sistema de facturación electrónica de Argentina
           </p>
         </div>
 
         {/* Tabs */}
         <div className="mb-6">
-          <div className="border-b border-gray-200 dark:border-gray-700">
+          <div className="border-b border-surface-200 dark:border-surface-700">
             <nav className="-mb-px flex space-x-8">
               <button
                 onClick={() => setActiveTab('config')}
                 className={`${
                   activeTab === 'config'
-                    ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                    : 'border-transparent text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:text-surface-300 hover:border-surface-300'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
               >
                 <ClipboardDocumentCheckIcon className="h-5 w-5 inline mr-2" />
@@ -215,8 +215,8 @@ const AfipSettings = () => {
                 onClick={() => setActiveTab('connection')}
                 className={`${
                   activeTab === 'connection'
-                    ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                    : 'border-transparent text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:text-surface-300 hover:border-surface-300'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
               >
                 <ArrowPathIcon className="h-5 w-5 inline mr-2" />
@@ -226,8 +226,8 @@ const AfipSettings = () => {
                 onClick={() => setActiveTab('stats')}
                 className={`${
                   activeTab === 'stats'
-                    ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                    : 'border-transparent text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:text-surface-300 hover:border-surface-300'
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
               >
                 <DocumentTextIcon className="h-5 w-5 inline mr-2" />
@@ -239,12 +239,12 @@ const AfipSettings = () => {
 
         {/* Configuration Tab */}
         {activeTab === 'config' && (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+          <div className="bg-white dark:bg-surface-800 shadow rounded-lg p-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* CUIT y Razón Social */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                     CUIT *
                   </label>
                   <input
@@ -254,12 +254,12 @@ const AfipSettings = () => {
                     placeholder="20123456789 (sin guiones)"
                     value={formData.cuit}
                     onChange={(e) => setFormData({ ...formData, cuit: e.target.value.replace(/\D/g, '') })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                     Razón Social *
                   </label>
                   <input
@@ -268,27 +268,27 @@ const AfipSettings = () => {
                     placeholder="Mi Empresa S.A."
                     value={formData.businessName}
                     onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                   />
                 </div>
               </div>
 
               {/* Certificados */}
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+              <div className="border-t border-surface-200 dark:border-surface-700 pt-6">
+                <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">
                   Certificados Digitales
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                       Certificado (.crt) *
                     </label>
                     <input
                       type="file"
                       accept=".crt,.pem"
                       onChange={(e) => handleFileUpload('certificate', e)}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white"
                     />
                     {credentials?.hasCredentials && (
                       <p className="mt-2 text-sm text-green-600">
@@ -298,14 +298,14 @@ const AfipSettings = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                       Clave Privada (.key) *
                     </label>
                     <input
                       type="file"
                       accept=".key,.pem"
                       onChange={(e) => handleFileUpload('privateKey', e)}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white"
                     />
                     {credentials?.hasCredentials && (
                       <p className="mt-2 text-sm text-green-600">
@@ -317,20 +317,20 @@ const AfipSettings = () => {
               </div>
 
               {/* Configuración Fiscal */}
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+              <div className="border-t border-surface-200 dark:border-surface-700 pt-6">
+                <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">
                   Configuración Fiscal
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                       Categoría Tributaria *
                     </label>
                     <select
                       value={formData.taxCategory}
                       onChange={(e) => setFormData({ ...formData, taxCategory: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                     >
                       <option value="responsable_inscripto">Responsable Inscripto</option>
                       <option value="responsable_monotributo">Monotributo</option>
@@ -339,7 +339,7 @@ const AfipSettings = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                       Punto de Venta *
                     </label>
                     <input
@@ -349,18 +349,18 @@ const AfipSettings = () => {
                       required
                       value={formData.pointOfSale}
                       onChange={(e) => setFormData({ ...formData, pointOfSale: parseInt(e.target.value) })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                       Ambiente
                     </label>
                     <select
                       value={formData.production}
                       onChange={(e) => setFormData({ ...formData, production: e.target.value === 'true' })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                     >
                       <option value="false">Testing (Homologación)</option>
                       <option value="true">Producción</option>
@@ -370,14 +370,14 @@ const AfipSettings = () => {
               </div>
 
               {/* Dirección */}
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+              <div className="border-t border-surface-200 dark:border-surface-700 pt-6">
+                <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">
                   Datos Adicionales
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                       Dirección
                     </label>
                     <input
@@ -385,12 +385,12 @@ const AfipSettings = () => {
                       placeholder="Av. Corrientes 1234"
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                       Ciudad
                     </label>
                     <input
@@ -398,12 +398,12 @@ const AfipSettings = () => {
                       placeholder="Buenos Aires"
                       value={formData.city}
                       onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                       Código Postal
                     </label>
                     <input
@@ -411,12 +411,12 @@ const AfipSettings = () => {
                       placeholder="C1043"
                       value={formData.postalCode}
                       onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                       Provincia
                     </label>
                     <input
@@ -424,25 +424,25 @@ const AfipSettings = () => {
                       placeholder="Buenos Aires"
                       value={formData.province}
                       onChange={(e) => setFormData({ ...formData, province: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Botones */}
-              <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex justify-end space-x-4 pt-6 border-t border-surface-200 dark:border-surface-700">
                 <button
                   type="button"
                   onClick={loadCredentials}
-                  className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="px-6 py-2 border border-surface-300 dark:border-surface-600 rounded-lg text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-700"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {saving ? 'Guardando...' : 'Guardar Configuración'}
                 </button>
@@ -453,18 +453,18 @@ const AfipSettings = () => {
 
         {/* Connection Tab */}
         {activeTab === 'connection' && (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+          <div className="bg-white dark:bg-surface-800 shadow rounded-lg p-6">
             <div className="space-y-6">
               {/* Estado Actual */}
               <div>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-4">
                   Estado de Conexión
                 </h3>
                 
                 {credentials ? (
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 space-y-3">
+                  <div className="bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 rounded-lg p-4 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
                         Estado:
                       </span>
                       <span className={`flex items-center gap-2 ${
@@ -482,29 +482,29 @@ const AfipSettings = () => {
                     </div>
                     
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
                         Ambiente:
                       </span>
-                      <span className="text-sm text-gray-900 dark:text-white">
+                      <span className="text-sm text-surface-900 dark:text-white">
                         {credentials.production ? '🔴 Producción' : '🟢 Testing'}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
                         CUIT:
                       </span>
-                      <span className="text-sm text-gray-900 dark:text-white font-mono">
+                      <span className="text-sm text-surface-900 dark:text-white font-mono">
                         {credentials.cuit?.replace(/(\d{2})(\d{8})(\d{1})/, '$1-$2-$3')}
                       </span>
                     </div>
 
                     {credentials.lastConnectionTest && (
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
                           Última prueba:
                         </span>
-                        <span className="text-sm text-gray-900 dark:text-white">
+                        <span className="text-sm text-surface-900 dark:text-white">
                           {new Date(credentials.lastConnectionTest).toLocaleString('es-AR')}
                         </span>
                       </div>
@@ -528,11 +528,11 @@ const AfipSettings = () => {
               </div>
 
               {/* Test de Conexión */}
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+              <div className="border-t border-surface-200 dark:border-surface-700 pt-6">
                 <button
                   onClick={testConnection}
                   disabled={testing || !credentials}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ArrowPathIcon className={`h-5 w-5 ${testing ? 'animate-spin' : ''}`} />
                   {testing ? 'Probando conexión...' : 'Probar Conexión con AFIP'}
@@ -559,7 +559,7 @@ const AfipSettings = () => {
                         {connectionStatus.message}
                       </h4>
                       {connectionStatus.data && (
-                        <pre className="mt-2 text-sm text-gray-700 dark:text-gray-300 overflow-auto">
+                        <pre className="mt-2 text-sm text-surface-700 dark:text-surface-300 overflow-auto">
                           {JSON.stringify(connectionStatus.data, null, 2)}
                         </pre>
                       )}
@@ -578,8 +578,8 @@ const AfipSettings = () => {
 
         {/* Stats Tab */}
         {activeTab === 'stats' && (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-6">
+          <div className="bg-white dark:bg-surface-800 shadow rounded-lg p-6">
+            <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-6">
               Estadísticas de Facturación Electrónica
             </h3>
 
@@ -587,22 +587,22 @@ const AfipSettings = () => {
               <div className="space-y-6">
                 {/* Por Estado */}
                 <div>
-                  <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  <h4 className="text-sm font-medium text-surface-700 dark:text-surface-300 mb-3">
                     Por Estado de Autorización
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {stats.byStatus && stats.byStatus.map((item) => (
-                      <div key={item.afipStatus} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                      <div key={item.afipStatus} className="bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 rounded-lg p-4">
+                        <div className="text-sm text-surface-600 dark:text-surface-400 mb-1">
                           {item.afipStatus === 'authorized' && '✅ Autorizadas'}
                           {item.afipStatus === 'pending' && '⏳ Pendientes'}
                           {item.afipStatus === 'rejected' && '❌ Rechazadas'}
                           {item.afipStatus === 'error' && '⚠️ Con Error'}
                         </div>
-                        <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                        <div className="text-2xl font-bold text-surface-900 dark:text-white">
                           {item.count}
                         </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        <div className="text-sm text-surface-600 dark:text-surface-400 mt-1">
                           ${parseFloat(item.total || 0).toFixed(2)}
                         </div>
                       </div>
@@ -611,20 +611,20 @@ const AfipSettings = () => {
                 </div>
 
                 {/* Por Tipo */}
-                <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                  <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                <div className="border-t border-surface-200 dark:border-surface-700 pt-6">
+                  <h4 className="text-sm font-medium text-surface-700 dark:text-surface-300 mb-3">
                     Por Tipo de Factura (Autorizadas)
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {stats.byType && stats.byType.map((item) => (
-                      <div key={item.invoiceType} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                        <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                      <div key={item.invoiceType} className="bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 rounded-lg p-4">
+                        <div className="text-sm text-surface-600 dark:text-surface-400 mb-1">
                           Factura {item.invoiceType}
                         </div>
-                        <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                        <div className="text-2xl font-bold text-surface-900 dark:text-white">
                           {item.count}
                         </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        <div className="text-sm text-surface-600 dark:text-surface-400 mt-1">
                           ${parseFloat(item.total || 0).toFixed(2)}
                         </div>
                       </div>
@@ -633,7 +633,7 @@ const AfipSettings = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+              <div className="text-center py-12 text-surface-500 dark:text-surface-400">
                 No hay datos disponibles
               </div>
             )}

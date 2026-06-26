@@ -169,7 +169,7 @@ const Suppliers = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-500"></div>
       </div>
     )
   }
@@ -186,7 +186,7 @@ const Suppliers = () => {
             Proveedores
           </h1>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 ml-14">
+        <p className="text-sm text-surface-600 dark:text-surface-400 ml-14">
           Gestiona los proveedores de tus productos
         </p>
       </div>
@@ -195,26 +195,26 @@ const Suppliers = () => {
       <div className="mb-6 flex flex-col sm:flex-row gap-4 justify-between">
         <div className="flex-1 max-w-md">
           <div className="relative">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-surface-400" />
             <input
               type="text"
               placeholder="Buscar proveedores..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+              className="w-full pl-10 pr-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
             />
           </div>
         </div>
 
         <div className="flex gap-3">
-          <label className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+          <label className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-600 rounded-lg cursor-pointer hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-700">
             <input
               type="checkbox"
               checked={showActiveOnly}
               onChange={(e) => setShowActiveOnly(e.target.checked)}
-              className="rounded text-indigo-600 focus:ring-indigo-500"
+              className="rounded text-primary-600 focus:ring-primary-500"
             />
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
               Solo activos
             </span>
           </label>
@@ -234,7 +234,7 @@ const Suppliers = () => {
         {filteredSuppliers.map((supplier) => (
           <div
             key={supplier.id}
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 overflow-hidden border border-gray-200 dark:border-gray-700"
+            className="bg-white dark:bg-surface-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 overflow-hidden border border-surface-200 dark:border-surface-700"
           >
             <div className="p-6">
               {/* Header */}
@@ -244,11 +244,11 @@ const Suppliers = () => {
                     <BuildingOfficeIcon className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    <h3 className="text-lg font-bold text-surface-900 dark:text-white">
                       {supplier.name}
                     </h3>
                     {supplier.contactPerson && (
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-surface-500 dark:text-surface-400">
                         {supplier.contactPerson}
                       </p>
                     )}
@@ -268,29 +268,29 @@ const Suppliers = () => {
               {/* Contact Info */}
               <div className="space-y-2 mb-4">
                 {supplier.email && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                    <EnvelopeIcon className="h-4 w-4 text-indigo-500" />
-                    <a href={`mailto:${supplier.email}`} className="hover:text-indigo-600 dark:hover:text-indigo-400">
+                  <div className="flex items-center gap-2 text-sm text-surface-600 dark:text-surface-400">
+                    <EnvelopeIcon className="h-4 w-4 text-primary-500" />
+                    <a href={`mailto:${supplier.email}`} className="hover:text-primary-600 dark:hover:text-primary-400">
                       {supplier.email}
                     </a>
                   </div>
                 )}
                 {supplier.phone && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                    <PhoneIcon className="h-4 w-4 text-indigo-500" />
-                    <a href={`tel:${supplier.phone}`} className="hover:text-indigo-600 dark:hover:text-indigo-400">
+                  <div className="flex items-center gap-2 text-sm text-surface-600 dark:text-surface-400">
+                    <PhoneIcon className="h-4 w-4 text-primary-500" />
+                    <a href={`tel:${supplier.phone}`} className="hover:text-primary-600 dark:hover:text-primary-400">
                       {supplier.phone}
                     </a>
                   </div>
                 )}
                 {supplier.website && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                    <GlobeAltIcon className="h-4 w-4 text-indigo-500" />
+                  <div className="flex items-center gap-2 text-sm text-surface-600 dark:text-surface-400">
+                    <GlobeAltIcon className="h-4 w-4 text-primary-500" />
                     <a 
                       href={supplier.website} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="hover:text-indigo-600 dark:hover:text-indigo-400 truncate"
+                      className="hover:text-primary-600 dark:hover:text-primary-400 truncate"
                     >
                       {supplier.website}
                     </a>
@@ -300,8 +300,8 @@ const Suppliers = () => {
 
               {/* Products Count */}
               <div className="mb-4 p-3 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg">
-                <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Productos: <span className="text-indigo-600 dark:text-indigo-400">{supplier.productCount || 0}</span>
+                <p className="text-sm font-semibold text-surface-700 dark:text-surface-300">
+                  Productos: <span className="text-primary-600 dark:text-primary-400">{supplier.productCount || 0}</span>
                 </p>
               </div>
 
@@ -309,7 +309,7 @@ const Suppliers = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => handleEdit(supplier)}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/30 transition-colors"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-colors"
                 >
                   <PencilIcon className="h-4 w-4" />
                   <span className="text-sm font-medium">Editar</span>
@@ -332,9 +332,9 @@ const Suppliers = () => {
 
       {filteredSuppliers.length === 0 && (
         <div className="text-center py-12">
-          <TruckIcon className="mx-auto h-12 w-12 text-gray-400" />
-          <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No hay proveedores</h3>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <TruckIcon className="mx-auto h-12 w-12 text-surface-400" />
+          <h3 className="mt-2 text-sm font-medium text-surface-900 dark:text-white">No hay proveedores</h3>
+          <p className="mt-1 text-sm text-surface-500 dark:text-surface-400">
             Comienza agregando un nuevo proveedor
           </p>
         </div>
@@ -343,7 +343,7 @@ const Suppliers = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-surface-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
             <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 flex items-center justify-between rounded-t-xl">
               <div className="flex items-center gap-3">
@@ -366,13 +366,13 @@ const Suppliers = () => {
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
               {/* Basic Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
+                <h3 className="text-lg font-semibold text-surface-900 dark:text-white border-b border-surface-200 dark:border-surface-700 pb-2">
                   Información Básica
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Nombre del Proveedor *
                     </label>
                     <input
@@ -380,33 +380,33 @@ const Suppliers = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="Nombre de la empresa"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Persona de Contacto
                     </label>
                     <input
                       type="text"
                       value={formData.contactPerson}
                       onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="Nombre del contacto"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       RFC / Tax ID
                     </label>
                     <input
                       type="text"
                       value={formData.taxId}
                       onChange={(e) => setFormData({ ...formData, taxId: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="RFC o Tax ID"
                     />
                   </div>
@@ -415,46 +415,46 @@ const Suppliers = () => {
 
               {/* Contact Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
+                <h3 className="text-lg font-semibold text-surface-900 dark:text-white border-b border-surface-200 dark:border-surface-700 pb-2">
                   Información de Contacto
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Email
                     </label>
                     <input
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="correo@ejemplo.com"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Teléfono
                     </label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="+52 123 456 7890"
                     />
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Sitio Web
                     </label>
                     <input
                       type="url"
                       value={formData.website}
                       onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="https://www.ejemplo.com"
                     />
                   </div>
@@ -463,72 +463,72 @@ const Suppliers = () => {
 
               {/* Address Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
+                <h3 className="text-lg font-semibold text-surface-900 dark:text-white border-b border-surface-200 dark:border-surface-700 pb-2">
                   Dirección
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Dirección
                     </label>
                     <textarea
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                       rows="2"
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="Calle, número, colonia..."
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Ciudad
                     </label>
                     <input
                       type="text"
                       value={formData.city}
                       onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="Ciudad"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Estado
                     </label>
                     <input
                       type="text"
                       value={formData.state}
                       onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="Estado"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       País
                     </label>
                     <input
                       type="text"
                       value={formData.country}
                       onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="País"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Código Postal
                     </label>
                     <input
                       type="text"
                       value={formData.postalCode}
                       onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder="00000"
                     />
                   </div>
@@ -537,19 +537,19 @@ const Suppliers = () => {
 
               {/* Additional Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
+                <h3 className="text-lg font-semibold text-surface-900 dark:text-white border-b border-surface-200 dark:border-surface-700 pb-2">
                   Información Adicional
                 </h3>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                     Notas
                   </label>
                   <textarea
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                     rows="3"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-surface-700 dark:text-white"
                     placeholder="Notas adicionales sobre el proveedor..."
                   />
                 </div>
@@ -560,20 +560,20 @@ const Suppliers = () => {
                     id="isActive"
                     checked={formData.isActive}
                     onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                    className="rounded text-indigo-600 focus:ring-indigo-500"
+                    className="rounded text-primary-600 focus:ring-primary-500"
                   />
-                  <label htmlFor="isActive" className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+                  <label htmlFor="isActive" className="text-sm font-medium text-surface-700 dark:text-surface-300 cursor-pointer">
                     Proveedor Activo
                   </label>
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex gap-3 pt-4 border-t border-surface-200 dark:border-surface-700">
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 font-medium transition-colors"
+                  className="flex-1 px-4 py-2.5 border border-surface-300 dark:border-surface-600 text-surface-700 dark:text-surface-300 rounded-lg hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-700 font-medium transition-colors"
                 >
                   Cancelar
                 </button>

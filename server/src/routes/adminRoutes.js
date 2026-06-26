@@ -84,6 +84,8 @@ router.delete('/categories/:id', adminAuth, requirePermission('categories.delete
 router.get('/orders', adminAuth, orderController.getAllOrders);
 router.get('/orders/:id', adminAuth, orderController.getOrder);
 router.patch('/orders/:id/status', adminAuth, orderController.updateOrderStatus);
+router.patch('/orders/:id/approve-payment', adminAuth, orderController.approvePayment);
+router.patch('/orders/:id/reject-payment', adminAuth, orderController.rejectPayment);
 
 // Analytics
 const analyticsController = require('../controllers/analyticsController');

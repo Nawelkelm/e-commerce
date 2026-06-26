@@ -4,9 +4,9 @@ const logger = require('../config/logger');
 // Get user's wishlist
 const getWishlist = async (req, res) => {
   try {
-    console.log('=== GET WISHLIST CALLED ===');
+    logger.info('=== GET WISHLIST CALLED ===');
     const userId = req.user.id;
-    console.log('User ID:', userId);
+    logger.info('User ID:', userId);
 
     const wishlistItems = await Wishlist.findAll({
       where: { userId },
@@ -26,7 +26,7 @@ const getWishlist = async (req, res) => {
       order: [['createdAt', 'DESC']]
     });
 
-    console.log('Wishlist items found:', wishlistItems.length);
+    logger.info('Wishlist items found:', wishlistItems.length);
 
     // Format response
     const wishlist = wishlistItems.map(item => ({
@@ -46,14 +46,14 @@ const getWishlist = async (req, res) => {
       } : null
     }));
 
-    console.log('Sending response with', wishlist.length, 'items');
+    logger.info('Sending response with', wishlist.length, 'items');
     res.json({
       wishlist,
       count: wishlist.length
     });
   } catch (error) {
-    console.error('=== GET WISHLIST ERROR ===');
-    console.error('Error details:', error);
+    logger.error('=== GET WISHLIST ERROR ===');
+    logger.error('Error details:', error);
     logger.error('Get wishlist error:', error);
     res.status(500).json({ message: 'Error al obtener la lista de deseos' });
   }

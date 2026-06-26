@@ -1,5 +1,6 @@
 ﻿const { Coupon, CouponUsage, User, Order, sequelize } = require('../models');
 const { Op } = require('sequelize');
+const logger = require('../config/logger');
 
 // Validar y aplicar cupón
 const validateCoupon = async (req, res) => {
@@ -126,7 +127,7 @@ const validateCoupon = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error validating coupon:', error);
+    logger.error('Error validating coupon:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Error al validar cupón' 
@@ -153,7 +154,7 @@ const applyCoupon = async (req, res) => {
 
     res.json({ success: true, message: 'Cupón aplicado exitosamente' });
   } catch (error) {
-    console.error('Error applying coupon:', error);
+    logger.error('Error applying coupon:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Error al aplicar cupón' 
@@ -187,7 +188,7 @@ const getPublicCoupons = async (req, res) => {
 
     res.json({ coupons });
   } catch (error) {
-    console.error('Error fetching public coupons:', error);
+    logger.error('Error fetching public coupons:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Error al obtener cupones' 
@@ -231,7 +232,7 @@ const getAllCoupons = async (req, res) => {
       totalPages: Math.ceil(count / limit)
     });
   } catch (error) {
-    console.error('Error fetching coupons:', error);
+    logger.error('Error fetching coupons:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Error al obtener cupones' 
@@ -259,7 +260,7 @@ const getCouponById = async (req, res) => {
 
     res.json({ coupon });
   } catch (error) {
-    console.error('Error fetching coupon:', error);
+    logger.error('Error fetching coupon:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Error al obtener cupón' 
@@ -283,7 +284,7 @@ const createCoupon = async (req, res) => {
       coupon 
     });
   } catch (error) {
-    console.error('Error creating coupon:', error);
+    logger.error('Error creating coupon:', error);
     if (error.name === 'SequelizeUniqueConstraintError') {
       return res.status(400).json({ 
         success: false, 
@@ -321,7 +322,7 @@ const updateCoupon = async (req, res) => {
       coupon 
     });
   } catch (error) {
-    console.error('Error updating coupon:', error);
+    logger.error('Error updating coupon:', error);
     if (error.name === 'SequelizeUniqueConstraintError') {
       return res.status(400).json({ 
         success: false, 
@@ -363,7 +364,7 @@ const deleteCoupon = async (req, res) => {
       message: 'Cupón eliminado exitosamente' 
     });
   } catch (error) {
-    console.error('Error deleting coupon:', error);
+    logger.error('Error deleting coupon:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Error al eliminar cupón' 
@@ -392,7 +393,7 @@ const toggleCouponStatus = async (req, res) => {
       coupon 
     });
   } catch (error) {
-    console.error('Error toggling coupon status:', error);
+    logger.error('Error toggling coupon status:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Error al cambiar estado del cupón' 
@@ -437,7 +438,7 @@ const getCouponStats = async (req, res) => {
       recentUsages: usages.slice(0, 10)
     });
   } catch (error) {
-    console.error('Error fetching coupon stats:', error);
+    logger.error('Error fetching coupon stats:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Error al obtener estadísticas' 

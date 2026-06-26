@@ -402,7 +402,7 @@ const Products = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
       </div>
     )
   }
@@ -413,7 +413,7 @@ const Products = () => {
         <p className="text-red-600 text-lg mb-4">Error: {error}</p>
         <button 
           onClick={fetchProducts}
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+          className="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
         >
           Intentar nuevamente
         </button>
@@ -435,7 +435,7 @@ const Products = () => {
                 Gestión de Productos
               </h1>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 ml-14">
+            <p className="text-sm text-surface-600 dark:text-surface-400 ml-14">
               Administra tu inventario completo en un solo lugar
             </p>
           </div>
@@ -445,7 +445,7 @@ const Products = () => {
                 resetForm()
                 setShowModal(true)
               }}
-              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-xl hover:scale-105"
+              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-xl hover:scale-105"
             >
               <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
               Nuevo Producto
@@ -463,20 +463,20 @@ const Products = () => {
       </div>
 
       {/* Barra de búsqueda y filtros - Rediseñada */}
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 mb-6 border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-surface-800 shadow-lg rounded-xl p-6 mb-6 border border-surface-200 dark:border-surface-700">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Barra de búsqueda mejorada */}
           <div className="flex-1">
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
+                <MagnifyingGlassIcon className="h-5 w-5 text-surface-400 group-focus-within:text-primary-500 transition-colors" />
               </div>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar por nombre, SKU, descripción o categoría..."
-                className="block w-full pl-12 pr-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg leading-5 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white dark:focus:bg-gray-600 transition-all duration-200 sm:text-sm"
+                className="block w-full pl-12 pr-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg leading-5 bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 placeholder-surface-400 dark:placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:bg-white dark:bg-surface-800 dark:focus:bg-surface-600 transition-all duration-200 sm:text-sm"
               />
             </div>
           </div>
@@ -486,14 +486,14 @@ const Products = () => {
             onClick={() => setShowFilters(!showFilters)}
             className={`inline-flex items-center px-6 py-3 border-2 rounded-lg shadow-sm text-sm font-medium transition-all duration-200 ${
               showFilters || Object.values(filters).some(v => v)
-                ? 'border-indigo-500 text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-900/30'
-                : 'border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
+                ? 'border-primary-500 text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-900/30'
+                : 'border-surface-200 dark:border-surface-700 dark:border-surface-600 text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600'
             }`}
           >
             <FunnelIcon className="h-5 w-5 mr-2" />
             Filtros
             {(filters.category || filters.status !== '' || filters.stock || filters.featured !== '') && (
-              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200">
+              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-indigo-200">
                 Activos
               </span>
             )}
@@ -503,7 +503,7 @@ const Products = () => {
           {(searchQuery || filters.category || filters.status !== '' || filters.stock || filters.featured !== '') && (
             <button
               onClick={clearFilters}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              className="inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm text-sm font-medium text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600"
             >
               <XMarkIcon className="h-5 w-5 mr-2" />
               Limpiar
@@ -513,17 +513,17 @@ const Products = () => {
 
         {/* Panel de filtros expandible */}
         {showFilters && (
-          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="mt-4 pt-4 border-t border-surface-200 dark:border-surface-700">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {/* Filtro por categoría */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                   Categoría
                 </label>
                 <select
                   value={filters.category}
                   onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                  className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                 >
                   <option value="">Todas las categorías</option>
                   {categories.map(category => (
@@ -536,13 +536,13 @@ const Products = () => {
 
               {/* Filtro por estado */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                   Estado
                 </label>
                 <select
                   value={filters.status}
                   onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                  className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                 >
                   <option value="">Todos</option>
                   <option value="true">Activos</option>
@@ -552,13 +552,13 @@ const Products = () => {
 
               {/* Filtro por stock */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                   Stock
                 </label>
                 <select
                   value={filters.stock}
                   onChange={(e) => setFilters({ ...filters, stock: e.target.value })}
-                  className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                 >
                   <option value="">Todos</option>
                   <option value="available">Disponible</option>
@@ -569,13 +569,13 @@ const Products = () => {
 
               {/* Filtro por destacado */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                   Destacados
                 </label>
                 <select
                   value={filters.featured}
                   onChange={(e) => setFilters({ ...filters, featured: e.target.value })}
-                  className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                 >
                   <option value="">Todos</option>
                   <option value="true">Destacados</option>
@@ -586,12 +586,12 @@ const Products = () => {
 
             {/* Contador de resultados mejorado */}
             <div className="mt-4 flex items-center justify-between bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg px-4 py-3 border border-indigo-100 dark:border-indigo-800">
-              <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                <CubeIcon className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-                Mostrando <span className="font-bold text-indigo-600 dark:text-indigo-400">{filteredProducts.length}</span> de <span className="font-semibold">{products.length}</span> productos
+              <div className="flex items-center gap-2 text-sm text-surface-700 dark:text-surface-300">
+                <CubeIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+                Mostrando <span className="font-bold text-primary-600 dark:text-primary-400">{filteredProducts.length}</span> de <span className="font-semibold">{products.length}</span> productos
               </div>
               {filteredProducts.length < products.length && (
-                <span className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">
+                <span className="text-xs text-primary-600 dark:text-primary-400 font-medium">
                   {products.length - filteredProducts.length} ocultos por filtros
                 </span>
               )}
@@ -601,71 +601,71 @@ const Products = () => {
       </div>
 
       {/* Tabla mejorada */}
-      <div className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+      <div className="bg-white dark:bg-surface-800 shadow-xl rounded-xl overflow-hidden border border-surface-200 dark:border-surface-700">
+        <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
           <thead className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
             <tr>
               <th 
                 onClick={() => handleSort('name')}
-                className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors group"
+                className="px-6 py-4 text-left text-xs font-semibold text-surface-600 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider cursor-pointer hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors group"
               >
                 <div className="flex items-center gap-2">
                   Producto
-                  <ArrowsUpDownIcon className="h-4 w-4 text-gray-400 group-hover:text-indigo-600 transition-colors" />
+                  <ArrowsUpDownIcon className="h-4 w-4 text-surface-400 group-hover:text-primary-600 transition-colors" />
                 </div>
               </th>
               <th 
                 onClick={() => handleSort('category')}
-                className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors group"
+                className="px-6 py-4 text-left text-xs font-semibold text-surface-600 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider cursor-pointer hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors group"
               >
                 <div className="flex items-center gap-2">
                   Categoría
-                  <ArrowsUpDownIcon className="h-4 w-4 text-gray-400 group-hover:text-indigo-600 transition-colors" />
+                  <ArrowsUpDownIcon className="h-4 w-4 text-surface-400 group-hover:text-primary-600 transition-colors" />
                 </div>
               </th>
-              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-surface-600 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider">
                 Proveedor
               </th>
               <th 
                 onClick={() => handleSort('price')}
-                className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors group"
+                className="px-6 py-4 text-left text-xs font-semibold text-surface-600 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider cursor-pointer hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors group"
               >
                 <div className="flex items-center gap-2">
                   Precio
-                  <ArrowsUpDownIcon className="h-4 w-4 text-gray-400 group-hover:text-indigo-600 transition-colors" />
+                  <ArrowsUpDownIcon className="h-4 w-4 text-surface-400 group-hover:text-primary-600 transition-colors" />
                 </div>
               </th>
               <th 
                 onClick={() => handleSort('stock')}
-                className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors group"
+                className="px-6 py-4 text-left text-xs font-semibold text-surface-600 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider cursor-pointer hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors group"
               >
                 <div className="flex items-center gap-2">
                   Stock
-                  <ArrowsUpDownIcon className="h-4 w-4 text-gray-400 group-hover:text-indigo-600 transition-colors" />
+                  <ArrowsUpDownIcon className="h-4 w-4 text-surface-400 group-hover:text-primary-600 transition-colors" />
                 </div>
               </th>
-              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-surface-600 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-surface-600 dark:text-surface-400 dark:text-surface-300 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody className="bg-white dark:bg-surface-800 divide-y divide-surface-200 dark:divide-surface-700">
             {loading ? (
               <tr>
                 <td colSpan="6" className="px-6 py-12 text-center">
                   <div className="flex justify-center items-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-                    <span className="ml-3 text-gray-600 dark:text-gray-400">Cargando productos...</span>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                    <span className="ml-3 text-surface-600 dark:text-surface-400">Cargando productos...</span>
                   </div>
                 </td>
               </tr>
             ) : filteredProducts.length === 0 ? (
               <tr>
                 <td colSpan="6" className="px-6 py-12 text-center">
-                  <div className="text-gray-500 dark:text-gray-400">
+                  <div className="text-surface-500 dark:text-surface-400">
                     {searchQuery || filters.category || filters.status !== '' || filters.stock || filters.featured !== '' 
                       ? 'No se encontraron productos con los filtros aplicados'
                       : 'No hay productos registrados'}
@@ -674,7 +674,7 @@ const Products = () => {
               </tr>
             ) : (
               filteredProducts.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+              <tr key={product.id} className="hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-700/50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-14 w-14">
@@ -697,14 +697,14 @@ const Products = () => {
                     </div>
                     <div className="ml-4">
                       <div className="flex items-center gap-2">
-                        <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                        <div className="text-sm font-semibold text-surface-900 dark:text-white">
                           {product.name}
                         </div>
                         {product.isFeatured && (
                           <SparklesIcon className="h-4 w-4 text-yellow-500" title="Destacado" />
                         )}
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      <div className="text-xs text-surface-500 dark:text-surface-400 mt-1">
                         <TagIcon className="h-3 w-3 inline mr-1" />
                         SKU: {product.sku}
                       </div>
@@ -712,7 +712,7 @@ const Products = () => {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900/30 dark:text-primary-300">
                     {product.Category?.name || 'Sin categoría'}
                   </span>
                 </td>
@@ -726,15 +726,15 @@ const Products = () => {
                       {product.supplier.name}
                     </span>
                   ) : (
-                    <span className="text-xs text-gray-400">Sin proveedor</span>
+                    <span className="text-xs text-surface-400">Sin proveedor</span>
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-bold text-gray-900 dark:text-gray-100">
+                  <div className="text-sm font-bold text-surface-900 dark:text-white dark:text-surface-100">
                     ${parseFloat(product.price).toFixed(2)}
                   </div>
                   {product.comparePrice && parseFloat(product.comparePrice) > parseFloat(product.price) && (
-                    <div className="text-xs text-gray-400 line-through">
+                    <div className="text-xs text-surface-400 line-through">
                       ${parseFloat(product.comparePrice).toFixed(2)}
                     </div>
                   )}
@@ -768,7 +768,7 @@ const Products = () => {
                   <div className="flex space-x-2 justify-end">
                     <button
                       onClick={() => handleEdit(product)}
-                      className="p-2 text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-all"
+                      className="p-2 text-primary-600 hover:text-indigo-900 dark:text-primary-400 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all"
                       title="Editar producto"
                     >
                       <PencilIcon className="h-5 w-5" />
@@ -790,18 +790,18 @@ const Products = () => {
       </div>
 
       {/* Paginación */}
-      <div className="bg-white dark:bg-gray-800 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6 mt-4 rounded-lg">
+      <div className="bg-white dark:bg-surface-800 px-4 py-3 flex items-center justify-between border-t border-surface-200 dark:border-surface-700 sm:px-6 mt-4 rounded-lg">
         <div className="flex-1 flex justify-between sm:hidden">
-          <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <button className="relative inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 text-sm font-medium rounded-md text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600">
             Anterior
           </button>
-          <button className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <button className="ml-3 relative inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 text-sm font-medium rounded-md text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600">
             Siguiente
           </button>
         </div>
         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-surface-700 dark:text-surface-300">
               Mostrando <span className="font-medium">1</span> a{' '}
               <span className="font-medium">3</span> de{' '}
               <span className="font-medium">3</span> productos
@@ -809,13 +809,13 @@ const Products = () => {
           </div>
           <div>
             <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
-              <button className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <button className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 dark:bg-surface-700 text-sm font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600">
                 Anterior
               </button>
-              <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-indigo-50 dark:bg-indigo-900 text-sm font-medium text-indigo-600 dark:text-indigo-300">
+              <button className="relative inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 bg-primary-50 dark:bg-primary-900 text-sm font-medium text-primary-600 dark:text-primary-300">
                 1
               </button>
-              <button className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <button className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 dark:bg-surface-700 text-sm font-medium text-surface-500 dark:text-surface-400 dark:text-surface-300 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600">
                 Siguiente
               </button>
             </nav>
@@ -825,7 +825,7 @@ const Products = () => {
 
       {/* Modal de Crear/Editar Producto - Rediseñado */}
       {showModal && (
-        <div className="fixed inset-0 bg-gray-900/75 dark:bg-black/85 backdrop-blur-sm overflow-y-auto h-full w-full z-50 flex items-start justify-center p-4">
+        <div className="fixed inset-0 bg-surface-900/75 dark:bg-black/85 backdrop-blur-sm overflow-y-auto h-full w-full z-50 flex items-start justify-center p-4">
           <div className="relative w-full max-w-5xl my-8">
             {/* Header del Modal */}
             <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-t-2xl px-6 py-5 shadow-xl">
@@ -855,58 +855,58 @@ const Products = () => {
             </div>
 
             {/* Contenido del Modal */}
-            <div className="bg-white dark:bg-gray-800 rounded-b-2xl shadow-2xl">
+            <div className="bg-white dark:bg-surface-800 rounded-b-2xl shadow-2xl">
               <form onSubmit={handleSubmit} className="p-6 space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Información Básica */}
                   <div className="space-y-6">
                     <div className="flex items-center gap-2 pb-3 border-b-2 border-indigo-100 dark:border-indigo-900">
-                      <CubeIcon className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Información Básica</h4>
+                      <CubeIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+                      <h4 className="text-lg font-semibold text-surface-900 dark:text-white">Información Básica</h4>
                     </div>
                   
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
                       Nombre del Producto <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                      className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                       placeholder="Ej: Laptop Dell Inspiron 15"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Descripción Corta</label>
+                    <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">Descripción Corta</label>
                     <input
                       type="text"
                       value={formData.shortDescription}
                       onChange={(e) => setFormData({...formData, shortDescription: e.target.value})}
-                      className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                      className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                       placeholder="Descripción breve para listados"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Descripción Completa</label>
+                    <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">Descripción Completa</label>
                     <textarea
                       value={formData.description}
                       onChange={(e) => setFormData({...formData, description: e.target.value})}
                       rows={4}
-                      className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all resize-none"
+                      className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all resize-none"
                       placeholder="Descripción detallada del producto..."
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Categoría</label>
+                    <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">Categoría</label>
                     <select
                       value={formData.categoryId}
                       onChange={(e) => setFormData({...formData, categoryId: e.target.value})}
-                      className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                      className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                     >
                       <option value="">Seleccionar categoría</option>
                       {categories.map(category => (
@@ -917,7 +917,7 @@ const Products = () => {
 
                   {/* Proveedor */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Proveedor</label>
+                    <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">Proveedor</label>
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800">
                         <input
@@ -929,9 +929,9 @@ const Products = () => {
                             isOwnProduction: e.target.checked,
                             supplierId: e.target.checked ? '' : formData.supplierId
                           })}
-                          className="rounded text-indigo-600 focus:ring-indigo-500"
+                          className="rounded text-primary-600 focus:ring-primary-500"
                         />
-                        <label htmlFor="isOwnProduction" className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+                        <label htmlFor="isOwnProduction" className="text-sm font-medium text-surface-700 dark:text-surface-300 cursor-pointer">
                           Producción Propia
                         </label>
                       </div>
@@ -940,7 +940,7 @@ const Products = () => {
                         <select
                           value={formData.supplierId}
                           onChange={(e) => setFormData({...formData, supplierId: e.target.value})}
-                          className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                          className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                         >
                           <option value="">Seleccionar proveedor</option>
                           {suppliers.map(supplier => (
@@ -956,22 +956,22 @@ const Products = () => {
                 <div className="space-y-6">
                   <div className="flex items-center gap-2 pb-3 border-b-2 border-purple-100 dark:border-purple-900">
                     <TagIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Precios y Stock</h4>
+                    <h4 className="text-lg font-semibold text-surface-900 dark:text-white">Precios y Stock</h4>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
                         Precio (ARS) <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-semibold">$</span>
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-surface-500 dark:text-surface-400 font-semibold">$</span>
                         <input
                           type="number"
                           step="0.01"
                           value={formData.price}
                           onChange={(e) => setFormData({...formData, price: e.target.value})}
-                          className="block w-full pl-8 pr-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                          className="block w-full pl-8 pr-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                           placeholder="0.00"
                           required
                         />
@@ -979,15 +979,15 @@ const Products = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Precio Comparación</label>
+                      <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">Precio Comparación</label>
                       <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-semibold">$</span>
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-surface-500 dark:text-surface-400 font-semibold">$</span>
                         <input
                           type="number"
                           step="0.01"
                           value={formData.comparePrice}
                           onChange={(e) => setFormData({...formData, comparePrice: e.target.value})}
-                          className="block w-full pl-8 pr-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                          className="block w-full pl-8 pr-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                           placeholder="0.00"
                         />
                       </div>
@@ -996,26 +996,26 @@ const Products = () => {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
                         Stock <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="number"
                         value={formData.stock}
                         onChange={(e) => setFormData({...formData, stock: e.target.value})}
-                        className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                        className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                         placeholder="0"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Stock Mínimo</label>
+                      <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">Stock Mínimo</label>
                       <input
                         type="number"
                         value={formData.minStock}
                         onChange={(e) => setFormData({...formData, minStock: e.target.value})}
-                        className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                        className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                         placeholder="0"
                       />
                     </div>
@@ -1023,23 +1023,23 @@ const Products = () => {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">SKU</label>
+                      <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">SKU</label>
                       <input
                         type="text"
                         value={formData.sku}
                         onChange={(e) => setFormData({...formData, sku: e.target.value})}
-                        className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                        className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                         placeholder="SKU-001"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Código de Barras</label>
+                      <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">Código de Barras</label>
                       <input
                         type="text"
                         value={formData.barcode}
                         onChange={(e) => setFormData({...formData, barcode: e.target.value})}
-                        className="block w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                        className="block w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                         placeholder="7798123456789"
                       />
                     </div>
@@ -1051,9 +1051,9 @@ const Products = () => {
                         type="checkbox"
                         checked={formData.isActive}
                         onChange={(e) => setFormData({...formData, isActive: e.target.checked})}
-                        className="h-5 w-5 text-indigo-600 focus:ring-2 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 rounded transition-all"
+                        className="h-5 w-5 text-primary-600 focus:ring-2 focus:ring-primary-500 border-surface-300 dark:border-surface-600 rounded transition-all"
                       />
-                      <label className="ml-3 block text-sm font-medium text-gray-900 dark:text-gray-100">Producto activo</label>
+                      <label className="ml-3 block text-sm font-medium text-surface-900 dark:text-white dark:text-surface-100">Producto activo</label>
                     </div>
 
                     <div className="flex items-center">
@@ -1061,9 +1061,9 @@ const Products = () => {
                         type="checkbox"
                         checked={formData.isFeatured}
                         onChange={(e) => setFormData({...formData, isFeatured: e.target.checked})}
-                        className="h-5 w-5 text-indigo-600 focus:ring-2 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 rounded transition-all"
+                        className="h-5 w-5 text-primary-600 focus:ring-2 focus:ring-primary-500 border-surface-300 dark:border-surface-600 rounded transition-all"
                       />
-                      <label className="ml-3 flex items-center text-sm font-medium text-gray-900 dark:text-gray-100">
+                      <label className="ml-3 flex items-center text-sm font-medium text-surface-900 dark:text-white dark:text-surface-100">
                         <SparklesIcon className="h-4 w-4 text-yellow-500 mr-1" />
                         Producto destacado
                       </label>
@@ -1075,14 +1075,14 @@ const Products = () => {
               {/* Imágenes */}
               <div className="space-y-6">
                 <div className="flex items-center gap-2 pb-3 border-b-2 border-indigo-100 dark:border-indigo-900">
-                  <PhotoIcon className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Imágenes del Producto</h4>
+                  <PhotoIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+                  <h4 className="text-lg font-semibold text-surface-900 dark:text-white">Imágenes del Producto</h4>
                 </div>
                 
                 {/* Imágenes existentes (al editar) */}
                 {existingImages.length > 0 && (
                   <div>
-                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Imágenes actuales:</p>
+                    <p className="text-sm font-semibold text-surface-700 dark:text-surface-300 mb-3">Imágenes actuales:</p>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {existingImages.map((image, index) => (
                         <div key={`existing-${index}`} className="relative group">
@@ -1109,14 +1109,14 @@ const Products = () => {
                   </div>
                 )}
                 
-                <div className="border-2 border-dashed border-indigo-300 dark:border-indigo-700 rounded-xl p-8 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all">
+                <div className="border-2 border-dashed border-indigo-300 dark:border-indigo-700 rounded-xl p-8 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 hover:border-primary-500 dark:hover:border-primary-500 transition-all">
                   <div className="text-center">
-                    <div className="mx-auto h-16 w-16 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center mb-4">
-                      <PhotoIcon className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
+                    <div className="mx-auto h-16 w-16 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center mb-4">
+                      <PhotoIcon className="h-8 w-8 text-primary-600 dark:text-primary-400" />
                     </div>
                     <div className="mt-4">
                       <label className="cursor-pointer inline-block">
-                        <span className="inline-flex items-center px-6 py-3 border-2 border-indigo-600 dark:border-indigo-500 rounded-lg text-sm font-semibold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all">
+                        <span className="inline-flex items-center px-6 py-3 border-2 border-primary-600 dark:border-primary-500 rounded-lg text-sm font-semibold text-primary-600 dark:text-primary-400 bg-white dark:bg-surface-800 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-all">
                           <PhotoIcon className="h-5 w-5 mr-2" />
                           {existingImages.length > 0 ? 'Agregar más imágenes' : 'Seleccionar imágenes'}
                         </span>
@@ -1129,13 +1129,13 @@ const Products = () => {
                         />
                       </label>
                     </div>
-                    <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">PNG, JPG, WEBP hasta 10MB cada una</p>
+                    <p className="mt-3 text-xs text-surface-500 dark:text-surface-400">PNG, JPG, WEBP hasta 10MB cada una</p>
                   </div>
 
                   {/* Preview de nuevas imágenes */}
                   {imagePreview.length > 0 && (
-                    <div className="mt-6 p-4 bg-white dark:bg-gray-700 rounded-lg border border-green-200 dark:border-green-800">
-                      <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                    <div className="mt-6 p-4 bg-white dark:bg-surface-800 dark:bg-surface-700 rounded-lg border border-green-200 dark:border-green-800">
+                      <p className="text-sm font-semibold text-surface-700 dark:text-surface-300 mb-3 flex items-center gap-2">
                         <span className="inline-block h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
                         Nuevas imágenes a agregar:
                       </p>
@@ -1166,14 +1166,14 @@ const Products = () => {
               </div>
 
               {/* Botones de acción */}
-              <div className="flex justify-end space-x-4 pt-6 border-t-2 border-gray-200 dark:border-gray-700">
+              <div className="flex justify-end space-x-4 pt-6 border-t-2 border-surface-200 dark:border-surface-700">
                 <button
                   type="button"
                   onClick={() => {
                     setShowModal(false)
                     resetForm()
                   }}
-                  className="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg text-sm font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all shadow-sm hover:shadow-md"
+                  className="px-6 py-3 border-2 border-surface-300 dark:border-surface-600 rounded-lg text-sm font-semibold text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600 transition-all shadow-sm hover:shadow-md"
                   disabled={uploading}
                 >
                   Cancelar

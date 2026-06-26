@@ -9,11 +9,9 @@ if (!DATABASE_URL) {
   throw new Error('DATABASE_URL is required');
 }
 
-// SSL: requerido en producción gestionada (Render/Coolify con TLS).
-// DB_SSL_REJECT_UNAUTHORIZED=true para validar el certificado (recomendado
-// cuando el proveedor expone una CA válida). Por defecto se acepta el
-// certificado autofirmado del proveedor cloud.
-const useSsl = process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production';
+// SSL: activar SOLO con DB_SSL=true. En Coolify el PostgreSQL interno no usa TLS,
+// así que no inferimos SSL desde NODE_ENV. Configurar explícitamente por entorno.
+const useSsl = process.env.DB_SSL === 'true';
 const rejectUnauthorized = process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true';
 
 const sequelize = new Sequelize(

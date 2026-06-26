@@ -123,6 +123,7 @@ const exportProducts = async (filters = {}) => {
       include: [
         {
           model: Category,
+          as: 'category',
           attributes: ['name']
         }
       ],

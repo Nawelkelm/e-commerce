@@ -348,6 +348,7 @@ const createProduct = async (req, res) => {
       include: [
         {
           model: Category,
+          as: 'category',
           attributes: ['id', 'name', 'slug']
         }
       ]
@@ -488,6 +489,7 @@ const updateProduct = async (req, res) => {
       include: [
         {
           model: Category,
+          as: 'category',
           attributes: ['id', 'name', 'slug']
         }
       ]
@@ -537,6 +539,7 @@ const getFeaturedProducts = async (req, res) => {
       include: [
         {
           model: Category,
+          as: 'category',
           attributes: ['id', 'name', 'slug']
         }
       ],
@@ -601,6 +604,7 @@ const searchSuggestions = async (req, res) => {
       include: [
         {
           model: Category,
+          as: 'category',
           attributes: ['id', 'name', 'slug']
         }
       ],

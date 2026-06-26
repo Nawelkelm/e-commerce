@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { HeartIcon, ShoppingCartIcon, TrashIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useWishlistStore } from '../store/wishlistStore'
 import { useAuthStore } from '../store/authStore'
-import { cartAPI } from '../services/api'
 import toast from 'react-hot-toast'
 import { Helmet } from 'react-helmet-async'
 
@@ -17,26 +16,20 @@ const Wishlist = () => {
     loadWishlist()
   }, [loadWishlist])
 
-  const handleAddToCart = async (product) => {
-    try {
-      setAddingToCart(prev => ({ ...prev, [product.id]: true }))
-      
-      await cartAPI.addToCart({
-        productId: product.id,
-        quantity: 1
-      })
+  const handleAddToCart = (product) => {
+    setAddingToCart(prev => ({ ...prev, [product.id]: true }))
 
-      addToCart(product)
-      toast.success('Producto agregado al carrito')
-      
-      // Optionally remove from wishlist after adding to cart
-      // await removeFromWishlist(product.id)
-    } catch (error) {
-      const message = error.response?.data?.message || 'Error al agregar al carrito'
-      toast.error(message)
-    } finally {
-      setAddingToCart(prev => ({ ...prev, [product.id]: false }))
-    }
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.salePrice || product.price,
+      image: product.images?.[0] || '',
+      stock: product.stock,
+      slug: product.slug
+    })
+    toast.success('Producto agregado al carrito')
+
+    setAddingToCart(prev => ({ ...prev, [product.id]: false }))
   }
 
   const handleRemove = async (productId) => {
@@ -59,7 +52,7 @@ const Wishlist = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     )
   }
@@ -68,23 +61,23 @@ const Wishlist = () => {
     return (
       <>
         <Helmet>
-          <title>Mi Lista de Deseos - E-Commerce</title>
+          <title>Mi Lista de Deseos - TiendaKit</title>
         </Helmet>
         
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+        <div className="min-h-screen bg-surface-50 dark:bg-surface-900 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center py-12">
-              <HeartIcon className="mx-auto h-24 w-24 text-gray-400 dark:text-gray-600" />
-              <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
+              <HeartIcon className="mx-auto h-24 w-24 text-surface-400 dark:text-surface-600 dark:text-surface-400" />
+              <h2 className="mt-6 text-3xl font-extrabold text-surface-900 dark:text-white">
                 Tu lista de deseos está vacía
               </h2>
-              <p className="mt-2 text-lg text-gray-600 dark:text-gray-300">
+              <p className="mt-2 text-lg text-surface-600 dark:text-surface-400 dark:text-surface-300">
                 Guarda tus productos favoritos aquí para comprarlos después
               </p>
               <div className="mt-8">
                 <Link
                   to="/products"
-                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700"
                 >
                   Explorar productos
                 </Link>
@@ -99,19 +92,19 @@ const Wishlist = () => {
   return (
     <>
       <Helmet>
-        <title>Mi Lista de Deseos ({wishlist.length}) - E-Commerce</title>
+        <title>Mi Lista de Deseos ({wishlist.length}) - TiendaKit</title>
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+      <div className="min-h-screen bg-surface-50 dark:bg-surface-900 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+              <h1 className="text-3xl font-bold text-surface-900 dark:text-white flex items-center">
                 <HeartIcon className="h-8 w-8 text-red-500 mr-3" />
                 Mi Lista de Deseos
               </h1>
-              <p className="mt-2 text-gray-600 dark:text-gray-300">
+              <p className="mt-2 text-surface-600 dark:text-surface-400 dark:text-surface-300">
                 {wishlist.length} {wishlist.length === 1 ? 'producto' : 'productos'}
               </p>
             </div>
@@ -140,12 +133,12 @@ const Wishlist = () => {
               return (
                 <div
                   key={item.id}
-                  className="bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden relative group"
+                  className="bg-white dark:bg-surface-800 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden relative group"
                 >
                   {/* Remove Button */}
                   <button
                     onClick={() => handleRemove(product.id)}
-                    className="absolute top-2 right-2 z-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-2 rounded-full text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-500 hover:bg-white dark:hover:bg-gray-700 transition-all opacity-0 group-hover:opacity-100"
+                    className="absolute top-2 right-2 z-10 bg-white/90 dark:bg-surface-800/90 backdrop-blur-sm p-2 rounded-full text-surface-600 dark:text-surface-400 dark:text-surface-300 hover:text-red-600 dark:hover:text-red-500 hover:bg-white dark:bg-surface-800 dark:hover:bg-surface-700 transition-all opacity-0 group-hover:opacity-100"
                     title="Quitar de la lista"
                   >
                     <XMarkIcon className="h-5 w-5" />
@@ -153,7 +146,7 @@ const Wishlist = () => {
 
                   {/* Product Image */}
                   <Link to={`/products/${product.slug}`} className="block">
-                    <div className="aspect-square bg-gray-100 dark:bg-gray-700 overflow-hidden">
+                    <div className="aspect-square bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 overflow-hidden">
                       {primaryImage ? (
                         <img
                           src={primaryImage.url}
@@ -161,7 +154,7 @@ const Wishlist = () => {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                        <div className="w-full h-full flex items-center justify-center text-surface-400">
                           Sin imagen
                         </div>
                       )}
@@ -171,14 +164,14 @@ const Wishlist = () => {
                   {/* Product Info */}
                   <div className="p-4">
                     <Link to={`/products/${product.slug}`}>
-                      <h3 className="font-semibold text-gray-900 hover:text-indigo-600 line-clamp-2 mb-2">
+                      <h3 className="font-semibold text-surface-900 dark:text-white hover:text-primary-600 line-clamp-2 mb-2">
                         {product.name}
                       </h3>
                     </Link>
 
                     {/* Category */}
                     {product.category && (
-                      <p className="text-xs text-gray-500 mb-2">
+                      <p className="text-xs text-surface-500 dark:text-surface-400 mb-2">
                         {product.category.name}
                       </p>
                     )}
@@ -186,11 +179,11 @@ const Wishlist = () => {
                     {/* Price */}
                     <div className="mb-3">
                       <div className="flex items-baseline space-x-2">
-                        <span className="text-xl font-bold text-gray-900">
+                        <span className="text-xl font-bold text-surface-900 dark:text-white">
                           {formatPrice(currentPrice)}
                         </span>
                         {hasDiscount && (
-                          <span className="text-sm text-gray-500 line-through">
+                          <span className="text-sm text-surface-500 dark:text-surface-400 line-through">
                             {formatPrice(product.price)}
                           </span>
                         )}
@@ -225,8 +218,8 @@ const Wishlist = () => {
                         w-full flex items-center justify-center px-4 py-2 rounded-md font-medium
                         transition-colors
                         ${product.stock === 0
-                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                          : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                          ? 'bg-surface-100 dark:bg-surface-800 text-surface-400 cursor-not-allowed'
+                          : 'bg-primary-600 text-white hover:bg-primary-700'
                         }
                       `}
                     >
@@ -248,7 +241,7 @@ const Wishlist = () => {
           <div className="mt-12 text-center">
             <Link
               to="/products"
-              className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="inline-flex items-center px-6 py-3 border border-surface-300 dark:border-surface-600 text-base font-medium rounded-md text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 hover:bg-surface-50 dark:bg-surface-900"
             >
               Seguir comprando
             </Link>

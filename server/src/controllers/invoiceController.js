@@ -6,6 +6,7 @@ const afipService = require('../services/afipService');
 const emailService = require('../services/emailService');
 const path = require('path');
 const fs = require('fs');
+const logger = require('../config/logger');
 
 // Helper para convertir valores DECIMAL de Sequelize a números
 const normalizeInvoiceForPDF = (invoice) => {
@@ -196,14 +197,14 @@ const createInvoiceFromOrder = async (req, res) => {
     // Solicitar CAE a AFIP automáticamente (sin bloquear la transacción)
     if (requestAfipCAE) {
       try {
-        console.log('📝 Solicitando CAE a AFIP para factura:', invoice.invoiceNumber);
+        logger.info('📝 Solicitando CAE a AFIP para factura:', invoice.invoiceNumber);
         await afipService.requestCAE(invoice);
-        console.log('✅ CAE obtenido exitosamente');
+        logger.info('✅ CAE obtenido exitosamente');
         
         // Recargar factura con datos actualizados
         await invoice.reload();
       } catch (afipError) {
-        console.error('⚠️ Error al solicitar CAE (factura creada sin CAE):', afipError.message);
+        logger.error('⚠️ Error al solicitar CAE (factura creada sin CAE):', afipError.message);
         // No fallar la creación de factura si AFIP falla
         // El CAE se puede solicitar manualmente después
       }
@@ -218,7 +219,7 @@ const createInvoiceFromOrder = async (req, res) => {
     
   } catch (error) {
     await transaction.rollback();
-    console.error('Error al crear factura:', error);
+    logger.error('Error al crear factura:', error);
     res.status(500).json({ 
       message: 'Error al crear la factura',
       error: error.message 
@@ -306,11 +307,11 @@ const createManualInvoice = async (req, res) => {
     // Solicitar CAE a AFIP si está habilitado
     if (requestAfipCAE) {
       try {
-        console.log('📝 Solicitando CAE a AFIP para factura manual:', invoice.invoiceNumber);
+        logger.info('📝 Solicitando CAE a AFIP para factura manual:', invoice.invoiceNumber);
         await afipService.requestCAE(invoice);
         await invoice.reload();
       } catch (afipError) {
-        console.error('Error al solicitar CAE:', afipError.message);
+        logger.error('Error al solicitar CAE:', afipError.message);
         // No falla la creación, solo registra el error
       }
     }
@@ -323,7 +324,7 @@ const createManualInvoice = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error al crear factura manual:', error);
+    logger.error('Error al crear factura manual:', error);
     res.status(500).json({ 
       message: 'Error al crear la factura',
       error: error.message 
@@ -394,7 +395,7 @@ const getAllInvoices = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error al obtener facturas:', error);
+    logger.error('Error al obtener facturas:', error);
     res.status(500).json({ 
       message: 'Error al obtener las facturas',
       error: error.message 
@@ -434,7 +435,7 @@ const getUserInvoices = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error al obtener facturas del usuario:', error);
+    logger.error('Error al obtener facturas del usuario:', error);
     res.status(500).json({ 
       message: 'Error al obtener tus facturas',
       error: error.message 
@@ -477,7 +478,7 @@ const getInvoiceById = async (req, res) => {
     res.json({ invoice });
     
   } catch (error) {
-    console.error('Error al obtener factura:', error);
+    logger.error('Error al obtener factura:', error);
     res.status(500).json({ 
       message: 'Error al obtener la factura',
       error: error.message 
@@ -515,7 +516,7 @@ const getInvoiceByNumber = async (req, res) => {
     res.json({ invoice });
     
   } catch (error) {
-    console.error('Error al obtener factura:', error);
+    logger.error('Error al obtener factura:', error);
     res.status(500).json({ 
       message: 'Error al obtener la factura',
       error: error.message 
@@ -552,7 +553,7 @@ const cancelInvoice = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error al cancelar factura:', error);
+    logger.error('Error al cancelar factura:', error);
     res.status(500).json({ 
       message: 'Error al cancelar la factura',
       error: error.message 
@@ -601,7 +602,7 @@ const getInvoiceStats = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error al obtener estadísticas:', error);
+    logger.error('Error al obtener estadísticas:', error);
     res.status(500).json({ 
       message: 'Error al obtener estadísticas',
       error: error.message 
@@ -661,13 +662,13 @@ const downloadInvoicePDF = async (req, res) => {
     // Enviar archivo
     res.download(filePath, filename, (err) => {
       if (err) {
-        console.error('Error al enviar PDF:', err);
+        logger.error('Error al enviar PDF:', err);
         res.status(500).json({ message: 'Error al generar el PDF' });
       }
     });
     
   } catch (error) {
-    console.error('Error al generar PDF:', error);
+    logger.error('Error al generar PDF:', error);
     res.status(500).json({ 
       message: 'Error al generar el PDF',
       error: error.message 
@@ -716,7 +717,7 @@ const viewInvoicePDF = async (req, res) => {
     fileStream.pipe(res);
     
   } catch (error) {
-    console.error('Error al ver PDF:', error);
+    logger.error('Error al ver PDF:', error);
     res.status(500).json({ 
       message: 'Error al mostrar el PDF',
       error: error.message 
@@ -809,7 +810,7 @@ const emailInvoice = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error al enviar factura por email:', error);
+    logger.error('Error al enviar factura por email:', error);
     res.status(500).json({ 
       message: 'Error al enviar la factura',
       error: error.message 
@@ -851,7 +852,7 @@ const regenerateInvoicePDF = async (req, res) => {
     });
     
   } catch (error) {
-    console.error('Error al regenerar PDF:', error);
+    logger.error('Error al regenerar PDF:', error);
     res.status(500).json({ 
       message: 'Error al regenerar el PDF',
       error: error.message 

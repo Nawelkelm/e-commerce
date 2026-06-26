@@ -1,7 +1,7 @@
-# Arquitectura — E-commerce DojiPrint
+# Arquitectura — TiendaKit
 
-> Documento vivo. Última actualización: 2026-06-18.
-> Dominio de producción: **www.dojiprint.com.ar** (frontend) / **api.dojiprint.com.ar** (backend).
+> Documento vivo. Última actualización: 2026-06-26.
+> Cada cliente despliega con su propio dominio (ej: www.tu-dominio.com / api.tu-dominio.com).
 
 ## 1. Visión general
 
@@ -14,7 +14,7 @@ Correo Argentino) y un panel de administración extenso.
    Navegador  ──HTTPS──► │              Cloudflare (DNS + CDN + WAF)     │
                          └───────────────┬───────────────┬─────────────┘
                                          │               │
-                       www.dojiprint.com.ar      api.dojiprint.com.ar
+                       www.tu-dominio.com        api.tu-dominio.com
                                          │               │
                          ┌───────────────▼───────────────▼─────────────┐
                          │            VPS  +  Coolify (Traefik/SSL)      │

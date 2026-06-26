@@ -94,7 +94,7 @@ export default function PaymentTransfer() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     )
   }
@@ -103,15 +103,15 @@ export default function PaymentTransfer() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-2xl font-bold text-surface-900 dark:text-white mb-4">
             No hay datos bancarios configurados
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <p className="text-surface-600 dark:text-surface-400 mb-6">
             Por favor contacte al vendedor para obtener los datos de transferencia.
           </p>
           <button
             onClick={() => navigate('/pedidos')}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
           >
             Ver Mis Pedidos
           </button>
@@ -148,35 +148,35 @@ export default function PaymentTransfer() {
         </div>
 
         {/* Datos Bancarios - Grid Moderno */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-8">
+        <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl p-8 mb-8">
           <div className="flex items-center gap-3 mb-6">
-            <HiDocumentText className="text-blue-600 text-2xl" />
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <HiDocumentText className="text-primary-600 text-2xl" />
+            <h2 className="text-2xl font-bold text-surface-900 dark:text-white">
               Datos para la Transferencia
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             {/* Banco */}
-            <div className="col-span-2 p-5 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border border-blue-200 dark:border-blue-700 rounded-xl">
-              <p className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-1">Banco</p>
-              <p className="text-xl font-bold text-blue-900 dark:text-blue-100">
+            <div className="col-span-2 p-5 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border border-primary-200 dark:border-blue-700 rounded-xl">
+              <p className="text-sm font-medium text-primary-700 dark:text-primary-300 mb-1">Banco</p>
+              <p className="text-xl font-bold text-primary-900 dark:text-blue-100">
                 {bankData.bankName}
               </p>
             </div>
 
             {/* Tipo de Cuenta */}
-            <div className="p-5 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Tipo de Cuenta</p>
-              <p className="text-lg font-semibold text-gray-900 dark:text-white">
+            <div className="p-5 bg-surface-50 dark:bg-surface-900 dark:bg-surface-700/50 border border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-xl">
+              <p className="text-sm font-medium text-surface-600 dark:text-surface-400 mb-1">Tipo de Cuenta</p>
+              <p className="text-lg font-semibold text-surface-900 dark:text-white">
                 {bankData.accountType}
               </p>
             </div>
 
             {/* Titular */}
-            <div className="p-5 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Titular</p>
-              <p className="text-lg font-semibold text-gray-900 dark:text-white">
+            <div className="p-5 bg-surface-50 dark:bg-surface-900 dark:bg-surface-700/50 border border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-xl">
+              <p className="text-sm font-medium text-surface-600 dark:text-surface-400 mb-1">Titular</p>
+              <p className="text-lg font-semibold text-surface-900 dark:text-white">
                 {bankData.holderName}
               </p>
             </div>
@@ -195,7 +195,7 @@ export default function PaymentTransfer() {
                   className={`ml-4 p-3 rounded-xl transition-all duration-200 ${
                     copiedField === 'cbu'
                       ? 'bg-green-600 text-white scale-110'
-                      : 'bg-white dark:bg-gray-800 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/30 shadow-md'
+                      : 'bg-white dark:bg-surface-800 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/30 shadow-md'
                   }`}
                   title="Copiar CBU"
                 >
@@ -224,7 +224,7 @@ export default function PaymentTransfer() {
                     className={`ml-4 p-3 rounded-xl transition-all duration-200 ${
                       copiedField === 'alias'
                         ? 'bg-purple-600 text-white scale-110'
-                        : 'bg-white dark:bg-gray-800 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900/30 shadow-md'
+                        : 'bg-white dark:bg-surface-800 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900/30 shadow-md'
                     }`}
                     title="Copiar Alias"
                   >
@@ -240,11 +240,11 @@ export default function PaymentTransfer() {
             )}
 
             {/* Número de Cuenta */}
-            <div className="col-span-2 p-5 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl">
+            <div className="col-span-2 p-5 bg-surface-50 dark:bg-surface-900 dark:bg-surface-700/50 border border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-xl">
               <div className="flex justify-between items-center">
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Número de Cuenta</p>
-                  <p className="text-lg font-mono font-semibold text-gray-900 dark:text-white">
+                  <p className="text-sm font-medium text-surface-600 dark:text-surface-400 mb-1">Número de Cuenta</p>
+                  <p className="text-lg font-mono font-semibold text-surface-900 dark:text-white">
                     {bankData.accountNumber}
                   </p>
                 </div>
@@ -252,8 +252,8 @@ export default function PaymentTransfer() {
                   onClick={() => copyToClipboard(bankData.accountNumber, 'account')}
                   className={`ml-4 p-3 rounded-xl transition-all duration-200 ${
                     copiedField === 'account'
-                      ? 'bg-blue-600 text-white scale-110'
-                      : 'bg-white dark:bg-gray-800 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 shadow-md'
+                      ? 'bg-primary-600 text-white scale-110'
+                      : 'bg-white dark:bg-surface-800 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 shadow-md'
                   }`}
                   title="Copiar Número de Cuenta"
                 >
@@ -263,9 +263,9 @@ export default function PaymentTransfer() {
             </div>
 
             {/* CUIT */}
-            <div className="col-span-2 p-5 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl">
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">CUIT/CUIL del Titular</p>
-              <p className="text-lg font-mono font-semibold text-gray-900 dark:text-white">
+            <div className="col-span-2 p-5 bg-surface-50 dark:bg-surface-900 dark:bg-surface-700/50 border border-surface-200 dark:border-surface-700 dark:border-surface-600 rounded-xl">
+              <p className="text-sm font-medium text-surface-600 dark:text-surface-400 mb-1">CUIT/CUIL del Titular</p>
+              <p className="text-lg font-mono font-semibold text-surface-900 dark:text-white">
                 {bankData.holderDocument}
               </p>
             </div>
@@ -274,22 +274,22 @@ export default function PaymentTransfer() {
 
         {/* Upload Comprobante - Diseño Mejorado */}
         {!uploadSuccess ? (
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-8">
+          <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl p-8 mb-8">
             <div className="flex items-center gap-3 mb-4">
-              <FaUpload className="text-blue-600 text-2xl" />
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              <FaUpload className="text-primary-600 text-2xl" />
+              <h2 className="text-2xl font-bold text-surface-900 dark:text-white">
                 Cargar Comprobante de Pago
               </h2>
             </div>
             
-            <p className="text-gray-600 dark:text-gray-400 mb-6 text-lg">
+            <p className="text-surface-600 dark:text-surface-400 mb-6 text-lg">
               Una vez realizada la transferencia, cargue aquí el comprobante para que podamos verificar su pago.
             </p>
 
             <div className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 ${
               selectedFile 
                 ? 'border-green-400 bg-green-50 dark:bg-green-900/20' 
-                : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/30 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10'
+                : 'border-surface-300 dark:border-surface-600 bg-surface-50 dark:bg-surface-900 dark:bg-surface-700/30 hover:border-blue-400 hover:bg-primary-50 dark:hover:bg-primary-900/10'
             }`}>
               <input
                 type="file"
@@ -306,25 +306,25 @@ export default function PaymentTransfer() {
                 {selectedFile ? (
                   <>
                     <FaCheckCircle className="text-6xl text-green-500 mb-4 animate-bounce" />
-                    <p className="text-gray-900 dark:text-white font-bold text-lg mb-2">
+                    <p className="text-surface-900 dark:text-white font-bold text-lg mb-2">
                       {selectedFile.name}
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-surface-600 dark:text-surface-400">
                       {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
                     </p>
                   </>
                 ) : (
                   <>
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-6 rounded-full mb-4">
-                      <FaUpload className="text-5xl text-blue-600 dark:text-blue-400" />
+                    <div className="bg-primary-100 dark:bg-primary-900/30 p-6 rounded-full mb-4">
+                      <FaUpload className="text-5xl text-primary-600 dark:text-primary-400" />
                     </div>
-                    <p className="text-gray-900 dark:text-white font-bold text-xl mb-2">
+                    <p className="text-surface-900 dark:text-white font-bold text-xl mb-2">
                       Seleccionar archivo
                     </p>
-                    <p className="text-gray-600 dark:text-gray-400 mb-1">
+                    <p className="text-surface-600 dark:text-surface-400 mb-1">
                       Haga clic o arrastre el archivo aquí
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-surface-500 dark:text-surface-400">
                       JPG, PNG o PDF (máx. 5MB)
                     </p>
                   </>
@@ -336,7 +336,7 @@ export default function PaymentTransfer() {
               <div className="mt-6 flex gap-4">
                 <button
                   onClick={() => setSelectedFile(null)}
-                  className="flex-1 px-6 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 font-semibold text-lg"
+                  className="flex-1 px-6 py-4 border-2 border-surface-300 dark:border-surface-600 text-surface-700 dark:text-surface-300 rounded-xl hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-700 transition-all duration-200 font-semibold text-lg"
                 >
                   Cancelar
                 </button>
@@ -360,7 +360,7 @@ export default function PaymentTransfer() {
             <div className="mt-6 text-center">
               <button
                 onClick={() => navigate('/pedidos')}
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold text-lg hover:underline transition-colors"
+                className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold text-lg hover:underline transition-colors"
               >
                 Cargar más tarde desde Mis Pedidos →
               </button>
@@ -403,35 +403,35 @@ export default function PaymentTransfer() {
           </div>
           
           <div className="space-y-3 ml-2">
-            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl">
+            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-surface-800/50 rounded-xl">
               <FaCheckCircle className="text-green-500 text-xl flex-shrink-0 mt-0.5" />
               <p className="text-amber-800 dark:text-amber-300 font-medium">
                 Asegúrese de transferir el <strong>monto exacto</strong> indicado: ${parseFloat(total).toFixed(2)} ARS
               </p>
             </div>
             
-            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl">
+            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-surface-800/50 rounded-xl">
               <FaCheckCircle className="text-green-500 text-xl flex-shrink-0 mt-0.5" />
               <p className="text-amber-800 dark:text-amber-300 font-medium">
                 Use el número de orden <strong>#{orderNumber}</strong> como referencia si es posible
               </p>
             </div>
             
-            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl">
+            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-surface-800/50 rounded-xl">
               <FaCheckCircle className="text-green-500 text-xl flex-shrink-0 mt-0.5" />
               <p className="text-amber-800 dark:text-amber-300 font-medium">
                 Conserve el comprobante de la transferencia hasta que confirmemos el pago
               </p>
             </div>
             
-            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl">
+            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-surface-800/50 rounded-xl">
               <FaCheckCircle className="text-green-500 text-xl flex-shrink-0 mt-0.5" />
               <p className="text-amber-800 dark:text-amber-300 font-medium">
                 El pedido será procesado una vez verificado el pago (<strong>24-48 horas hábiles</strong>)
               </p>
             </div>
             
-            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl">
+            <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-surface-800/50 rounded-xl">
               <FaCheckCircle className="text-green-500 text-xl flex-shrink-0 mt-0.5" />
               <p className="text-amber-800 dark:text-amber-300 font-medium">
                 Recibirá un <strong>email de confirmación</strong> cuando su pago sea validado

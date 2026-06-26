@@ -51,26 +51,26 @@ const EmailVerificationPending = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div className="bg-white rounded-lg shadow-xl p-8">
+        <div className="bg-white dark:bg-surface-800 rounded-lg shadow-xl p-8">
           {/* Header */}
           <div className="text-center">
-            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100">
-              <EnvelopeIcon className="h-10 w-10 text-blue-600" />
+            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-primary-100">
+              <EnvelopeIcon className="h-10 w-10 text-primary-600" />
             </div>
-            <h2 className="mt-6 text-3xl font-bold text-gray-900">
+            <h2 className="mt-6 text-3xl font-bold text-surface-900 dark:text-white">
               Verifica tu Email
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-surface-600 dark:text-surface-400">
               Te hemos enviado un email con un enlace de verificación
             </p>
           </div>
 
           {/* Instructions */}
-          <div className="mt-8 bg-blue-50 rounded-lg p-4">
-            <h3 className="text-sm font-semibold text-blue-900 mb-2">
+          <div className="mt-8 bg-primary-50 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-primary-900 mb-2">
               Pasos a seguir:
             </h3>
-            <ol className="list-decimal list-inside space-y-2 text-sm text-blue-800">
+            <ol className="list-decimal list-inside space-y-2 text-sm text-primary-800">
               <li>Revisa tu bandeja de entrada</li>
               <li>Busca un email de nuestra parte</li>
               <li>Haz clic en el enlace de verificación</li>
@@ -121,7 +121,7 @@ const EmailVerificationPending = () => {
           <div className="mt-8">
             <form onSubmit={handleResendEmail} className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="email" className="block text-sm font-medium text-surface-700 dark:text-surface-300">
                   ¿No recibiste el email?
                 </label>
                 <div className="mt-1 relative">
@@ -133,7 +133,7 @@ const EmailVerificationPending = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="appearance-none block w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm placeholder-surface-400 dark:placeholder-surface-500 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                     placeholder="tu@email.com"
                     disabled={status === 'sending'}
                   />
@@ -143,7 +143,7 @@ const EmailVerificationPending = () => {
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {status === 'sending' ? (
                   <>
@@ -164,7 +164,7 @@ const EmailVerificationPending = () => {
           <div className="mt-6 text-center">
             <button
               onClick={() => navigate('/login')}
-              className="text-sm font-medium text-blue-600 hover:text-blue-500 transition-colors"
+              className="text-sm font-medium text-primary-600 hover:text-primary-500 transition-colors"
             >
               Volver al inicio de sesión
             </button>

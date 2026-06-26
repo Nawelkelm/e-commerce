@@ -362,3 +362,38 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ─── Dark Mode ─── */
+.dark .page-header h1 { color: #fafafa; }
+.dark .page-header p { color: #a3a3a3; }
+.dark .search-box input { background: #1a1a1a; border-color: #404040; color: #fafafa; }
+.dark .filters-section select { background-color: #1a1a1a; border-color: #404040; color: #fafafa; }
+.dark .templates-table { background: #262626; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.dark .templates-table td { border-bottom-color: #404040; color: #e5e5e5; }
+.dark .templates-table tbody tr:hover { background-color: #1a1a1a; }
+.dark .template-name .icon { color: #a78bfa; }
+.dark .subject-cell { color: #a3a3a3; }
+.dark .variables-count { background-color: #404040; color: #d4d4d4; }
+.dark .status-toggle.inactive { background: #404040; color: #a3a3a3; }
+.dark .btn-icon { background: #262626; border-color: #404040; }
+.dark .btn-icon .icon { color: #a3a3a3; }
+.dark .btn-icon:hover { background: #2e1065; border-color: #7c3aed; }
+.dark .btn-icon:hover .icon { color: #a78bfa; }
+.dark .btn-icon.btn-test:hover { background: #052e16; border-color: #16a34a; }
+.dark .btn-icon.btn-test:hover .icon { color: #4ade80; }
+.dark .btn-icon.btn-danger:hover { background: #450a0a; border-color: #dc2626; }
+.dark .btn-icon.btn-danger:hover .icon { color: #f87171; }
+.dark .btn-secondary { background: #262626; color: #a78bfa; border-color: #7c3aed; }
+.dark .btn-secondary:hover { background: #2e1065; }
+.dark .pagination button { background: #262626; border-color: #404040; color: #e5e5e5; }
+.dark .pagination button:not(:disabled):hover { background: #2e1065; border-color: #7c3aed; color: #a78bfa; }
+.dark .loading-state, .dark .empty-state { background: #262626; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.dark .empty-icon { color: #404040; }
+.dark .empty-state h3 { color: #fafafa; }
+.dark .empty-state p { color: #737373; }
+.dark .modal-content { background: #262626; }
+.dark .test-modal h2 { color: #fafafa; }
+.dark .test-modal p { color: #a3a3a3; }
+.dark .form-group label { color: #e5e5e5; }
+.dark .form-group input { background: #1a1a1a; border-color: #404040; color: #fafafa; }
+.dark .form-group input:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.2); }

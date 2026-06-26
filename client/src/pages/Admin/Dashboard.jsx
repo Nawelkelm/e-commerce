@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { 
-  ShoppingBagIcon, 
-  UsersIcon, 
-  ChartBarIcon, 
-  CurrencyDollarIcon
+import { Link } from 'react-router-dom'
+import {
+  ShoppingBagIcon,
+  UsersIcon,
+  ChartBarIcon,
+  CurrencyDollarIcon,
+  ArrowTrendingUpIcon,
+  ArrowTrendingDownIcon
 } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../store/authStore'
+
+const statusConfig = {
+  delivered:  { label: 'Entregado', class: 'badge-success' },
+  pending:    { label: 'Pendiente', class: 'badge-warning' },
+  processing: { label: 'Procesando', class: 'badge-info' },
+  confirmed:  { label: 'Confirmado', class: 'badge-info' },
+  shipped:    { label: 'Enviado', class: 'badge-primary' },
+  cancelled:  { label: 'Cancelado', class: 'badge-error' },
+}
 
 const Dashboard = () => {
   const [dashboardStats, setDashboardStats] = useState(null)
@@ -13,38 +25,20 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true)
   const { token } = useAuthStore()
 
-  useEffect(() => {
-    fetchDashboardData()
-  }, [])
+  useEffect(() => { fetchDashboardData() }, [])
 
   const fetchDashboardData = async () => {
     try {
       setLoading(true)
-      
-      // Fetch dashboard stats
-      const statsResponse = await fetch('/api/admin/dashboard/stats', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      
-      if (statsResponse.ok) {
-        const statsData = await statsResponse.json()
-        setDashboardStats(statsData)
-      }
+      const headers = { 'Authorization': `Bearer ${token}` }
 
-      // Fetch recent orders
-      const ordersResponse = await fetch('/api/admin/orders?page=1&limit=5', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      
-      if (ordersResponse.ok) {
-        const ordersData = await ordersResponse.json()
-        setRecentOrders(ordersData.orders || [])
-      }
-      
+      const [statsRes, ordersRes] = await Promise.all([
+        fetch('/api/admin/dashboard/stats', { headers }),
+        fetch('/api/admin/orders?page=1&limit=5', { headers })
+      ])
+
+      if (statsRes.ok) setDashboardStats(await statsRes.json())
+      if (ordersRes.ok) { const d = await ordersRes.json(); setRecentOrders(d.orders || []) }
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
     } finally {
@@ -52,157 +46,125 @@ const Dashboard = () => {
     }
   }
 
-  const stats = [
+  const statCards = [
     {
       name: 'Total Ventas',
-      value: dashboardStats ? `$${dashboardStats.totalRevenue.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '$0',
+      value: dashboardStats ? `$${dashboardStats.totalRevenue?.toLocaleString('es-AR', { minimumFractionDigits: 0 })}` : '$0',
       change: dashboardStats ? `${dashboardStats.revenueGrowth > 0 ? '+' : ''}${dashboardStats.revenueGrowth}%` : '0%',
-      changeType: dashboardStats && dashboardStats.revenueGrowth > 0 ? 'increase' : 'decrease',
+      up: dashboardStats?.revenueGrowth > 0,
       icon: CurrencyDollarIcon,
+      color: 'primary',
     },
     {
       name: 'Productos',
-      value: dashboardStats ? dashboardStats.totalProducts || 0 : 0,
-      change: dashboardStats && dashboardStats.lowStockProducts ? `${dashboardStats.lowStockProducts} bajo stock` : 'Stock OK',
-      changeType: dashboardStats && dashboardStats.lowStockProducts > 5 ? 'decrease' : 'increase',
+      value: dashboardStats?.totalProducts || 0,
+      change: dashboardStats?.lowStockProducts ? `${dashboardStats.lowStockProducts} bajo stock` : 'Stock OK',
+      up: !(dashboardStats?.lowStockProducts > 5),
       icon: ShoppingBagIcon,
+      color: 'accent',
     },
     {
       name: 'Usuarios',
-      value: dashboardStats ? dashboardStats.totalUsers || 0 : 0,
+      value: dashboardStats?.totalUsers || 0,
       change: dashboardStats ? `${dashboardStats.userGrowth > 0 ? '+' : ''}${dashboardStats.userGrowth}%` : '0%',
-      changeType: dashboardStats && dashboardStats.userGrowth > 0 ? 'increase' : 'decrease',
+      up: dashboardStats?.userGrowth > 0,
       icon: UsersIcon,
+      color: 'emerald',
     },
     {
       name: 'Pedidos',
-      value: dashboardStats ? dashboardStats.totalOrders || 0 : 0,
+      value: dashboardStats?.totalOrders || 0,
       change: dashboardStats ? `${dashboardStats.ordersGrowth > 0 ? '+' : ''}${dashboardStats.ordersGrowth}%` : '0%',
-      changeType: dashboardStats && dashboardStats.ordersGrowth > 0 ? 'increase' : 'decrease',
+      up: dashboardStats?.ordersGrowth > 0,
       icon: ChartBarIcon,
+      color: 'blue',
     },
   ]
+
+  const colorStyles = {
+    primary: 'bg-primary-100 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 border-primary-500',
+    accent: 'bg-accent-100 dark:bg-accent-950/50 text-accent-600 dark:text-accent-400 border-accent-500',
+    emerald: 'bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border-emerald-500',
+    blue: 'bg-primary-100 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 border-primary-500',
+  }
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-500"></div>
+        <div className="loading-spinner h-10 w-10" />
       </div>
     )
   }
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-8">
+    <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-          Resumen general de tu tienda
-        </p>
+        <h1 className="section-heading">Dashboard</h1>
+        <p className="section-subheading mt-1">Resumen general de tu tienda</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-        {stats.map((stat) => (
-          <div
-            key={stat.name}
-            className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg"
-          >
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <stat.icon className="h-6 w-6 text-gray-400" aria-hidden="true" />
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">{stat.name}</dt>
-                    <dd>
-                      <div className="flex items-baseline">
-                        <div className="text-2xl font-semibold text-gray-900 dark:text-white">{stat.value}</div>
-                        <div
-                          className={`ml-2 flex items-baseline text-sm font-semibold ${
-                            stat.changeType === 'increase' ? 'text-green-600' : 'text-red-600'
-                          }`}
-                        >
-                          {stat.change}
-                        </div>
-                      </div>
-                    </dd>
-                  </dl>
-                </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {statCards.map((stat) => (
+          <div key={stat.name}
+            className={`card p-5 border-l-4 ${colorStyles[stat.color].split(' ').filter(c => c.startsWith('border-')).join(' ')}`}>
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-caption font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wide">{stat.name}</p>
+                <p className="mt-2 text-2xl font-bold text-surface-900 dark:text-white">{stat.value}</p>
               </div>
+              <div className={`p-2.5 rounded-xl ${colorStyles[stat.color].split(' ').filter(c => c.startsWith('bg-') || c.startsWith('dark:bg-') || c.startsWith('text-') || c.startsWith('dark:text-')).join(' ')}`}>
+                <stat.icon className="h-5 w-5" />
+              </div>
+            </div>
+            <div className="mt-3 flex items-center gap-1">
+              {stat.up ? (
+                <ArrowTrendingUpIcon className="h-4 w-4 text-emerald-500" />
+              ) : (
+                <ArrowTrendingDownIcon className="h-4 w-4 text-error-500" />
+              )}
+              <span className={`text-xs font-medium ${stat.up ? 'text-emerald-600 dark:text-emerald-400' : 'text-error-600 dark:text-error-400'}`}>
+                {stat.change}
+              </span>
             </div>
           </div>
         ))}
       </div>
 
       {/* Recent Orders */}
-      <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
-            Pedidos Recientes
-          </h3>
+      <div className="card overflow-hidden">
+        <div className="px-6 py-4 border-b border-surface-200 dark:border-surface-700 flex items-center justify-between">
+          <h3 className="text-base font-semibold text-surface-900 dark:text-white">Pedidos Recientes</h3>
+          <Link to="/admin/pedidos" className="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 transition-colors">
+            Ver todos
+          </Link>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead className="bg-gray-50 dark:bg-gray-700">
+        <div className="table-wrapper border-0 rounded-none">
+          <table className="table">
+            <thead>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  ID
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Cliente
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Total
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Estado
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                  Fecha
-                </th>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Fecha</th>
               </tr>
             </thead>
-            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-              {recentOrders.length > 0 ? recentOrders.map((order) => (
-                <tr key={order.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
-                    #{order.orderNumber || order.id}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                    {order.shippingAddress ? `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}` : 'N/A'}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                    ${parseFloat(order.total).toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        order.status === 'delivered'
-                          ? 'bg-green-100 text-green-800'
-                          : order.status === 'pending'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : order.status === 'processing'
-                          ? 'bg-blue-100 text-blue-800'
-                          : order.status === 'confirmed'
-                          ? 'bg-blue-100 text-blue-800'
-                          : order.status === 'shipped'
-                          ? 'bg-purple-100 text-purple-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                    {new Date(order.createdAt).toLocaleDateString('es-ES')}
-                  </td>
-                </tr>
-              )) : (
+            <tbody>
+              {recentOrders.length > 0 ? recentOrders.map((order) => {
+                const st = statusConfig[order.status] || { label: order.status, class: 'badge-info' }
+                return (
+                  <tr key={order.id}>
+                    <td className="font-medium text-surface-900 dark:text-white">#{order.orderNumber || order.id?.slice(0, 8)}</td>
+                    <td>{order.shippingAddress ? `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}` : 'N/A'}</td>
+                    <td className="font-medium text-surface-900 dark:text-white">${parseFloat(order.total).toLocaleString('es-AR')}</td>
+                    <td><span className={st.class}>{st.label}</span></td>
+                    <td>{new Date(order.createdAt).toLocaleDateString('es-AR')}</td>
+                  </tr>
+                )
+              }) : (
                 <tr>
-                  <td colSpan="5" className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                    No hay órdenes recientes
-                  </td>
+                  <td colSpan="5" className="text-center py-8 text-surface-400">No hay pedidos recientes</td>
                 </tr>
               )}
             </tbody>

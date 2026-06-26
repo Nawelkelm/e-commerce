@@ -1,4 +1,4 @@
-# Roadmap & Backlog — E-commerce DojiPrint
+# Roadmap & Backlog — TiendaKit
 
 > Estado: 2026-06-18. Prioridad acordada con el dueño: **OCA → Redis → Tests → Backups**.
 > Convención: cada tarea se implementa de a una, con tests cuando aplique, docs y commit.
@@ -17,14 +17,14 @@ Estado: ⬜ pendiente · 🔄 en progreso · ✅ hecho
 | 0.3 | Externalizar CORS/URLs a env (`CORS_ORIGINS`, `FRONTEND_URL`, `BACKEND_URL`) | 🔴 | ✅ |
 | 0.4 | `/api/health` con verificación real de DB | 🟠 | ✅ |
 | 0.5 | Eliminar archivos backup/duplicados versionados | 🟡 | ✅ |
-| 0.6 | `.env.example` actualizado (dojiprint + Redis + nuevas vars) | 🟠 | ✅ |
+| 0.6 | `.env.example` actualizado (TiendaKit + Redis + nuevas vars) | 🟠 | ✅ |
 | 0.7 | Docs base: `architecture.md`, `ROADMAP.md`, `CLAUDE.md`, guía Coolify, skills | 🟠 | ✅ |
 | 0.8 | **Rotar contraseña de PostgreSQL** (la vieja quedó en el historial de git) | 🔴 | ⬜ (acción del dueño) |
-| 0.9 | Quitar `VITE_API_URL` por defecto de Render en `client/src/config/api.js` | 🟠 | ⬜ |
+| 0.9 | Quitar todas las URLs/referencias de Render del proyecto | 🟠 | ✅ |
 
 ---
 
-## MVP — Estabilizar y poner online en dojiprint.com.ar
+## MVP — Estabilizar y poner online en Coolify
 
 Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + backups.
 
@@ -33,7 +33,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | M.1 | **Fix OCA**: claves `.env` duplicadas + URL/namespace/SOAPAction/campos del WSDL corregidos; parser robusto. Integración OK (devuelve respuesta real de OCA) | 🔴 | ✅ |
 | M.1b | **Credenciales OCA**: OCA responde "CUIT o operativa inválidos". Conseguir contrato ePak + operativa válida y cargar `OCA_CUIT`/`OCA_OPERATIVA` reales | 🔴 | ⬜ (acción del dueño) |
 | M.2 | Bajar a nivel `debug` los logs verbosos de `ocaService` y `shippingMethodController` | 🟡 | ✅ |
-| M.3 | `docker-compose` apto Coolify (servicios separados, sin secrets en archivo) | 🔴 | ⬜ |
+| M.3 | `docker-compose` apto Coolify (servicios separados, sin secrets en archivo) + `.dockerignore` + nginx SPA + Dockerfile build args | 🔴 | ✅ |
 | M.4 | Guía y ejecución de deploy en Coolify (Oracle Free / Hetzner) | 🔴 | 🔄 |
 | M.5 | Configurar dominios en Cloudflare → Coolify (www + api) con SSL | 🔴 | ⬜ |
 | M.6 | Backups automáticos de PostgreSQL (Coolify → S3/Cloudflare R2) | 🟠 | ⬜ |

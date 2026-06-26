@@ -1,5 +1,6 @@
 const { Shipment, ShipmentTracking, Order, OrderItem, Product, User } = require('../models');
 const { Op } = require('sequelize');
+const logger = require('../config/logger');
 
 // Get all shipments with filtering and pagination
 const getAllShipments = async (req, res) => {
@@ -72,7 +73,7 @@ const getAllShipments = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error fetching shipments:', error);
+    logger.error('Error fetching shipments:', error);
     res.status(500).json({ message: 'Error al obtener envíos', error: error.message });
   }
 };
@@ -120,7 +121,7 @@ const getShipmentById = async (req, res) => {
 
     res.json(shipment);
   } catch (error) {
-    console.error('Error fetching shipment:', error);
+    logger.error('Error fetching shipment:', error);
     res.status(500).json({ message: 'Error al obtener envío', error: error.message });
   }
 };
@@ -165,7 +166,7 @@ const getShipmentByTracking = async (req, res) => {
 
     res.json(publicData);
   } catch (error) {
-    console.error('Error fetching shipment by tracking:', error);
+    logger.error('Error fetching shipment by tracking:', error);
     res.status(500).json({ message: 'Error al obtener información de seguimiento', error: error.message });
   }
 };
@@ -270,7 +271,7 @@ const createShipment = async (req, res) => {
 
     res.status(201).json(createdShipment);
   } catch (error) {
-    console.error('Error creating shipment:', error);
+    logger.error('Error creating shipment:', error);
     res.status(500).json({ message: 'Error al crear envío', error: error.message });
   }
 };
@@ -312,7 +313,7 @@ const updateShipment = async (req, res) => {
 
     res.json(updatedShipment);
   } catch (error) {
-    console.error('Error updating shipment:', error);
+    logger.error('Error updating shipment:', error);
     res.status(500).json({ message: 'Error al actualizar envío', error: error.message });
   }
 };
@@ -391,7 +392,7 @@ const updateShipmentStatus = async (req, res) => {
 
     res.json(updatedShipment);
   } catch (error) {
-    console.error('Error updating shipment status:', error);
+    logger.error('Error updating shipment status:', error);
     res.status(500).json({ message: 'Error al actualizar estado del envío', error: error.message });
   }
 };
@@ -420,7 +421,7 @@ const addTrackingEvent = async (req, res) => {
 
     res.status(201).json(trackingEvent);
   } catch (error) {
-    console.error('Error adding tracking event:', error);
+    logger.error('Error adding tracking event:', error);
     res.status(500).json({ message: 'Error al agregar evento de seguimiento', error: error.message });
   }
 };
@@ -489,7 +490,7 @@ const getShipmentStats = async (req, res) => {
       shipmentsByCarrier
     });
   } catch (error) {
-    console.error('Error fetching shipment stats:', error);
+    logger.error('Error fetching shipment stats:', error);
     res.status(500).json({ message: 'Error al obtener estadísticas de envíos', error: error.message });
   }
 };
@@ -528,7 +529,7 @@ const syncShipmentTracking = async (req, res) => {
       res.status(400).json({ message: result.message || result.error });
     }
   } catch (error) {
-    console.error('Sync shipment tracking error:', error);
+    logger.error('Sync shipment tracking error:', error);
     res.status(500).json({ message: 'Server error syncing tracking' });
   }
 };
@@ -545,7 +546,7 @@ const syncAllShipments = async (req, res) => {
       results
     });
   } catch (error) {
-    console.error('Sync all shipments error:', error);
+    logger.error('Sync all shipments error:', error);
     res.status(500).json({ message: 'Server error syncing all shipments' });
   }
 };
@@ -566,7 +567,7 @@ const getShippingQuote = async (req, res) => {
       res.status(400).json({ message: quote.error });
     }
   } catch (error) {
-    console.error('Get shipping quote error:', error);
+    logger.error('Get shipping quote error:', error);
     res.status(500).json({ message: 'Server error getting quote' });
   }
 };
@@ -582,7 +583,7 @@ const getAllShippingQuotes = async (req, res) => {
 
     res.json({ quotes });
   } catch (error) {
-    console.error('Get all shipping quotes error:', error);
+    logger.error('Get all shipping quotes error:', error);
     res.status(500).json({ message: 'Server error getting quotes' });
   }
 };
@@ -596,7 +597,7 @@ const getAvailableCarriers = async (req, res) => {
 
     res.json({ carriers });
   } catch (error) {
-    console.error('Get available carriers error:', error);
+    logger.error('Get available carriers error:', error);
     res.status(500).json({ message: 'Server error getting carriers' });
   }
 };

@@ -1,7 +1,7 @@
-# Despliegue en Coolify — DojiPrint
+# Despliegue en Coolify — TiendaKit
 
-Guía paso a paso para desplegar el e-commerce en **Coolify** (PaaS self-hosted),
-con **PostgreSQL + Redis + SSL + dominio dojiprint.com.ar + backups automáticos**,
+Guía paso a paso para desplegar TiendaKit en **Coolify** (PaaS self-hosted),
+con **PostgreSQL + Redis + SSL + dominio propio + backups automáticos**,
 detrás de **Cloudflare**. **No se usa Render.**
 
 ---
@@ -10,9 +10,9 @@ detrás de **Cloudflare**. **No se usa Render.**
 
 ```
 Cloudflare (DNS + proxy + SSL en el borde)
-   www.dojiprint.com.ar ─┐
-   dojiprint.com.ar      ├─► VPS (IP pública) con Coolify
-   api.dojiprint.com.ar ─┘        ├─ App: frontend (nginx, build estático)
+   www.tu-dominio.com ─┐
+   tu-dominio.com      ├─► VPS (IP pública) con Coolify
+   api.tu-dominio.com ─┘        ├─ App: frontend (nginx, build estático)
                                   ├─ App: backend (Node API, :5000)
                                   ├─ Recurso: PostgreSQL 15
                                   └─ Recurso: Redis 7
@@ -62,7 +62,7 @@ Al terminar, abrí `http://<IP_DEL_SERVER>:8000`, creá el usuario admin y compl
 
 ## 3. DNS en Cloudflare
 
-En el panel de Cloudflare de `dojiprint.com.ar` → **DNS → Records**. Borrá los CNAME viejos que apuntaban a Render y creá registros **A** a la IP del VPS:
+En el panel de Cloudflare de `tu-dominio.com` → **DNS → Records**. Borrá los CNAME viejos que apuntaban a Render y creá registros **A** a la IP del VPS:
 
 | Tipo | Name | Content | Proxy |
 |------|------|---------|-------|
@@ -96,7 +96,7 @@ En tu proyecto de Coolify → **+ New**:
 
 - **Build Pack:** Dockerfile. **Base Directory:** `/server`. (Usa `server/Dockerfile`.)
 - **Port:** `5000`.
-- **Domain:** `https://api.dojiprint.com.ar` (Coolify pide SSL → lo emite con Let's Encrypt).
+- **Domain:** `https://api.tu-dominio.com` (Coolify pide SSL → lo emite con Let's Encrypt).
 - **Health check path:** `/api/health`.
 - **Environment Variables** (pegá desde `.env.example`, con valores reales):
   - `NODE_ENV=production`
@@ -104,16 +104,16 @@ En tu proyecto de Coolify → **+ New**:
   - `DB_SSL=false` (Postgres interno de Coolify normalmente sin TLS) — o `true` si lo configurás con TLS
   - `REDIS_URL=` (la de Coolify Redis)
   - `JWT_SECRET`, `JWT_REFRESH_SECRET` (generá con `openssl rand -hex 64`)
-  - `FRONTEND_URL=https://www.dojiprint.com.ar`
-  - `BACKEND_URL=https://api.dojiprint.com.ar`
-  - `CORS_ORIGINS=https://www.dojiprint.com.ar,https://dojiprint.com.ar`
+  - `FRONTEND_URL=https://www.tu-dominio.com`
+  - `BACKEND_URL=https://api.tu-dominio.com`
+  - `CORS_ORIGINS=https://www.tu-dominio.com,https://tu-dominio.com`
   - `MERCADOPAGO_*`, `CLOUDINARY_*`, `SMTP_*`, `OCA_*`, `AFIP_*` (ver `.env.example`)
 - **Persistent storage** (volúmenes) para no perder archivos subidos:
   - `/app/uploads` → volumen persistente
   - `/app/logs` → volumen persistente
 - Deploy. El primer arranque corre `sync` + seeds + inicializa permisos.
 
-> **Webhook de MercadoPago:** configuralo a `https://api.dojiprint.com.ar/api/payments/webhook`.
+> **Webhook de MercadoPago:** configuralo a `https://api.tu-dominio.com/api/payments/webhook`.
 
 ---
 
@@ -123,8 +123,8 @@ En tu proyecto de Coolify → **+ New**:
 
 - **Build Pack:** Dockerfile. **Base Directory:** `/client`. (Usa `client/Dockerfile`, sirve con nginx.)
 - **Port:** `10000` (el `EXPOSE` del Dockerfile del cliente).
-- **Domain:** `https://www.dojiprint.com.ar` (agregá también `https://dojiprint.com.ar` con redirect a www).
-- **Build-time env:** `VITE_API_URL=https://api.dojiprint.com.ar/api` (Vite necesita la var en build).
+- **Domain:** `https://www.tu-dominio.com` (agregá también `https://tu-dominio.com` con redirect a www).
+- **Build-time env:** `VITE_API_URL=https://api.tu-dominio.com/api` (Vite necesita la var en build).
 - Deploy.
 
 ---
@@ -134,7 +134,7 @@ En tu proyecto de Coolify → **+ New**:
 En Coolify, sobre el recurso **PostgreSQL → Backups**:
 - Activá **Scheduled Backups** (cron, p. ej. diario `0 3 * * *`).
 - **Destino S3-compatible:** lo más barato es **Cloudflare R2** (10 GB gratis):
-  - En Cloudflare → R2 → creá un bucket `dojiprint-backups` y un API token (S3).
+  - En Cloudflare → R2 → creá un bucket `tiendakit-backups` y un API token (S3).
   - En Coolify → Storages (S3) → cargá endpoint R2, access key y secret.
   - Asociá ese storage al backup de PostgreSQL.
 - Verificá una restauración de prueba al menos una vez.
@@ -144,10 +144,10 @@ En Coolify, sobre el recurso **PostgreSQL → Backups**:
 ## 8. Verificación post-deploy (smoke test)
 
 ```bash
-curl https://api.dojiprint.com.ar/api/health        # {"status":"OK","db":"up"}
-curl https://api.dojiprint.com.ar/api/products      # lista productos
+curl https://api.tu-dominio.com/api/health        # {"status":"OK","db":"up"}
+curl https://api.tu-dominio.com/api/products      # lista productos
 ```
-En el navegador: `https://www.dojiprint.com.ar` → cargar home, login admin, ver catálogo, hacer un checkout en sandbox de MercadoPago.
+En el navegador: `https://www.tu-dominio.com` → cargar home, login admin, ver catálogo, hacer un checkout en sandbox de MercadoPago.
 
 ---
 
@@ -168,6 +168,6 @@ En el navegador: `https://www.dojiprint.com.ar` → cargar home, login admin, ve
 - [ ] Frontend desplegado con `VITE_API_URL` correcto
 - [ ] SSL emitido para www, root y api
 - [ ] **Contraseña de PostgreSQL vieja (Render) rotada/inutilizada**
-- [ ] Webhook de MercadoPago apuntando a api.dojiprint.com.ar
+- [ ] Webhook de MercadoPago apuntando a api.tu-dominio.com
 - [ ] Backups automáticos a R2 configurados y probados
 - [ ] Smoke test OK

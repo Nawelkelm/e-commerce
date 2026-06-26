@@ -75,13 +75,9 @@ const getUserOrders = async (req, res) => {
 // Get single order by ID
 const getOrder = async (req, res) => {
   try {
-    console.log('=== GET ORDER CALLED ===');
     const { id } = req.params;
     const userId = req.user.id;
     const isAdmin = req.user.role === 'admin';
-    console.log('Order ID:', id);
-    console.log('User ID:', userId);
-    console.log('Is Admin:', isAdmin);
 
     const where = { id };
     if (!isAdmin) {
@@ -111,14 +107,11 @@ const getOrder = async (req, res) => {
     });
 
     if (!order) {
-      console.log('Order not found');
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    console.log('Order found, sending response');
     res.json(order);
   } catch (error) {
-    console.error('Get order error:', error);
     logger.error('Get order error:', error);
     res.status(500).json({ message: 'Server error' });
   }
@@ -129,12 +122,8 @@ const createOrder = async (req, res) => {
   const transaction = await sequelize.transaction();
   
   try {
-    console.log('=== CREATE ORDER CALLED ===');
-    console.log('Request body:', JSON.stringify(req.body, null, 2));
-    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log('❌ Validation errors:', JSON.stringify(errors.array(), null, 2));
       await transaction.rollback();
       return res.status(400).json({ errors: errors.array() });
     }
@@ -257,10 +246,10 @@ const createOrder = async (req, res) => {
     let shippingMethodCode = null;
     let shippingMethodName = null;
 
-    // Si se proporcionó un método de envío, usarlo
     if (shippingMethod) {
       shippingAmount = parseFloat(shippingMethod.price || 0);
-      shippingMethodId = shippingMethod.id;
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      shippingMethodId = uuidRegex.test(shippingMethod.id) ? shippingMethod.id : null;
       shippingMethodCode = shippingMethod.code;
       shippingMethodName = shippingMethod.name;
     } else {
@@ -481,10 +470,6 @@ const updateOrderStatus = async (req, res) => {
 // Get all orders (Admin only)
 const getAllOrders = async (req, res) => {
   try {
-    console.log('=== GET ALL ORDERS CALLED ===');
-    console.log('User:', req.user);
-    console.log('Query params:', req.query);
-    
     const {
       page = 1,
       limit = 20,
@@ -559,11 +544,6 @@ const getAllOrders = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('GET ALL ORDERS ERROR DETAILS:', {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
-    });
     logger.error('Get all orders error:', error);
     res.status(500).json({ 
       message: 'Server error',
@@ -777,6 +757,71 @@ const updateShippingAddress = async (req, res) => {
   }
 };
 
+const approvePayment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const order = await Order.findByPk(id, {
+      include: [
+        { model: OrderItem, as: 'items', include: [{ model: Product, as: 'product', attributes: ['id', 'name', 'slug', 'images'] }] },
+        { model: User, as: 'user', attributes: ['id', 'firstName', 'lastName', 'email'] }
+      ]
+    });
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    await order.update({
+      paymentStatus: 'paid',
+      status: order.status === 'pending' ? 'processing' : order.status
+    });
+
+    if (order.user) {
+      try {
+        await emailService.sendOrderConfirmation(order, order.user);
+      } catch (emailError) {
+        logger.error('Payment approval email error:', emailError);
+      }
+    }
+
+    logger.info(`Payment approved for order ${id} by admin ${req.user.id}`);
+    res.json(order);
+  } catch (error) {
+    logger.error('Approve payment error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const rejectPayment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+
+    const order = await Order.findByPk(id, {
+      include: [
+        { model: OrderItem, as: 'items', include: [{ model: Product, as: 'product', attributes: ['id', 'name', 'slug', 'images'] }] },
+        { model: User, as: 'user', attributes: ['id', 'firstName', 'lastName', 'email'] }
+      ]
+    });
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    await order.update({
+      paymentStatus: 'failed',
+      adminNotes: reason ? `Pago rechazado: ${reason}` : 'Pago rechazado'
+    });
+
+    logger.info(`Payment rejected for order ${id} by admin ${req.user.id}. Reason: ${reason || 'N/A'}`);
+    res.json(order);
+  } catch (error) {
+    logger.error('Reject payment error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   getUserOrders,
   getOrder,
@@ -786,5 +831,7 @@ module.exports = {
   cancelOrder,
   uploadPaymentProof,
   getOrdersPendingShipping,
-  updateShippingAddress
+  updateShippingAddress,
+  approvePayment,
+  rejectPayment
 };

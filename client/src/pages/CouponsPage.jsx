@@ -71,7 +71,7 @@ const CouponsPage = () => {
   return (
     <>
       <Helmet>
-        <title>Ofertas y Cupones - E-commerce</title>
+        <title>Ofertas y Cupones - TiendaKit</title>
         <meta name="description" content="Descubre nuestros cupones de descuento y ofertas especiales. Ahorra en tus compras." />
       </Helmet>
 

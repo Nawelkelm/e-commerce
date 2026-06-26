@@ -59,8 +59,8 @@ const InvoicesList = () => {
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      draft: { color: 'bg-gray-100 text-gray-800', icon: ClockIcon, text: 'Borrador' },
-      issued: { color: 'bg-blue-100 text-blue-800', icon: FileTextIcon, text: 'Emitida' },
+      draft: { color: 'bg-surface-100 dark:bg-surface-800 text-surface-800', icon: ClockIcon, text: 'Borrador' },
+      issued: { color: 'bg-primary-100 text-primary-800', icon: FileTextIcon, text: 'Emitida' },
       paid: { color: 'bg-green-100 text-green-800', icon: CheckCircleIcon, text: 'Pagada' },
       cancelled: { color: 'bg-red-100 text-red-800', icon: XCircleIcon, text: 'Cancelada' },
       refunded: { color: 'bg-yellow-100 text-yellow-800', icon: DollarSignIcon, text: 'Reembolsada' }
@@ -112,7 +112,7 @@ const InvoicesList = () => {
   if (loading && invoices.length === 0) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     );
   }
@@ -134,72 +134,72 @@ const InvoicesList = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">Mis Facturas</h2>
-        <div className="text-sm text-gray-600">
+        <h2 className="text-2xl font-bold text-surface-900 dark:text-white">Mis Facturas</h2>
+        <div className="text-sm text-surface-600 dark:text-surface-400">
           Total: {pagination.total} {pagination.total === 1 ? 'factura' : 'facturas'}
         </div>
       </div>
 
       {invoices.length === 0 ? (
-        <div className="bg-gray-50 rounded-lg p-12 text-center">
-          <FileTextIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No tienes facturas</h3>
-          <p className="text-gray-600">
+        <div className="bg-surface-50 dark:bg-surface-900 rounded-lg p-12 text-center">
+          <FileTextIcon className="w-16 h-16 text-surface-400 mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-surface-900 dark:text-white mb-2">No tienes facturas</h3>
+          <p className="text-surface-600 dark:text-surface-400">
             Las facturas se generarán automáticamente cuando realices compras.
           </p>
         </div>
       ) : (
         <>
           {/* Lista de facturas */}
-          <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+          <div className="bg-white dark:bg-surface-800 shadow-sm rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
+                <thead className="bg-surface-50 dark:bg-surface-900">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                       Número
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                       Fecha
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                       Pedido
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                       Total
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                       Estado
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-right text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                       Acciones
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-surface-800 divide-y divide-surface-200 dark:divide-surface-700">
                   {invoices.map((invoice) => (
-                    <tr key={invoice.id} className="hover:bg-gray-50">
+                    <tr key={invoice.id} className="hover:bg-surface-50 dark:bg-surface-900">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <FileTextIcon className="w-5 h-5 text-gray-400 mr-2" />
-                          <span className="text-sm font-medium text-gray-900">
+                          <FileTextIcon className="w-5 h-5 text-surface-400 mr-2" />
+                          <span className="text-sm font-medium text-surface-900 dark:text-white">
                             {invoice.invoiceNumber}
                           </span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center text-sm text-gray-600">
+                        <div className="flex items-center text-sm text-surface-600 dark:text-surface-400">
                           <CalendarIcon className="w-4 h-4 mr-1" />
                           {formatDate(invoice.issueDate)}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-900">
+                        <span className="text-sm text-surface-900 dark:text-white">
                           {invoice.order?.orderNumber || 'N/A'}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-semibold text-gray-900">
+                        <span className="text-sm font-semibold text-surface-900 dark:text-white">
                           {formatCurrency(invoice.total)}
                         </span>
                       </td>
@@ -210,7 +210,7 @@ const InvoicesList = () => {
                         <div className="flex justify-end space-x-2">
                           <button
                             onClick={() => window.location.href = `/invoices/${invoice.id}`}
-                            className="text-blue-600 hover:text-blue-800 p-1"
+                            className="text-primary-600 hover:text-primary-800 p-1"
                             title="Ver detalle"
                           >
                             <EyeIcon className="w-5 h-5" />
@@ -237,17 +237,17 @@ const InvoicesList = () => {
               <button
                 onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
                 disabled={pagination.page === 1}
-                className="px-4 py-2 border rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-4 py-2 border rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-surface-50 dark:bg-surface-900"
               >
                 Anterior
               </button>
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-surface-600 dark:text-surface-400">
                 Página {pagination.page} de {pagination.pages}
               </span>
               <button
                 onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
                 disabled={pagination.page === pagination.pages}
-                className="px-4 py-2 border rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-4 py-2 border rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-surface-50 dark:bg-surface-900"
               >
                 Siguiente
               </button>

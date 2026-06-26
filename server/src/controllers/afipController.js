@@ -2,6 +2,7 @@ const afipService = require('../services/afipService');
 const AfipCredential = require('../models/AfipCredential');
 const Invoice = require('../models/Invoice');
 const { Op } = require('sequelize');
+const logger = require('../config/logger');
 
 // Test de conexión con AFIP
 exports.testConnection = async (req, res) => {
@@ -26,7 +27,7 @@ exports.testConnection = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error('Error en test de conexión:', error);
+    logger.error('Error en test de conexión:', error);
     res.status(500).json({
       success: false,
       message: 'Error al probar conexión con AFIP',
@@ -73,7 +74,7 @@ exports.getActiveCredential = async (req, res) => {
       data: safeCredential
     });
   } catch (error) {
-    console.error('Error al obtener credenciales:', error);
+    logger.error('Error al obtener credenciales:', error);
     res.status(500).json({
       success: false,
       message: 'Error al obtener configuración AFIP',
@@ -157,7 +158,7 @@ exports.saveCredential = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error al guardar credenciales:', error);
+    logger.error('Error al guardar credenciales:', error);
     res.status(500).json({
       success: false,
       message: 'Error al guardar credenciales AFIP',
@@ -200,7 +201,7 @@ exports.requestCAE = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error al solicitar CAE:', error);
+    logger.error('Error al solicitar CAE:', error);
     res.status(500).json({
       success: false,
       message: 'Error al solicitar CAE a AFIP',
@@ -243,7 +244,7 @@ exports.getCAE = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error al consultar CAE:', error);
+    logger.error('Error al consultar CAE:', error);
     res.status(500).json({
       success: false,
       message: 'Error al consultar CAE',
@@ -273,7 +274,7 @@ exports.getLastInvoiceNumber = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error al obtener último número:', error);
+    logger.error('Error al obtener último número:', error);
     res.status(500).json({
       success: false,
       message: 'Error al obtener último número de factura',
@@ -306,7 +307,7 @@ exports.validateCUIT = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error al validar CUIT:', error);
+    logger.error('Error al validar CUIT:', error);
     res.status(500).json({
       success: false,
       message: 'Error al validar CUIT',
@@ -348,7 +349,7 @@ exports.getAfipStats = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error al obtener estadísticas:', error);
+    logger.error('Error al obtener estadísticas:', error);
     res.status(500).json({
       success: false,
       message: 'Error al obtener estadísticas AFIP',
@@ -389,7 +390,7 @@ exports.retryCAE = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error al re-solicitar CAE:', error);
+    logger.error('Error al re-solicitar CAE:', error);
     res.status(500).json({
       success: false,
       message: 'Error al re-solicitar CAE',
@@ -418,7 +419,7 @@ exports.getPendingInvoices = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error al obtener facturas pendientes:', error);
+    logger.error('Error al obtener facturas pendientes:', error);
     res.status(500).json({
       success: false,
       message: 'Error al obtener facturas pendientes',
@@ -472,7 +473,7 @@ exports.processPendingInvoices = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error al procesar facturas:', error);
+    logger.error('Error al procesar facturas:', error);
     res.status(500).json({
       success: false,
       message: 'Error al procesar facturas pendientes',

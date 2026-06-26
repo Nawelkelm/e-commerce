@@ -25,9 +25,9 @@ const getStockHistory = async (req, res) => {
       if (endDate) where.createdAt[Op.lte] = new Date(endDate);
     }
 
-    console.log('=== Stock History Request ===');
-    console.log('Query params:', req.query);
-    console.log('Where clause:', where);
+    logger.info('=== Stock History Request ===');
+    logger.info('Query params:', req.query);
+    logger.info('Where clause:', where);
 
     const movements = await StockMovement.findAll({
       where,
@@ -49,12 +49,12 @@ const getStockHistory = async (req, res) => {
       offset: parseInt(offset) || 0
     });
 
-    console.log(`Found ${movements.length} stock movements`);
+    logger.info(`Found ${movements.length} stock movements`);
     res.json(movements);
   } catch (error) {
-    console.error('=== Stock History Error ===');
-    console.error('Error message:', error.message);
-    console.error('Error stack:', error.stack);
+    logger.error('=== Stock History Error ===');
+    logger.error('Error message:', error.message);
+    logger.error('Error stack:', error.stack);
     logger.error('Get stock history error:', error);
     res.status(500).json({ message: error.message || 'Server error' });
   }

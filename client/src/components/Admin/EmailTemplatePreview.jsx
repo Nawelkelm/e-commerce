@@ -8,8 +8,8 @@ const EmailTemplatePreview = ({ template, onClose }) => {
   const getTestData = (type) => {
     const baseData = {
       customerName: 'Juan Pérez',
-      loginUrl: 'https://www.dojiprint.com.ar/login',
-      shopUrl: 'https://www.dojiprint.com.ar/products',
+      loginUrl: 'https://www.tu-dominio.com/login',
+      shopUrl: 'https://www.tu-dominio.com/products',
       supportEmail: 'soporte@tienda.com'
     };
 
@@ -33,7 +33,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
             </tr>
           `,
           shippingAddress: 'Calle Falsa 123, Ciudad, País',
-          trackingUrl: 'https://www.dojiprint.com.ar/orders/track'
+          trackingUrl: 'https://www.tu-dominio.com/orders/track'
         };
 
       case 'order_shipped':
@@ -41,7 +41,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           ...baseData,
           orderNumber: 'ORD-2024-001',
           trackingNumber: 'TRACK123456789',
-          trackingUrl: 'https://www.dojiprint.com.ar/orders/track',
+          trackingUrl: 'https://www.tu-dominio.com/orders/track',
           estimatedDelivery: '5-7 días hábiles'
         };
 
@@ -50,7 +50,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           ...baseData,
           orderNumber: 'ORD-2024-001',
           deliveryDate: new Date().toLocaleDateString('es-ES'),
-          reviewUrl: 'https://www.dojiprint.com.ar/orders/review'
+          reviewUrl: 'https://www.tu-dominio.com/orders/review'
         };
 
       case 'abandoned_cart':
@@ -71,7 +71,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           cartTotal: '$500.00',
           couponCode: 'VUELVE10',
           discountAmount: '10%',
-          checkoutUrl: 'https://www.dojiprint.com.ar/cart'
+          checkoutUrl: 'https://www.tu-dominio.com/cart'
         };
 
       case 'welcome':
@@ -80,7 +80,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
       case 'password_reset':
         return {
           ...baseData,
-          resetUrl: 'https://www.dojiprint.com.ar/reset-password?token=example123',
+          resetUrl: 'https://www.tu-dominio.com/reset-password?token=example123',
           expiryTime: '1 hora'
         };
 
@@ -91,7 +91,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           promoDescription: 'Aprovecha hasta 50% de descuento en productos seleccionados',
           promoImage: 'https://via.placeholder.com/600x300',
           couponCode: 'PROMO50',
-          promoUrl: 'https://www.dojiprint.com.ar/promo',
+          promoUrl: 'https://www.tu-dominio.com/promo',
           expiryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('es-ES')
         };
 
@@ -100,7 +100,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
           ...baseData,
           message: 'Este es un mensaje de notificación personalizado',
           actionText: 'Ver Detalles',
-          actionUrl: 'https://www.dojiprint.com.ar'
+          actionUrl: 'https://www.tu-dominio.com'
         };
 
       default:

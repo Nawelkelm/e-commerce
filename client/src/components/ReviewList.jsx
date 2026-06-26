@@ -117,7 +117,7 @@ const ReviewList = ({ productId }) => {
     return (
       <div className="reviews-empty">
         <p>Aún no hay reseñas para este producto.</p>
-        <p className="text-sm text-gray-500">¡Sé el primero en dejar una reseña!</p>
+        <p className="text-sm text-surface-500 dark:text-surface-400">¡Sé el primero en dejar una reseña!</p>
       </div>
     );
   }

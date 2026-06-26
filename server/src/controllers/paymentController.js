@@ -1,16 +1,15 @@
-const { MercadoPagoConfig, Preference } = require('mercadopago');
+const { MercadoPagoConfig, Preference, Payment, MerchantOrder } = require('mercadopago');
 const { Order, OrderItem, Cart, CartItem, Product, User, Coupon, CouponUsage, Invoice } = require('../models');
 const { sequelize, Op } = require('../config/database');
 const { validationResult } = require('express-validator');
 const logger = require('../config/logger');
 
-// Configure MercadoPago
-const client = new MercadoPagoConfig({ 
-  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN 
+const client = new MercadoPagoConfig({
+  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN
 });
 const preference = new Preference(client);
+const paymentApi = new Payment(client);
 
-// Create payment preference for MercadoPago checkout
 const createPayment = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -21,9 +20,8 @@ const createPayment = async (req, res) => {
     const { orderId } = req.body;
     const userId = req.user?.id;
 
-    // Find order
     const order = await Order.findOne({
-      where: { 
+      where: {
         id: orderId,
         ...(userId && { userId })
       },
@@ -50,7 +48,6 @@ const createPayment = async (req, res) => {
       return res.status(400).json({ message: 'Order payment is not pending' });
     }
 
-    // Prepare items for MercadoPago
     const orderItems = order.items || order.OrderItems || [];
     const items = orderItems.map(item => ({
       id: item.productId,
@@ -63,31 +60,28 @@ const createPayment = async (req, res) => {
       unit_price: parseFloat(item.unitPrice)
     }));
 
-    // Add shipping as an item if applicable
     if (order.shippingAmount > 0) {
       items.push({
-        title: 'Shipping',
-        description: 'Shipping cost',
+        title: 'Envío',
+        description: 'Costo de envío',
         quantity: 1,
         currency_id: 'ARS',
         unit_price: parseFloat(order.shippingAmount)
       });
     }
 
-    // Add taxes as an item if applicable
     if (order.taxAmount > 0) {
       items.push({
-        title: 'Taxes (IVA)',
-        description: 'Tax amount',
+        title: 'IVA',
+        description: 'Impuestos',
         quantity: 1,
         currency_id: 'ARS',
         unit_price: parseFloat(order.taxAmount)
       });
     }
 
-    // Create preference data
     const preferenceData = {
-      items: items,
+      items,
       payer: {
         name: order.shippingAddress.firstName || '',
         surname: order.shippingAddress.lastName || '',
@@ -113,18 +107,12 @@ const createPayment = async (req, res) => {
         pending: `${process.env.FRONTEND_URL}/payment/pending?order=${order.id}`
       },
       external_reference: order.orderNumber,
-      notification_url: `${process.env.BACKEND_URL || 'https://e-commerce-7q25.onrender.com'}/api/payments/webhook`,
-      statement_descriptor: 'E-COMMERCE'
+      notification_url: `${process.env.BACKEND_URL}/api/payments/webhook`,
+      statement_descriptor: 'TIENDAKIT'
     };
 
-    console.log('🔄 Creating MercadoPago preference with data:', JSON.stringify(preferenceData, null, 2));
-    console.log('💳 Access Token configured:', process.env.MERCADOPAGO_ACCESS_TOKEN ? 'Yes' : 'No');
-    
     const result = await preference.create({ body: preferenceData });
 
-    console.log('✅ MercadoPago preference created successfully:', result.id);
-
-    // Update order with MercadoPago preference ID
     await Order.update({
       paymentId: result.id
     }, {
@@ -139,187 +127,91 @@ const createPayment = async (req, res) => {
       sandbox_init_point: result.sandbox_init_point
     });
   } catch (error) {
-    console.error('❌ MercadoPago error details:', error);
-    console.error('❌ Error message:', error.message);
-    console.error('❌ Error stack:', error.stack);
-    if (error.response) {
-      console.error('❌ Error response data:', error.response.data);
-      console.error('❌ Error response status:', error.response.status);
-    }
     logger.error('Create payment error:', error);
     res.status(500).json({ message: 'Error creating payment preference' });
   }
 };
 
-// Handle MercadoPago webhook notifications
 const handleWebhook = async (req, res) => {
   try {
-    const { type, data } = req.body;
+    const { type, data, action } = req.body;
 
-    logger.info('MercadoPago webhook received:', { type, data });
+    logger.info('MercadoPago webhook received:', { type, action, data });
 
-    if (type === 'payment') {
-      const paymentId = data.id;
+    // SDK v2: el webhook puede venir como type=payment o action=payment.created/updated
+    const isPaymentNotification =
+      type === 'payment' ||
+      (action && action.startsWith('payment.'));
 
-      // Get payment information from MercadoPago
-      const payment = await mercadopago.payment.findById(paymentId);
-      const paymentData = payment.body;
+    if (!isPaymentNotification || !data?.id) {
+      return res.status(200).send('OK');
+    }
 
-      logger.info('Payment data:', paymentData);
+    const mpPaymentId = data.id;
 
-      if (paymentData.external_reference) {
-        // Find order by external reference (order number)
-        const order = await Order.findOne({
-          where: { orderNumber: paymentData.external_reference }
-        });
+    // SDK v2: usar Payment.get()
+    const paymentData = await paymentApi.get({ id: mpPaymentId });
 
-        if (order) {
-          let newPaymentStatus;
-          let newOrderStatus = order.status;
+    if (!paymentData || !paymentData.external_reference) {
+      logger.warn(`Webhook: no external_reference in payment ${mpPaymentId}`);
+      return res.status(200).send('OK');
+    }
 
-          switch (paymentData.status) {
-            case 'approved':
-              newPaymentStatus = 'paid';
-              if (order.status === 'pending') {
-                newOrderStatus = 'confirmed';
-              }
-              break;
-            case 'pending':
-              newPaymentStatus = 'pending';
-              break;
-            case 'in_process':
-              newPaymentStatus = 'pending';
-              break;
-            case 'rejected':
-            case 'cancelled':
-              newPaymentStatus = 'failed';
-              if (order.status === 'pending') {
-                newOrderStatus = 'cancelled';
-              }
-              break;
-            case 'refunded':
-              newPaymentStatus = 'refunded';
-              newOrderStatus = 'refunded';
-              break;
-            default:
-              newPaymentStatus = 'pending';
-          }
+    const order = await Order.findOne({
+      where: { orderNumber: paymentData.external_reference }
+    });
 
-          // Update order
-          await Order.update({
-            paymentStatus: newPaymentStatus,
-            status: newOrderStatus,
-            paymentId: paymentId.toString(),
-            paymentMethod: paymentData.payment_type_id,
-            paidAt: newPaymentStatus === 'paid' ? new Date() : null
-          }, {
-            where: { id: order.id }
-          });
+    if (!order) {
+      logger.warn(`Webhook: order not found for ref ${paymentData.external_reference}`);
+      return res.status(200).send('OK');
+    }
 
-          logger.info(`Order ${order.orderNumber} updated - Payment: ${newPaymentStatus}, Status: ${newOrderStatus}`);
-          
-          // Auto-generar factura cuando el pago es aprobado
-          if (newPaymentStatus === 'paid') {
-            try {
-              // Verificar si ya existe una factura
-              const existingInvoice = await Invoice.findOne({
-                where: { orderId: order.id }
-              });
-              
-              if (!existingInvoice) {
-                // Obtener detalles completos de la orden
-                const fullOrder = await Order.findByPk(order.id, {
-                  include: [
-                    {
-                      model: OrderItem,
-                      as: 'items',
-                      include: [{ model: Product, as: 'product' }]
-                    },
-                    {
-                      model: User,
-                      as: 'user',
-                      attributes: ['id', 'firstName', 'lastName', 'email']
-                    }
-                  ]
-                });
-                
-                // Generar número de factura
-                const year = new Date().getFullYear();
-                const prefix = `INV-${year}-`;
-                const lastInvoice = await Invoice.findOne({
-                  where: {
-                    invoiceNumber: {
-                      [Op.like]: `${prefix}%`
-                    }
-                  },
-                  order: [['invoiceNumber', 'DESC']]
-                });
-                
-                let nextNumber = 1;
-                if (lastInvoice) {
-                  const lastNumber = parseInt(lastInvoice.invoiceNumber.split('-')[2]);
-                  nextNumber = lastNumber + 1;
-                }
-                const invoiceNumber = `${prefix}${String(nextNumber).padStart(5, '0')}`;
-                
-                // Preparar items
-                const invoiceItems = fullOrder.items.map(item => ({
-                  productId: item.productId,
-                  name: item.product.name,
-                  sku: item.product.sku,
-                  quantity: item.quantity,
-                  unitPrice: parseFloat(item.unitPrice),
-                  subtotal: parseFloat(item.totalPrice)
-                }));
-                
-                // Calcular montos
-                const subtotal = parseFloat(fullOrder.subtotal);
-                const taxRate = 16.00;
-                const tax = parseFloat(fullOrder.taxAmount || 0);
-                const shipping = parseFloat(fullOrder.shippingAmount || 0);
-                const discount = parseFloat(fullOrder.discountAmount || 0);
-                const total = parseFloat(fullOrder.total);
-                
-                // Crear factura
-                const invoice = await Invoice.create({
-                  invoiceNumber,
-                  orderId: fullOrder.id,
-                  userId: fullOrder.userId,
-                  customerName: `${fullOrder.user.firstName} ${fullOrder.user.lastName}`,
-                  customerEmail: fullOrder.user.email,
-                  customerPhone: fullOrder.shippingAddress?.phone || null,
-                  customerAddress: fullOrder.shippingAddress?.fullAddress || null,
-                  subtotal,
-                  tax,
-                  taxRate,
-                  discount,
-                  shipping,
-                  total,
-                  items: invoiceItems,
-                  paymentMethod: paymentData.payment_type_id || 'MercadoPago',
-                  paymentId: paymentId.toString(),
-                  paymentDate: new Date(),
-                  status: 'paid',
-                  issueDate: new Date(),
-                  customerNotes: 'Factura generada automáticamente al confirmar el pago'
-                });
-                
-                // Actualizar orden con referencia a factura
-                await Order.update({
-                  invoiceId: invoice.id,
-                  invoiceNumber: invoice.invoiceNumber
-                }, {
-                  where: { id: fullOrder.id }
-                });
-                
-                logger.info(`Factura ${invoiceNumber} generada automáticamente para orden ${order.orderNumber}`);
-              }
-            } catch (invoiceError) {
-              logger.error('Error al generar factura automática:', invoiceError);
-              // No fallar el proceso si hay error en factura
-            }
-          }
+    let newPaymentStatus;
+    let newOrderStatus = order.status;
+
+    switch (paymentData.status) {
+      case 'approved':
+        newPaymentStatus = 'paid';
+        if (order.status === 'pending') {
+          newOrderStatus = 'confirmed';
         }
+        break;
+      case 'pending':
+      case 'in_process':
+        newPaymentStatus = 'pending';
+        break;
+      case 'rejected':
+      case 'cancelled':
+        newPaymentStatus = 'failed';
+        if (order.status === 'pending') {
+          newOrderStatus = 'cancelled';
+        }
+        break;
+      case 'refunded':
+        newPaymentStatus = 'refunded';
+        newOrderStatus = 'refunded';
+        break;
+      default:
+        newPaymentStatus = 'pending';
+    }
+
+    await Order.update({
+      paymentStatus: newPaymentStatus,
+      status: newOrderStatus,
+      paymentId: mpPaymentId.toString(),
+      paymentMethod: paymentData.payment_type_id,
+      paidAt: newPaymentStatus === 'paid' ? new Date() : null
+    }, {
+      where: { id: order.id }
+    });
+
+    logger.info(`Order ${order.orderNumber} updated - Payment: ${newPaymentStatus}, Status: ${newOrderStatus}`);
+
+    if (newPaymentStatus === 'paid') {
+      try {
+        await generateAutoInvoice(order);
+      } catch (invoiceError) {
+        logger.error('Error al generar factura automática:', invoiceError);
       }
     }
 
@@ -330,14 +222,100 @@ const handleWebhook = async (req, res) => {
   }
 };
 
-// Get payment status
+async function generateAutoInvoice(order) {
+  const existingInvoice = await Invoice.findOne({
+    where: { orderId: order.id }
+  });
+
+  if (existingInvoice) return;
+
+  const fullOrder = await Order.findByPk(order.id, {
+    include: [
+      {
+        model: OrderItem,
+        as: 'items',
+        include: [{ model: Product, as: 'product' }]
+      },
+      {
+        model: User,
+        as: 'user',
+        attributes: ['id', 'firstName', 'lastName', 'email']
+      }
+    ]
+  });
+
+  const year = new Date().getFullYear();
+  const prefix = `INV-${year}-`;
+  const lastInvoice = await Invoice.findOne({
+    where: {
+      invoiceNumber: { [Op.like]: `${prefix}%` }
+    },
+    order: [['invoiceNumber', 'DESC']]
+  });
+
+  let nextNumber = 1;
+  if (lastInvoice) {
+    const lastNumber = parseInt(lastInvoice.invoiceNumber.split('-')[2]);
+    nextNumber = lastNumber + 1;
+  }
+  const invoiceNumber = `${prefix}${String(nextNumber).padStart(5, '0')}`;
+
+  const invoiceItems = fullOrder.items.map(item => ({
+    productId: item.productId,
+    name: item.product.name,
+    sku: item.product.sku,
+    quantity: item.quantity,
+    unitPrice: parseFloat(item.unitPrice),
+    subtotal: parseFloat(item.totalPrice)
+  }));
+
+  const subtotal = parseFloat(fullOrder.subtotal);
+  const taxRate = 21.00;
+  const tax = parseFloat(fullOrder.taxAmount || 0);
+  const shipping = parseFloat(fullOrder.shippingAmount || 0);
+  const discount = parseFloat(fullOrder.discountAmount || 0);
+  const total = parseFloat(fullOrder.total);
+
+  const invoice = await Invoice.create({
+    invoiceNumber,
+    orderId: fullOrder.id,
+    userId: fullOrder.userId,
+    customerName: `${fullOrder.user.firstName} ${fullOrder.user.lastName}`,
+    customerEmail: fullOrder.user.email,
+    customerPhone: fullOrder.shippingAddress?.phone || null,
+    customerAddress: fullOrder.shippingAddress?.fullAddress || null,
+    subtotal,
+    tax,
+    taxRate,
+    discount,
+    shipping,
+    total,
+    items: invoiceItems,
+    paymentMethod: fullOrder.paymentMethod || 'MercadoPago',
+    paymentId: fullOrder.paymentId,
+    paymentDate: new Date(),
+    status: 'paid',
+    issueDate: new Date(),
+    customerNotes: 'Factura generada automáticamente al confirmar el pago'
+  });
+
+  await Order.update({
+    invoiceId: invoice.id,
+    invoiceNumber: invoice.invoiceNumber
+  }, {
+    where: { id: fullOrder.id }
+  });
+
+  logger.info(`Factura ${invoiceNumber} generada automáticamente para orden ${fullOrder.orderNumber}`);
+}
+
 const getPaymentStatus = async (req, res) => {
   try {
     const { orderId } = req.params;
     const userId = req.user?.id;
 
     const order = await Order.findOne({
-      where: { 
+      where: {
         id: orderId,
         ...(userId && { userId })
       },
@@ -351,16 +329,16 @@ const getPaymentStatus = async (req, res) => {
     let paymentDetails = null;
     if (order.paymentId) {
       try {
-        const payment = await mercadopago.payment.findById(order.paymentId);
+        const paymentData = await paymentApi.get({ id: order.paymentId });
         paymentDetails = {
-          id: payment.body.id,
-          status: payment.body.status,
-          statusDetail: payment.body.status_detail,
-          paymentMethodId: payment.body.payment_method_id,
-          paymentTypeId: payment.body.payment_type_id,
-          transactionAmount: payment.body.transaction_amount,
-          dateCreated: payment.body.date_created,
-          dateApproved: payment.body.date_approved
+          id: paymentData.id,
+          status: paymentData.status,
+          statusDetail: paymentData.status_detail,
+          paymentMethodId: paymentData.payment_method_id,
+          paymentTypeId: paymentData.payment_type_id,
+          transactionAmount: paymentData.transaction_amount,
+          dateCreated: paymentData.date_created,
+          dateApproved: paymentData.date_approved
         };
       } catch (paymentError) {
         logger.error('Error fetching payment details:', paymentError);
@@ -383,7 +361,6 @@ const getPaymentStatus = async (req, res) => {
   }
 };
 
-// Process refund (Admin only)
 const processRefund = async (req, res) => {
   try {
     const { orderId } = req.params;
@@ -402,23 +379,32 @@ const processRefund = async (req, res) => {
       return res.status(400).json({ message: 'Order payment is not paid' });
     }
 
-    // Create refund in MercadoPago
-    const refund = await mercadopago.refund.create({
-      payment_id: order.paymentId,
-      amount: amount || order.total,
-      reason: reason || 'requested_by_client'
-    });
+    // SDK v2: refund vía API REST directa (el SDK no expone Refund como clase en v2.0.x)
+    const refundResponse = await fetch(
+      `https://api.mercadopago.com/v1/payments/${order.paymentId}/refunds`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          amount: amount || parseFloat(order.total)
+        })
+      }
+    );
 
-    if (refund.body.status === 'approved') {
-      // Update order status
-      const refundAmount = parseFloat(refund.body.amount);
+    const refundData = await refundResponse.json();
+
+    if (refundData.status === 'approved') {
+      const refundAmount = parseFloat(refundData.amount);
       const isPartialRefund = refundAmount < parseFloat(order.total);
-      
+
       await Order.update({
         paymentStatus: isPartialRefund ? 'partially_refunded' : 'refunded',
         status: isPartialRefund ? order.status : 'refunded',
         refundedAt: new Date(),
-        adminNotes: `Refund processed: $${refundAmount}. Reason: ${reason || 'Admin refund'}`
+        adminNotes: `Reembolso procesado: $${refundAmount}. Motivo: ${reason || 'Reembolso admin'}`
       }, {
         where: { id: orderId }
       });
@@ -428,15 +414,15 @@ const processRefund = async (req, res) => {
       res.json({
         message: 'Refund processed successfully',
         refund: {
-          id: refund.body.id,
-          amount: refund.body.amount,
-          status: refund.body.status
+          id: refundData.id,
+          amount: refundData.amount,
+          status: refundData.status
         }
       });
     } else {
-      res.status(400).json({ 
-        message: 'Refund failed', 
-        error: refund.body.status_detail 
+      res.status(400).json({
+        message: 'Refund failed',
+        error: refundData.message || refundData.status
       });
     }
   } catch (error) {

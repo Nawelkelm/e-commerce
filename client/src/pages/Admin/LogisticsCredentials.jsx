@@ -180,7 +180,7 @@ const LogisticsCredentials = () => {
   const getStatusBadge = (cred) => {
     if (!cred) {
       return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-100 dark:bg-surface-800 text-surface-800 dark:bg-surface-700 dark:text-surface-300">
           No configurado
         </span>
       )
@@ -188,7 +188,7 @@ const LogisticsCredentials = () => {
 
     if (!cred.isActive) {
       return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-100 dark:bg-surface-800 text-surface-800 dark:bg-surface-700 dark:text-surface-300">
           Inactivo
         </span>
       )
@@ -218,7 +218,7 @@ const LogisticsCredentials = () => {
         )
       default:
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-100 dark:bg-surface-800 text-surface-800 dark:bg-surface-700 dark:text-surface-300">
             Sin probar
           </span>
         )
@@ -228,7 +228,7 @@ const LogisticsCredentials = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     )
   }
@@ -237,8 +237,8 @@ const LogisticsCredentials = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Credenciales de Logística</h1>
-        <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+        <h1 className="text-2xl font-bold text-surface-900 dark:text-white">Credenciales de Logística</h1>
+        <p className="mt-2 text-sm text-surface-700 dark:text-surface-300">
           Configura las credenciales de API para los servicios de logística
         </p>
       </div>
@@ -249,15 +249,15 @@ const LogisticsCredentials = () => {
           const cred = credentials.find(c => c.carrier === carrier)
           
           return (
-            <div key={carrier} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <div key={carrier} className="bg-white dark:bg-surface-800 rounded-lg shadow-sm border border-surface-200 dark:border-surface-700 p-6">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{carrier}</h3>
+                  <h3 className="text-lg font-semibold text-surface-900 dark:text-white">{carrier}</h3>
                   <div className="mt-2">
                     {getStatusBadge(cred)}
                   </div>
                 </div>
-                <KeyIcon className="h-8 w-8 text-gray-400" />
+                <KeyIcon className="h-8 w-8 text-surface-400" />
               </div>
 
               {cred && cred.lastError && (
@@ -268,7 +268,7 @@ const LogisticsCredentials = () => {
               )}
 
               {cred && cred.lastSyncAt && (
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                <p className="text-xs text-surface-500 dark:text-surface-400 mb-4">
                   Última sincronización: {new Date(cred.lastSyncAt).toLocaleString('es-ES')}
                 </p>
               )}
@@ -276,7 +276,7 @@ const LogisticsCredentials = () => {
               <div className="space-y-2">
                 <button
                   onClick={() => handleEdit(carrier)}
-                  className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                 >
                   {cred ? 'Editar Credenciales' : 'Configurar'}
                 </button>
@@ -286,7 +286,7 @@ const LogisticsCredentials = () => {
                     <button
                       onClick={() => handleTest(carrier)}
                       disabled={testing === carrier}
-                      className="w-full px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                      className="w-full px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-300 dark:text-surface-200 bg-white dark:bg-surface-800 dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-md hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
                     >
                       {testing === carrier ? (
                         <>
@@ -300,7 +300,7 @@ const LogisticsCredentials = () => {
 
                     <button
                       onClick={() => handleToggle(carrier)}
-                      className={`w-full px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+                      className={`w-full px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 ${
                         cred.isActive
                           ? 'text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 hover:bg-red-100 dark:hover:bg-red-900/30'
                           : 'text-green-700 dark:text-green-300 bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-700 hover:bg-green-100 dark:hover:bg-green-900/30'
@@ -319,9 +319,9 @@ const LogisticsCredentials = () => {
       {/* Edit Modal */}
       {editingCarrier && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <div className="bg-white dark:bg-surface-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white dark:bg-surface-800 border-b border-surface-200 dark:border-surface-700 px-6 py-4">
+              <h2 className="text-xl font-bold text-surface-900 dark:text-white">
                 Configurar {editingCarrier}
               </h2>
             </div>
@@ -329,7 +329,7 @@ const LogisticsCredentials = () => {
             <div className="p-6 space-y-4">
               {carrierFields[editingCarrier].map(field => (
                 <div key={field.key}>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                     {field.label} {field.required && <span className="text-red-500">*</span>}
                   </label>
                   <div className="relative">
@@ -337,14 +337,14 @@ const LogisticsCredentials = () => {
                       type={field.type === 'password' && !showPassword[field.key] ? 'password' : 'text'}
                       value={formData.credentials?.[field.key] || ''}
                       onChange={(e) => handleInputChange(field.key, e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                      className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-700 dark:text-white"
                       placeholder={field.default || ''}
                     />
                     {field.type === 'password' && (
                       <button
                         type="button"
                         onClick={() => setShowPassword(prev => ({ ...prev, [field.key]: !prev[field.key] }))}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-surface-400 hover:text-surface-600 dark:text-surface-400"
                       >
                         {showPassword[field.key] ? (
                           <EyeSlashIcon className="h-5 w-5" />
@@ -363,24 +363,24 @@ const LogisticsCredentials = () => {
                   id="isActive"
                   checked={formData.isActive || false}
                   onChange={(e) => setFormData(prev => ({ ...prev, isActive: e.target.checked }))}
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-surface-300 dark:border-surface-600 rounded"
                 />
-                <label htmlFor="isActive" className="ml-2 block text-sm text-gray-900 dark:text-white">
+                <label htmlFor="isActive" className="ml-2 block text-sm text-surface-900 dark:text-white">
                   Activar automáticamente después de guardar
                 </label>
               </div>
             </div>
 
-            <div className="sticky bottom-0 bg-gray-50 dark:bg-gray-900 px-6 py-4 flex justify-end gap-3 border-t border-gray-200 dark:border-gray-700">
+            <div className="sticky bottom-0 bg-surface-50 dark:bg-surface-900 px-6 py-4 flex justify-end gap-3 border-t border-surface-200 dark:border-surface-700">
               <button
                 onClick={() => setEditingCarrier(null)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600"
+                className="px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-md hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleSave}
-                className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Guardar
               </button>

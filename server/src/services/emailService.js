@@ -43,7 +43,7 @@ class EmailService {
 
   async sendVerificationEmail(user, verificationToken) {
     try {
-      const verificationUrl = `${process.env.FRONTEND_URL || 'https://e-commerce-frontend-rlvt.onrender.com'}/verify-email?token=${verificationToken}`;
+      const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
       
       const mailOptions = {
         from: `"${process.env.EMAIL_FROM_NAME || 'E-Commerce'}" <${process.env.EMAIL_USER}>`,
@@ -157,7 +157,7 @@ class EmailService {
                 </ul>
                 
                 <div style="text-align: center;">
-                  <a href="${process.env.FRONTEND_URL || 'https://e-commerce-frontend-rlvt.onrender.com'}/productos" class="button">Ver productos</a>
+                  <a href="${process.env.FRONTEND_URL}/productos" class="button">Ver productos</a>
                 </div>
                 
                 <p>Gracias por unirte a nuestra comunidad.</p>

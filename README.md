@@ -1,6 +1,6 @@
-# E-commerce B2C - Plataforma Completa
+# TiendaKit — Plataforma E-commerce para PyMEs
 
-Una plataforma de e-commerce B2C completa desarrollada con React, Node.js, PostgreSQL y integración con MercadoPago para pagos en línea.
+Plataforma e-commerce B2C white-label lista para vender. React + Node.js + PostgreSQL + MercadoPago. Cada cliente despliega con su marca y dominio.
 
 ## 🚀 Características
 
@@ -72,9 +72,9 @@ npm run install:all
 npm run docker:up
 
 # La aplicación estará disponible en:
-# Frontend: https://e-commerce-frontend-rlvt.onrender.com
-# Backend: https://e-commerce-7q25.onrender.com
-# PostgreSQL: Render PostgreSQL
+# Frontend: https://www.tu-dominio.com
+# Backend:  https://api.tu-dominio.com
+# PostgreSQL: gestionado por Coolify
 ```
 
 #### Producción
@@ -83,7 +83,7 @@ npm run docker:up
 docker-compose --profile production up -d
 
 # Con Nginx como proxy reverso
-# Aplicación disponible en: https://e-commerce-frontend-rlvt.onrender.com
+# Aplicación disponible en: https://www.tu-dominio.com
 ```
 
 ### 4. Instalación Manual (Sin Docker)
@@ -193,8 +193,8 @@ MERCADOPAGO_WEBHOOK_SECRET=your-webhook-secret
 
 # Servidor
 PORT=5000
-FRONTEND_URL=https://e-commerce-frontend-rlvt.onrender.com
-BACKEND_URL=https://e-commerce-7q25.onrender.com
+FRONTEND_URL=https://www.tu-dominio.com
+BACKEND_URL=https://api.tu-dominio.com
 
 # Email (para recuperación de contraseña)
 EMAIL_HOST=smtp.gmail.com

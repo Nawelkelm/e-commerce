@@ -81,17 +81,17 @@ const StockDashboard = () => {
         return selectedProduct ? (
           <BatchManagement productId={selectedProduct} />
         ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-12 text-center">
-            <QueueListIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          <div className="bg-white dark:bg-surface-800 rounded-lg shadow-lg p-12 text-center">
+            <QueueListIcon className="h-16 w-16 text-surface-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-surface-900 dark:text-white mb-2">
               Selecciona un Producto
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-surface-600 dark:text-surface-400 mb-4">
               Para gestionar lotes, primero selecciona un producto desde el catálogo
             </p>
             <button
               onClick={() => setShowProductSelector(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
             >
               <CubeIcon className="h-5 w-5" />
               Seleccionar Producto
@@ -102,17 +102,17 @@ const StockDashboard = () => {
         return selectedProduct ? (
           <BarcodeManagement productId={selectedProduct} />
         ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-12 text-center">
-            <QrCodeIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          <div className="bg-white dark:bg-surface-800 rounded-lg shadow-lg p-12 text-center">
+            <QrCodeIcon className="h-16 w-16 text-surface-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-surface-900 dark:text-white mb-2">
               Selecciona un Producto
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-surface-600 dark:text-surface-400 mb-4">
               Para gestionar códigos de barras, primero selecciona un producto desde el catálogo
             </p>
             <button
               onClick={() => setShowProductSelector(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
             >
               <CubeIcon className="h-5 w-5" />
               Seleccionar Producto
@@ -125,26 +125,26 @@ const StockDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+    <div className="min-h-screen bg-surface-50 dark:bg-surface-900 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between gap-3 mb-2">
             <div className="flex items-center gap-3">
-              <ChartBarIcon className="h-10 w-10 text-blue-600 dark:text-blue-400" />
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+              <ChartBarIcon className="h-10 w-10 text-primary-600 dark:text-primary-400" />
+              <h1 className="text-4xl font-bold text-surface-900 dark:text-white">
                 Panel de Gestión de Stock
               </h1>
             </div>
             <button
               onClick={() => setShowProductSelector(!showProductSelector)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
             >
               <CubeIcon className="h-5 w-5" />
               Seleccionar Producto
             </button>
           </div>
-          <p className="text-gray-600 dark:text-gray-400 text-lg">
+          <p className="text-surface-600 dark:text-surface-400 text-lg">
             Sistema avanzado de control de inventario con trazabilidad completa
           </p>
         </div>
@@ -152,30 +152,30 @@ const StockDashboard = () => {
         {/* Product Selector Modal */}
         {showProductSelector && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl max-w-2xl w-full max-h-[80vh] flex flex-col">
+            <div className="bg-white dark:bg-surface-800 rounded-lg shadow-2xl max-w-2xl w-full max-h-[80vh] flex flex-col">
               {/* Modal Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="flex items-center justify-between p-6 border-b border-surface-200 dark:border-surface-700">
+                <h2 className="text-2xl font-bold text-surface-900 dark:text-white">
                   Seleccionar Producto
                 </h2>
                 <button
                   onClick={() => setShowProductSelector(false)}
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  className="text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:text-surface-300 dark:text-surface-400 dark:hover:text-surface-200"
                 >
                   <XMarkIcon className="h-6 w-6" />
                 </button>
               </div>
 
               {/* Search Bar */}
-              <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+              <div className="p-6 border-b border-surface-200 dark:border-surface-700">
                 <div className="relative">
-                  <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-surface-400" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Buscar por nombre o SKU..."
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                 </div>
               </div>
@@ -184,13 +184,13 @@ const StockDashboard = () => {
               <div className="flex-1 overflow-y-auto p-6">
                 {loading ? (
                   <div className="text-center py-8">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600 dark:text-gray-400">Cargando productos...</p>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+                    <p className="mt-4 text-surface-600 dark:text-surface-400">Cargando productos...</p>
                   </div>
                 ) : filteredProducts.length === 0 ? (
                   <div className="text-center py-8">
-                    <CubeIcon className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                    <p className="text-gray-600 dark:text-gray-400">No se encontraron productos</p>
+                    <CubeIcon className="h-12 w-12 text-surface-400 mx-auto mb-3" />
+                    <p className="text-surface-600 dark:text-surface-400">No se encontraron productos</p>
                   </div>
                 ) : (
                   <div className="space-y-2">
@@ -198,7 +198,7 @@ const StockDashboard = () => {
                       <button
                         key={product.id}
                         onClick={() => handleProductSelect(product)}
-                        className="w-full flex items-center gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
+                        className="w-full flex items-center gap-4 p-4 border border-surface-200 dark:border-surface-700 rounded-lg hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-700 transition-colors text-left"
                       >
                         {product.images && product.images[0] ? (
                           <img
@@ -207,16 +207,16 @@ const StockDashboard = () => {
                             className="w-16 h-16 object-cover rounded-lg"
                           />
                         ) : (
-                          <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                            <CubeIcon className="h-8 w-8 text-gray-400" />
+                          <div className="w-16 h-16 bg-surface-200 dark:bg-surface-700 rounded-lg flex items-center justify-center">
+                            <CubeIcon className="h-8 w-8 text-surface-400" />
                           </div>
                         )}
                         <div className="flex-1">
-                          <h3 className="font-semibold text-gray-900 dark:text-white">
+                          <h3 className="font-semibold text-surface-900 dark:text-white">
                             {product.name}
                           </h3>
                           <div className="flex items-center gap-4 mt-1">
-                            <span className="text-sm text-gray-600 dark:text-gray-400">
+                            <span className="text-sm text-surface-600 dark:text-surface-400">
                               SKU: {product.sku}
                             </span>
                             {product.isOwnProduction ? (
@@ -248,16 +248,16 @@ const StockDashboard = () => {
 
         {/* Selected Product Badge */}
         {selectedProduct && (
-          <div className="mb-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+          <div className="mb-6 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-blue-800 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <CubeIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                <CubeIcon className="h-6 w-6 text-primary-600 dark:text-primary-400" />
                 <div>
-                  <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                  <p className="text-sm text-primary-600 dark:text-primary-400 font-medium">
                     Producto seleccionado:
                   </p>
-                  <p className="text-lg font-bold text-blue-900 dark:text-blue-100">
-                    {getSelectedProductData()?.name} <span className="text-sm font-normal text-blue-600 dark:text-blue-400">({getSelectedProductData()?.sku})</span>
+                  <p className="text-lg font-bold text-primary-900 dark:text-blue-100">
+                    {getSelectedProductData()?.name} <span className="text-sm font-normal text-primary-600 dark:text-primary-400">({getSelectedProductData()?.sku})</span>
                   </p>
                   {getSelectedProductData()?.isOwnProduction ? (
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 mt-1">
@@ -272,7 +272,7 @@ const StockDashboard = () => {
               </div>
               <button
                 onClick={clearProductSelection}
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200"
+                className="text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-blue-200"
               >
                 <XMarkIcon className="h-6 w-6" />
               </button>
@@ -281,8 +281,8 @@ const StockDashboard = () => {
         )}
 
         {/* Tabs */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-6">
-          <div className="border-b border-gray-200 dark:border-gray-700">
+        <div className="bg-white dark:bg-surface-800 rounded-lg shadow mb-6">
+          <div className="border-b border-surface-200 dark:border-surface-700">
             <nav className="flex -mb-px overflow-x-auto">
               {TABS.map((tab) => {
                 const Icon = tab.icon;
@@ -292,8 +292,8 @@ const StockDashboard = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                       activeTab === tab.id
-                        ? 'border-blue-600 text-blue-600 dark:text-blue-400'
-                        : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                        ? 'border-primary-600 text-primary-600 dark:text-primary-400'
+                        : 'border-transparent text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:text-surface-300 dark:hover:text-surface-300 hover:border-surface-300 dark:border-surface-600 dark:hover:border-surface-600'
                     }`}
                   >
                     <Icon className="h-5 w-5" />

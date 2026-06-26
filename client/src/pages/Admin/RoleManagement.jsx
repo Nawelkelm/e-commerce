@@ -237,7 +237,7 @@ const RoleManagement = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
       </div>
     )
   }
@@ -246,8 +246,8 @@ const RoleManagement = () => {
     <div>
       <div className="sm:flex sm:items-center mb-8">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-bold text-gray-900">Gestión de Roles y Permisos</h1>
-          <p className="mt-2 text-sm text-gray-700">
+          <h1 className="text-2xl font-bold text-surface-900 dark:text-white">Gestión de Roles y Permisos</h1>
+          <p className="mt-2 text-sm text-surface-700 dark:text-surface-300">
             Administra roles y permisos del sistema para controlar el acceso de los usuarios
           </p>
         </div>
@@ -255,7 +255,7 @@ const RoleManagement = () => {
           <button
             type="button"
             onClick={handleCreateRole}
-            className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+            className="inline-flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 sm:w-auto"
           >
             <PlusIcon className="h-4 w-4 mr-2" />
             Crear Rol
@@ -277,59 +277,59 @@ const RoleManagement = () => {
         </div>
       )}
 
-      <div className="bg-white shadow rounded-lg overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="bg-white dark:bg-surface-800 shadow rounded-lg overflow-hidden">
+        <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
+          <thead className="bg-surface-50 dark:bg-surface-900">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                 Rol
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                 Permisos
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                 Tipo
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white dark:bg-surface-800 divide-y divide-surface-200 dark:divide-surface-700">
             {roles.length === 0 ? (
               <tr>
-                <td colSpan="5" className="px-6 py-8 text-center text-gray-500">
+                <td colSpan="5" className="px-6 py-8 text-center text-surface-500 dark:text-surface-400">
                   No se encontraron roles
                 </td>
               </tr>
             ) : (
               roles.map((role) => (
-                <tr key={role.id} className="hover:bg-gray-50">
+                <tr key={role.id} className="hover:bg-surface-50 dark:bg-surface-900">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">
-                        <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                          <ShieldCheckIcon className="h-6 w-6 text-indigo-600" />
+                        <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
+                          <ShieldCheckIcon className="h-6 w-6 text-primary-600" />
                         </div>
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-surface-900 dark:text-white">
                           {role.displayName}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-surface-500 dark:text-surface-400">
                           {role.name}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900">
+                    <div className="text-sm text-surface-900 dark:text-white">
                       {role.Permissions?.length || 0} permisos
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-surface-500 dark:text-surface-400">
                       {role.description || 'Sin descripción'}
                     </div>
                   </td>
@@ -337,8 +337,8 @@ const RoleManagement = () => {
                     <span
                       className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                         role.isSystemRole
-                          ? 'bg-blue-100 text-blue-800'
-                          : 'bg-gray-100 text-gray-800'
+                          ? 'bg-primary-100 text-primary-800'
+                          : 'bg-surface-100 dark:bg-surface-800 text-surface-800'
                       }`}
                     >
                       {role.isSystemRole ? 'Sistema' : 'Personalizado'}
@@ -359,7 +359,7 @@ const RoleManagement = () => {
                     <div className="flex justify-end space-x-2">
                       <button
                         onClick={() => handleViewRole(role)}
-                        className="text-blue-600 hover:text-blue-900 p-1"
+                        className="text-primary-600 hover:text-primary-900 p-1"
                         title="Ver detalles"
                       >
                         <KeyIcon className="h-5 w-5" />
@@ -368,7 +368,7 @@ const RoleManagement = () => {
                         <>
                           <button
                             onClick={() => handleEditRole(role)}
-                            className="text-indigo-600 hover:text-indigo-900 p-1"
+                            className="text-primary-600 hover:text-indigo-900 p-1"
                             title="Editar rol"
                           >
                             <PencilIcon className="h-5 w-5" />
@@ -394,16 +394,16 @@ const RoleManagement = () => {
       {/* Modal de crear/editar/ver rol */}
       {showRoleModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-screen overflow-y-auto">
+          <div className="bg-white dark:bg-surface-800 rounded-lg max-w-4xl w-full max-h-screen overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-surface-900 dark:text-white">
                   {modalMode === 'create' ? 'Crear Rol' : 
                    modalMode === 'edit' ? 'Editar Rol' : 'Detalles del Rol'}
                 </h2>
                 <button
                   onClick={() => setShowRoleModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-surface-400 hover:text-surface-600 dark:text-surface-400"
                 >
                   <XMarkIcon className="h-6 w-6" />
                 </button>
@@ -414,26 +414,26 @@ const RoleManagement = () => {
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <h3 className="font-medium text-gray-900 mb-4">Información del Rol</h3>
+                      <h3 className="font-medium text-surface-900 dark:text-white mb-4">Información del Rol</h3>
                       <div className="space-y-3">
                         <div>
-                          <label className="text-sm font-medium text-gray-500">Nombre Interno</label>
-                          <p className="text-sm text-gray-900">{selectedRole?.name}</p>
+                          <label className="text-sm font-medium text-surface-500 dark:text-surface-400">Nombre Interno</label>
+                          <p className="text-sm text-surface-900 dark:text-white">{selectedRole?.name}</p>
                         </div>
                         <div>
-                          <label className="text-sm font-medium text-gray-500">Nombre de Visualización</label>
-                          <p className="text-sm text-gray-900">{selectedRole?.displayName}</p>
+                          <label className="text-sm font-medium text-surface-500 dark:text-surface-400">Nombre de Visualización</label>
+                          <p className="text-sm text-surface-900 dark:text-white">{selectedRole?.displayName}</p>
                         </div>
                         <div>
-                          <label className="text-sm font-medium text-gray-500">Descripción</label>
-                          <p className="text-sm text-gray-900">{selectedRole?.description || 'Sin descripción'}</p>
+                          <label className="text-sm font-medium text-surface-500 dark:text-surface-400">Descripción</label>
+                          <p className="text-sm text-surface-900 dark:text-white">{selectedRole?.description || 'Sin descripción'}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-4">Permisos Asignados</h3>
+                    <h3 className="font-medium text-surface-900 dark:text-white mb-4">Permisos Asignados</h3>
                     {Object.entries(permissions).map(([category, categoryPermissions]) => {
                       const rolePermissions = selectedRole?.Permissions?.map(p => p.id) || []
                       const hasPermissionsInCategory = categoryPermissions.some(p => rolePermissions.includes(p.id))
@@ -442,7 +442,7 @@ const RoleManagement = () => {
                       
                       return (
                         <div key={category} className="mb-4">
-                          <h4 className="text-sm font-medium text-gray-700 mb-2">
+                          <h4 className="text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
                             {getCategoryDisplayName(category)}
                           </h4>
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -452,7 +452,7 @@ const RoleManagement = () => {
                               return (
                                 <div key={permission.id} className="flex items-center space-x-2">
                                   <CheckIcon className="h-4 w-4 text-green-500" />
-                                  <span className="text-sm text-gray-700">{permission.displayName}</span>
+                                  <span className="text-sm text-surface-700 dark:text-surface-300">{permission.displayName}</span>
                                 </div>
                               )
                             })}
@@ -467,7 +467,7 @@ const RoleManagement = () => {
                 <form onSubmit={handleFormSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                         Nombre Interno *
                       </label>
                       <input
@@ -476,12 +476,12 @@ const RoleManagement = () => {
                         value={roleForm.name}
                         onChange={(e) => setRoleForm({...roleForm, name: e.target.value})}
                         placeholder="ej: sales_manager"
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-full rounded-md border-surface-300 dark:border-surface-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                         Nombre de Visualización *
                       </label>
                       <input
@@ -490,13 +490,13 @@ const RoleManagement = () => {
                         value={roleForm.displayName}
                         onChange={(e) => setRoleForm({...roleForm, displayName: e.target.value})}
                         placeholder="ej: Gerente de Ventas"
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-full rounded-md border-surface-300 dark:border-surface-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                       />
                     </div>
                   </div>
 
                   <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
                       Descripción
                     </label>
                     <textarea
@@ -504,18 +504,18 @@ const RoleManagement = () => {
                       value={roleForm.description}
                       onChange={(e) => setRoleForm({...roleForm, description: e.target.value})}
                       placeholder="Describe las responsabilidades de este rol..."
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-surface-300 dark:border-surface-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                     />
                   </div>
 
                   <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-4">
+                    <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-4">
                       Permisos
                     </label>
-                    <div className="space-y-4 max-h-96 overflow-y-auto border border-gray-200 rounded-md p-4">
+                    <div className="space-y-4 max-h-96 overflow-y-auto border border-surface-200 dark:border-surface-700 rounded-md p-4">
                       {Object.entries(permissions).map(([category, categoryPermissions]) => (
                         <div key={category}>
-                          <h4 className="text-sm font-medium text-gray-900 mb-2">
+                          <h4 className="text-sm font-medium text-surface-900 dark:text-white mb-2">
                             {getCategoryDisplayName(category)}
                           </h4>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ml-4">
@@ -525,9 +525,9 @@ const RoleManagement = () => {
                                   type="checkbox"
                                   checked={roleForm.permissions.includes(permission.id)}
                                   onChange={() => handlePermissionToggle(permission.id)}
-                                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                  className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-surface-300 dark:border-surface-600 rounded"
                                 />
-                                <span className="text-sm text-gray-700">{permission.displayName}</span>
+                                <span className="text-sm text-surface-700 dark:text-surface-300">{permission.displayName}</span>
                               </label>
                             ))}
                           </div>
@@ -540,13 +540,13 @@ const RoleManagement = () => {
                     <button
                       type="button"
                       onClick={() => setShowRoleModal(false)}
-                      className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                      className="px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-600 rounded-md hover:bg-surface-50 dark:bg-surface-900"
                     >
                       Cancelar
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700"
+                      className="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700"
                     >
                       {modalMode === 'create' ? 'Crear Rol' : 'Actualizar Rol'}
                     </button>
@@ -561,14 +561,14 @@ const RoleManagement = () => {
       {/* Modal de confirmación de eliminación */}
       {showDeleteModal && selectedRole && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full">
+          <div className="bg-white dark:bg-surface-800 rounded-lg max-w-md w-full">
             <div className="p-6">
               <div className="flex items-center mb-4">
                 <ExclamationTriangleIcon className="h-6 w-6 text-red-600 mr-2" />
-                <h3 className="text-lg font-medium text-gray-900">Eliminar Rol</h3>
+                <h3 className="text-lg font-medium text-surface-900 dark:text-white">Eliminar Rol</h3>
               </div>
               
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm text-surface-500 dark:text-surface-400 mb-6">
                 ¿Estás seguro de que quieres eliminar el rol <strong>{selectedRole.displayName}</strong>? 
                 Esta acción no se puede deshacer.
               </p>
@@ -576,7 +576,7 @@ const RoleManagement = () => {
               <div className="flex justify-end space-x-3">
                 <button
                   onClick={() => setShowDeleteModal(false)}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                  className="px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-600 rounded-md hover:bg-surface-50 dark:bg-surface-900"
                 >
                   Cancelar
                 </button>

@@ -1,17 +1,13 @@
-const Review = require('../models/Review');
-const ReviewHelpful = require('../models/ReviewHelpful');
-const Product = require('../models/Product');
-const User = require('../models/User');
-const Order = require('../models/Order');
-const OrderItem = require('../models/OrderItem');
+const { Review, ReviewHelpful, Product, User, Order, OrderItem } = require('../models');
 const { Op } = require('sequelize');
+const logger = require('../config/logger');
 
 // Create a new review
 const createReview = async (req, res) => {
   try {
     const { productId } = req.params;
     const { rating, title, comment, images } = req.body;
-    const userId = req.userId;
+    const userId = req.user?.id;
 
     // Check if user already reviewed this product
     const existingReview = await Review.findOne({
@@ -58,7 +54,7 @@ const createReview = async (req, res) => {
       review
     });
   } catch (error) {
-    console.error('Error creating review:', error);
+    logger.error('Error creating review:', error);
     res.status(500).json({ message: 'Error al crear la reseña', error: error.message });
   }
 };
@@ -91,6 +87,7 @@ const getProductReviews = async (req, res) => {
       where,
       include: [{
         model: User,
+        as: 'user',
         attributes: ['id', 'firstName', 'lastName', 'email']
       }],
       order,
@@ -100,10 +97,10 @@ const getProductReviews = async (req, res) => {
 
     // Get user's votes if authenticated
     let userVotes = {};
-    if (req.userId) {
+    if (req.user?.id) {
       const votes = await ReviewHelpful.findAll({
         where: {
-          userId: req.userId,
+          userId: req.user?.id,
           reviewId: { [Op.in]: reviews.map(r => r.id) }
         }
       });
@@ -127,7 +124,7 @@ const getProductReviews = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error getting product reviews:', error);
+    logger.error('Error getting product reviews:', error);
     res.status(500).json({ message: 'Error al obtener las reseñas', error: error.message });
   }
 };
@@ -136,7 +133,7 @@ const getProductReviews = async (req, res) => {
 const getUserReviews = async (req, res) => {
   try {
     const { userId } = req.params;
-    const requestUserId = req.userId;
+    const requestUserId = req.user?.id;
 
     // Only allow users to see their own reviews or admin to see all
     if (userId !== requestUserId && !req.isAdmin) {
@@ -147,6 +144,7 @@ const getUserReviews = async (req, res) => {
       where: { userId },
       include: [{
         model: Product,
+        as: 'product',
         attributes: ['id', 'name', 'images']
       }],
       order: [['createdAt', 'DESC']]
@@ -154,7 +152,7 @@ const getUserReviews = async (req, res) => {
 
     res.json({ reviews });
   } catch (error) {
-    console.error('Error getting user reviews:', error);
+    logger.error('Error getting user reviews:', error);
     res.status(500).json({ message: 'Error al obtener las reseñas del usuario', error: error.message });
   }
 };
@@ -164,7 +162,7 @@ const updateReview = async (req, res) => {
   try {
     const { id } = req.params;
     const { rating, title, comment, images } = req.body;
-    const userId = req.userId;
+    const userId = req.user?.id;
 
     const review = await Review.findByPk(id);
 
@@ -191,7 +189,7 @@ const updateReview = async (req, res) => {
 
     res.json({ message: 'Reseña actualizada exitosamente', review });
   } catch (error) {
-    console.error('Error updating review:', error);
+    logger.error('Error updating review:', error);
     res.status(500).json({ message: 'Error al actualizar la reseña', error: error.message });
   }
 };
@@ -200,7 +198,7 @@ const updateReview = async (req, res) => {
 const deleteReview = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.userId;
+    const userId = req.user?.id;
 
     const review = await Review.findByPk(id);
 
@@ -226,7 +224,7 @@ const deleteReview = async (req, res) => {
 
     res.json({ message: 'Reseña eliminada exitosamente' });
   } catch (error) {
-    console.error('Error deleting review:', error);
+    logger.error('Error deleting review:', error);
     res.status(500).json({ message: 'Error al eliminar la reseña', error: error.message });
   }
 };
@@ -249,7 +247,7 @@ const approveReview = async (req, res) => {
 
     res.json({ message: 'Reseña aprobada exitosamente', review });
   } catch (error) {
-    console.error('Error approving review:', error);
+    logger.error('Error approving review:', error);
     res.status(500).json({ message: 'Error al aprobar la reseña', error: error.message });
   }
 };
@@ -273,7 +271,7 @@ const addAdminResponse = async (req, res) => {
 
     res.json({ message: 'Respuesta agregada exitosamente', review });
   } catch (error) {
-    console.error('Error adding admin response:', error);
+    logger.error('Error adding admin response:', error);
     res.status(500).json({ message: 'Error al agregar la respuesta', error: error.message });
   }
 };
@@ -283,7 +281,7 @@ const voteHelpful = async (req, res) => {
   try {
     const { id } = req.params;
     const { isHelpful } = req.body;
-    const userId = req.userId;
+    const userId = req.user?.id;
 
     const review = await Review.findByPk(id);
 
@@ -352,7 +350,7 @@ const voteHelpful = async (req, res) => {
       notHelpfulCount: review.notHelpfulCount
     });
   } catch (error) {
-    console.error('Error voting helpful:', error);
+    logger.error('Error voting helpful:', error);
     res.status(500).json({ message: 'Error al registrar el voto', error: error.message });
   }
 };
@@ -390,7 +388,7 @@ const getReviewStats = async (req, res) => {
       distribution
     });
   } catch (error) {
-    console.error('Error getting review stats:', error);
+    logger.error('Error getting review stats:', error);
     res.status(500).json({ message: 'Error al obtener estadísticas', error: error.message });
   }
 };
@@ -419,10 +417,12 @@ const getAllReviews = async (req, res) => {
       include: [
         {
           model: User,
+          as: 'user',
           attributes: ['id', 'firstName', 'lastName', 'email']
         },
         {
           model: Product,
+          as: 'product',
           attributes: ['id', 'name', 'images']
         }
       ],
@@ -440,7 +440,7 @@ const getAllReviews = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error getting all reviews:', error);
+    logger.error('Error getting all reviews:', error);
     res.status(500).json({ message: 'Error al obtener las reseñas', error: error.message });
   }
 };
@@ -470,7 +470,7 @@ const updateProductRating = async (productId) => {
       { where: { id: productId } }
     );
   } catch (error) {
-    console.error('Error updating product rating:', error);
+    logger.error('Error updating product rating:', error);
   }
 };
 

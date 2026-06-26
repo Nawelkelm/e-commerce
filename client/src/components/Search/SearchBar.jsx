@@ -125,7 +125,7 @@ const SearchBar = ({
     <div ref={wrapperRef} className={`relative ${className}`}>
       <form onSubmit={handleSubmit} className="relative">
         {/* Search Icon */}
-        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-surface-400">
           <MagnifyingGlassIcon className="h-5 w-5" />
         </div>
 
@@ -145,11 +145,11 @@ const SearchBar = ({
           autoFocus={autoFocus}
           className="
             w-full pl-10 pr-10 py-2.5 
-            border border-gray-300 rounded-lg
-            bg-white dark:bg-gray-800
-            text-gray-900 dark:text-white
-            placeholder-gray-500 dark:placeholder-gray-400
-            focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+            border border-surface-300 dark:border-surface-600 rounded-lg
+            bg-white dark:bg-surface-800
+            text-surface-900 dark:text-white
+            placeholder-surface-500 dark:placeholder-surface-400
+            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
             transition-all duration-200
           "
         />
@@ -159,7 +159,7 @@ const SearchBar = ({
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-surface-400 hover:text-surface-600 dark:text-surface-400 dark:hover:text-surface-300"
           >
             <XMarkIcon className="h-5 w-5" />
           </button>
@@ -169,7 +169,7 @@ const SearchBar = ({
         {showButton && (
           <button
             type="submit"
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
           >
             Buscar
           </button>
@@ -178,15 +178,15 @@ const SearchBar = ({
 
       {/* Suggestions Dropdown */}
       {showSuggestions && (query.trim().length >= 2) && (
-        <div className="absolute z-50 w-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-h-96 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-2 bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-lg shadow-xl max-h-96 overflow-y-auto">
           {isLoading ? (
-            <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600 mx-auto"></div>
+            <div className="p-4 text-center text-surface-500 dark:text-surface-400">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600 mx-auto"></div>
               <p className="mt-2 text-sm">Buscando...</p>
             </div>
           ) : suggestions.length > 0 ? (
             <>
-              <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide border-b border-gray-200 dark:border-gray-700">
+              <div className="px-3 py-2 text-xs font-semibold text-surface-500 dark:text-surface-400 uppercase tracking-wide border-b border-surface-200 dark:border-surface-700">
                 {suggestions.length} {suggestions.length === 1 ? 'resultado' : 'resultados'}
               </div>
               <ul>
@@ -196,14 +196,14 @@ const SearchBar = ({
                       onClick={() => handleSelectSuggestion(product.slug)}
                       className={`
                         w-full px-4 py-3 flex items-center space-x-3
-                        hover:bg-gray-50 dark:hover:bg-gray-700
+                        hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-700
                         transition-colors duration-150
-                        ${index === selectedIndex ? 'bg-gray-50 dark:bg-gray-700' : ''}
-                        ${index !== suggestions.length - 1 ? 'border-b border-gray-100 dark:border-gray-700' : ''}
+                        ${index === selectedIndex ? 'bg-surface-50 dark:bg-surface-900 dark:bg-surface-700' : ''}
+                        ${index !== suggestions.length - 1 ? 'border-b border-surface-100 dark:border-surface-700' : ''}
                       `}
                     >
                       {/* Product Image */}
-                      <div className="flex-shrink-0 w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded overflow-hidden">
+                      <div className="flex-shrink-0 w-12 h-12 bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 rounded overflow-hidden">
                         {product.image ? (
                           <img
                             src={product.image}
@@ -211,7 +211,7 @@ const SearchBar = ({
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-400">
+                          <div className="w-full h-full flex items-center justify-center text-surface-400">
                             <MagnifyingGlassIcon className="h-6 w-6" />
                           </div>
                         )}
@@ -219,12 +219,12 @@ const SearchBar = ({
 
                       {/* Product Info */}
                       <div className="flex-1 text-left min-w-0">
-                        <p className="font-medium text-gray-900 dark:text-white truncate">
+                        <p className="font-medium text-surface-900 dark:text-white truncate">
                           {product.name}
                         </p>
                         <div className="flex items-center space-x-2 text-sm">
                           {product.category && (
-                            <span className="text-gray-500 dark:text-gray-400">
+                            <span className="text-surface-500 dark:text-surface-400">
                               {product.category}
                             </span>
                           )}
@@ -238,7 +238,7 @@ const SearchBar = ({
 
                       {/* Price */}
                       <div className="flex-shrink-0 text-right">
-                        <p className="font-bold text-indigo-600 dark:text-indigo-400">
+                        <p className="font-bold text-primary-600 dark:text-primary-400">
                           {formatPrice(product.price)}
                         </p>
                       </div>
@@ -248,18 +248,18 @@ const SearchBar = ({
               </ul>
 
               {/* View All Results */}
-              <div className="border-t border-gray-200 dark:border-gray-700">
+              <div className="border-t border-surface-200 dark:border-surface-700">
                 <button
                   onClick={handleSubmit}
-                  className="w-full px-4 py-3 text-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  className="w-full px-4 py-3 text-center text-sm font-medium text-primary-600 dark:text-primary-400 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-700 transition-colors"
                 >
                   Ver todos los resultados para "{query}"
                 </button>
               </div>
             </>
           ) : (
-            <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-              <MagnifyingGlassIcon className="h-12 w-12 mx-auto mb-2 text-gray-300" />
+            <div className="p-4 text-center text-surface-500 dark:text-surface-400">
+              <MagnifyingGlassIcon className="h-12 w-12 mx-auto mb-2 text-surface-300" />
               <p className="text-sm">No se encontraron resultados para "{query}"</p>
             </div>
           )}

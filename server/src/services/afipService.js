@@ -3,6 +3,7 @@ const AfipCredential = require('../models/AfipCredential');
 const Invoice = require('../models/Invoice');
 const path = require('path');
 const fs = require('fs').promises;
+const logger = require('../config/logger');
 
 class AfipService {
   constructor() {
@@ -54,11 +55,11 @@ class AfipService {
       // Inicializar SDK de AFIP
       this.afipInstance = new Afip(afipConfig);
 
-      console.log(`✅ AFIP inicializado - CUIT: ${this.credential.cuit} - Ambiente: ${this.credential.getEnvironment()}`);
+      logger.info(`AFIP inicializado - CUIT: ${this.credential.cuit} - Ambiente: ${this.credential.getEnvironment()}`);
 
       return this.afipInstance;
     } catch (error) {
-      console.error('❌ Error al inicializar AFIP:', error);
+      logger.error('Error al inicializar AFIP:', error);
       throw error;
     }
   }
@@ -124,7 +125,7 @@ class AfipService {
         nextNumber: parseInt(lastNumber) + 1
       };
     } catch (error) {
-      console.error('Error al obtener último número de factura:', error);
+      logger.error('Error al obtener último número de factura:', error);
       throw error;
     }
   }
@@ -189,12 +190,12 @@ class AfipService {
         ];
       }
 
-      console.log('📝 Solicitando CAE a AFIP:', voucherData);
+      logger.info('Solicitando CAE a AFIP:', voucherData);
 
       // Solicitar CAE a AFIP
       const response = await this.afipInstance.ElectronicBilling.createVoucher(voucherData);
 
-      console.log('✅ Respuesta de AFIP:', response);
+      logger.info('Respuesta de AFIP:', response);
 
       // Actualizar factura con datos de AFIP
       const updateData = {
@@ -221,7 +222,7 @@ class AfipService {
       };
 
     } catch (error) {
-      console.error('❌ Error al solicitar CAE:', error);
+      logger.error('Error al solicitar CAE:', error);
 
       // Actualizar factura con error
       await invoice.update({
@@ -255,7 +256,7 @@ class AfipService {
         data: info
       };
     } catch (error) {
-      console.error('Error al consultar CAE:', error);
+      logger.error('Error al consultar CAE:', error);
       throw error;
     }
   }
