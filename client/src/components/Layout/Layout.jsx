@@ -61,13 +61,15 @@ const Layout = () => {
   const isActive = (path) => location.pathname === path
 
   return (
-    <div className="min-h-screen bg-surface-50 dark:bg-surface-900 dark:bg-surface-950">
+    <div className="min-h-screen bg-surface-50 dark:bg-surface-950">
       {/* Header */}
       <header className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'glass shadow-sm'
           : 'bg-white/95 dark:bg-surface-900/95 backdrop-blur-sm'
       } border-b border-surface-200/60 dark:border-surface-700/40`}>
+        {/* Accent topline — detalle signature de TiendaKit */}
+        <div className="topbar-accent" />
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo + nav */}

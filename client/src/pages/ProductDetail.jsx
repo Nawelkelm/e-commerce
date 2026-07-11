@@ -227,11 +227,11 @@ const ProductDetail = () => {
     const stars = []
     for (let i = 1; i <= 5; i++) {
       if (i <= Math.floor(rating)) {
-        stars.push(<StarIconSolid key={i} className="h-5 w-5 text-yellow-400" />)
+        stars.push(<StarIconSolid key={i} className="h-5 w-5 text-accent-400" />)
       } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
-        stars.push(<StarIcon key={i} className="h-5 w-5 text-yellow-400" />)
+        stars.push(<StarIcon key={i} className="h-5 w-5 text-accent-400" />)
       } else {
-        stars.push(<StarIcon key={i} className="h-5 w-5 text-surface-300" />)
+        stars.push(<StarIcon key={i} className="h-5 w-5 text-surface-300 dark:text-surface-600" />)
       }
     }
     return stars
@@ -239,10 +239,10 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-surface-50 dark:bg-surface-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary-600 mx-auto"></div>
-          <p className="mt-4 text-surface-600 dark:text-surface-400">Cargando producto...</p>
+          <div className="loading-spinner h-12 w-12 mx-auto" />
+          <p className="mt-4 text-surface-500 dark:text-surface-400">Cargando producto...</p>
         </div>
       </div>
     )
@@ -250,9 +250,9 @@ const ProductDetail = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-surface-50 dark:bg-surface-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
-          <XCircleIcon className="h-16 w-16 text-red-500 mx-auto mb-4" />
+          <XCircleIcon className="h-16 w-16 text-error-500 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-surface-900 dark:text-white mb-2">
             Error al cargar el producto
           </h2>
@@ -335,7 +335,7 @@ const ProductDetail = () => {
                 
                 {/* Discount Badge */}
                 {hasDiscount() && (
-                  <div className="absolute top-4 left-4 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg">
+                  <div className="absolute top-4 left-4 bg-error-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg">
                     -{getDiscountPercentage()}%
                   </div>
                 )}
@@ -346,7 +346,7 @@ const ProductDetail = () => {
                     Sin Stock
                   </div>
                 ) : product.stock <= 5 ? (
-                  <div className="absolute top-4 right-4 bg-orange-500 text-white text-sm font-semibold px-3 py-1 rounded-full shadow-lg">
+                  <div className="absolute top-4 right-4 bg-warning-500 text-white text-sm font-semibold px-3 py-1 rounded-full shadow-lg">
                     ¡Últimas {product.stock} unidades!
                   </div>
                 ) : null}
@@ -379,7 +379,7 @@ const ProductDetail = () => {
                       onClick={() => setSelectedImage(index)}
                       className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                         selectedImage === index
-                          ? 'border-primary-600 dark:border-indigo-400 ring-2 ring-primary-200 dark:ring-indigo-800'
+                          ? 'border-primary-600 dark:border-primary-400 ring-2 ring-primary-200 dark:ring-primary-900'
                           : 'border-surface-200 dark:border-surface-700 hover:border-surface-300 dark:border-surface-600 dark:hover:border-surface-600'
                       }`}
                     >
@@ -430,20 +430,20 @@ const ProductDetail = () => {
               )}
 
               {/* Price */}
-              <div className="space-y-2">
-                <div className="flex items-baseline space-x-3">
-                  <span className="text-4xl font-bold text-surface-900 dark:text-white">
-                    ${getCurrentPrice().toFixed(2)}
+              <div className="space-y-1.5">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-4xl font-bold text-accent-600 dark:text-accent-400">
+                    ${getCurrentPrice().toLocaleString('es-AR', { minimumFractionDigits: 0 })}
                   </span>
                   {hasDiscount() && (
-                    <span className="text-2xl text-surface-500 dark:text-surface-400 line-through">
-                      ${parseFloat(product.price).toFixed(2)}
+                    <span className="text-xl text-surface-400 line-through">
+                      ${parseFloat(product.price).toLocaleString('es-AR', { minimumFractionDigits: 0 })}
                     </span>
                   )}
                 </div>
                 {hasDiscount() && (
-                  <p className="text-green-600 dark:text-green-400 font-medium">
-                    ¡Ahorrás ${(parseFloat(product.price) - parseFloat(product.salePrice)).toFixed(2)}!
+                  <p className="text-success-600 dark:text-success-500 font-medium text-sm">
+                    ¡Ahorrás ${(parseFloat(product.price) - parseFloat(product.salePrice)).toLocaleString('es-AR', { minimumFractionDigits: 0 })}!
                   </p>
                 )}
               </div>

@@ -113,6 +113,7 @@ const AdminLayout = () => {
       <div className="md:pl-64 flex flex-col min-h-screen">
         {/* Top bar */}
         <header className="sticky top-0 z-30 glass border-b border-surface-200/60 dark:border-surface-700/40">
+          <div className="topbar-accent" />
           <div className="flex items-center justify-between h-14 px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3">
               <button
@@ -157,13 +158,16 @@ const AdminLayout = () => {
 }
 
 const SidebarContent = ({ navGroups, isActivePath, onNavigate }) => (
-  <div className="flex flex-col h-full bg-white dark:bg-surface-800 dark:bg-surface-900 border-r border-surface-200 dark:border-surface-700 dark:border-surface-800">
+  <div className="flex flex-col h-full bg-white dark:bg-surface-900 border-r border-surface-200 dark:border-surface-800">
     {/* Brand */}
-    <div className="flex items-center h-14 px-5 border-b border-surface-200 dark:border-surface-700 dark:border-surface-800 flex-shrink-0">
-      <Link to="/admin" className="text-lg font-bold text-gradient" onClick={onNavigate}>
-        TiendaKit
-      </Link>
-      <span className="ml-2 badge-primary text-[10px]">Admin</span>
+    <div className="flex-shrink-0 border-b border-surface-200 dark:border-surface-800">
+      <div className="topbar-accent" />
+      <div className="flex items-center h-14 px-5">
+        <Link to="/admin" className="text-lg font-bold text-gradient" onClick={onNavigate}>
+          TiendaKit
+        </Link>
+        <span className="ml-2 badge-primary text-[10px]">Admin</span>
+      </div>
     </div>
 
     {/* Navigation */}
@@ -184,8 +188,8 @@ const SidebarContent = ({ navGroups, isActivePath, onNavigate }) => (
                   onClick={onNavigate}
                   className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
                     active
-                      ? 'bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-300'
-                      : 'text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:bg-surface-800 hover:text-surface-900 dark:text-white dark:text-surface-400 dark:hover:bg-surface-800 dark:hover:text-surface-200'
+                      ? 'bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-300 border-l-2 border-primary-500 dark:border-primary-400 pl-[10px]'
+                      : 'text-surface-600 dark:text-surface-400 hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-200 border-l-2 border-transparent pl-[10px]'
                   }`}
                 >
                   <Icon className={`h-4.5 w-4.5 flex-shrink-0 ${
