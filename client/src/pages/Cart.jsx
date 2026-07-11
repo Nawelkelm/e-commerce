@@ -4,7 +4,7 @@ import { useAuthStore } from '../store/authStore'
 import PageMeta from '../components/SEO/PageMeta'
 import { getImageUrl, PLACEHOLDER_IMAGE } from '../utils/imageHelpers'
 import ShippingQuote from '../components/Shipping/ShippingQuote'
-import { TrashIcon, MinusIcon, PlusIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
+import { TrashIcon, MinusIcon, PlusIcon, ShoppingBagIcon, ShieldCheckIcon, TruckIcon, CheckBadgeIcon } from '@heroicons/react/24/outline'
 
 const Cart = () => {
   const navigate = useNavigate()
@@ -146,9 +146,31 @@ const Cart = () => {
                 </div>
               )}
 
-              <button onClick={handleCheckout} disabled={!selectedShipping} className="btn-primary w-full btn-lg mt-6">
+              <button onClick={handleCheckout} className="btn-cta w-full btn-lg mt-6">
                 {isAuthenticated ? 'Proceder al checkout' : 'Iniciar sesión para continuar'}
               </button>
+
+              {!selectedShipping && (
+                <p className="mt-2 text-[11px] text-center text-surface-400">
+                  Podés cotizar el envío antes o seleccionarlo en el checkout
+                </p>
+              )}
+
+              {/* Señales de confianza */}
+              <div className="mt-4 pt-4 border-t border-surface-200 dark:border-surface-700 grid grid-cols-3 gap-2">
+                <div className="text-center">
+                  <ShieldCheckIcon className="h-4 w-4 text-primary-500 mx-auto mb-1" />
+                  <p className="text-[10px] text-surface-400 leading-tight">Compra segura</p>
+                </div>
+                <div className="text-center">
+                  <TruckIcon className="h-4 w-4 text-primary-500 mx-auto mb-1" />
+                  <p className="text-[10px] text-surface-400 leading-tight">Envío rápido</p>
+                </div>
+                <div className="text-center">
+                  <CheckBadgeIcon className="h-4 w-4 text-primary-500 mx-auto mb-1" />
+                  <p className="text-[10px] text-surface-400 leading-tight">Calidad garantizada</p>
+                </div>
+              </div>
 
               <div className="mt-4 text-center">
                 <Link to="/productos" className="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 transition-colors">

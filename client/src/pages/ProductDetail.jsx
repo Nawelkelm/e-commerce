@@ -317,7 +317,7 @@ const ProductDetail = () => {
         </div>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24 lg:pb-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             
             {/* Left Column - Images */}
@@ -452,15 +452,15 @@ const ProductDetail = () => {
               <div className="flex items-center space-x-2">
                 {product.stock > 0 ? (
                   <>
-                    <CheckCircleIcon className="h-6 w-6 text-green-500" />
-                    <span className="text-green-700 dark:text-green-400 font-medium">
+                    <CheckCircleIcon className="h-6 w-6 text-success-500" />
+                    <span className="text-success-700 dark:text-success-400 font-medium">
                       En Stock ({product.stock} disponibles)
                     </span>
                   </>
                 ) : (
                   <>
-                    <XCircleIcon className="h-6 w-6 text-red-500" />
-                    <span className="text-red-700 dark:text-red-400 font-medium">
+                    <XCircleIcon className="h-6 w-6 text-error-500" />
+                    <span className="text-error-700 dark:text-error-400 font-medium">
                       Sin Stock
                     </span>
                   </>
@@ -509,10 +509,10 @@ const ProductDetail = () => {
                     <button
                       onClick={handleAddToCart}
                       disabled={addingToCart}
-                      className="flex-1 bg-primary-600 text-white py-4 px-6 rounded-lg font-semibold hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
+                      className="flex-1 btn-cta btn-lg"
                     >
-                      <ShoppingCartIcon className="h-6 w-6" />
-                      <span>{addingToCart ? 'Agregando...' : 'Agregar al Carrito'}</span>
+                      <ShoppingCartIcon className="h-5 w-5" />
+                      <span>{addingToCart ? 'Agregando...' : 'Agregar al carrito'}</span>
                     </button>
                     <button
                       onClick={toggleFavorite}
@@ -818,6 +818,32 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+
+      {/* Barra de compra fija en móvil */}
+      {product.stock > 0 && (
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-surface-900/95 backdrop-blur-md border-t border-surface-200 dark:border-surface-700 shadow-lg px-4 py-3">
+          <div className="flex items-center gap-3 max-w-lg mx-auto">
+            <div className="flex-1">
+              <p className="text-xl font-bold text-accent-600 dark:text-accent-400 leading-none">
+                ${getCurrentPrice().toLocaleString('es-AR', { minimumFractionDigits: 0 })}
+              </p>
+              {hasDiscount() && (
+                <p className="text-xs text-surface-400 line-through leading-none mt-0.5">
+                  ${parseFloat(product.price).toLocaleString('es-AR', { minimumFractionDigits: 0 })}
+                </p>
+              )}
+            </div>
+            <button
+              onClick={handleAddToCart}
+              disabled={addingToCart}
+              className="btn-cta btn-lg"
+            >
+              <ShoppingCartIcon className="h-5 w-5" />
+              {addingToCart ? 'Agregando...' : 'Agregar al carrito'}
+            </button>
+          </div>
+        </div>
+      )}
     </>
   )
 }

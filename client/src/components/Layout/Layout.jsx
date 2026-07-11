@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { ShoppingCartIcon, HeartIcon, Bars3Icon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../store/authStore'
@@ -17,6 +17,8 @@ const Layout = () => {
   const [settings, setSettings] = useState({ site_name: 'TiendaKit', site_logo: '' })
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [cartBumped, setCartBumped] = useState(false)
+  const prevCartCount = useRef(cartItemsCount)
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -42,6 +44,15 @@ const Layout = () => {
   }, [])
 
   useEffect(() => { setMobileMenuOpen(false) }, [location.pathname])
+
+  useEffect(() => {
+    if (cartItemsCount > prevCartCount.current) {
+      setCartBumped(true)
+      const t = setTimeout(() => setCartBumped(false), 450)
+      return () => clearTimeout(t)
+    }
+    prevCartCount.current = cartItemsCount
+  }, [cartItemsCount])
 
   const updateFavicon = (faviconUrl) => {
     document.querySelectorAll("link[rel*='icon']").forEach(l => l.remove())
@@ -136,7 +147,7 @@ const Layout = () => {
               >
                 <ShoppingCartIcon className="h-5 w-5" />
                 {cartItemsCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-accent-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  <span className={`absolute -top-0.5 -right-0.5 h-4 w-4 bg-accent-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center ${cartBumped ? 'cart-badge-bump' : ''}`}>
                     {cartItemsCount}
                   </span>
                 )}
