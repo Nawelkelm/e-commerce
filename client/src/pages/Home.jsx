@@ -201,43 +201,59 @@ const Home = () => {
           </div>
         )}
 
-        {/* ── Hero fallback (no carousel) ── */}
+        {/* ── Hero fallback — bloque sólido, tipografía izquierda, sin gradiente ── */}
         {enabledSlides.length === 0 && homeSettings && (
-          <div className="relative bg-gradient-to-br from-primary-700 via-primary-600 to-accent-500 py-24 lg:py-32 overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.1),transparent_50%)]" />
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">{homeSettings.heroTitle}</h1>
-              <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">{homeSettings.heroSubtitle}</p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link to={homeSettings.heroCta1Link} className="px-7 py-3.5 bg-white dark:bg-surface-800 text-primary-700 font-semibold rounded-xl hover:bg-primary-50 shadow-lg transition-all duration-300">
-                  {homeSettings.heroCta1Text}
-                </Link>
-                <Link to={homeSettings.heroCta2Link} className="px-7 py-3.5 border-2 border-white/30 text-white font-semibold rounded-xl hover:bg-white/10 backdrop-blur-sm transition-all duration-300">
-                  {homeSettings.heroCta2Text}
-                </Link>
+          <div className="bg-primary-900 py-20 lg:py-32">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-2xl">
+                <p className="text-primary-400 text-xs font-bold uppercase tracking-[0.2em] mb-5">
+                  Tienda online
+                </p>
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-6">
+                  {homeSettings.heroTitle}
+                </h1>
+                <p className="text-lg text-primary-200 mb-10 leading-relaxed max-w-lg">
+                  {homeSettings.heroSubtitle}
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  {homeSettings.heroCta1Text && homeSettings.heroCta1Link && (
+                    <Link
+                      to={homeSettings.heroCta1Link}
+                      className="inline-flex items-center gap-2 px-8 py-4 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-lg transition-colors"
+                    >
+                      {homeSettings.heroCta1Text}
+                      <ArrowRightIcon className="h-4 w-4" />
+                    </Link>
+                  )}
+                  {homeSettings.heroCta2Text && homeSettings.heroCta2Link && (
+                    <Link
+                      to={homeSettings.heroCta2Link}
+                      className="inline-flex items-center gap-2 px-8 py-4 border border-primary-600 text-primary-100 font-semibold rounded-lg hover:border-primary-400 hover:text-white transition-colors"
+                    >
+                      {homeSettings.heroCta2Text}
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* ── Features ── */}
+        {/* ── Features — estilo editorial, sin íconos, borde superior primario ── */}
         {homeSettings?.featuresEnabled && homeSettings.features?.length > 0 && (
-          <section className="py-20 bg-white dark:bg-surface-800 dark:bg-surface-900">
+          <section className="py-14 border-y border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="section-heading text-center mb-12">{homeSettings.featuresTitle}</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {homeSettings.features.map((feat, i) => {
-                  const Icon = getIcon(feat.icon)
-                  return (
-                    <div key={i} className="card-hover p-6 text-center group">
-                      <div className="inline-flex items-center justify-center w-14 h-14 bg-primary-100 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Icon className="h-7 w-7" />
-                      </div>
-                      <h3 className="text-base font-semibold text-surface-900 dark:text-white mb-2">{feat.title}</h3>
-                      <p className="text-sm text-surface-500 dark:text-surface-400">{feat.description}</p>
-                    </div>
-                  )
-                })}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                {homeSettings.features.map((feat, i) => (
+                  <div key={i} className="border-t-2 border-primary-500 pt-5">
+                    <h3 className="text-sm font-bold text-surface-900 dark:text-white uppercase tracking-wider mb-2">
+                      {feat.title}
+                    </h3>
+                    <p className="text-sm text-surface-500 dark:text-surface-400 leading-relaxed">
+                      {feat.description}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
@@ -271,29 +287,34 @@ const Home = () => {
           )
         })}
 
-        {/* ── Categories ── */}
+        {/* ── Categories — grid compacto, foco en el nombre ── */}
         {homeSettings?.categoriesEnabled && categories.length > 0 && (
-          <section className="py-20 bg-surface-50 dark:bg-surface-900">
+          <section className="py-16 bg-surface-50 dark:bg-surface-950">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
-                <h2 className="section-heading mb-3">{homeSettings.categoriesTitle}</h2>
-                <p className="section-subheading">Explorá nuestras categorías más populares</p>
+              <div className="flex items-baseline justify-between mb-8">
+                <h2 className="text-heading-2 text-surface-900 dark:text-white">{homeSettings.categoriesTitle}</h2>
+                <Link to="/productos" className="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors">
+                  Ver todo →
+                </Link>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-3">
                 {categories.slice(0, 8).map((cat) => {
                   const customIcon = homeSettings.categoryIcons?.[cat.id]
                   const Icon = customIcon ? getIcon(customIcon) : null
                   return (
-                    <Link key={cat.id} to={`/productos?categoria=${cat.id}`}
-                      className="card-hover group p-6 flex flex-col items-center text-center">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-50 dark:from-primary-950 dark:to-primary-900 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Link
+                      key={cat.id}
+                      to={`/productos?categoria=${cat.id}`}
+                      className="group flex flex-col items-center gap-2.5 py-5 px-3 bg-white dark:bg-surface-900 border border-surface-200 dark:border-surface-800 rounded-xl hover:border-primary-400 dark:hover:border-primary-700 hover:bg-primary-50 dark:hover:bg-primary-950/30 transition-all duration-200"
+                    >
+                      <span className="text-2xl leading-none">
                         {Icon ? (
-                          <Icon className="h-8 w-8 text-primary-600 dark:text-primary-400" />
+                          <Icon className="h-6 w-6 text-primary-600 dark:text-primary-400 group-hover:scale-110 transition-transform" />
                         ) : (
-                          <span className="text-3xl">{cat.icon || '📦'}</span>
+                          cat.icon || '📦'
                         )}
-                      </div>
-                      <h3 className="text-sm font-semibold text-surface-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                      </span>
+                      <h3 className="text-xs font-semibold text-surface-700 dark:text-surface-300 group-hover:text-primary-700 dark:group-hover:text-primary-300 text-center leading-tight transition-colors">
                         {cat.name}
                       </h3>
                     </Link>
@@ -306,16 +327,12 @@ const Home = () => {
 
         {/* ── Products ── */}
         {products.length > 0 && (
-          <section className="py-20 bg-white dark:bg-surface-800/50">
+          <section className="py-16 bg-white dark:bg-surface-950">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex items-end justify-between mb-10">
-                <div>
-                  <h2 className="section-heading mb-2">Productos Destacados</h2>
-                  <p className="section-subheading mt-0">Descubrí nuestras últimas novedades</p>
-                </div>
-                <Link to="/productos" className="hidden md:inline-flex items-center gap-2 btn-primary">
-                  Ver todos
-                  <ArrowRightIcon className="h-4 w-4" />
+              <div className="flex items-baseline justify-between mb-8">
+                <h2 className="text-heading-2 text-surface-900 dark:text-white">Productos Destacados</h2>
+                <Link to="/productos" className="hidden md:inline-flex items-center gap-1 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors">
+                  Ver todos →
                 </Link>
               </div>
               <ProductGrid products={products} />
@@ -326,19 +343,27 @@ const Home = () => {
           </section>
         )}
 
-        {/* ── Newsletter ── */}
+        {/* ── Newsletter — sólido, sin gradiente ── */}
         {homeSettings?.newsletterEnabled && (
-          <section className="py-20 bg-gradient-to-br from-primary-700 via-primary-600 to-accent-500 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.08),transparent_50%)]" />
-            <div className="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h2 className="text-3xl font-bold text-white mb-3 tracking-tight">{homeSettings.newsletterTitle}</h2>
-              <p className="text-lg text-white/80 mb-8">{homeSettings.newsletterSubtitle}</p>
-              <form className="flex flex-col sm:flex-row gap-3">
-                <input type="email" placeholder="Tu email" className="flex-1 px-5 py-3.5 rounded-xl bg-white/10 backdrop-blur-sm text-white placeholder:text-white/50 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent" />
-                <button type="submit" className="px-7 py-3.5 bg-white dark:bg-surface-800 text-primary-700 font-semibold rounded-xl hover:bg-primary-50 shadow-lg transition-all duration-300">
-                  Suscribirse
-                </button>
-              </form>
+          <section className="py-16 bg-primary-900">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-xl">
+                <h2 className="text-3xl font-bold text-white mb-2 tracking-tight">{homeSettings.newsletterTitle}</h2>
+                <p className="text-primary-200 mb-7 text-base">{homeSettings.newsletterSubtitle}</p>
+                <form className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="email"
+                    placeholder="Tu email"
+                    className="flex-1 px-4 py-3 bg-primary-800/60 border border-primary-700 text-white placeholder:text-primary-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-500 transition-all"
+                  />
+                  <button
+                    type="submit"
+                    className="px-7 py-3 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-lg transition-colors whitespace-nowrap"
+                  >
+                    Suscribirse
+                  </button>
+                </form>
+              </div>
             </div>
           </section>
         )}

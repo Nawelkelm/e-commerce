@@ -4,12 +4,14 @@ import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { productsAPI } from '../../services/api'
 import { useDebounce } from '../../hooks/useDebounce'
 
-const SearchBar = ({ 
-  placeholder = 'Buscar productos...', 
+const SearchBar = ({
+  placeholder = 'Buscar productos...',
   className = '',
   showButton = false,
-  autoFocus = false 
+  autoFocus = false,
+  variant = 'default',
 }) => {
+  const isDark = variant === 'dark'
   const [query, setQuery] = useState('')
   const [suggestions, setSuggestions] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -125,8 +127,8 @@ const SearchBar = ({
     <div ref={wrapperRef} className={`relative ${className}`}>
       <form onSubmit={handleSubmit} className="relative">
         {/* Search Icon */}
-        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-surface-400">
-          <MagnifyingGlassIcon className="h-5 w-5" />
+        <div className={`absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-primary-300' : 'text-surface-400'}`}>
+          <MagnifyingGlassIcon className="h-4 w-4" />
         </div>
 
         {/* Input */}
@@ -135,23 +137,15 @@ const SearchBar = ({
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => {
-            if (suggestions.length > 0) {
-              setShowSuggestions(true)
-            }
-          }}
+          onFocus={() => { if (suggestions.length > 0) setShowSuggestions(true) }}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           autoFocus={autoFocus}
-          className="
-            w-full pl-10 pr-10 py-2.5 
-            border border-surface-300 dark:border-surface-600 rounded-lg
-            bg-white dark:bg-surface-800
-            text-surface-900 dark:text-white
-            placeholder-surface-500 dark:placeholder-surface-400
-            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
-            transition-all duration-200
-          "
+          className={`w-full pl-9 pr-9 py-2 text-sm rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:border-transparent ${
+            isDark
+              ? 'bg-primary-800/60 border-primary-700 text-white placeholder:text-primary-400 focus:ring-primary-500/40 focus:border-primary-500'
+              : 'bg-white dark:bg-surface-800 border-surface-300 dark:border-surface-600 text-surface-900 dark:text-white placeholder:text-surface-400 dark:placeholder:text-surface-500 focus:ring-primary-500/30 focus:border-primary-500 dark:focus:border-primary-400'
+          }`}
         />
 
         {/* Clear Button */}
@@ -159,7 +153,7 @@ const SearchBar = ({
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-surface-400 hover:text-surface-600 dark:text-surface-400 dark:hover:text-surface-300"
+            className={`absolute right-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-primary-300 hover:text-white' : 'text-surface-400 hover:text-surface-600 dark:hover:text-surface-300'}`}
           >
             <XMarkIcon className="h-5 w-5" />
           </button>

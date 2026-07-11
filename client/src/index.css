@@ -7,7 +7,7 @@
    ================================================================ */
 @layer base {
   html {
-    font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
@@ -71,6 +71,14 @@
            hover:bg-surface-100 hover:text-surface-900
            focus-visible:ring-surface-400
            dark:text-surface-400 dark:hover:bg-surface-800 dark:hover:text-surface-100;
+  }
+
+  /* Botón de acción de compra — ámbar, más energético que el verde */
+  .btn-cta {
+    @apply btn bg-accent-500 text-white
+           hover:bg-accent-600 hover:shadow-md
+           focus-visible:ring-accent-400
+           active:bg-accent-700;
   }
 
   .btn-danger {
@@ -211,11 +219,11 @@
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 via-primary-500 to-accent-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-400 via-primary-300 to-accent-400;
   }
 
   .topbar-accent {
-    @apply h-[2px] bg-gradient-to-r from-primary-700 via-primary-500 to-accent-400;
+    @apply h-[2px] bg-gradient-to-r from-primary-600 via-primary-400 to-accent-400;
   }
 
   .animate-fade-in {

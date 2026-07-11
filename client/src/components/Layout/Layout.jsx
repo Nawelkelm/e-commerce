@@ -62,16 +62,14 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen bg-surface-50 dark:bg-surface-950">
-      {/* Header */}
+      {/* Header — siempre verde oscuro, identidad de marca */}
       <header className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'glass shadow-sm'
-          : 'bg-white/95 dark:bg-surface-900/95 backdrop-blur-sm'
-      } border-b border-surface-200/60 dark:border-surface-700/40`}>
-        {/* Accent topline — detalle signature de TiendaKit */}
-        <div className="topbar-accent" />
+        scrolled ? 'bg-primary-950/95 backdrop-blur-md shadow-lg shadow-black/25' : 'bg-primary-900'
+      } border-b border-primary-800`}>
+
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
+
             {/* Logo + nav */}
             <div className="flex items-center gap-8">
               <Link to="/" className="flex-shrink-0 flex items-center gap-2">
@@ -79,27 +77,28 @@ const Layout = () => {
                   <img
                     src={settings.site_logo}
                     alt={settings.site_name || 'TiendaKit'}
-                    className="h-9 w-auto"
+                    className="h-8 w-auto brightness-0 invert"
                     onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block' }}
                   />
                 ) : null}
                 <span
-                  className="text-xl font-bold text-gradient"
+                  className="text-xl font-bold text-white tracking-tight"
                   style={{ display: settings.site_logo ? 'none' : 'block' }}
                 >
-                  {settings.site_name || 'TiendaKit'}
+                  {settings.site_name || 'Tienda'}
+                  <span className="text-accent-400">Kit</span>
                 </span>
               </Link>
 
-              <div className="hidden md:flex items-center gap-1">
+              <div className="hidden md:flex items-center gap-0.5">
                 {navLinks.map(({ to, label }) => (
                   <Link
                     key={to}
                     to={to}
                     className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       isActive(to)
-                        ? 'text-primary-700 bg-primary-50 dark:text-primary-300 dark:bg-primary-950/50'
-                        : 'text-surface-600 dark:text-surface-400 hover:text-surface-900 dark:text-white hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-300 dark:hover:text-surface-100 dark:hover:bg-surface-800'
+                        ? 'text-white bg-primary-700/70'
+                        : 'text-primary-200 hover:text-white hover:bg-primary-800/60'
                     }`}
                   >
                     {label}
@@ -109,15 +108,19 @@ const Layout = () => {
             </div>
 
             {/* Right side */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <div className="hidden lg:flex">
-                <SearchBar placeholder="Buscar productos..." className="w-72" />
+                <SearchBar placeholder="Buscar productos..." className="w-64" variant="dark" />
               </div>
 
-              <ThemeToggle />
+              <ThemeToggle variant="dark" />
 
               {isAuthenticated && (
-                <Link to="/wishlist" className="relative p-2 rounded-lg text-surface-500 dark:text-surface-400 hover:text-rose-500 hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-800 transition-colors" title="Lista de deseos">
+                <Link
+                  to="/wishlist"
+                  className="relative p-2 rounded-lg text-primary-200 hover:text-rose-400 hover:bg-primary-800/60 transition-colors"
+                  title="Lista de deseos"
+                >
                   <HeartIcon className="h-5 w-5" />
                   {wishlistCount > 0 && (
                     <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
@@ -127,38 +130,56 @@ const Layout = () => {
                 </Link>
               )}
 
-              <Link to="/carrito" className="relative p-2 rounded-lg text-surface-500 dark:text-surface-400 hover:text-primary-600 hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-800 transition-colors">
+              <Link
+                to="/carrito"
+                className="relative p-2 rounded-lg text-primary-200 hover:text-white hover:bg-primary-800/60 transition-colors"
+              >
                 <ShoppingCartIcon className="h-5 w-5" />
                 {cartItemsCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-primary-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 bg-accent-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                     {cartItemsCount}
                   </span>
                 )}
               </Link>
 
               {/* Desktop user nav */}
-              <div className="hidden md:flex items-center gap-2">
+              <div className="hidden md:flex items-center gap-1">
                 {isAuthenticated ? (
                   <>
-                    <Link to="/perfil" className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-surface-600 dark:text-surface-400 hover:text-surface-900 dark:text-white hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-300 dark:hover:text-surface-100 dark:hover:bg-surface-800 transition-colors">
-                      <UserCircleIcon className="h-5 w-5" />
+                    <Link
+                      to="/perfil"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-primary-200 hover:text-white hover:bg-primary-800/60 transition-colors"
+                    >
+                      <UserCircleIcon className="h-4 w-4" />
                       {user?.firstName}
                     </Link>
                     {user?.role === 'admin' && (
-                      <Link to="/admin" className="px-3 py-1.5 rounded-lg text-sm font-medium text-primary-600 hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-950/50 transition-colors">
+                      <Link
+                        to="/admin"
+                        className="px-3 py-1.5 rounded-lg text-sm font-medium text-accent-300 hover:text-accent-200 hover:bg-primary-800/60 transition-colors"
+                      >
                         Admin
                       </Link>
                     )}
-                    <button onClick={handleLogout} className="px-3 py-1.5 rounded-lg text-sm font-medium text-surface-500 dark:text-surface-400 hover:text-surface-900 dark:text-white hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-400 dark:hover:text-surface-100 dark:hover:bg-surface-800 transition-colors">
+                    <button
+                      onClick={handleLogout}
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium text-primary-300 hover:text-white hover:bg-primary-800/60 transition-colors"
+                    >
                       Salir
                     </button>
                   </>
                 ) : (
                   <>
-                    <Link to="/login" className="px-3 py-1.5 rounded-lg text-sm font-medium text-surface-600 dark:text-surface-400 hover:text-surface-900 dark:text-white hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-300 dark:hover:text-surface-100 dark:hover:bg-surface-800 transition-colors">
-                      Iniciar Sesión
+                    <Link
+                      to="/login"
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium text-primary-200 hover:text-white hover:bg-primary-800/60 transition-colors"
+                    >
+                      Iniciar sesión
                     </Link>
-                    <Link to="/registro" className="btn-primary btn-sm">
+                    <Link
+                      to="/registro"
+                      className="inline-flex items-center px-4 py-1.5 bg-accent-500 hover:bg-accent-600 text-white text-sm font-semibold rounded-lg transition-colors"
+                    >
                       Registrarse
                     </Link>
                   </>
@@ -168,7 +189,7 @@ const Layout = () => {
               {/* Mobile menu toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-surface-500 dark:text-surface-400 hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-800 transition-colors"
+                className="md:hidden p-2 rounded-lg text-primary-200 hover:text-white hover:bg-primary-800/60 transition-colors"
               >
                 {mobileMenuOpen ? <XMarkIcon className="h-5 w-5" /> : <Bars3Icon className="h-5 w-5" />}
               </button>
@@ -176,45 +197,55 @@ const Layout = () => {
           </div>
         </nav>
 
-        {/* Mobile menu */}
+        {/* Mobile menu — mismo tono oscuro */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 dark:bg-surface-900 animate-slide-up">
-            <div className="px-4 py-3 space-y-1">
+          <div className="md:hidden border-t border-primary-800 bg-primary-900 animate-slide-up">
+            <div className="px-4 py-3 space-y-0.5">
               <div className="pb-3">
-                <SearchBar placeholder="Buscar..." className="w-full" />
+                <SearchBar placeholder="Buscar..." className="w-full" variant="dark" />
               </div>
               {navLinks.map(({ to, label }) => (
-                <Link key={to} to={to} className={`block px-3 py-2 rounded-lg text-sm font-medium ${
-                  isActive(to)
-                    ? 'text-primary-700 bg-primary-50 dark:text-primary-300 dark:bg-primary-950/50'
-                    : 'text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-300 dark:hover:bg-surface-800'
-                }`}>
+                <Link
+                  key={to}
+                  to={to}
+                  className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    isActive(to)
+                      ? 'text-white bg-primary-700/70'
+                      : 'text-primary-200 hover:text-white hover:bg-primary-800/60'
+                  }`}
+                >
                   {label}
                 </Link>
               ))}
-              {isAuthenticated ? (
-                <>
-                  <Link to="/perfil" className="block px-3 py-2 rounded-lg text-sm font-medium text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-300 dark:hover:bg-surface-800">
-                    Mi Perfil
-                  </Link>
-                  <Link to="/pedidos" className="block px-3 py-2 rounded-lg text-sm font-medium text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-300 dark:hover:bg-surface-800">
-                    Mis Pedidos
-                  </Link>
-                  {user?.role === 'admin' && (
-                    <Link to="/admin" className="block px-3 py-2 rounded-lg text-sm font-medium text-primary-600 dark:text-primary-400">
-                      Panel Admin
+              <div className="pt-2 border-t border-primary-800 mt-2">
+                {isAuthenticated ? (
+                  <>
+                    <Link to="/perfil" className="block px-3 py-2 rounded-lg text-sm font-medium text-primary-200 hover:text-white hover:bg-primary-800/60 transition-colors">
+                      Mi Perfil
                     </Link>
-                  )}
-                  <button onClick={handleLogout} className="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-surface-500 dark:text-surface-400 hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-400 dark:hover:bg-surface-800">
-                    Cerrar Sesión
-                  </button>
-                </>
-              ) : (
-                <div className="flex gap-2 pt-2">
-                  <Link to="/login" className="btn-outline flex-1 text-center">Iniciar Sesión</Link>
-                  <Link to="/registro" className="btn-primary flex-1 text-center">Registrarse</Link>
-                </div>
-              )}
+                    <Link to="/pedidos" className="block px-3 py-2 rounded-lg text-sm font-medium text-primary-200 hover:text-white hover:bg-primary-800/60 transition-colors">
+                      Mis Pedidos
+                    </Link>
+                    {user?.role === 'admin' && (
+                      <Link to="/admin" className="block px-3 py-2 rounded-lg text-sm font-medium text-accent-300 hover:text-accent-200 hover:bg-primary-800/60 transition-colors">
+                        Panel Admin
+                      </Link>
+                    )}
+                    <button onClick={handleLogout} className="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-primary-300 hover:text-white hover:bg-primary-800/60 transition-colors">
+                      Cerrar Sesión
+                    </button>
+                  </>
+                ) : (
+                  <div className="flex gap-2 py-1">
+                    <Link to="/login" className="flex-1 text-center px-3 py-2 rounded-lg text-sm font-medium text-primary-200 border border-primary-700 hover:border-primary-500 hover:text-white transition-colors">
+                      Iniciar sesión
+                    </Link>
+                    <Link to="/registro" className="flex-1 text-center px-3 py-2 rounded-lg text-sm font-semibold bg-accent-500 hover:bg-accent-600 text-white transition-colors">
+                      Registrarse
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
