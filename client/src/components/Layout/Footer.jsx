@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 const Footer = () => {
@@ -20,8 +20,8 @@ const Footer = () => {
         const data = await response.json()
         setFooterSettings(data)
       }
-    } catch (error) {
-      console.error('Error loading footer settings:', error)
+    } catch {
+      // silent
     } finally {
       setLoading(false)
     }
@@ -128,7 +128,7 @@ const Footer = () => {
           {footerSettings.footerLinksEnabled && (
             <>
               {[
-                { title: footerSettings.footerColumn1Title || 'Información', links: footerSettings.footerColumn1Links },
+                { title: footerSettings.footerColumn1Title || 'InformaciÃ³n', links: footerSettings.footerColumn1Links },
                 { title: footerSettings.footerColumn2Title || 'Ayuda', links: footerSettings.footerColumn2Links },
                 { title: footerSettings.footerColumn3Title || 'Legal', links: footerSettings.footerColumn3Links },
               ].filter(col => col.links?.length > 0).map((col, i) => (
@@ -152,7 +152,7 @@ const Footer = () => {
         {/* Copyright & Payment */}
         <div className="border-t border-surface-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-surface-500 dark:text-surface-400 text-sm">
-            {footerSettings.footerCopyrightText || `© ${currentYear} TiendaKit. Todos los derechos reservados.`}
+            {footerSettings.footerCopyrightText || `Â© ${currentYear} TiendaKit. Todos los derechos reservados.`}
           </p>
 
           {footerSettings.footerShowPaymentMethods && footerSettings.footerPaymentMethods?.length > 0 && (
@@ -181,3 +181,4 @@ const Footer = () => {
 }
 
 export default Footer
+
