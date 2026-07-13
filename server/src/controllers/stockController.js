@@ -540,13 +540,13 @@ const exportStockHistory = async (req, res) => {
       include: [
         {
           model: Product,
-          as: 'product',
+          required: false,
           attributes: ['name', 'sku']
         },
         {
           model: User,
-          as: 'user',
-          attributes: ['name', 'email']
+          as: 'performer',
+          attributes: ['firstName', 'lastName', 'email']
         }
       ],
       order: [['createdAt', 'DESC']],
@@ -556,15 +556,15 @@ const exportStockHistory = async (req, res) => {
     // Prepare data for Excel
     const data = movements.map(m => ({
       'Fecha': new Date(m.createdAt).toLocaleString('es-ES'),
-      'Producto': m.product?.name || 'N/A',
-      'SKU': m.product?.sku || 'N/A',
+      'Producto': m.Product?.name || 'N/A',
+      'SKU': m.Product?.sku || 'N/A',
       'Tipo': m.type,
       'Cantidad': m.quantity,
       'Stock Anterior': m.previousStock,
       'Stock Nuevo': m.newStock,
       'Costo Unitario': m.unitCost || 0,
       'Costo Total': m.totalCost || 0,
-      'Usuario': m.user?.name || 'Sistema',
+      'Usuario': m.performer ? [m.performer.firstName, m.performer.lastName].filter(Boolean).join(' ') || 'Sistema' : 'Sistema',
       'Referencia': m.referenceType ? `${m.referenceType}: ${m.referenceId}` : '',
       'Notas': m.notes || ''
     }));
