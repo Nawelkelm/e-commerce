@@ -38,11 +38,13 @@ const getCategories = async (req, res) => {
 // Get category by slug
 const getCategoryBySlug = async (req, res) => {
   try {
-    const { slug } = req.params;
+    const identifier = req.params.slug || req.params.id;
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(identifier);
+    const where = isUuid ? { id: identifier } : { slug: identifier };
+    // Catalogo publico (sin auth): solo activas. Admin (con auth): incluye inactivas.
+    if (!req.user) where.isActive = true;
 
-    const category = await Category.findOne({
-      where: { slug, isActive: true }
-    });
+    const category = await Category.findOne({ where });
 
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
@@ -64,6 +66,10 @@ const createCategory = async (req, res) => {
     }
 
     const { name, description, imageUrl, isActive, sortOrder } = req.body;
+
+    if (!name || !String(name).trim()) {
+      return res.status(400).json({ message: 'El nombre de la categoria es requerido' });
+    }
 
     // Generate slug
     const slug = generateSlug(name);

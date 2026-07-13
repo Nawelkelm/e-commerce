@@ -1,4 +1,4 @@
-﻿const { Coupon, CouponUsage, User, Order, sequelize } = require('../models');
+const { Coupon, CouponUsage, User, Order, sequelize } = require('../models');
 const { Op } = require('sequelize');
 const logger = require('../config/logger');
 
@@ -271,9 +271,15 @@ const getCouponById = async (req, res) => {
 // ADMIN: Crear cupón
 const createCoupon = async (req, res) => {
   try {
+    if (!req.body.code || !String(req.body.code).trim()) {
+      return res.status(400).json({ success: false, message: 'El codigo del cupon es requerido' });
+    }
+    if (req.body.discountValue === undefined || req.body.discountValue === null || req.body.discountValue === '') {
+      return res.status(400).json({ success: false, message: 'El valor del descuento es requerido' });
+    }
     const couponData = {
       ...req.body,
-      code: req.body.code.toUpperCase(),
+      code: String(req.body.code).toUpperCase(),
       createdBy: req.user.id
     };
 

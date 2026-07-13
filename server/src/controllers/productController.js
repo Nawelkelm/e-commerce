@@ -234,10 +234,14 @@ const getProducts = async (req, res) => {
 // Get single product by slug
 const getProductBySlug = async (req, res) => {
   try {
-    const { slug } = req.params;
+    const identifier = req.params.slug || req.params.id;
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(identifier);
+    const where = isUuid ? { id: identifier } : { slug: identifier };
+    // Catalogo publico (sin auth): solo activos. Admin (con auth): incluye inactivos.
+    if (!req.user) where.isActive = true;
 
     const product = await Product.findOne({
-      where: { slug, isActive: true },
+      where,
       include: [
         {
           model: Category,
