@@ -7,6 +7,8 @@
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
     "test": "jest",
+    "smoke": "node src/scripts/smokeTest.js",
+    "smoke:write": "node src/scripts/smokeTestWrite.js",
     "db:migrate": "sequelize-cli db:migrate",
     "db:seed": "sequelize-cli db:seed:all"
   },
