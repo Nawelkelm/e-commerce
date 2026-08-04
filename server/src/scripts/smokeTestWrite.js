@@ -34,7 +34,7 @@
 
 const BASE_URL = (process.argv[2] || process.env.SMOKE_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
 const ADMIN_EMAIL = process.env.SMOKE_ADMIN_EMAIL || 'admin@ecommerce.com';
-const ADMIN_PASSWORD = process.env.SMOKE_ADMIN_PASSWORD || 'admin123';
+const ADMIN_PASSWORD = process.env.SMOKE_ADMIN_PASSWORD || '123456';
 const TIMEOUT_MS = parseInt(process.env.SMOKE_TIMEOUT_MS, 10) || 15000;
 const TAG = Date.now(); // sufijo unico para no colisionar entre corridas
 

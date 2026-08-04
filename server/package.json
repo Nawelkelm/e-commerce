@@ -9,6 +9,7 @@
     "test": "jest",
     "smoke": "node src/scripts/smokeTest.js",
     "smoke:write": "node src/scripts/smokeTestWrite.js",
+    "smoke:purchase": "node src/scripts/smokeTestPurchase.js",
     "db:migrate": "sequelize-cli db:migrate",
     "db:seed": "sequelize-cli db:seed:all"
   },

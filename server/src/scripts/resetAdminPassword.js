@@ -12,8 +12,8 @@ async function resetAdminPassword() {
   try {
     console.log('🔐 Reseteando contraseña del admin...\n');
 
-    const adminEmail = 'admin@ecommerce.com';
-    const newPassword = 'admin123'; // Contraseña temporal
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@ecommerce.com';
+    const newPassword = process.env.ADMIN_PASSWORD || '123456'; // configurable por entorno (ADMIN_PASSWORD)
 
     // Buscar el usuario admin
     const admin = await User.findOne({

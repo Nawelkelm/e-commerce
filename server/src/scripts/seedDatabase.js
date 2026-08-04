@@ -6,14 +6,19 @@ const seedDatabase = async () => {
   try {
     logger.info('Starting database seeding...');
 
-    // Create admin user
-    const adminPassword = await bcrypt.hash('123456', 12);
+    // Create admin user (credenciales configurables por entorno)
+    const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@ecommerce.com';
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '123456';
+    if (process.env.NODE_ENV === 'production' && !process.env.ADMIN_PASSWORD) {
+      logger.warn('SEED: usando contrasena de admin por defecto en produccion. Configura ADMIN_PASSWORD.');
+    }
+    const adminPassword = await bcrypt.hash(ADMIN_PASSWORD, 12);
     const [adminUser] = await User.findOrCreate({
-      where: { email: 'admin@ecommerce.com' },
+      where: { email: ADMIN_EMAIL },
       defaults: {
         firstName: 'Admin',
         lastName: 'User',
-        email: 'admin@ecommerce.com',
+        email: ADMIN_EMAIL,
         password: adminPassword,
         role: 'admin',
         isActive: true,
