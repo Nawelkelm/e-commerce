@@ -268,7 +268,7 @@ const Orders = () => {
     return (
       <div className="bg-error-50 dark:bg-error-500/10 border border-error-600/20 dark:border-error-500/25 rounded-md p-4">
         <div className="flex">
-          <ExclamationTriangleIcon className="h-5 w-5 text-red-400" />
+          <ExclamationTriangleIcon className="h-5 w-5 text-error-500" />
           <div className="ml-3">
             <h3 className="text-sm font-medium text-error-700 dark:text-error-500">Error</h3>
             <div className="mt-2 text-sm text-error-600 dark:text-error-400">
@@ -479,14 +479,14 @@ const Orders = () => {
                     <div className="flex justify-center items-center gap-1">
                       <button
                         onClick={() => handleViewDetails(order)}
-                        className="text-primary-600 hover:text-indigo-900 dark:text-primary-400 dark:hover:text-primary-300 p-1 rounded hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-700 transition-colors"
+                        className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 p-1 rounded hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
                         title="Ver detalles"
                       >
                         <EyeIcon className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleStatusUpdate(order)}
-                        className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 p-1 rounded hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-700 transition-colors"
+                        className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 p-1 rounded hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
                         title="Cambiar estado"
                       >
                         <PencilIcon className="h-4 w-4" />
@@ -690,14 +690,14 @@ const Orders = () => {
                     <div className="mt-3 flex gap-2">
                       <button
                         onClick={() => handleApprovePayment(selectedOrder.id)}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-success-600 text-white rounded-md hover:bg-success-700 transition-colors"
                       >
                         <CheckIcon className="h-5 w-5" />
                         Aprobar Pago
                       </button>
                       <button
                         onClick={() => handleRejectPayment(selectedOrder.id)}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-error-600 text-white rounded-md hover:bg-error-700 transition-colors"
                       >
                         <XMarkIcon className="h-5 w-5" />
                         Rechazar Pago

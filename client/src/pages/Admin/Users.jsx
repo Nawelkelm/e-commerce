@@ -312,7 +312,7 @@ const Users = () => {
     return (
       <div className="bg-error-50 dark:bg-error-500/10 border border-error-600/20 dark:border-error-500/25 rounded-md p-4">
         <div className="flex">
-          <ExclamationTriangleIcon className="h-5 w-5 text-red-400" />
+          <ExclamationTriangleIcon className="h-5 w-5 text-error-500" />
           <div className="ml-3">
             <h3 className="text-sm font-medium text-error-700 dark:text-error-500">Error</h3>
             <div className="mt-2 text-sm text-error-600 dark:text-error-400">
@@ -520,7 +520,7 @@ const Users = () => {
                       </button>
                       <button
                         onClick={() => handleEditUser(user)}
-                        className="text-primary-600 hover:text-indigo-900 p-1"
+                        className="text-primary-600 hover:text-primary-700 p-1"
                         title="Editar usuario"
                       >
                         <PencilIcon className="h-5 w-5" />
@@ -833,7 +833,7 @@ const Users = () => {
                 </button>
                 <button
                   onClick={() => deactivateUser(selectedUser.id)}
-                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700"
+                  className="btn-danger"
                 >
                   Desactivar
                 </button>
