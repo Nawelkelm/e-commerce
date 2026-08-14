@@ -19,6 +19,13 @@ const statusConfig = {
   cancelled:  { label: 'Cancelado', class: 'badge-error' },
 }
 
+// Chip de icono por color — solo tokens del sistema
+const iconStyles = {
+  primary: 'bg-primary-50 text-primary-600 dark:bg-primary-950/50 dark:text-primary-400',
+  accent:  'bg-accent-50 text-accent-600 dark:bg-accent-950/50 dark:text-accent-400',
+  success: 'bg-success-50 text-success-600 dark:bg-success-500/10 dark:text-success-500',
+}
+
 const Dashboard = () => {
   const [dashboardStats, setDashboardStats] = useState(null)
   const [recentOrders, setRecentOrders] = useState([])
@@ -39,8 +46,8 @@ const Dashboard = () => {
 
       if (statsRes.ok) setDashboardStats(await statsRes.json())
       if (ordersRes.ok) { const d = await ordersRes.json(); setRecentOrders(d.orders || []) }
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error)
+    } catch {
+      // silencioso: los estados vacíos cubren la falla
     } finally {
       setLoading(false)
     }
@@ -48,7 +55,7 @@ const Dashboard = () => {
 
   const statCards = [
     {
-      name: 'Total Ventas',
+      name: 'Total ventas',
       value: dashboardStats ? `$${dashboardStats.totalRevenue?.toLocaleString('es-AR', { minimumFractionDigits: 0 })}` : '$0',
       change: dashboardStats ? `${dashboardStats.revenueGrowth > 0 ? '+' : ''}${dashboardStats.revenueGrowth}%` : '0%',
       up: dashboardStats?.revenueGrowth > 0,
@@ -69,7 +76,7 @@ const Dashboard = () => {
       change: dashboardStats ? `${dashboardStats.userGrowth > 0 ? '+' : ''}${dashboardStats.userGrowth}%` : '0%',
       up: dashboardStats?.userGrowth > 0,
       icon: UsersIcon,
-      color: 'emerald',
+      color: 'success',
     },
     {
       name: 'Pedidos',
@@ -77,16 +84,9 @@ const Dashboard = () => {
       change: dashboardStats ? `${dashboardStats.ordersGrowth > 0 ? '+' : ''}${dashboardStats.ordersGrowth}%` : '0%',
       up: dashboardStats?.ordersGrowth > 0,
       icon: ChartBarIcon,
-      color: 'blue',
+      color: 'primary',
     },
   ]
-
-  const colorStyles = {
-    primary: 'bg-primary-100 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 border-primary-500',
-    accent: 'bg-accent-100 dark:bg-accent-950/50 text-accent-600 dark:text-accent-400 border-accent-500',
-    emerald: 'bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border-emerald-500',
-    blue: 'bg-primary-100 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 border-primary-500',
-  }
 
   if (loading) {
     return (
@@ -106,24 +106,23 @@ const Dashboard = () => {
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {statCards.map((stat) => (
-          <div key={stat.name}
-            className={`card p-5 border-l-4 ${colorStyles[stat.color].split(' ').filter(c => c.startsWith('border-')).join(' ')}`}>
+          <div key={stat.name} className="card p-5">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-caption font-medium text-surface-500 dark:text-surface-400 uppercase tracking-wide">{stat.name}</p>
-                <p className="mt-2 text-2xl font-bold text-surface-900 dark:text-white">{stat.value}</p>
+                <p className="mt-2 text-2xl font-bold text-surface-900 dark:text-white tabular-nums">{stat.value}</p>
               </div>
-              <div className={`p-2.5 rounded-xl ${colorStyles[stat.color].split(' ').filter(c => c.startsWith('bg-') || c.startsWith('dark:bg-') || c.startsWith('text-') || c.startsWith('dark:text-')).join(' ')}`}>
+              <div className={`p-2.5 rounded-xl ${iconStyles[stat.color]}`}>
                 <stat.icon className="h-5 w-5" />
               </div>
             </div>
             <div className="mt-3 flex items-center gap-1">
               {stat.up ? (
-                <ArrowTrendingUpIcon className="h-4 w-4 text-emerald-500" />
+                <ArrowTrendingUpIcon className="h-4 w-4 text-success-500" />
               ) : (
                 <ArrowTrendingDownIcon className="h-4 w-4 text-error-500" />
               )}
-              <span className={`text-xs font-medium ${stat.up ? 'text-emerald-600 dark:text-emerald-400' : 'text-error-600 dark:text-error-400'}`}>
+              <span className={`text-xs font-medium ${stat.up ? 'text-success-600 dark:text-success-500' : 'text-error-600 dark:text-error-400'}`}>
                 {stat.change}
               </span>
             </div>
@@ -134,7 +133,7 @@ const Dashboard = () => {
       {/* Recent Orders */}
       <div className="card overflow-hidden">
         <div className="px-6 py-4 border-b border-surface-200 dark:border-surface-700 flex items-center justify-between">
-          <h3 className="text-base font-semibold text-surface-900 dark:text-white">Pedidos Recientes</h3>
+          <h3 className="text-base font-semibold text-surface-900 dark:text-white">Pedidos recientes</h3>
           <Link to="/admin/pedidos" className="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 transition-colors">
             Ver todos
           </Link>
@@ -155,11 +154,11 @@ const Dashboard = () => {
                 const st = statusConfig[order.status] || { label: order.status, class: 'badge-info' }
                 return (
                   <tr key={order.id}>
-                    <td className="font-medium text-surface-900 dark:text-white">#{order.orderNumber || order.id?.slice(0, 8)}</td>
+                    <td className="font-medium text-surface-900 dark:text-white tabular-nums">#{order.orderNumber || order.id?.slice(0, 8)}</td>
                     <td>{order.shippingAddress ? `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}` : 'N/A'}</td>
-                    <td className="font-medium text-surface-900 dark:text-white">${parseFloat(order.total).toLocaleString('es-AR')}</td>
+                    <td className="font-medium text-surface-900 dark:text-white tabular-nums">${parseFloat(order.total).toLocaleString('es-AR')}</td>
                     <td><span className={st.class}>{st.label}</span></td>
-                    <td>{new Date(order.createdAt).toLocaleDateString('es-AR')}</td>
+                    <td className="tabular-nums">{new Date(order.createdAt).toLocaleDateString('es-AR')}</td>
                   </tr>
                 )
               }) : (
