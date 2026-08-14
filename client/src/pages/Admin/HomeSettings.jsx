@@ -1476,7 +1476,7 @@ const HomeSettings = () => {
                     <button
                       onClick={handleSaveAllCustomSections}
                       disabled={saving}
-                      className="mb-6 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 disabled:opacity-50 font-medium"
+                      className="mb-6 inline-flex items-center px-6 py-3 bg-success-600 text-white rounded-lg hover:bg-success-700 disabled:opacity-50 font-medium transition-colors"
                     >
                       {saving ? 'Guardando...' : 'Guardar Todas las Secciones Personalizadas'}
                     </button>

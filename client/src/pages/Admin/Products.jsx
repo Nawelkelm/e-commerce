@@ -603,7 +603,7 @@ const Products = () => {
       {/* Tabla mejorada */}
       <div className="card overflow-hidden">
         <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
-          <thead className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
+          <thead className="bg-surface-50 dark:bg-surface-800">
             <tr>
               <th 
                 onClick={() => handleSort('name')}
@@ -701,7 +701,7 @@ const Products = () => {
                           {product.name}
                         </div>
                         {product.isFeatured && (
-                          <SparklesIcon className="h-4 w-4 text-yellow-500" title="Destacado" />
+                          <SparklesIcon className="h-4 w-4 text-warning-500" title="Destacado" />
                         )}
                       </div>
                       <div className="text-xs text-surface-500 dark:text-surface-400 mt-1">
@@ -718,7 +718,7 @@ const Products = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {product.isOwnProduction ? (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500">
                       Producción Propia
                     </span>
                   ) : product.supplier ? (
@@ -743,10 +743,10 @@ const Products = () => {
                   <div className="flex items-center">
                     <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
                       product.stock <= 0 
-                        ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+                        ? 'bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500'
                         : product.stock <= product.minStock
-                        ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
-                        : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
+                        ? 'bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-500'
+                        : 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500'
                     }`}>
                       {product.stock} unidades
                     </span>
@@ -756,11 +756,11 @@ const Products = () => {
                   <span
                     className={`inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-full ${
                       product.isActive
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-                        : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+                        ? 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500'
+                        : 'bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500'
                     }`}
                   >
-                    <span className={`h-1.5 w-1.5 rounded-full mr-2 ${product.isActive ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                    <span className={`h-1.5 w-1.5 rounded-full mr-2 ${product.isActive ? 'bg-success-500' : 'bg-error-500'}`}></span>
                     {product.isActive ? 'Activo' : 'Inactivo'}
                   </span>
                 </td>
@@ -867,7 +867,7 @@ const Products = () => {
                   
                   <div>
                     <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
-                      Nombre del Producto <span className="text-red-500">*</span>
+                      Nombre del Producto <span className="text-error-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -962,7 +962,7 @@ const Products = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
-                        Precio (ARS) <span className="text-red-500">*</span>
+                        Precio (ARS) <span className="text-error-500">*</span>
                       </label>
                       <div className="relative">
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-surface-500 dark:text-surface-400 font-semibold">$</span>
@@ -997,7 +997,7 @@ const Products = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
-                        Stock <span className="text-red-500">*</span>
+                        Stock <span className="text-error-500">*</span>
                       </label>
                       <input
                         type="number"
@@ -1064,7 +1064,7 @@ const Products = () => {
                         className="h-5 w-5 text-primary-600 focus:ring-2 focus:ring-primary-500 border-surface-300 dark:border-surface-600 rounded transition-all"
                       />
                       <label className="ml-3 flex items-center text-sm font-medium text-surface-900 dark:text-white dark:text-surface-100">
-                        <SparklesIcon className="h-4 w-4 text-yellow-500 mr-1" />
+                        <SparklesIcon className="h-4 w-4 text-warning-500 mr-1" />
                         Producto destacado
                       </label>
                     </div>
@@ -1099,7 +1099,7 @@ const Products = () => {
                           <button
                             type="button"
                             onClick={() => removeExistingImage(index)}
-                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 shadow-lg transition-all hover:scale-110"
+                            className="absolute -top-2 -right-2 bg-error-500 text-white rounded-full p-1.5 hover:bg-error-600 shadow-lg transition-all hover:scale-110"
                           >
                             <XMarkIcon className="h-4 w-4" />
                           </button>
@@ -1134,9 +1134,9 @@ const Products = () => {
 
                   {/* Preview de nuevas imágenes */}
                   {imagePreview.length > 0 && (
-                    <div className="mt-6 p-4 bg-white dark:bg-surface-800 dark:bg-surface-700 rounded-lg border border-green-200 dark:border-green-800">
+                    <div className="mt-6 p-4 bg-white dark:bg-surface-800 rounded-lg border border-success-600/20 dark:border-success-500/25">
                       <p className="text-sm font-semibold text-surface-700 dark:text-surface-300 mb-3 flex items-center gap-2">
-                        <span className="inline-block h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span className="inline-block h-2 w-2 rounded-full bg-success-500 animate-pulse"></span>
                         Nuevas imágenes a agregar:
                       </p>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1145,15 +1145,15 @@ const Products = () => {
                             <img
                               src={preview}
                               alt={`Preview ${index + 1}`}
-                              className="h-28 w-full object-cover rounded-xl border-2 border-green-300 dark:border-green-600 shadow-md group-hover:shadow-xl transition-all"
+                              className="h-28 w-full object-cover rounded-xl border-2 border-success-500/40 shadow-md group-hover:shadow-xl transition-all"
                             />
-                            <span className="absolute top-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-lg">
+                            <span className="absolute top-2 left-2 bg-success-500 text-white text-xs font-semibold px-2 py-1 rounded-lg">
                               Nueva
                             </span>
                             <button
                               type="button"
                               onClick={() => removeImage(index)}
-                              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 shadow-lg transition-all hover:scale-110"
+                              className="absolute -top-2 -right-2 bg-error-500 text-white rounded-full p-1.5 hover:bg-error-600 shadow-lg transition-all hover:scale-110"
                             >
                               <XMarkIcon className="h-4 w-4" />
                             </button>

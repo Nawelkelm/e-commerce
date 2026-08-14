@@ -461,7 +461,7 @@ const Orders = () => {
                             Con comp.
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-xs font-medium rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-xs font-medium rounded-full bg-warning-50 dark:bg-warning-500/10 text-warning-700 dark:text-warning-500">
                             <ClockIcon className="h-3 w-3" />
                             Sin comp.
                           </span>
@@ -679,7 +679,7 @@ const Orders = () => {
 
                   {!selectedOrder.paymentProofUrl && (
                     <div className="mt-3 p-3 bg-warning-50 dark:bg-warning-500/10 border border-warning-600/20 dark:border-warning-500/25 rounded-md">
-                      <p className="text-sm text-yellow-800">
+                      <p className="text-sm text-warning-700 dark:text-warning-500">
                         <ExclamationTriangleIcon className="h-4 w-4 inline mr-1" />
                         El cliente aún no ha subido el comprobante de transferencia
                       </p>
@@ -790,8 +790,8 @@ const Orders = () => {
 
               {selectedOrder.admin_notes && (
                 <div className="mt-4 p-3 bg-warning-50 dark:bg-warning-500/10 rounded-lg">
-                  <h4 className="text-sm font-medium text-yellow-800 mb-1">Notas del Administrador:</h4>
-                  <p className="text-sm text-yellow-700">{selectedOrder.admin_notes}</p>
+                  <h4 className="text-sm font-medium text-warning-700 dark:text-warning-500 mb-1">Notas del Administrador:</h4>
+                  <p className="text-sm text-warning-600 dark:text-warning-500">{selectedOrder.admin_notes}</p>
                 </div>
               )}
             </div>

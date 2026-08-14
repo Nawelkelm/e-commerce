@@ -1033,7 +1033,7 @@ const Shipments = () => {
                             ) : null}
                             <div className="relative flex space-x-3">
                               <div>
-                                <span className={`h-8 w-8 rounded-full bg-${getStatusColor(event.status)}-500 flex items-center justify-center ring-8 ring-white dark:ring-gray-700`}>
+                                <span className={`h-8 w-8 rounded-full bg-${getStatusColor(event.status)}-500 flex items-center justify-center ring-8 ring-white dark:ring-surface-800`}>
                                   <CheckCircleIcon className="h-5 w-5 text-white" />
                                 </span>
                               </div>
