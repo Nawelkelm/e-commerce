@@ -169,7 +169,7 @@ const Suppliers = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-500"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -179,10 +179,10 @@ const Suppliers = () => {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
+          <div className="p-2 bg-primary-600 rounded-lg">
             <TruckIcon className="h-6 w-6 text-white" />
           </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-2xl sm:text-3xl font-bold text-surface-900 dark:text-white tracking-tight">
             Proveedores
           </h1>
         </div>
@@ -221,7 +221,7 @@ const Suppliers = () => {
 
           <button
             onClick={() => setShowModal(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl"
+            className="btn-primary"
           >
             <PlusIcon className="h-5 w-5" />
             <span className="font-medium">Nuevo Proveedor</span>
@@ -240,7 +240,7 @@ const Suppliers = () => {
               {/* Header */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
+                  <div className="p-2 bg-primary-600 rounded-lg">
                     <BuildingOfficeIcon className="h-5 w-5 text-white" />
                   </div>
                   <div>
@@ -257,8 +257,8 @@ const Suppliers = () => {
                 <span
                   className={`px-2 py-1 text-xs font-semibold rounded-full ${
                     supplier.isActive
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-                      : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+                      ? 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500'
+                      : 'bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500'
                   }`}
                 >
                   {supplier.isActive ? 'Activo' : 'Inactivo'}
@@ -299,7 +299,7 @@ const Suppliers = () => {
               </div>
 
               {/* Products Count */}
-              <div className="mb-4 p-3 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg">
+              <div className="mb-4 p-3 bg-surface-50 dark:bg-surface-900 rounded-lg">
                 <p className="text-sm font-semibold text-surface-700 dark:text-surface-300">
                   Productos: <span className="text-primary-600 dark:text-primary-400">{supplier.productCount || 0}</span>
                 </p>
@@ -316,7 +316,7 @@ const Suppliers = () => {
                 </button>
                 <button
                   onClick={() => handleDelete(supplier.id)}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-error-50 dark:bg-error-500/10 text-error-600 dark:text-error-400 rounded-lg hover:bg-error-100 dark:hover:bg-error-500/20 transition-colors"
                 >
                   <TrashIcon className="h-4 w-4" />
                   <span className="text-sm font-medium">Eliminar</span>
@@ -325,7 +325,7 @@ const Suppliers = () => {
             </div>
 
             {/* Colored bottom border */}
-            <div className="h-1 bg-gradient-to-r from-indigo-500 to-purple-600"></div>
+            <div className="h-1 bg-primary-600"></div>
           </div>
         ))}
       </div>
@@ -345,7 +345,7 @@ const Suppliers = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-surface-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 flex items-center justify-between rounded-t-xl">
+            <div className="sticky top-0 bg-primary-900 px-6 py-4 flex items-center justify-between rounded-t-xl">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-white/20 rounded-lg">
                   <TruckIcon className="h-6 w-6 text-white" />
@@ -554,7 +554,7 @@ const Suppliers = () => {
                   />
                 </div>
 
-                <div className="flex items-center gap-2 p-4 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800">
+                <div className="flex items-center gap-2 p-4 bg-surface-50 dark:bg-surface-900 rounded-lg border border-surface-200 dark:border-surface-700">
                   <input
                     type="checkbox"
                     id="isActive"
@@ -579,7 +579,7 @@ const Suppliers = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 font-medium transition-all shadow-lg hover:shadow-xl"
+                  className="btn-primary flex-1"
                 >
                   {editingSupplier ? 'Actualizar' : 'Crear'} Proveedor
                 </button>

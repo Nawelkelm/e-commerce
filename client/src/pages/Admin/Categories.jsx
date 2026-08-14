@@ -109,7 +109,7 @@ const Categories = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -117,10 +117,10 @@ const Categories = () => {
   if (error) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-600 text-lg mb-4">Error: {error}</p>
+        <p className="text-error-600 dark:text-error-400 text-lg mb-4">Error: {error}</p>
         <button 
           onClick={fetchCategories}
-          className="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
+          className="btn-primary"
         >
           Intentar nuevamente
         </button>
@@ -135,10 +135,10 @@ const Categories = () => {
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
+              <div className="p-2 bg-primary-600 rounded-lg">
                 <TagIcon className="h-6 w-6 text-white" />
               </div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-2xl sm:text-3xl font-bold text-surface-900 dark:text-white tracking-tight">
                 Categorías
               </h1>
             </div>
@@ -149,7 +149,7 @@ const Categories = () => {
           <div className="mt-4 sm:mt-0">
             <button
               onClick={() => setShowModal(true)}
-              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-xl hover:scale-105"
+              className="btn-primary"
             >
               <PlusIcon className="h-5 w-5 mr-2" />
               Nueva Categoría
@@ -181,7 +181,7 @@ const Categories = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="p-2 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-lg">
+                      <div className="p-2 bg-primary-50 dark:bg-primary-950/50 rounded-lg">
                         <TagIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
                       </div>
                       <h3 className="text-lg font-bold text-surface-900 dark:text-white">
@@ -190,24 +190,24 @@ const Categories = () => {
                     </div>
                     <span className={`inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full ${
                       category.isActive 
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' 
-                        : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+                        ? 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500' 
+                        : 'bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500'
                     }`}>
-                      <span className={`h-1.5 w-1.5 rounded-full mr-2 ${category.isActive ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                      <span className={`h-1.5 w-1.5 rounded-full mr-2 ${category.isActive ? 'bg-success-500' : 'bg-error-500'}`}></span>
                       {category.isActive ? 'Activa' : 'Inactiva'}
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => handleEdit(category)}
-                      className="p-2 text-primary-600 hover:text-indigo-900 dark:text-primary-400 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all"
+                      className="p-2 text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all"
                       title="Editar"
                     >
                       <PencilIcon className="h-5 w-5" />
                     </button>
                     <button
                       onClick={() => handleDelete(category.id)}
-                      className="p-2 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
+                      className="p-2 text-surface-400 hover:text-error-500 hover:bg-error-50 dark:hover:bg-error-500/10 rounded-lg transition-colors"
                       title="Eliminar"
                     >
                       <TrashIcon className="h-5 w-5" />
@@ -228,7 +228,7 @@ const Categories = () => {
                   </div>
                 </div>
               </div>
-              <div className="h-1 bg-gradient-to-r from-indigo-500 to-purple-600"></div>
+              <div className="h-1 bg-primary-600"></div>
             </div>
           ))
         )}
@@ -239,7 +239,7 @@ const Categories = () => {
         <div className="fixed inset-0 bg-surface-900/75 dark:bg-black/85 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="w-full max-w-lg">
             {/* Header del modal */}
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-t-2xl px-6 py-5 shadow-xl">
+            <div className="bg-primary-900 rounded-t-2xl px-6 py-5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
@@ -271,7 +271,7 @@ const Categories = () => {
               <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 <div>
                   <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">
-                    Nombre <span className="text-red-500">*</span>
+                    Nombre <span className="text-error-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -296,7 +296,7 @@ const Categories = () => {
                   />
                 </div>
                 
-                <div className="p-4 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg border border-indigo-100 dark:border-indigo-800">
+                <div className="p-4 bg-surface-50 dark:bg-surface-900 rounded-lg border border-surface-200 dark:border-surface-700">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -318,13 +318,13 @@ const Categories = () => {
                       setEditingCategory(null)
                       setFormData({ name: '', description: '', isActive: true })
                     }}
-                    className="px-6 py-3 border-2 border-surface-300 dark:border-surface-600 rounded-lg text-sm font-semibold text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600 transition-all shadow-sm hover:shadow-md"
+                    className="px-6 py-3 border-2 border-surface-300 dark:border-surface-600 rounded-lg text-sm font-semibold text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 hover:bg-surface-50 dark:hover:bg-surface-700 transition-all shadow-sm hover:shadow-md"
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 transition-all hover:shadow-xl hover:scale-105 flex items-center gap-2"
+                    className="btn-primary flex items-center gap-2"
                   >
                     {editingCategory ? (
                       <>

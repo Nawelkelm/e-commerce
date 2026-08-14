@@ -203,9 +203,9 @@ const ShippingMethods = () => {
   const getTypeBadge = (type) => {
     const colors = {
       carrier: 'bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200',
-      custom: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
-      pickup: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-      agreement: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+      custom: 'bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400',
+      pickup: 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500',
+      agreement: 'bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-500'
     }
     const labels = {
       carrier: 'Carrier',
@@ -223,7 +223,7 @@ const ShippingMethods = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -302,7 +302,7 @@ const ShippingMethods = () => {
                   {method.type === 'carrier' ? (
                     <span className="text-primary-600 dark:text-primary-400">Cotización</span>
                   ) : method.isFree ? (
-                    <span className="text-green-600 dark:text-green-400">Gratis</span>
+                    <span className="text-success-600 dark:text-success-500">Gratis</span>
                   ) : method.freeFromAmount ? (
                     <span>
                       ${parseFloat(method.price || 0).toFixed(2)}
@@ -323,7 +323,7 @@ const ShippingMethods = () => {
                     onClick={() => handleToggle(method.id)}
                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                       method.isActive
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                        ? 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500'
                         : 'bg-surface-100 dark:bg-surface-800 text-surface-800 dark:bg-surface-700 dark:text-surface-300'
                     }`}
                   >
@@ -334,13 +334,13 @@ const ShippingMethods = () => {
                   <div className="flex justify-end gap-2">
                     <button
                       onClick={() => handleEdit(method)}
-                      className="text-primary-600 hover:text-indigo-900 dark:text-primary-400 dark:hover:text-primary-300"
+                      className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
                     >
                       <PencilIcon className="h-5 w-5" />
                     </button>
                     <button
                       onClick={() => handleDelete(method.id)}
-                      className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                      className="text-surface-400 hover:text-error-500 transition-colors"
                     >
                       <TrashIcon className="h-5 w-5" />
                     </button>
@@ -366,7 +366,7 @@ const ShippingMethods = () => {
               {/* Nombre */}
               <div>
                 <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
-                  Nombre <span className="text-red-500">*</span>
+                  Nombre <span className="text-error-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -380,7 +380,7 @@ const ShippingMethods = () => {
               {/* Código */}
               <div>
                 <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
-                  Código <span className="text-red-500">*</span>
+                  Código <span className="text-error-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -396,7 +396,7 @@ const ShippingMethods = () => {
               {/* Tipo */}
               <div>
                 <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
-                  Tipo <span className="text-red-500">*</span>
+                  Tipo <span className="text-error-500">*</span>
                 </label>
                 <select
                   value={formData.type}
@@ -413,7 +413,7 @@ const ShippingMethods = () => {
               {formData.type === 'carrier' && (
                 <div>
                   <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
-                    Carrier <span className="text-red-500">*</span>
+                    Carrier <span className="text-error-500">*</span>
                   </label>
                   <select
                     value={formData.carrier}
@@ -522,7 +522,7 @@ const ShippingMethods = () => {
                   <button
                     type="button"
                     onClick={addZone}
-                    className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700"
+                    className="btn-primary"
                   >
                     Agregar
                   </button>
@@ -531,13 +531,13 @@ const ShippingMethods = () => {
                   {formData.zones.map((zone, index) => (
                     <span
                       key={index}
-                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-surface-100 dark:bg-surface-800 dark:bg-surface-700 text-surface-800 dark:text-surface-200"
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-surface-100 dark:bg-surface-800 text-surface-800 dark:text-surface-200"
                     >
                       {zone}
                       <button
                         type="button"
                         onClick={() => removeZone(index)}
-                        className="ml-2 text-red-600 hover:text-red-800"
+                        className="ml-2 text-surface-400 hover:text-error-500"
                       >
                         ×
                       </button>
@@ -580,7 +580,7 @@ const ShippingMethods = () => {
             <div className="sticky bottom-0 bg-surface-50 dark:bg-surface-900 px-6 py-4 flex justify-end gap-3 border-t border-surface-200 dark:border-surface-700">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-md hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600"
+                className="px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-600 rounded-md hover:bg-surface-50 dark:hover:bg-surface-700"
               >
                 Cancelar
               </button>

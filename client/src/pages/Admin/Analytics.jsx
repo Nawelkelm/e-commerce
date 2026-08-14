@@ -41,7 +41,7 @@ const Analytics = () => {
   if (loading || !analytics) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -103,7 +103,7 @@ const Analytics = () => {
               <p className="text-2xl font-semibold text-surface-900 dark:text-white">{stat.value}</p>
               <p
                 className={`ml-2 flex items-baseline text-sm font-semibold ${
-                  stat.changeType === 'increase' ? 'text-green-600' : 'text-red-600'
+                  stat.changeType === 'increase' ? 'text-success-600 dark:text-success-500' : 'text-error-600 dark:text-error-400'
                 }`}
               >
                 {stat.changeType === 'increase' ? (
@@ -191,36 +191,36 @@ const Analytics = () => {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {summary.salesGrowth > 0 && (
-            <div className="p-4 bg-green-50 rounded-lg">
+            <div className="p-4 bg-success-50 dark:bg-success-500/10 rounded-lg">
               <div className="flex items-center">
-                <ArrowTrendingUpIcon className="h-5 w-5 text-green-600 mr-2" />
-                <h4 className="font-medium text-green-900">Crecimiento Positivo en Ventas</h4>
+                <ArrowTrendingUpIcon className="h-5 w-5 text-success-600 dark:text-success-500 mr-2" />
+                <h4 className="font-medium text-success-700 dark:text-success-500">Crecimiento Positivo en Ventas</h4>
               </div>
-              <p className="text-sm text-green-700 mt-1">
+              <p className="text-sm text-success-600 dark:text-success-500 mt-1">
                 Las ventas han aumentado un {summary.salesGrowth}% en comparación con el período anterior.
               </p>
             </div>
           )}
           
           {summary.salesGrowth < 0 && (
-            <div className="p-4 bg-red-50 rounded-lg">
+            <div className="p-4 bg-error-50 dark:bg-error-500/10 rounded-lg">
               <div className="flex items-center">
-                <ArrowTrendingDownIcon className="h-5 w-5 text-red-600 mr-2" />
-                <h4 className="font-medium text-red-900">Disminución en Ventas</h4>
+                <ArrowTrendingDownIcon className="h-5 w-5 text-error-600 dark:text-error-400 mr-2" />
+                <h4 className="font-medium text-error-700 dark:text-error-500">Disminución en Ventas</h4>
               </div>
-              <p className="text-sm text-red-700 mt-1">
+              <p className="text-sm text-error-600 dark:text-error-400 mt-1">
                 Las ventas han disminuido un {Math.abs(summary.salesGrowth)}% comparado con el período anterior.
               </p>
             </div>
           )}
           
           {summary.ordersGrowth < 0 && (
-            <div className="p-4 bg-yellow-50 rounded-lg">
+            <div className="p-4 bg-warning-50 dark:bg-warning-500/10 rounded-lg">
               <div className="flex items-center">
-                <ChartBarIcon className="h-5 w-5 text-yellow-600 mr-2" />
-                <h4 className="font-medium text-yellow-900">Oportunidad de Mejora</h4>
+                <ChartBarIcon className="h-5 w-5 text-warning-600 dark:text-warning-500 mr-2" />
+                <h4 className="font-medium text-warning-700 dark:text-warning-500">Oportunidad de Mejora</h4>
               </div>
-              <p className="text-sm text-yellow-700 mt-1">
+              <p className="text-sm text-warning-600 dark:text-warning-500 mt-1">
                 El número de órdenes ha disminuido un {Math.abs(summary.ordersGrowth)}%. Considera estrategias de marketing.
               </p>
             </div>

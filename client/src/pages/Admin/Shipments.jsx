@@ -291,7 +291,7 @@ const Shipments = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -311,7 +311,7 @@ const Shipments = () => {
             <>
               <button
                 onClick={syncAllShipments}
-                className="inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm text-sm font-medium text-surface-700 dark:text-surface-300 dark:text-surface-200 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                className="btn-outline btn-sm"
               >
                 <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -385,7 +385,7 @@ const Shipments = () => {
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <ClockIcon className="h-6 w-6 text-purple-400" />
+                  <ClockIcon className="h-6 w-6 text-primary-400" />
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
@@ -405,7 +405,7 @@ const Shipments = () => {
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <CheckCircleIcon className="h-6 w-6 text-green-400" />
+                  <CheckCircleIcon className="h-6 w-6 text-success-500" />
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
@@ -622,7 +622,7 @@ const Shipments = () => {
                     <div className="flex justify-center items-center gap-1">
                       <button
                         onClick={() => handleViewDetails(shipment)}
-                        className="text-primary-600 hover:text-indigo-900 dark:text-primary-400 dark:hover:text-primary-300 p-1 rounded hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-700 transition-colors"
+                        className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 p-1 rounded hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
                         title="Ver detalles"
                       >
                         <EyeIcon className="h-4 w-4" />
@@ -630,7 +630,7 @@ const Shipments = () => {
                       {shipment.status !== 'delivered' && shipment.status !== 'cancelled' && (
                         <button
                           onClick={() => syncShipmentTracking(shipment.id)}
-                          className="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300 p-1 rounded hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-700 transition-colors"
+                          className="text-success-600 hover:text-success-700 dark:text-success-500 p-1 rounded hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
                           title="Sincronizar tracking"
                         >
                           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -668,13 +668,13 @@ const Shipments = () => {
                 className="bg-white dark:bg-surface-800 rounded-lg shadow-lg overflow-hidden"
               >
                 {/* Header */}
-                <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-4">
+                <div className="bg-primary-900 px-6 py-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       <h3 className="text-xl font-bold text-white">
                         Pedido #{order.orderNumber}
                       </h3>
-                      <span className="px-3 py-1 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                      <span className="px-3 py-1 rounded-full text-sm font-semibold bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-500">
                         {order.shippingMethodName}
                       </span>
                     </div>
@@ -748,7 +748,7 @@ const Shipments = () => {
                         {editingOrder !== order.id && (
                           <button
                             onClick={() => handleEditAddress(order)}
-                            className="flex items-center px-3 py-1 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm"
+                            className="btn-primary btn-sm"
                           >
                             <PencilIcon className="h-4 w-4 mr-1" />
                             Editar
@@ -823,7 +823,7 @@ const Shipments = () => {
                             </button>
                             <button
                               onClick={() => handleSaveAddress(order.id)}
-                              className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
+                              className="inline-flex items-center gap-1.5 px-4 py-2 bg-success-600 text-white rounded-lg hover:bg-success-700 transition-colors text-sm"
                             >
                               <CheckCircleIcon className="h-4 w-4 mr-1" />
                               Guardar
@@ -886,7 +886,7 @@ const Shipments = () => {
                 {selectedShipment.status !== 'delivered' && selectedShipment.status !== 'cancelled' && (
                   <button
                     onClick={() => syncShipmentTracking(selectedShipment.id)}
-                    className="inline-flex items-center px-3 py-1.5 border border-green-300 dark:border-green-600 rounded-md text-sm font-medium text-green-700 dark:text-green-300 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-green-50 dark:hover:bg-surface-600 transition-colors"
+                    className="inline-flex items-center px-3 py-1.5 border border-success-600/30 rounded-md text-sm font-medium text-success-700 dark:text-success-500 bg-white dark:bg-surface-800 hover:bg-success-50 dark:hover:bg-success-500/10 transition-colors"
                   >
                     <svg className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
