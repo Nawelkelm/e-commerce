@@ -249,21 +249,36 @@ const Home = () => {
         {/* ── Custom Sections ── */}
         {homeSettings?.customSections?.filter(s => s.enabled).sort((a, b) => (a.order || 0) - (b.order || 0)).map((section) => {
           const Icon = getIcon(section.icon)
+          const ink = section.textColor || '#171717'
+          const paper = section.backgroundColor || '#fafafa'
           return (
-            <section key={section.id} style={{ backgroundColor: section.backgroundColor || '#fafafa' }} className="py-20">
-              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <Icon className="h-12 w-12 mx-auto mb-5" style={{ color: section.textColor || '#171717' }} />
-                <h2 style={{ color: section.textColor || '#171717' }} className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">{section.title}</h2>
-                {section.subtitle && (
-                  <p style={{ color: section.textColor || '#737373' }} className="text-lg mb-8 max-w-2xl mx-auto">{section.subtitle}</p>
-                )}
-                {section.buttonText && section.buttonLink && (
-                  <Link to={section.buttonLink} style={{ backgroundColor: section.textColor || '#171717', color: section.backgroundColor || '#fff' }}
-                    className="inline-flex items-center gap-2 px-7 py-3 rounded-xl font-semibold hover:opacity-90 transition-all duration-300">
-                    {section.buttonText}
-                    <ArrowRightIcon className="h-4 w-4" />
-                  </Link>
-                )}
+            <section key={section.id} style={{ backgroundColor: paper }} className="relative overflow-hidden py-16 sm:py-24">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <div className="max-w-2xl">
+                  <h2 style={{ color: ink }} className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.02]">
+                    {section.title}
+                  </h2>
+                  {section.subtitle && (
+                    <p style={{ color: ink, opacity: 0.72 }} className="mt-5 text-lg leading-relaxed max-w-xl">
+                      {section.subtitle}
+                    </p>
+                  )}
+                  {section.buttonText && section.buttonLink && (
+                    <Link
+                      to={section.buttonLink}
+                      style={{ color: ink, borderColor: ink }}
+                      className="mt-8 inline-flex items-center gap-2 border-b-2 pb-1 font-semibold hover:gap-3 transition-all duration-300"
+                    >
+                      {section.buttonText}
+                      <ArrowRightIcon className="h-4 w-4" />
+                    </Link>
+                  )}
+                </div>
+                <Icon
+                  aria-hidden="true"
+                  style={{ color: ink, opacity: 0.06 }}
+                  className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 h-64 w-64 pointer-events-none"
+                />
               </div>
             </section>
           )
