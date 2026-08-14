@@ -121,7 +121,7 @@ export default function BankAccounts() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -152,7 +152,7 @@ export default function BankAccounts() {
           {accounts.map((account) => (
             <div
               key={account.id}
-              className={`bg-white dark:bg-surface-800 rounded-lg shadow p-6 ${
+              className={`card p-6 ${
                 account.isPrimary ? 'ring-2 ring-primary-500' : ''
               }`}
             >
@@ -168,9 +168,9 @@ export default function BankAccounts() {
                       </span>
                     )}
                     {account.isActive ? (
-                      <CheckCircleIcon className="w-5 h-5 text-green-500" />
+                      <CheckCircleIcon className="w-5 h-5 text-success-500" />
                     ) : (
-                      <XMarkIcon className="w-5 h-5 text-red-500" />
+                      <XMarkIcon className="w-5 h-5 text-error-500" />
                     )}
                   </div>
 
@@ -222,7 +222,7 @@ export default function BankAccounts() {
                   </button>
                   <button
                     onClick={() => handleDelete(account.id)}
-                    className="text-red-600 hover:text-red-800 dark:text-red-400 p-2"
+                    className="text-surface-400 hover:text-error-500 p-2 transition-colors"
                   >
                     <TrashIcon className="w-5 h-5" />
                   </button>

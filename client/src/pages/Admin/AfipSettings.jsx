@@ -178,7 +178,7 @@ const AfipSettings = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     );
   }
@@ -254,7 +254,7 @@ const AfipSettings = () => {
                     placeholder="20123456789 (sin guiones)"
                     value={formData.cuit}
                     onChange={(e) => setFormData({ ...formData, cuit: e.target.value.replace(/\D/g, '') })}
-                    className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                    className="input"
                   />
                 </div>
 
@@ -268,7 +268,7 @@ const AfipSettings = () => {
                     placeholder="Mi Empresa S.A."
                     value={formData.businessName}
                     onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                    className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                    className="input"
                   />
                 </div>
               </div>
@@ -288,10 +288,10 @@ const AfipSettings = () => {
                       type="file"
                       accept=".crt,.pem"
                       onChange={(e) => handleFileUpload('certificate', e)}
-                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white"
+                      className="input"
                     />
                     {credentials?.hasCredentials && (
-                      <p className="mt-2 text-sm text-green-600">
+                      <p className="mt-2 text-sm text-success-600 dark:text-success-500">
                         ✓ Certificado configurado
                       </p>
                     )}
@@ -305,10 +305,10 @@ const AfipSettings = () => {
                       type="file"
                       accept=".key,.pem"
                       onChange={(e) => handleFileUpload('privateKey', e)}
-                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white"
+                      className="input"
                     />
                     {credentials?.hasCredentials && (
-                      <p className="mt-2 text-sm text-green-600">
+                      <p className="mt-2 text-sm text-success-600 dark:text-success-500">
                         ✓ Clave privada configurada
                       </p>
                     )}
@@ -330,7 +330,7 @@ const AfipSettings = () => {
                     <select
                       value={formData.taxCategory}
                       onChange={(e) => setFormData({ ...formData, taxCategory: e.target.value })}
-                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                      className="input"
                     >
                       <option value="responsable_inscripto">Responsable Inscripto</option>
                       <option value="responsable_monotributo">Monotributo</option>
@@ -349,7 +349,7 @@ const AfipSettings = () => {
                       required
                       value={formData.pointOfSale}
                       onChange={(e) => setFormData({ ...formData, pointOfSale: parseInt(e.target.value) })}
-                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                      className="input"
                     />
                   </div>
 
@@ -360,7 +360,7 @@ const AfipSettings = () => {
                     <select
                       value={formData.production}
                       onChange={(e) => setFormData({ ...formData, production: e.target.value === 'true' })}
-                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                      className="input"
                     >
                       <option value="false">Testing (Homologación)</option>
                       <option value="true">Producción</option>
@@ -385,7 +385,7 @@ const AfipSettings = () => {
                       placeholder="Av. Corrientes 1234"
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                      className="input"
                     />
                   </div>
 
@@ -398,7 +398,7 @@ const AfipSettings = () => {
                       placeholder="Buenos Aires"
                       value={formData.city}
                       onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                      className="input"
                     />
                   </div>
 
@@ -411,7 +411,7 @@ const AfipSettings = () => {
                       placeholder="C1043"
                       value={formData.postalCode}
                       onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                      className="input"
                     />
                   </div>
 
@@ -424,7 +424,7 @@ const AfipSettings = () => {
                       placeholder="Buenos Aires"
                       value={formData.province}
                       onChange={(e) => setFormData({ ...formData, province: e.target.value })}
-                      className="w-full px-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                      className="input"
                     />
                   </div>
                 </div>
@@ -442,7 +442,7 @@ const AfipSettings = () => {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary"
                 >
                   {saving ? 'Guardando...' : 'Guardar Configuración'}
                 </button>
@@ -468,9 +468,9 @@ const AfipSettings = () => {
                         Estado:
                       </span>
                       <span className={`flex items-center gap-2 ${
-                        credentials.connectionStatus === 'connected' ? 'text-green-600' :
-                        credentials.connectionStatus === 'error' ? 'text-red-600' :
-                        'text-yellow-600'
+                        credentials.connectionStatus === 'connected' ? 'text-success-600 dark:text-success-500' :
+                        credentials.connectionStatus === 'error' ? 'text-error-600 dark:text-error-400' :
+                        'text-warning-600 dark:text-warning-500'
                       }`}>
                         {credentials.connectionStatus === 'connected' && <CheckCircleIcon className="h-5 w-5" />}
                         {credentials.connectionStatus === 'error' && <XCircleIcon className="h-5 w-5" />}
@@ -511,16 +511,16 @@ const AfipSettings = () => {
                     )}
 
                     {credentials.lastError && (
-                      <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded">
-                        <p className="text-sm text-red-800 dark:text-red-200">
+                      <div className="mt-4 p-3 bg-error-50 dark:bg-error-500/10 border border-error-600/20 dark:border-error-500/25 rounded">
+                        <p className="text-sm text-error-700 dark:text-error-500">
                           <strong>Último error:</strong> {credentials.lastError}
                         </p>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
-                    <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                  <div className="bg-warning-50 dark:bg-warning-500/10 border border-warning-600/20 dark:border-warning-500/25 rounded-lg p-4">
+                    <p className="text-sm text-warning-700 dark:text-warning-500">
                       No hay credenciales AFIP configuradas
                     </p>
                   </div>
@@ -532,7 +532,7 @@ const AfipSettings = () => {
                 <button
                   onClick={testConnection}
                   disabled={testing || !credentials}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary w-full"
                 >
                   <ArrowPathIcon className={`h-5 w-5 ${testing ? 'animate-spin' : ''}`} />
                   {testing ? 'Probando conexión...' : 'Probar Conexión con AFIP'}
@@ -543,18 +543,18 @@ const AfipSettings = () => {
               {connectionStatus && (
                 <div className={`p-4 rounded-lg ${
                   connectionStatus.success 
-                    ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
-                    : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+                    ? 'bg-success-50 dark:bg-success-500/10 border border-success-600/20 dark:border-success-500/25'
+                    : 'bg-error-50 dark:bg-error-500/10 border border-error-600/20 dark:border-error-500/25'
                 }`}>
                   <div className="flex items-start gap-3">
                     {connectionStatus.success ? (
-                      <CheckCircleIcon className="h-6 w-6 text-green-600 flex-shrink-0" />
+                      <CheckCircleIcon className="h-6 w-6 text-success-600 dark:text-success-500 flex-shrink-0" />
                     ) : (
-                      <XCircleIcon className="h-6 w-6 text-red-600 flex-shrink-0" />
+                      <XCircleIcon className="h-6 w-6 text-error-600 dark:text-error-400 flex-shrink-0" />
                     )}
                     <div className="flex-1">
                       <h4 className={`font-medium ${
-                        connectionStatus.success ? 'text-green-800 dark:text-green-200' : 'text-red-800 dark:text-red-200'
+                        connectionStatus.success ? 'text-success-700 dark:text-success-500' : 'text-error-700 dark:text-error-500'
                       }`}>
                         {connectionStatus.message}
                       </h4>
@@ -564,7 +564,7 @@ const AfipSettings = () => {
                         </pre>
                       )}
                       {connectionStatus.error && (
-                        <p className="mt-2 text-sm text-red-700 dark:text-red-300">
+                        <p className="mt-2 text-sm text-error-600 dark:text-error-400">
                           {connectionStatus.error}
                         </p>
                       )}
