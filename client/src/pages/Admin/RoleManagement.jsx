@@ -237,7 +237,7 @@ const RoleManagement = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -264,12 +264,12 @@ const RoleManagement = () => {
       </div>
 
       {error && (
-        <div className="mb-4 bg-red-50 border border-red-200 rounded-md p-4">
+        <div className="mb-4 bg-error-50 dark:bg-error-500/10 border border-error-600/20 dark:border-error-500/25 rounded-md p-4">
           <div className="flex">
-            <ExclamationTriangleIcon className="h-5 w-5 text-red-400" />
+            <ExclamationTriangleIcon className="h-5 w-5 text-error-500" />
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">Error</h3>
-              <div className="mt-2 text-sm text-red-700">
+              <h3 className="text-sm font-medium text-error-700 dark:text-error-500">Error</h3>
+              <div className="mt-2 text-sm text-error-600 dark:text-error-400">
                 <p>{error}</p>
               </div>
             </div>
@@ -348,8 +348,8 @@ const RoleManagement = () => {
                     <span
                       className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                         role.isActive
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
+                          ? 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500'
+                          : 'bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500'
                       }`}
                     >
                       {role.isActive ? 'Activo' : 'Inactivo'}
@@ -368,14 +368,14 @@ const RoleManagement = () => {
                         <>
                           <button
                             onClick={() => handleEditRole(role)}
-                            className="text-primary-600 hover:text-indigo-900 p-1"
+                            className="text-surface-400 hover:text-primary-600 p-1 transition-colors"
                             title="Editar rol"
                           >
                             <PencilIcon className="h-5 w-5" />
                           </button>
                           <button
                             onClick={() => handleDeleteRole(role)}
-                            className="text-red-600 hover:text-red-900 p-1"
+                            className="text-surface-400 hover:text-error-500 p-1 transition-colors"
                             title="Eliminar rol"
                           >
                             <TrashIcon className="h-5 w-5" />
@@ -451,7 +451,7 @@ const RoleManagement = () => {
                               
                               return (
                                 <div key={permission.id} className="flex items-center space-x-2">
-                                  <CheckIcon className="h-4 w-4 text-green-500" />
+                                  <CheckIcon className="h-4 w-4 text-success-500" />
                                   <span className="text-sm text-surface-700 dark:text-surface-300">{permission.displayName}</span>
                                 </div>
                               )
@@ -564,7 +564,7 @@ const RoleManagement = () => {
           <div className="bg-white dark:bg-surface-800 rounded-lg max-w-md w-full">
             <div className="p-6">
               <div className="flex items-center mb-4">
-                <ExclamationTriangleIcon className="h-6 w-6 text-red-600 mr-2" />
+                <ExclamationTriangleIcon className="h-6 w-6 text-error-500 mr-2" />
                 <h3 className="text-lg font-medium text-surface-900 dark:text-white">Eliminar Rol</h3>
               </div>
               
@@ -582,7 +582,7 @@ const RoleManagement = () => {
                 </button>
                 <button
                   onClick={() => deleteRole(selectedRole.id)}
-                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700"
+                  className="btn-danger"
                 >
                   Eliminar
                 </button>

@@ -340,7 +340,7 @@ const Settings = () => {
             <button
               onClick={() => handleSave('site_name', settings.site_name?.value)}
               disabled={saving}
-              className="mt-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
+              className="mt-2 btn-primary"
             >
               {saving ? 'Guardando...' : 'Guardar Nombre'}
             </button>
@@ -359,7 +359,7 @@ const Settings = () => {
             <button
               onClick={() => handleSave('site_description', settings.site_description?.value)}
               disabled={saving}
-              className="mt-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
+              className="mt-2 btn-primary"
             >
               {saving ? 'Guardando...' : 'Guardar Descripción'}
             </button>
@@ -378,7 +378,7 @@ const Settings = () => {
             <button
               onClick={() => handleSave('site_email', settings.site_email?.value)}
               disabled={saving}
-              className="mt-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
+              className="mt-2 btn-primary"
             >
               {saving ? 'Guardando...' : 'Guardar Email'}
             </button>
@@ -397,7 +397,7 @@ const Settings = () => {
             <button
               onClick={() => handleSave('site_phone', settings.site_phone?.value)}
               disabled={saving}
-              className="mt-2 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
+              className="mt-2 btn-primary"
             >
               {saving ? 'Guardando...' : 'Guardar Teléfono'}
             </button>
@@ -437,7 +437,7 @@ const Settings = () => {
             Subir Nuevo Logo
           </label>
           <div className="flex items-center space-x-4">
-            <label className="flex items-center px-4 py-2 bg-white dark:bg-surface-800 dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm cursor-pointer hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600">
+            <label className="btn-outline btn-sm cursor-pointer">
               <CloudArrowUpIcon className="h-5 w-5 text-surface-400 dark:text-surface-300 mr-2" />
               <span className="text-sm text-surface-700 dark:text-surface-300">
                 {uploading ? 'Subiendo...' : 'Seleccionar Archivo'}
@@ -476,7 +476,7 @@ const Settings = () => {
             <button
               onClick={() => handleSave('site_logo', settings.site_logo?.value)}
               disabled={saving}
-              className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
+              className="btn-primary"
             >
               {saving ? 'Guardando...' : 'Guardar'}
             </button>
@@ -499,7 +499,7 @@ const Settings = () => {
                 <h4 className="text-md font-medium text-surface-900 dark:text-white">Slider #{index + 1}</h4>
                 <button
                   onClick={() => handleDeleteSlider(slider.id)}
-                  className="text-red-600 hover:text-red-800 dark:text-red-400"
+                  className="text-surface-400 hover:text-error-500 transition-colors"
                 >
                   <TrashIcon className="h-5 w-5" />
                 </button>
@@ -564,7 +564,7 @@ const Settings = () => {
           <button
             onClick={handleSaveSliders}
             disabled={saving}
-            className="mb-6 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 disabled:opacity-50"
+            className="mb-6 inline-flex items-center px-4 py-2 bg-success-600 text-white rounded-md hover:bg-success-700 disabled:opacity-50 transition-colors"
           >
             {saving ? 'Guardando...' : 'Guardar Cambios en Sliders'}
           </button>
@@ -633,7 +633,7 @@ const Settings = () => {
           <button
             onClick={handleAddSlider}
             disabled={saving}
-            className="mt-4 flex items-center bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
+            className="mt-4 btn-primary"
           >
             <PlusIcon className="h-5 w-5 mr-2" />
             Agregar Slider
@@ -695,7 +695,7 @@ const Settings = () => {
                       </label>
                       <button
                         onClick={() => handleDeleteSection(section.id)}
-                        className="text-red-600 hover:text-red-800 dark:text-red-400"
+                        className="text-surface-400 hover:text-error-500 transition-colors"
                       >
                         <TrashIcon className="h-5 w-5" />
                       </button>
@@ -846,7 +846,7 @@ const Settings = () => {
             <button
               onClick={handleSaveSections}
               disabled={saving}
-              className="mb-6 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 disabled:opacity-50"
+              className="mb-6 inline-flex items-center px-4 py-2 bg-success-600 text-white rounded-md hover:bg-success-700 disabled:opacity-50 transition-colors"
             >
               {saving ? 'Guardando...' : 'Guardar Cambios en Secciones'}
             </button>
@@ -966,7 +966,7 @@ const Settings = () => {
             <button
               onClick={handleAddSection}
               disabled={saving}
-              className="mt-4 flex items-center bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 disabled:opacity-50"
+              className="mt-4 btn-primary"
             >
               <PlusIcon className="h-5 w-5 mr-2" />
               Agregar Sección
@@ -980,7 +980,7 @@ const Settings = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -998,21 +998,21 @@ const Settings = () => {
 
       {/* Success/Error Messages */}
       {success && (
-        <div className="mb-4 rounded-md bg-green-50 p-4">
+        <div className="mb-4 rounded-md bg-success-50 dark:bg-success-500/10 p-4">
           <div className="flex">
-            <CheckIcon className="h-5 w-5 text-green-400" />
+            <CheckIcon className="h-5 w-5 text-success-500" />
             <div className="ml-3">
-              <p className="text-sm font-medium text-green-800">{success}</p>
+              <p className="text-sm font-medium text-success-700 dark:text-success-500">{success}</p>
             </div>
           </div>
         </div>
       )}
 
       {error && (
-        <div className="mb-4 rounded-md bg-red-50 p-4">
+        <div className="mb-4 rounded-md bg-error-50 dark:bg-error-500/10 p-4">
           <div className="flex">
             <div className="ml-3">
-              <p className="text-sm font-medium text-red-800">{error}</p>
+              <p className="text-sm font-medium text-error-700 dark:text-error-500">{error}</p>
             </div>
           </div>
         </div>

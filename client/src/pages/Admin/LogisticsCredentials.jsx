@@ -197,21 +197,21 @@ const LogisticsCredentials = () => {
     switch (cred.syncStatus) {
       case 'success':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500">
             <CheckCircleIcon className="h-4 w-4 mr-1" />
             Activo
           </span>
         )
       case 'error':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500">
             <XCircleIcon className="h-4 w-4 mr-1" />
             Error
           </span>
         )
       case 'pending':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-500">
             <ExclamationTriangleIcon className="h-4 w-4 mr-1" />
             Pendiente
           </span>
@@ -228,7 +228,7 @@ const LogisticsCredentials = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -261,7 +261,7 @@ const LogisticsCredentials = () => {
               </div>
 
               {cred && cred.lastError && (
-                <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 rounded text-sm text-red-800 dark:text-red-200">
+                <div className="mb-4 p-3 bg-error-50 dark:bg-error-500/10 rounded text-sm text-error-700 dark:text-error-500">
                   <p className="font-medium">Último error:</p>
                   <p className="mt-1">{cred.lastError}</p>
                 </div>
@@ -286,7 +286,7 @@ const LogisticsCredentials = () => {
                     <button
                       onClick={() => handleTest(carrier)}
                       disabled={testing === carrier}
-                      className="w-full px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-300 dark:text-surface-200 bg-white dark:bg-surface-800 dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-md hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
+                      className="btn-outline btn-sm w-full disabled:opacity-50"
                     >
                       {testing === carrier ? (
                         <>
@@ -302,8 +302,8 @@ const LogisticsCredentials = () => {
                       onClick={() => handleToggle(carrier)}
                       className={`w-full px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 ${
                         cred.isActive
-                          ? 'text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 hover:bg-red-100 dark:hover:bg-red-900/30'
-                          : 'text-green-700 dark:text-green-300 bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-700 hover:bg-green-100 dark:hover:bg-green-900/30'
+                          ? 'text-error-700 dark:text-error-500 bg-error-50 dark:bg-error-500/10 border border-error-600/30 hover:bg-error-100 dark:hover:bg-error-500/20'
+                          : 'text-success-700 dark:text-success-500 bg-success-50 dark:bg-success-500/10 border border-success-600/30 hover:bg-success-100 dark:hover:bg-success-500/20'
                       }`}
                     >
                       {cred.isActive ? 'Desactivar' : 'Activar'}
@@ -330,7 +330,7 @@ const LogisticsCredentials = () => {
               {carrierFields[editingCarrier].map(field => (
                 <div key={field.key}>
                   <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
-                    {field.label} {field.required && <span className="text-red-500">*</span>}
+                    {field.label} {field.required && <span className="text-error-500">*</span>}
                   </label>
                   <div className="relative">
                     <input
@@ -374,7 +374,7 @@ const LogisticsCredentials = () => {
             <div className="sticky bottom-0 bg-surface-50 dark:bg-surface-900 px-6 py-4 flex justify-end gap-3 border-t border-surface-200 dark:border-surface-700">
               <button
                 onClick={() => setEditingCarrier(null)}
-                className="px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-md hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600"
+                className="btn-outline btn-sm"
               >
                 Cancelar
               </button>
