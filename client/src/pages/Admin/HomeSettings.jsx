@@ -623,7 +623,7 @@ const HomeSettings = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-10 w-10"></div>
       </div>
     )
   }
@@ -644,8 +644,8 @@ const HomeSettings = () => {
         {message && (
           <div className={`mb-6 p-4 rounded-lg flex items-center ${
             message.type === 'success' 
-              ? 'bg-green-50 text-green-800 border border-green-200' 
-              : 'bg-red-50 text-red-800 border border-red-200'
+              ? 'bg-success-50 text-success-700 border border-success-600/20 dark:bg-success-500/10 dark:text-success-500 dark:border-success-500/25' 
+              : 'bg-error-50 text-error-700 border border-error-600/20 dark:bg-error-500/10 dark:text-error-500 dark:border-error-500/25'
           }`}>
             {message.type === 'success' ? (
               <CheckCircleIcon className="h-5 w-5 mr-2" />
@@ -657,7 +657,7 @@ const HomeSettings = () => {
         )}
 
         {/* Tabs */}
-        <div className="bg-white dark:bg-surface-800 rounded-lg shadow mb-6">
+        <div className="card mb-6 overflow-hidden">
           <div className="border-b border-surface-200 dark:border-surface-700">
             <nav className="flex -mb-px overflow-x-auto">
               {[
@@ -698,7 +698,7 @@ const HomeSettings = () => {
                     </p>
                   </div>
                   {settings.carousel.length < 3 && (
-                    <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+                    <label className="btn-primary btn-sm cursor-pointer">
                       <ArrowUpTrayIcon className="h-5 w-5 mr-2" />
                       Agregar Slide
                       <input
@@ -718,7 +718,7 @@ const HomeSettings = () => {
                         <h3 className="text-lg font-medium text-surface-900 dark:text-white">Slide {index + 1}</h3>
                         <button
                           onClick={() => handleRemoveSlide(index)}
-                          className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
+                          className="text-surface-400 hover:text-error-500 transition-colors"
                         >
                           <XMarkIcon className="h-5 w-5" />
                         </button>
@@ -1127,11 +1127,11 @@ const HomeSettings = () => {
                       </p>
                     </div>
 
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <div className="bg-warning-50 dark:bg-warning-500/10 border border-warning-600/20 dark:border-warning-500/25 rounded-lg p-4">
                       <div className="flex items-start">
-                        <ExclamationTriangleIcon className="h-5 w-5 text-yellow-600 mt-0.5 mr-2" />
+                        <ExclamationTriangleIcon className="h-5 w-5 text-warning-600 dark:text-warning-500 mt-0.5 mr-2" />
                         <div>
-                          <p className="text-sm text-yellow-800">
+                          <p className="text-sm text-warning-700 dark:text-warning-500">
                             <strong>Importante:</strong> Si no tienes cupones activos creados, 
                             el banner no se mostrará en la página principal.
                           </p>
@@ -1197,7 +1197,7 @@ const HomeSettings = () => {
                               return (
                                 <div key={category.id} className="flex items-center gap-3 p-3 border border-surface-200 dark:border-surface-700 rounded-lg bg-surface-50 dark:bg-surface-900 dark:bg-surface-800">
                                   {/* Icon Preview */}
-                                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900 dark:to-indigo-900 rounded-lg flex items-center justify-center">
+                                  <div className="flex-shrink-0 w-12 h-12 bg-primary-50 dark:bg-primary-950/50 rounded-lg flex items-center justify-center">
                                     <IconComponent className="h-6 w-6 text-primary-600 dark:text-primary-400" />
                                   </div>
 
@@ -1292,7 +1292,7 @@ const HomeSettings = () => {
                     {customSections.map((section, index) => {
                       const IconComponent = getIconComponent(section.icon)
                       return (
-                        <div key={section.id} className="border border-surface-300 dark:border-surface-600 rounded-lg p-6 bg-white dark:bg-surface-800 shadow-sm">
+                        <div key={section.id} className="card p-6">
                           <div className="flex items-start justify-between mb-4">
                             <div className="flex items-center space-x-3">
                               <div
@@ -1321,7 +1321,7 @@ const HomeSettings = () => {
                               </label>
                               <button
                                 onClick={() => handleDeleteCustomSection(section.id)}
-                                className="text-red-600 hover:text-red-800 dark:text-red-400 p-2"
+                                className="text-surface-400 hover:text-error-500 p-2 transition-colors"
                               >
                                 <TrashIcon className="h-5 w-5" />
                               </button>
@@ -1601,7 +1601,7 @@ const HomeSettings = () => {
                     <button
                       onClick={handleAddCustomSection}
                       disabled={saving}
-                      className="mt-6 flex items-center bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 disabled:opacity-50 font-medium"
+                      className="btn-primary mt-6"
                     >
                       <PlusIcon className="h-5 w-5 mr-2" />
                       Agregar Sección
@@ -1646,7 +1646,7 @@ const HomeSettings = () => {
                     Subir Nuevo Logo
                   </label>
                   <div className="flex items-center space-x-4">
-                    <label className="flex items-center px-4 py-2 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm cursor-pointer hover:bg-surface-50 dark:bg-surface-900 transition-colors">
+                    <label className="btn-outline btn-sm cursor-pointer">
                       <CloudArrowUpIcon className="h-5 w-5 text-surface-400 mr-2" />
                       <span className="text-sm text-surface-700 dark:text-surface-300">
                         {uploading ? 'Subiendo...' : 'Seleccionar Archivo'}
@@ -1711,7 +1711,7 @@ const HomeSettings = () => {
                     Subir Nuevo Favicon
                   </label>
                   <div className="flex items-center space-x-4">
-                    <label className="flex items-center px-4 py-2 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm cursor-pointer hover:bg-surface-50 dark:bg-surface-900 transition-colors">
+                    <label className="btn-outline btn-sm cursor-pointer">
                       <CloudArrowUpIcon className="h-5 w-5 text-surface-400 mr-2" />
                       <span className="text-sm text-surface-700 dark:text-surface-300">
                         {uploadingFavicon ? 'Subiendo...' : 'Seleccionar Favicon'}
@@ -2258,7 +2258,7 @@ const HomeSettings = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-between bg-white dark:bg-surface-800 rounded-lg shadow p-6">
+        <div className="card flex items-center justify-between p-6">
           <a
             href="/"
             target="_blank"
@@ -2272,11 +2272,11 @@ const HomeSettings = () => {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-primary btn-lg"
           >
             {saving ? (
               <>
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white mr-2"></div>
                 Guardando...
               </>
             ) : (

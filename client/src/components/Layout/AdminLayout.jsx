@@ -88,14 +88,14 @@ const AdminLayout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-surface-100 dark:bg-surface-800 dark:bg-surface-950">
+    <div className="min-h-screen bg-surface-100 dark:bg-surface-950">
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
           <div className="fixed inset-0 bg-surface-900/60 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-          <div className="fixed inset-y-0 left-0 flex w-72 flex-col bg-white dark:bg-surface-800 dark:bg-surface-900 border-r border-surface-200 dark:border-surface-700 dark:border-surface-800 shadow-xl animate-slide-up">
+          <div className="fixed inset-y-0 left-0 flex w-72 flex-col bg-white dark:bg-surface-900 border-r border-surface-200 dark:border-surface-800 shadow-xl animate-slide-up">
             <div className="absolute top-3 right-3">
-              <button onClick={() => setSidebarOpen(false)} className="p-1.5 rounded-lg text-surface-400 hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-800">
+              <button onClick={() => setSidebarOpen(false)} className="p-1.5 rounded-lg text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors">
                 <XIcon className="h-5 w-5" />
               </button>
             </div>
@@ -112,18 +112,17 @@ const AdminLayout = () => {
       {/* Main content */}
       <div className="md:pl-64 flex flex-col min-h-screen">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 glass border-b border-surface-200/60 dark:border-surface-700/40">
-          <div className="topbar-accent" />
+        <header className="sticky top-0 z-30 glass border-b border-surface-200/60 dark:border-surface-800/60">
           <div className="flex items-center justify-between h-14 px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="md:hidden p-2 -ml-2 rounded-lg text-surface-500 dark:text-surface-400 hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-800"
+                className="md:hidden p-2 -ml-2 rounded-lg text-surface-500 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
               >
                 <MenuIcon className="h-5 w-5" />
               </button>
               <h1 className="text-sm font-semibold text-surface-900 dark:text-white hidden sm:block">
-                Panel de Administración
+                Panel de administración
               </h1>
             </div>
             <div className="flex items-center gap-3">
@@ -137,7 +136,7 @@ const AdminLayout = () => {
               </span>
               <button
                 onClick={handleLogout}
-                className="p-2 rounded-lg text-surface-400 hover:text-error-500 hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-800 transition-colors"
+                className="p-2 rounded-lg text-surface-400 hover:text-error-500 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
                 title="Cerrar sesión"
               >
                 <LogoutIcon className="h-4 w-4" />
@@ -161,10 +160,9 @@ const SidebarContent = ({ navGroups, isActivePath, onNavigate }) => (
   <div className="flex flex-col h-full bg-white dark:bg-surface-900 border-r border-surface-200 dark:border-surface-800">
     {/* Brand */}
     <div className="flex-shrink-0 border-b border-surface-200 dark:border-surface-800">
-      <div className="topbar-accent" />
       <div className="flex items-center h-14 px-5">
-        <Link to="/admin" className="text-lg font-bold text-gradient" onClick={onNavigate}>
-          TiendaKit
+        <Link to="/admin" className="text-lg font-bold tracking-tight text-surface-900 dark:text-white" onClick={onNavigate}>
+          Tienda<span className="text-primary-600 dark:text-primary-400">Kit</span>
         </Link>
         <span className="ml-2 badge-primary text-[10px]">Admin</span>
       </div>
@@ -174,7 +172,7 @@ const SidebarContent = ({ navGroups, isActivePath, onNavigate }) => (
     <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-6">
       {navGroups.map((group) => (
         <div key={group.label}>
-          <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-surface-400 dark:text-surface-500 dark:text-surface-400">
+          <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-surface-400 dark:text-surface-500">
             {group.label}
           </p>
           <div className="space-y-0.5">
@@ -186,17 +184,18 @@ const SidebarContent = ({ navGroups, isActivePath, onNavigate }) => (
                   key={item.href}
                   to={item.href}
                   onClick={onNavigate}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
+                  className={`group flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
                     active
-                      ? 'bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-300 border-l-2 border-primary-500 dark:border-primary-400 pl-[10px]'
-                      : 'text-surface-600 dark:text-surface-400 hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-200 border-l-2 border-transparent pl-[10px]'
+                      ? 'bg-primary-50 text-primary-700 font-semibold dark:bg-primary-950/50 dark:text-primary-300'
+                      : 'text-surface-600 dark:text-surface-400 hover:bg-surface-100 hover:text-surface-900 dark:hover:bg-surface-800 dark:hover:text-surface-200'
                   }`}
                 >
-                  <Icon className={`h-4.5 w-4.5 flex-shrink-0 ${
-                    active ? 'text-primary-600 dark:text-primary-400' : 'text-surface-400 dark:text-surface-500'
-                  }`} style={{ width: '18px', height: '18px' }} />
+                  <Icon
+                    className={active ? 'flex-shrink-0 text-primary-600 dark:text-primary-400' : 'flex-shrink-0 text-surface-400 dark:text-surface-500 group-hover:text-surface-600 dark:group-hover:text-surface-300'}
+                    style={{ width: '18px', height: '18px' }}
+                  />
                   {item.name}
-                  {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-500" />}
+                  {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-500 dark:bg-primary-400" />}
                 </Link>
               )
             })}
