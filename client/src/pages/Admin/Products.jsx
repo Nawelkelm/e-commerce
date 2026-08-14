@@ -402,7 +402,7 @@ const Products = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
@@ -410,10 +410,10 @@ const Products = () => {
   if (error) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-600 text-lg mb-4">Error: {error}</p>
+        <p className="text-error-600 dark:text-error-400 text-lg mb-4">Error: {error}</p>
         <button 
           onClick={fetchProducts}
-          className="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
+          className="btn-primary"
         >
           Intentar nuevamente
         </button>
@@ -428,10 +428,10 @@ const Products = () => {
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
+              <div className="p-2 bg-primary-600 rounded-lg">
                 <CubeIcon className="h-6 w-6 text-white" />
               </div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-2xl sm:text-3xl font-bold text-surface-900 dark:text-white tracking-tight">
                 Gestión de Productos
               </h1>
             </div>
@@ -445,7 +445,7 @@ const Products = () => {
                 resetForm()
                 setShowModal(true)
               }}
-              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-xl hover:scale-105"
+              className="btn-primary"
             >
               <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
               Nuevo Producto
@@ -463,7 +463,7 @@ const Products = () => {
       </div>
 
       {/* Barra de búsqueda y filtros - Rediseñada */}
-      <div className="bg-white dark:bg-surface-800 shadow-lg rounded-xl p-6 mb-6 border border-surface-200 dark:border-surface-700">
+      <div className="card p-6 mb-6">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Barra de búsqueda mejorada */}
           <div className="flex-1">
@@ -493,7 +493,7 @@ const Products = () => {
             <FunnelIcon className="h-5 w-5 mr-2" />
             Filtros
             {(filters.category || filters.status !== '' || filters.stock || filters.featured !== '') && (
-              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-indigo-200">
+              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">
                 Activos
               </span>
             )}
@@ -523,7 +523,7 @@ const Products = () => {
                 <select
                   value={filters.category}
                   onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                  className="block w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                  className="input"
                 >
                   <option value="">Todas las categorías</option>
                   {categories.map(category => (
@@ -542,7 +542,7 @@ const Products = () => {
                 <select
                   value={filters.status}
                   onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                  className="block w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                  className="input"
                 >
                   <option value="">Todos</option>
                   <option value="true">Activos</option>
@@ -558,7 +558,7 @@ const Products = () => {
                 <select
                   value={filters.stock}
                   onChange={(e) => setFilters({ ...filters, stock: e.target.value })}
-                  className="block w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                  className="input"
                 >
                   <option value="">Todos</option>
                   <option value="available">Disponible</option>
@@ -575,7 +575,7 @@ const Products = () => {
                 <select
                   value={filters.featured}
                   onChange={(e) => setFilters({ ...filters, featured: e.target.value })}
-                  className="block w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-md shadow-sm bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white dark:text-surface-100 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                  className="input"
                 >
                   <option value="">Todos</option>
                   <option value="true">Destacados</option>
@@ -585,7 +585,7 @@ const Products = () => {
             </div>
 
             {/* Contador de resultados mejorado */}
-            <div className="mt-4 flex items-center justify-between bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg px-4 py-3 border border-indigo-100 dark:border-indigo-800">
+            <div className="mt-4 flex items-center justify-between bg-surface-50 dark:bg-surface-900 rounded-lg px-4 py-3 border border-surface-200 dark:border-surface-700">
               <div className="flex items-center gap-2 text-sm text-surface-700 dark:text-surface-300">
                 <CubeIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
                 Mostrando <span className="font-bold text-primary-600 dark:text-primary-400">{filteredProducts.length}</span> de <span className="font-semibold">{products.length}</span> productos
@@ -601,7 +601,7 @@ const Products = () => {
       </div>
 
       {/* Tabla mejorada */}
-      <div className="bg-white dark:bg-surface-800 shadow-xl rounded-xl overflow-hidden border border-surface-200 dark:border-surface-700">
+      <div className="card overflow-hidden">
         <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
           <thead className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
             <tr>
@@ -657,7 +657,7 @@ const Products = () => {
               <tr>
                 <td colSpan="6" className="px-6 py-12 text-center">
                   <div className="flex justify-center items-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                    <div className="loading-spinner h-8 w-8"></div>
                     <span className="ml-3 text-surface-600 dark:text-surface-400">Cargando productos...</span>
                   </div>
                 </td>
@@ -679,7 +679,7 @@ const Products = () => {
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-14 w-14">
                       <img
-                        className="h-14 w-14 rounded-xl object-cover shadow-sm ring-2 ring-gray-100 dark:ring-gray-700"
+                        className="h-14 w-14 rounded-xl object-cover shadow-sm ring-1 ring-surface-200 dark:ring-surface-700"
                         src={
                           product.images?.[0] 
                             ? (typeof product.images[0] === 'string' 
@@ -722,7 +722,7 @@ const Products = () => {
                       Producción Propia
                     </span>
                   ) : product.supplier ? (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400">
                       {product.supplier.name}
                     </span>
                   ) : (
@@ -768,14 +768,14 @@ const Products = () => {
                   <div className="flex space-x-2 justify-end">
                     <button
                       onClick={() => handleEdit(product)}
-                      className="p-2 text-primary-600 hover:text-indigo-900 dark:text-primary-400 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all"
+                      className="p-2 text-surface-400 hover:text-primary-600 dark:text-surface-500 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-500/10 rounded-lg transition-all"
                       title="Editar producto"
                     >
                       <PencilIcon className="h-5 w-5" />
                     </button>
                     <button
                       onClick={() => handleDeleteProduct(product.id)}
-                      className="p-2 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
+                      className="p-2 text-surface-400 hover:text-error-500 hover:bg-error-50 dark:hover:bg-error-500/10 rounded-lg transition-colors"
                       title="Eliminar producto"
                     >
                       <TrashIcon className="h-5 w-5" />
@@ -828,7 +828,7 @@ const Products = () => {
         <div className="fixed inset-0 bg-surface-900/75 dark:bg-black/85 backdrop-blur-sm overflow-y-auto h-full w-full z-50 flex items-start justify-center p-4">
           <div className="relative w-full max-w-5xl my-8">
             {/* Header del Modal */}
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-t-2xl px-6 py-5 shadow-xl">
+            <div className="bg-primary-900 rounded-t-2xl px-6 py-5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
@@ -855,12 +855,12 @@ const Products = () => {
             </div>
 
             {/* Contenido del Modal */}
-            <div className="bg-white dark:bg-surface-800 rounded-b-2xl shadow-2xl">
+            <div className="bg-white dark:bg-surface-800 rounded-b-2xl border border-t-0 border-surface-200 dark:border-surface-700">
               <form onSubmit={handleSubmit} className="p-6 space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Información Básica */}
                   <div className="space-y-6">
-                    <div className="flex items-center gap-2 pb-3 border-b-2 border-indigo-100 dark:border-indigo-900">
+                    <div className="flex items-center gap-2 pb-3 border-b border-surface-200 dark:border-surface-700">
                       <CubeIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
                       <h4 className="text-lg font-semibold text-surface-900 dark:text-white">Información Básica</h4>
                     </div>
@@ -919,7 +919,7 @@ const Products = () => {
                   <div>
                     <label className="block text-sm font-semibold text-surface-700 dark:text-surface-300 mb-2">Proveedor</label>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-3 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800">
+                      <div className="flex items-center gap-3 p-3 bg-surface-50 dark:bg-surface-900 rounded-lg border border-surface-200 dark:border-surface-700">
                         <input
                           type="checkbox"
                           id="isOwnProduction"
@@ -954,8 +954,8 @@ const Products = () => {
 
                 {/* Precios y Stock */}
                 <div className="space-y-6">
-                  <div className="flex items-center gap-2 pb-3 border-b-2 border-purple-100 dark:border-purple-900">
-                    <TagIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                  <div className="flex items-center gap-2 pb-3 border-b border-surface-200 dark:border-surface-700">
+                    <TagIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
                     <h4 className="text-lg font-semibold text-surface-900 dark:text-white">Precios y Stock</h4>
                   </div>
                   
@@ -1045,7 +1045,7 @@ const Products = () => {
                     </div>
                   </div>
 
-                  <div className="space-y-3 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg border border-indigo-100 dark:border-indigo-800">
+                  <div className="space-y-3 p-4 bg-surface-50 dark:bg-surface-900 rounded-lg border border-surface-200 dark:border-surface-700">
                     <div className="flex items-center">
                       <input
                         type="checkbox"
@@ -1074,7 +1074,7 @@ const Products = () => {
 
               {/* Imágenes */}
               <div className="space-y-6">
-                <div className="flex items-center gap-2 pb-3 border-b-2 border-indigo-100 dark:border-indigo-900">
+                <div className="flex items-center gap-2 pb-3 border-b border-surface-200 dark:border-surface-700">
                   <PhotoIcon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
                   <h4 className="text-lg font-semibold text-surface-900 dark:text-white">Imágenes del Producto</h4>
                 </div>
@@ -1089,10 +1089,10 @@ const Products = () => {
                           <img
                             src={image.url}
                             alt={image.alt || `Imagen ${index + 1}`}
-                            className="h-28 w-full object-cover rounded-xl border-2 border-indigo-200 dark:border-indigo-700 shadow-md group-hover:shadow-xl transition-all"
+                            className="h-28 w-full object-cover rounded-xl border border-surface-200 dark:border-surface-700 shadow-md group-hover:shadow-xl transition-all"
                           />
                           {image.isPrimary && (
-                            <span className="absolute top-2 left-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-semibold px-2.5 py-1 rounded-lg shadow-lg">
+                            <span className="absolute top-2 left-2 bg-primary-600 text-white text-xs font-semibold px-2.5 py-1 rounded-lg">
                               ★ Principal
                             </span>
                           )}
@@ -1109,7 +1109,7 @@ const Products = () => {
                   </div>
                 )}
                 
-                <div className="border-2 border-dashed border-indigo-300 dark:border-indigo-700 rounded-xl p-8 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 hover:border-primary-500 dark:hover:border-primary-500 transition-all">
+                <div className="border-2 border-dashed border-surface-300 dark:border-surface-600 rounded-xl p-8 bg-surface-50 dark:bg-surface-900 hover:border-primary-500 dark:hover:border-primary-500 transition-all">
                   <div className="text-center">
                     <div className="mx-auto h-16 w-16 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center mb-4">
                       <PhotoIcon className="h-8 w-8 text-primary-600 dark:text-primary-400" />
@@ -1181,11 +1181,11 @@ const Products = () => {
                 <button
                   type="submit"
                   disabled={uploading}
-                  className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-xl hover:scale-105 flex items-center gap-2"
+                  className="btn-primary flex items-center gap-2"
                 >
                   {uploading ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
                       Guardando...
                     </>
                   ) : (

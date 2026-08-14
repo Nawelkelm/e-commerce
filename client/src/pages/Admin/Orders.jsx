@@ -217,17 +217,17 @@ const Orders = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800'
+        return 'bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-500'
       case 'confirmed':
         return 'bg-primary-100 text-primary-800'
       case 'processing':
         return 'bg-primary-100 text-primary-800'
       case 'shipped':
-        return 'bg-purple-100 text-purple-800'
+        return 'bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400'
       case 'delivered':
-        return 'bg-green-100 text-green-800'
+        return 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500'
       case 'cancelled':
-        return 'bg-red-100 text-red-800'
+        return 'bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500'
       case 'refunded':
         return 'bg-surface-100 dark:bg-surface-800 text-surface-800'
       default:
@@ -259,19 +259,19 @@ const Orders = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-md p-4">
+      <div className="bg-error-50 dark:bg-error-500/10 border border-error-600/20 dark:border-error-500/25 rounded-md p-4">
         <div className="flex">
           <ExclamationTriangleIcon className="h-5 w-5 text-red-400" />
           <div className="ml-3">
-            <h3 className="text-sm font-medium text-red-800">Error</h3>
-            <div className="mt-2 text-sm text-red-700">
+            <h3 className="text-sm font-medium text-error-700 dark:text-error-500">Error</h3>
+            <div className="mt-2 text-sm text-error-600 dark:text-error-400">
               <p>{error}</p>
             </div>
           </div>
@@ -292,7 +292,7 @@ const Orders = () => {
       </div>
 
       {/* Filtros */}
-      <div className="mb-6 bg-white dark:bg-surface-800 p-4 rounded-lg shadow">
+      <div className="mb-6 card p-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
             <label htmlFor="search" className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
@@ -371,7 +371,7 @@ const Orders = () => {
         )}
       </div>
 
-      <div className="bg-white dark:bg-surface-800 shadow rounded-lg overflow-x-auto">
+      <div className="card overflow-x-auto">
         <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
           <thead className="bg-surface-50 dark:bg-surface-900 dark:bg-surface-700">
             <tr>
@@ -610,7 +610,7 @@ const Orders = () => {
                       )}
                       <p className="text-sm text-surface-600 dark:text-surface-400 mt-1">
                         Costo: {parseFloat(selectedOrder.shippingAmount) === 0 ? (
-                          <span className="text-green-600 font-medium">Gratis</span>
+                          <span className="text-success-600 dark:text-success-500 font-medium">Gratis</span>
                         ) : (
                           <span className="font-medium">${parseFloat(selectedOrder.shippingAmount).toFixed(2)}</span>
                         )}
@@ -633,8 +633,8 @@ const Orders = () => {
                       <p className="text-sm text-primary-800">
                         <strong>Estado del pago:</strong>{' '}
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          selectedOrder.paymentStatus === 'paid' ? 'bg-green-100 text-green-800' :
-                          selectedOrder.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                          selectedOrder.paymentStatus === 'paid' ? 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500' :
+                          selectedOrder.paymentStatus === 'pending' ? 'bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-500' :
                           'bg-surface-100 dark:bg-surface-800 text-surface-800'
                         }`}>
                           {selectedOrder.paymentStatus === 'paid' ? 'Pagado' : 
@@ -659,7 +659,7 @@ const Orders = () => {
                             href={selectedOrder.paymentProofUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors text-sm"
+                            className="btn-primary btn-sm"
                           >
                             <EyeIcon className="h-4 w-4" />
                             Ver Comprobante
@@ -678,7 +678,7 @@ const Orders = () => {
                   </div>
 
                   {!selectedOrder.paymentProofUrl && (
-                    <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                    <div className="mt-3 p-3 bg-warning-50 dark:bg-warning-500/10 border border-warning-600/20 dark:border-warning-500/25 rounded-md">
                       <p className="text-sm text-yellow-800">
                         <ExclamationTriangleIcon className="h-4 w-4 inline mr-1" />
                         El cliente aún no ha subido el comprobante de transferencia
@@ -789,7 +789,7 @@ const Orders = () => {
               </div>
 
               {selectedOrder.admin_notes && (
-                <div className="mt-4 p-3 bg-yellow-50 rounded-lg">
+                <div className="mt-4 p-3 bg-warning-50 dark:bg-warning-500/10 rounded-lg">
                   <h4 className="text-sm font-medium text-yellow-800 mb-1">Notas del Administrador:</h4>
                   <p className="text-sm text-yellow-700">{selectedOrder.admin_notes}</p>
                 </div>

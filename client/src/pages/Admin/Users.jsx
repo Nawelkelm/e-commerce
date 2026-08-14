@@ -263,7 +263,7 @@ const Users = () => {
   const getRoleColor = (role) => {
     switch (role) {
       case 'admin':
-        return 'bg-purple-100 text-purple-800'
+        return 'bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400'
       case 'customer':
         return 'bg-primary-100 text-primary-800'
       default:
@@ -272,7 +272,7 @@ const Users = () => {
   }
 
   const getStatusColor = (isActive) => {
-    return isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+    return isActive ? 'bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500' : 'bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500'
   }
 
   const getRoleText = (role) => {
@@ -303,19 +303,19 @@ const Users = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="loading-spinner h-12 w-12"></div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-md p-4">
+      <div className="bg-error-50 dark:bg-error-500/10 border border-error-600/20 dark:border-error-500/25 rounded-md p-4">
         <div className="flex">
           <ExclamationTriangleIcon className="h-5 w-5 text-red-400" />
           <div className="ml-3">
-            <h3 className="text-sm font-medium text-red-800">Error</h3>
-            <div className="mt-2 text-sm text-red-700">
+            <h3 className="text-sm font-medium text-error-700 dark:text-error-500">Error</h3>
+            <div className="mt-2 text-sm text-error-600 dark:text-error-400">
               <p>{error}</p>
             </div>
           </div>
@@ -346,7 +346,7 @@ const Users = () => {
       </div>
 
       {/* Filtros */}
-      <div className="mb-6 bg-white dark:bg-surface-800 p-4 rounded-lg shadow">
+      <div className="mb-6 card p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label htmlFor="search" className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">
@@ -413,7 +413,7 @@ const Users = () => {
         )}
       </div>
 
-      <div className="bg-white dark:bg-surface-800 shadow rounded-lg overflow-hidden">
+      <div className="card overflow-hidden">
         <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
           <thead className="bg-surface-50 dark:bg-surface-900 dark:bg-surface-700">
             <tr>
@@ -527,7 +527,7 @@ const Users = () => {
                       </button>
                       <button
                         onClick={() => handleDeleteUser(user)}
-                        className="text-red-600 hover:text-red-900 p-1"
+                        className="text-surface-400 hover:text-error-500 p-1 transition-colors"
                         title="Desactivar usuario"
                       >
                         <TrashIcon className="h-5 w-5" />
@@ -548,7 +548,7 @@ const Users = () => {
             <button 
               onClick={() => setPagination({...pagination, currentPage: pagination.currentPage - 1})}
               disabled={pagination.currentPage === 1}
-              className="relative inline-flex items-center px-4 py-2 border border-surface-300 dark:border-surface-600 text-sm font-medium rounded-md text-surface-700 dark:text-surface-300 bg-white dark:bg-surface-800 dark:bg-surface-700 hover:bg-surface-50 dark:bg-surface-900 dark:hover:bg-surface-600 disabled:opacity-50"
+              className="relative btn-outline btn-sm disabled:opacity-50"
             >
               Anterior
             </button>
@@ -691,7 +691,7 @@ const Users = () => {
                         required
                         value={userForm.firstName}
                         onChange={(e) => setUserForm({...userForm, firstName: e.target.value})}
-                        className="block w-full rounded-md border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                        className="input"
                       />
                     </div>
 
@@ -704,7 +704,7 @@ const Users = () => {
                         required
                         value={userForm.lastName}
                         onChange={(e) => setUserForm({...userForm, lastName: e.target.value})}
-                        className="block w-full rounded-md border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                        className="input"
                       />
                     </div>
 
@@ -717,7 +717,7 @@ const Users = () => {
                         required
                         value={userForm.email}
                         onChange={(e) => setUserForm({...userForm, email: e.target.value})}
-                        className="block w-full rounded-md border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                        className="input"
                       />
                     </div>
 
@@ -730,7 +730,7 @@ const Users = () => {
                         required={modalMode === 'create'}
                         value={userForm.password}
                         onChange={(e) => setUserForm({...userForm, password: e.target.value})}
-                        className="block w-full rounded-md border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                        className="input"
                       />
                     </div>
 
@@ -742,7 +742,7 @@ const Users = () => {
                         type="text"
                         value={userForm.phone}
                         onChange={(e) => setUserForm({...userForm, phone: e.target.value})}
-                        className="block w-full rounded-md border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                        className="input"
                       />
                     </div>
 
@@ -754,7 +754,7 @@ const Users = () => {
                         required
                         value={userForm.role}
                         onChange={(e) => setUserForm({...userForm, role: e.target.value})}
-                        className="block w-full rounded-md border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                        className="input"
                       >
                         <option value="customer">Cliente</option>
                         <option value="admin">Administrador</option>
@@ -770,7 +770,7 @@ const Users = () => {
                       rows={3}
                       value={userForm.address}
                       onChange={(e) => setUserForm({...userForm, address: e.target.value})}
-                      className="block w-full rounded-md border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 dark:bg-surface-700 text-surface-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                      className="input"
                     />
                   </div>
 
@@ -815,7 +815,7 @@ const Users = () => {
           <div className="bg-white dark:bg-surface-800 rounded-lg max-w-md w-full">
             <div className="p-6">
               <div className="flex items-center mb-4">
-                <ExclamationTriangleIcon className="h-6 w-6 text-red-600 mr-2" />
+                <ExclamationTriangleIcon className="h-6 w-6 text-error-500 mr-2" />
                 <h3 className="text-lg font-medium text-surface-900 dark:text-white">Desactivar Usuario</h3>
               </div>
               
