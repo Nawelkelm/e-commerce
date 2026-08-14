@@ -28,6 +28,10 @@
   .dark ::-webkit-scrollbar { width: 8px; }
   .dark ::-webkit-scrollbar-track { background: theme('colors.surface.900'); }
   .dark ::-webkit-scrollbar-thumb { background: theme('colors.surface.700'); border-radius: 4px; }
+
+  /* Seleccion de texto — tematizada desde el Malbec, no el celeste del navegador */
+  ::selection { background-color: theme('colors.primary.600'); color: #fff; }
+  .dark ::selection { background-color: theme('colors.primary.500'); color: #fff; }
 }
 
 /* ================================================================
