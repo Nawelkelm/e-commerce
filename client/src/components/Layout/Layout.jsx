@@ -6,6 +6,7 @@ import { useWishlistStore } from '../../store/wishlistStore'
 import ThemeToggle from '../Theme/ThemeToggle'
 import SearchBar from '../Search/SearchBar'
 import Footer from './Footer'
+import { TiendaKitIcon } from '../Brand/Logo'
 
 const Layout = () => {
   const navigate = useNavigate()
@@ -93,11 +94,14 @@ const Layout = () => {
                   />
                 ) : null}
                 <span
-                  className="text-xl font-bold text-white tracking-tight"
-                  style={{ display: settings.site_logo ? 'none' : 'block' }}
+                  className="flex items-center gap-2"
+                  style={{ display: settings.site_logo ? 'none' : 'flex' }}
                 >
-                  {settings.site_name || 'Tienda'}
-                  <span className="text-accent-400">Kit</span>
+                  <TiendaKitIcon className="h-8 w-8" />
+                  <span className="text-xl font-bold text-white tracking-tight">
+                    {settings.site_name || 'Tienda'}
+                    <span className="text-accent-400">Kit</span>
+                  </span>
                 </span>
               </Link>
 

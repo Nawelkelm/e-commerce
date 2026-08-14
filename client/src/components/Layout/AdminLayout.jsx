@@ -25,6 +25,7 @@ import {
   XMarkIcon as XIcon,
   ArrowLeftIcon
 } from '@heroicons/react/24/outline'
+import { TiendaKitIcon } from '../Brand/Logo'
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -161,8 +162,11 @@ const SidebarContent = ({ navGroups, isActivePath, onNavigate }) => (
     {/* Brand */}
     <div className="flex-shrink-0 border-b border-surface-200 dark:border-surface-800">
       <div className="flex items-center h-14 px-5">
-        <Link to="/admin" className="text-lg font-bold tracking-tight text-surface-900 dark:text-white" onClick={onNavigate}>
-          Tienda<span className="text-primary-600 dark:text-primary-400">Kit</span>
+        <Link to="/admin" className="inline-flex items-center gap-2" onClick={onNavigate}>
+          <TiendaKitIcon className="h-7 w-7" />
+          <span className="text-lg font-bold tracking-tight text-surface-900 dark:text-white">
+            Tienda<span className="text-accent-500">Kit</span>
+          </span>
         </Link>
         <span className="ml-2 badge-primary text-[10px]">Admin</span>
       </div>
