@@ -1,0 +1,35 @@
+# ============================================================================
+#  Override para mostrar la tienda desde OTRA máquina de la misma red local.
+#
+#  Por qué hace falta: Vite hornea VITE_API_URL dentro del bundle en tiempo de
+#  build. Con el valor por defecto (http://localhost:5000/api) la página carga
+#  en la otra notebook, pero "localhost" apunta a ESA máquina, así que ninguna
+#  llamada al API funciona. Hay que compilar con la IP de esta máquina.
+#
+#  Uso (desde la raíz del proyecto):
+#
+#    LAN_IP=192.168.100.40 docker compose \
+#      -f docker-compose.yml -f docker-compose.lan.yml up -d --build
+#
+#  Después, desde la otra notebook:  http://192.168.100.40:3000
+#
+#  Para volver al modo normal, levantá sin este archivo:
+#
+#    docker compose up -d --build
+#
+#  Nota: es sólo para demos en red local. No exponer a internet así.
+# ============================================================================
+
+services:
+  backend:
+    environment:
+      # Se permite el origen de la IP además de localhost, para poder seguir
+      # usando la tienda desde esta misma máquina mientras mostrás.
+      CORS_ORIGINS: http://${LAN_IP}:3000,http://localhost:3000
+
+  frontend:
+    build:
+      args:
+        # Tiene que ser la IP: el navegador de la otra notebook resuelve esta
+        # URL desde su propia máquina.
+        VITE_API_URL: http://${LAN_IP}:5000/api
