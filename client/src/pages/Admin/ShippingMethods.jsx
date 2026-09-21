@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
   TruckIcon,
   PlusIcon,
   PencilIcon,
   TrashIcon,
-  HomeIcon,
   HandRaisedIcon,
   BuildingStorefrontIcon
 } from '@heroicons/react/24/outline'

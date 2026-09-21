@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaTag, FaTimes, FaCheckCircle } from 'react-icons/fa';
 import '../styles/CouponInput.css';
 

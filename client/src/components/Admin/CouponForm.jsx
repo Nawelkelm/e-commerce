@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FaTimes, FaSave } from 'react-icons/fa';
 import '../../styles/Admin/CouponForm.css';
 

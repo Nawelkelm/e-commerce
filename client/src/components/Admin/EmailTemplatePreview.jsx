@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import './EmailTemplatePreview.css';
 
@@ -108,7 +108,7 @@ const EmailTemplatePreview = ({ template, onClose }) => {
     }
   };
 
-  const replaceVariables = (content, variables) => {
+  const replaceVariables = (content) => {
     if (!content) return '';
     
     let result = content;
@@ -127,11 +127,11 @@ const EmailTemplatePreview = ({ template, onClose }) => {
   };
 
   const getPreviewHtml = () => {
-    return replaceVariables(template.htmlContent, template.variables);
+    return replaceVariables(template.htmlContent);
   };
 
   const getPreviewText = () => {
-    return replaceVariables(template.textContent, template.variables);
+    return replaceVariables(template.textContent);
   };
 
   return (

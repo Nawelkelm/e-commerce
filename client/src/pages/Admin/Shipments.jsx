@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
   TruckIcon,
   MagnifyingGlassIcon,
@@ -18,7 +18,7 @@ const Shipments = () => {
   const [shipments, setShipments] = useState([])
   const [pendingOrders, setPendingOrders] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [, setError] = useState(null)
   const [selectedShipment, setSelectedShipment] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)

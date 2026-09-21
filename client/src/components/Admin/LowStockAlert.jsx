@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../store/authStore'
-import { Link } from 'react-router-dom'
 
 const LowStockAlert = () => {
   const [lowStockProducts, setLowStockProducts] = useState([])

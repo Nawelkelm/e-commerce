@@ -107,7 +107,7 @@ const Orders = () => {
         throw new Error(errorData.message || 'Error al cancelar el pedido')
       }
 
-      const data = await response.json()
+      await response.json()
 
       // Actualizar la lista de pedidos
       setOrders(orders.map(order => 

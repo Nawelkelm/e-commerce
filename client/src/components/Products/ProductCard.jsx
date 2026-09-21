@@ -7,7 +7,7 @@ import { useAuthStore } from '../../store/authStore'
 import { getProductImageUrl, PLACEHOLDER_IMAGE } from '../../utils/imageHelpers'
 
 const ProductCard = ({ product }) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
   const { addToCart } = useAuthStore()
 

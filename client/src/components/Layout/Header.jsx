@@ -16,7 +16,7 @@ const Header = () => {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout } = useAuthStore()
   const { itemCount, setCart } = useCartStore()
-  const { mobileMenuOpen, setMobileMenuOpen, cartSidebarOpen, setCartSidebarOpen } = useUIStore()
+  const { mobileMenuOpen, setMobileMenuOpen, setCartSidebarOpen } = useUIStore()
   
   const [searchQuery, setSearchQuery] = useState('')
   const [userMenuOpen, setUserMenuOpen] = useState(false)

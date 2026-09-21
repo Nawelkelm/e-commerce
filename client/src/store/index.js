@@ -71,7 +71,7 @@ export const useUIStore = create((set) => ({
 }))
 
 // Products Store
-export const useProductsStore = create((set, get) => ({
+export const useProductsStore = create((set) => ({
   products: [],
   featuredProducts: [],
   categories: [],

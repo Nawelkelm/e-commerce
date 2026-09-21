@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { ShoppingCartIcon, HeartIcon, Bars3Icon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import { useAuthStore } from '../../store/authStore'

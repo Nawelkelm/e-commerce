@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
-  CheckIcon, 
-  XMarkIcon, 
+  CheckIcon,  
   ChatBubbleLeftRightIcon,
   TrashIcon,
   FunnelIcon,
-  MagnifyingGlassIcon
 } from '@heroicons/react/24/outline';
 import StarRating from '../../components/StarRating';
 import './ReviewManagement.css';

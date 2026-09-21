@@ -139,7 +139,7 @@ const BarcodeManagement = ({ productId }) => {
     let code = '';
     
     switch (type) {
-      case 'EAN13':
+      case 'EAN13': {
         code = Math.floor(Math.random() * 1000000000000).toString().padStart(12, '0');
         // Calculate check digit
         let sum = 0;
@@ -149,7 +149,8 @@ const BarcodeManagement = ({ productId }) => {
         const checkDigit = (10 - (sum % 10)) % 10;
         code = code + checkDigit;
         break;
-      case 'UPC':
+      }
+      case 'UPC': {
         code = Math.floor(Math.random() * 100000000000).toString().padStart(11, '0');
         // Calculate check digit
         let upcSum = 0;
@@ -159,6 +160,7 @@ const BarcodeManagement = ({ productId }) => {
         const upcCheck = (10 - (upcSum % 10)) % 10;
         code = code + upcCheck;
         break;
+      }
       case 'INTERNAL':
         code = 'INT-' + Math.random().toString(36).substr(2, 9).toUpperCase();
         break;

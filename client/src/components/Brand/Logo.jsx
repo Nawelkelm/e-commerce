@@ -1,4 +1,3 @@
-import React from 'react'
 
 /**
  * Isotipo de marca TiendaKit — extraído del Manual de marca v1.0.

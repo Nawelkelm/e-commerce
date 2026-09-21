@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { PlusIcon, EnvelopeIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import EmailTemplateForm from '../../components/Admin/EmailTemplateForm';
 import EmailTemplatePreview from '../../components/Admin/EmailTemplatePreview';
-import { getApiUrl } from '../../config/api';
 import './EmailTemplateManagement.css';
 
 const EmailTemplateManagement = () => {

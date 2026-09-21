@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   ServerIcon, 
   CheckCircleIcon, 
@@ -14,7 +14,7 @@ const SmtpSettings = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [testing, setTesting] = useState(false);
-  const [testResult, setTestResult] = useState(null);
+  const [, setTestResult] = useState(null);
   const [presets, setPresets] = useState({});
   
   const [formData, setFormData] = useState({

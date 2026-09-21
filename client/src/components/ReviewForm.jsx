@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CheckBadgeIcon, XMarkIcon, PhotoIcon } from '@heroicons/react/24/outline';
 import StarRating from './StarRating';
 import './ReviewForm.css';

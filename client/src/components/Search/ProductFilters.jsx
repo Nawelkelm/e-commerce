@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FunnelIcon, XMarkIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
+import { FunnelIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import { productsAPI } from '../../services/api'
 
 const ProductFilters = ({ onFilterChange, currentFilters = {} }) => {

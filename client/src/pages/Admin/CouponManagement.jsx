@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FaPlus, FaEdit, FaTrash, FaToggleOn, FaToggleOff, FaChartBar, FaSearch, FaFilter, FaCopy } from 'react-icons/fa';
 import CouponForm from '../../components/Admin/CouponForm';
 import CouponStats from '../../components/Admin/CouponStats';

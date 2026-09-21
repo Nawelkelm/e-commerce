@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   UserCircleIcon, 
   CheckBadgeIcon,
@@ -18,7 +18,6 @@ const ReviewList = ({ productId }) => {
     sortBy: 'recent'
   });
 
-  const user = JSON.parse(localStorage.getItem('user') || 'null');
   const token = localStorage.getItem('token');
 
   useEffect(() => {

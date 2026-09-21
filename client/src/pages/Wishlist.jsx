@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { HeartIcon, ShoppingCartIcon, TrashIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useWishlistStore } from '../store/wishlistStore'
 import { useAuthStore } from '../store/authStore'
@@ -9,7 +9,6 @@ import { Helmet } from 'react-helmet-async'
 const Wishlist = () => {
   const { wishlist, loadWishlist, removeFromWishlist, clearWishlist, isLoading } = useWishlistStore()
   const { addToCart } = useAuthStore()
-  const navigate = useNavigate()
   const [addingToCart, setAddingToCart] = useState({})
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { 
   PhotoIcon, 
   XMarkIcon, 
@@ -21,7 +21,6 @@ import {
   ClockIcon,
   TagIcon,
   ChatBubbleLeftIcon,
-  PencilIcon,
   CubeIcon,
   FireIcon,
   LightBulbIcon,
@@ -78,7 +77,6 @@ import {
   PrinterIcon,
   QrCodeIcon,
   ReceiptPercentIcon,
-  RocketLaunchIcon as RocketIcon,
   ScaleIcon,
   ServerIcon,
   ShareIcon,
@@ -101,7 +99,7 @@ const HomeSettings = () => {
   const [uploadingFavicon, setUploadingFavicon] = useState(false)
   const [logoPreview, setLogoPreview] = useState('')
   const [faviconPreview, setFaviconPreview] = useState('')
-  const [siteSettings, setSiteSettings] = useState({
+  const [, setSiteSettings] = useState({
     site_logo: { value: '' },
     site_favicon: { value: '' },
     site_name: { value: '' }

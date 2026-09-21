@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FaTag, FaCopy, FaCheckCircle } from 'react-icons/fa';
 import '../styles/CouponBanner.css';
 

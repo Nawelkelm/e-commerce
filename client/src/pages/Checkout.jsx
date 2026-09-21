@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { ordersAPI, paymentsAPI } from '../services/api'
@@ -8,12 +8,11 @@ import CouponInput from '../components/CouponInput.jsx'
 const Checkout = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const { cart, getCartTotal, clearCart, user, token } = useAuthStore()
+  const { cart, getCartTotal, clearCart, user } = useAuthStore()
   
   const [loading, setLoading] = useState(false)
   const [appliedCoupon, setAppliedCoupon] = useState(null)
   const [paymentMethod, setPaymentMethod] = useState('mercadopago') // 'mercadopago' o 'transfer'
-  const [bankData, setBankData] = useState(null)
   const [shippingMethod, setShippingMethod] = useState(null)
 
   // Obtener el shipping method del state del navigate
