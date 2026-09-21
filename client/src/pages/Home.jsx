@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import CouponBanner from '../components/CouponBanner.jsx'
+import Reveal from '../components/Reveal'
+import useReveal from '../hooks/useReveal'
 import {
   ChevronLeftIcon, ChevronRightIcon,
   TruckIcon, ShieldCheckIcon, ArrowPathIcon, ChatBubbleBottomCenterTextIcon,
@@ -49,6 +51,13 @@ const iconMap = {
 const getIcon = (name) => iconMap[name] || SparklesIcon
 
 const Home = () => {
+  // Entradas por scroll de cada sección. Los hooks van acá arriba porque las
+  // secciones se renderizan condicionalmente y un hook no puede ser condicional.
+  const revFeatures = useReveal()
+  const revCategorias = useReveal()
+  const revProductos = useReveal()
+  const revNewsletter = useReveal()
+
   const { addToCart } = useAuthStore()
   const [homeSettings, setHomeSettings] = useState(null)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -156,7 +165,7 @@ const Home = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[440px] lg:min-h-[480px]">
 
                 {/* Izquierda: tipografía editorial grande */}
-                <div className="flex flex-col justify-center py-14 lg:py-20 pr-0 lg:pr-14">
+                <div className="hero-enter flex flex-col justify-center py-14 lg:py-20 pr-0 lg:pr-14">
                   <div className="flex items-center gap-3 mb-6">
                     <span className="text-[10px] text-primary-500 font-bold uppercase tracking-[0.25em]">
                       Tienda online
@@ -224,7 +233,7 @@ const Home = () => {
         {/* ── Features — estilo editorial, borde superior primario ── */}
         {homeSettings?.featuresEnabled && homeSettings.features?.length > 0 && (
           <section className="py-12 border-y border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div ref={revFeatures.ref} className={`${revFeatures.className} max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`}>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
                 {homeSettings.features.map((feat, i) => (
                   <div key={i} className="border-t-2 border-primary-500 pt-5">
@@ -253,7 +262,7 @@ const Home = () => {
           const paper = section.backgroundColor || '#fafafa'
           return (
             <section key={section.id} style={{ backgroundColor: paper }} className="relative overflow-hidden py-16 sm:py-24">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+              <Reveal className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                 <div className="max-w-2xl">
                   <h2 style={{ color: ink }} className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.02]">
                     {section.title}
@@ -279,7 +288,7 @@ const Home = () => {
                   style={{ color: ink, opacity: 0.06 }}
                   className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 h-64 w-64 pointer-events-none"
                 />
-              </div>
+              </Reveal>
             </section>
           )
         })}
@@ -287,7 +296,7 @@ const Home = () => {
         {/* ── Categories — lista tipográfica numerada, no icon-cards ── */}
         {homeSettings?.categoriesEnabled && categories.length > 0 && (
           <section className="py-14 bg-surface-50 dark:bg-surface-950">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div ref={revCategorias.ref} className={`${revCategorias.className} max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`}>
 
               {/* Header editorial: label + regla + link */}
               <div className="flex items-center gap-3 mb-8">
@@ -301,7 +310,7 @@ const Home = () => {
               </div>
 
               {/* Lista tipográfica — no icon cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
+              <Reveal stagger className="grid grid-cols-1 sm:grid-cols-2 gap-0">
                 {categories.slice(0, 8).map((cat, i) => (
                   <Link
                     key={cat.id}
@@ -317,7 +326,7 @@ const Home = () => {
                     <ArrowRightIcon className="h-3.5 w-3.5 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                   </Link>
                 ))}
-              </div>
+              </Reveal>
             </div>
           </section>
         )}
@@ -325,7 +334,7 @@ const Home = () => {
         {/* ── Products — grid editorial asimétrico ── */}
         {products.length > 0 && (
           <section className="py-16 bg-white dark:bg-surface-950">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div ref={revProductos.ref} className={`${revProductos.className} max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`}>
 
               {/* Header editorial: label + regla + link */}
               <div className="flex items-center gap-3 mb-8">
@@ -459,7 +468,7 @@ const Home = () => {
         {/* ── Newsletter — sólido, sin gradiente ── */}
         {homeSettings?.newsletterEnabled && (
           <section className="py-16 bg-primary-900">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div ref={revNewsletter.ref} className={`${revNewsletter.className} max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`}>
               <div className="max-w-xl">
                 <h2 className="text-3xl font-bold text-white mb-2 tracking-tight">{homeSettings.newsletterTitle}</h2>
                 <p className="text-primary-200 mb-7 text-base">{homeSettings.newsletterSubtitle}</p>

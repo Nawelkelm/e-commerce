@@ -248,6 +248,41 @@ Las 15 migraciones-parche anteriores quedaron superadas y están archivadas en
 El SQL que se aplicaba a mano antes de todo esto quedó archivado en
 `docs/historico-sql/`, fuera del camino del CLI.
 
+## 6.e Animaciones del frontend
+
+Las secciones del home entran con una animación al aparecer en pantalla.
+Está resuelto con `hooks/useReveal.js` + el componente `components/Reveal.jsx`
+y clases en `index.css` (`.reveal`, `.reveal-in`, `.reveal-stagger`,
+`.hero-enter`).
+
+Decisiones:
+
+- **Sin librería de animación.** El bundle ya pesa ~1 MB; esto son unas pocas
+  líneas de CSS y un hook.
+- **IntersectionObserver, no el evento scroll**, que dispara en cada píxel.
+- **Sólo `transform` y `opacity`**, que el navegador compone sin recalcular
+  layout. Nunca `width`/`height`/`top`.
+- **`ease-out` en las entradas.** Un elemento que entra con `ease-in` duda al
+  arrancar y se siente roto.
+- **El contenedor interno es el que se anima, no la `<section>`**, para que
+  las bandas de color queden quietas y sólo el contenido suba dentro.
+
+Dos casos borde que tuvieron que resolverse explícitamente:
+
+1. **Ref por callback y no `useRef`.** Las secciones se renderizan recién
+   cuando llega la configuración del servidor. Con `useRef`, el efecto corría
+   con `ref.current` en `null`, salía temprano y no volvía a ejecutarse: las
+   secciones quedaban invisibles para siempre.
+2. **Revelar lo que quedó por encima del viewport.** Saltar al final de la
+   página (Ctrl+End, un ancla, o el scroll que restaura el navegador al volver
+   atrás) dejaba invisible todo lo salteado, porque esos elementos nunca
+   llegan a intersecar. Se contempla `boundingClientRect.top < 0`.
+
+`prefers-reduced-motion: reduce` desactiva todo el movimiento del sitio
+(bloque al final de `index.css`) y fuerza el contenido a visible. No se usa
+`animation: none` porque cancelaría animaciones con estado final `both` y el
+contenido quedaría invisible.
+
 ## 7. Seguridad
 
 **Sanitización de entrada:** `middleware/sanitize` limpia todos los strings de
