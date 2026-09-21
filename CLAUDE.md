@@ -48,7 +48,8 @@ npm run docker:rebuild          # reconstruye
 - `server/src/{controllers,models,routes,middleware,services,jobs,migrations,scripts}` — backend.
 - `server/src/index.js` — bootstrap (DB, sync, seeds, crons, listen).
 - `server/src/config/database.js` — conexión Sequelize.
-- `docs/DEPLOYMENT-COOLIFY.md` — despliegue.
+- `docs/DEPLOYMENT-VERCEL.md` — despliegue del frontend y variables del backend.
+- `docs/DEPLOYMENT-COOLIFY.md` — despliegue del backend en un VPS.
 
 ## Convenciones
 

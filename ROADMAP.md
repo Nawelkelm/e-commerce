@@ -64,7 +64,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | V1.11 | Quitar los overrides legacy que pisaban el sistema de diseño (`.badge`, `.badge-success`, `.badge-warning`, `.btn-secondary`): 14 reglas eliminadas | 🟡 | ✅ |
 | V1.12 | Migrar las hojas CSS sueltas a CSS Modules: **20 clases genéricas están definidas en más de una hoja** (10 pintan color), así que una página puede pintar a otra. Ej.: `.coupon-header` de CouponsPage pintaba la caja de cupón del checkout | 🟠 | ⬜ |
 | V1.13 | Colores legacy: 102 instancias de la paleta indigo/violeta vieja reemplazadas por Malbec; "Realizar pedido" pasa a `btn-cta` | 🟡 | ✅ |
-| V1.14 | Preparar el despliegue separado: frontend a Vercel (`vercel.json`, rewrites del SPA, `VITE_API_URL`) y `CORS_ORIGINS` del backend con el dominio de Vercel | 🟠 | ⬜ |
+| V1.14 | Preparar el despliegue separado: `client/vercel.json` con los rewrites del SPA + `docs/DEPLOYMENT-VERCEL.md` con variables y checklist. Se quitó el `wrangler.jsonc` de Cloudflare Workers, que contradecía el plan y estaba roto | 🟠 | ✅ |
 
 ---
 

@@ -11,13 +11,10 @@
     "install:all": "npm install && cd server && npm install && cd ../client && npm install",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "docker:rebuild": "docker-compose down && docker-compose up --build -d",
-    "deploy": "wrangler deploy",
-    "preview": "wrangler dev"
+    "docker:rebuild": "docker-compose down && docker-compose up --build -d"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "wrangler": "^4.96.0"
+    "concurrently": "^8.2.2"
   },
   "keywords": [
     "ecommerce",
