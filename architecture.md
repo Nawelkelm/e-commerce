@@ -141,7 +141,43 @@ Al arrancar: conecta a la DB → sincroniza el esquema **según el entorno** (ve
 
 > ⚠️ **Deuda técnica restante:** falta consolidar y versionar las migraciones (hay duplicados en `server/src/migrations/`) y adoptar `db:migrate` como mecanismo único de cambios de esquema en producción. Ver `ROADMAP.md` (V1.3 / M.8).
 
+## 6.b Contenido y cumplimiento legal (Argentina)
+
+Las páginas institucionales y legales viven en el modelo `ContentPage`
+(`/api/content-pages`) y se editan desde **Admin > Páginas**. Se siembran 9 al
+arrancar (`scripts/seedContentPages.js`, con `findOrCreate` para no pisar lo que
+el comercio ya escribió): términos, privacidad, cookies, envíos, devoluciones,
+FAQ, sobre nosotros, contacto y arrepentimiento.
+
+Las marcadas como `isSystem` se pueden editar y despublicar pero no eliminar, y
+no se les puede cambiar el slug, porque el footer y el checkout enlazan esas
+URLs. El frontend las resuelve con la ruta `:slug`, que va al final del bloque
+público para no tapar ninguna ruta fija; si el slug no existe cae en el 404.
+
+**Botón de arrepentimiento:** la Resolución 424/2020 obliga a todo e-commerce
+argentino a ofrecerlo para que el consumidor cancele una compra dentro de los
+10 días corridos. Vive en `/arrepentimiento`, guarda cada solicitud en
+`RegretRequest` con su fecha de resolución (para poder acreditar el plazo), y
+se gestiona en **Admin > Arrepentimientos**. El endpoint de alta es público
+—la ley exige que cualquiera pueda iniciarlo— con rate limit de 5 por hora
+por IP. El enlace y el de Defensa de las y los Consumidores están fijos en el
+footer y no dependen de la configuración, porque son obligatorios.
+
+> ⚠️ Los datos fiscales de las páginas legales vienen entre corchetes
+> (`[RAZÓN SOCIAL]`, `[CUIT]`, `[DOMICILIO COMERCIAL]`) y **cada tienda los
+> tiene que completar** antes de salir a producción.
+
 ## 7. Seguridad
+
+**Sanitización de entrada:** `middleware/sanitize` limpia todos los strings de
+cada request. Por defecto elimina todas las etiquetas HTML, que es lo correcto
+para el contenido que mandan los clientes. Los campos de `RICH_TEXT_FIELDS`
+(`htmlContent` de las plantillas de email y `content` de las páginas) son la
+excepción: los edita un administrador, así que se sanitizan con
+`USE_PROFILES: { html: true }`, que conserva el marcado seguro y descarta
+script, svg, mathml, los manejadores de eventos y los protocolos peligrosos.
+La decisión se toma por nombre de campo, así que funciona igual en objetos
+anidados y arrays. Cubierto por `server/tests/sanitize.test.js`.
 
 - Helmet con CSP + HSTS.
 - Rate limiting general + estricto para login/registro.

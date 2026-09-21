@@ -39,6 +39,8 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | M.6 | Backups automáticos de PostgreSQL (Coolify → S3/Cloudflare R2) | 🟠 | ⬜ |
 | M.7 | Smoke test post-deploy: script `npm run smoke` (health/DB, settings, categorías, productos, login admin, token, acceso admin). Checkout MP sandbox = manual. Falta correrlo contra prod | 🟠 | 🔄 |
 | M.8 | Limpiar migraciones duplicadas (coupons ×2, categoryIcons ×3) | 🟡 | ✅ |
+| M.9 | **Cumplimiento legal AR**: botón de arrepentimiento (Res. 424/2020), links a Defensa del Consumidor, páginas de términos/privacidad/cookies editables desde el panel | 🔴 | ✅ |
+| M.10 | **Completar los datos fiscales** de las páginas legales (razón social, CUIT, domicilio, jurisdicción) desde Admin > Páginas | 🔴 | ⬜ (acción del dueño) |
 
 ---
 
@@ -56,6 +58,8 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | V1.8 | Healthcheck del frontend en Docker/Coolify | 🟢 | ⬜ |
 | V1.9 | **Arreglar `npm run db:migrate`**: no hay `.sequelizerc` ni config, así que sequelize-cli apunta a `server/migrations/` (SQL suelto) en vez de `server/src/migrations/`. Hoy el comando no corre. Bloquea V1.3 | 🔴 | ⬜ |
 | V1.10 | Limpiar los 33 warnings de `react-hooks/exhaustive-deps` y volver a `--max-warnings 0` en el lint | 🟡 | ⬜ |
+| V1.11 | Quitar los overrides legacy de `.badge` en 4 hojas CSS del admin: son globales y pisan el badge del sistema de diseño (mismo problema que ya se corrigió en `.btn-primary`) | 🟡 | ⬜ |
+| V1.12 | Migrar las hojas CSS sueltas del admin a CSS Modules o a clases del sistema de diseño, para que dejen de filtrarse a toda la app | 🟡 | ⬜ |
 
 ---
 
@@ -80,6 +84,9 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 - `bull` instalado pero sin uso real; Redis declarado y no aprovechado.
 - 0 tests pese a Jest/Supertest configurados.
 - 33 warnings de `react-hooks/exhaustive-deps` en el frontend.
+- Hojas CSS del admin importadas sin scope (Vite las inyecta globales): siguen pisando `.badge` del sistema de diseño. Ver V1.11 / V1.12.
+- Bundle del frontend en un solo chunk de ~1 MB, sin code-splitting (ver V2.4).
+- El footer enlaza `/blog` por defecto pero no existe un módulo de blog.
 - `.env` local con claves OCA duplicadas (placeholders pisan valores reales).
 - Mezcla de almacenamiento de imágenes (Cloudinary + disco local) sin criterio único.
 
