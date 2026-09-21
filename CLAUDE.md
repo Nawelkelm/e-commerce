@@ -62,8 +62,9 @@ npm run docker:rebuild          # reconstruye
 3. **No** introducir nuevos `sequelize.sync({ alter: true })` ni depender de él en producción. Usar migraciones versionadas (ver `ROADMAP.md` V1.3).
 4. **No** dejar `console.log`/debug en commits (limpiar antes de cerrar tarea).
 5. **No** romper la compatibilidad con Docker/Coolify (servicios, puertos, healthchecks).
-6. **No** apuntar URLs ni CORS a dominios de Render; usar el dominio del cliente vía Coolify.
-7. Antes de borrar/sobrescribir un archivo, verificá que no esté importado.
+6. **No** apuntar URLs ni CORS a dominios de Render; usar el dominio del cliente.
+7. **No** mover el backend a funciones serverless: rompe los crons y las conexiones persistentes.
+8. Antes de borrar/sobrescribir un archivo, verificá que no esté importado.
 
 ## Flujo de trabajo por tarea (definición de "hecho")
 
@@ -75,6 +76,12 @@ npm run docker:rebuild          # reconstruye
 
 ## Notas de despliegue
 
-- Plataforma objetivo: **Coolify** (self-hosted). **No usar Render.**
-- Recursos: PostgreSQL + Redis gestionados por Coolify; backups automáticos a S3/R2.
+- **Frontend: Vercel.** El SPA de React se sirve desde Vercel.
+- **Backend: host con proceso persistente** (Coolify self-hosted es el plan).
+  Express tiene crons de stock y tracking, conexión sostenida a PostgreSQL y
+  colas Bull previstas: **no es portable a funciones serverless**.
+- **No usar Render.**
+- Recursos: PostgreSQL + Redis junto al backend; backups automáticos a S3/R2.
+- Al separar frontend y backend en dominios distintos: `CORS_ORIGINS` tiene que
+  incluir el dominio de Vercel, y `VITE_API_URL` apuntar al dominio del backend.
 - Cloudflare por delante (DNS + proxy + SSL). Detalle en `docs/DEPLOYMENT-COOLIFY.md`.
