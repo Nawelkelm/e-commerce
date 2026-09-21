@@ -53,8 +53,8 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 |---|-------|------|--------|
 | V1.1 | **Integrar Redis**: cache de productos/categorías/settings públicos | 🟠 | ⬜ |
 | V1.2 | **Colas Bull** sobre Redis para email y sync de tracking (sacar de cron inline) | 🟠 | ⬜ |
-| V1.3 | Migración inicial que cree el esquema base desde cero (hoy no existe: las 15 migraciones son parches sobre un esquema creado por `sync()`) | 🔴 | ⬜ |
-| V1.4 | `sync` sólo en desarrollo; en prod `sync()` sin alter (hecho) + migraciones explícitas (pendiente) | 🟠 | 🔄 |
+| V1.3 | Migración inicial que crea el esquema base desde cero. Las 15 migraciones-parche quedaron superadas y archivadas | 🔴 | ✅ |
+| V1.4 | `sync` sólo en desarrollo; en prod `sync()` sin alter + migraciones explícitas | 🟠 | ✅ |
 | V1.5 | **Tests** de flujos críticos: auth, checkout, órdenes, pagos (Jest + Supertest) | 🟠 | ⬜ |
 | V1.6 | CI básico (GitHub Actions): lint + tests + build en cada push a `main` y en cada PR | 🟠 | ✅ |
 | V1.7 | `/api/health` extendido (DB + Redis + versión) | 🟡 | ⬜ |
@@ -85,7 +85,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 ## Deuda técnica registrada
 
 - `sequelize.sync({ alter: true })` + conversión ENUM→VARCHAR en cada arranque **sólo en desarrollo** (resuelto para producción en V1.4).
-- El esquema base lo sigue creando `sequelize.sync()`: **no hay migraciones que creen `Users`, `Products`, `Orders` ni `Categories`**. Las 15 migraciones son parches incrementales sobre un esquema que ya existe, así que una base vacía todavía necesita `sync()` para arrancar. Resolverlo es V1.3.
+- El `initial-schema.sql` se generó con `pg_dump`: es exacto pero no es legible como migración de Sequelize. Si un modelo cambia, el cambio va en una migración nueva, nunca editando ese archivo.
 - `bull` instalado pero sin uso real; Redis declarado y no aprovechado.
 - 0 tests pese a Jest/Supertest configurados.
 - 33 warnings de `react-hooks/exhaustive-deps` en el frontend.

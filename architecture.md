@@ -227,12 +227,23 @@ sólo en bases preexistentes. Admite `-- --dry` para ver qué haría.
 
 En una base vacía no hace falta: ahí las migraciones corren normalmente.
 
-### Limitación actual
+### Esquema inicial
 
-> Las 15 migraciones son **parches incrementales**: no hay ninguna que cree
-> `Users`, `Products`, `Orders` ni `Categories`. Una instalación nueva sigue
-> dependiendo de `sync()` para el esquema base, y las migraciones aplican los
-> cambios posteriores. Generar la migración inicial completa es V1.3.
+`20240101000000-initial-schema.js` crea las 38 tablas con sus índices y claves
+foráneas, ejecutando `sql/initial-schema.sql`. Ese SQL se generó con `pg_dump`
+sobre una base construida por `sync()` desde los modelos, así que el esquema
+que producen las migraciones es **idéntico** al que producía `sync()`
+(verificado comparando ambos volcados línea por línea).
+
+La migración es idempotente: si detecta que las tablas ya existen, no hace
+nada. Eso permite aplicarla tanto en una base vacía como en una que ya venía
+funcionando con un esquema creado por `sync()`.
+
+Las 15 migraciones-parche anteriores quedaron superadas y están archivadas en
+`docs/migraciones-archivadas/` con el detalle de por qué.
+
+> No editar `sql/initial-schema.sql` a mano. Si cambia un modelo, el cambio va
+> en una migración nueva.
 
 El SQL que se aplicaba a mano antes de todo esto quedó archivado en
 `docs/historico-sql/`, fuera del camino del CLI.

@@ -24,6 +24,7 @@ const ShipmentTracking = require('./ShipmentTracking');
 const LogisticsCredentials = require('./LogisticsCredentials');
 const ShippingMethod = require('./ShippingMethod');
 const BankAccount = require('./BankAccount');
+const SmtpSettings = require('./SmtpSettings');
 const ContentPage = require('./ContentPage');
 const RegretRequest = require('./RegretRequest');
 
@@ -223,6 +224,7 @@ module.exports = {
   ReviewHelpful,
   EmailTemplate,
   EmailLog,
+  SmtpSettings,
   ContentPage,
   RegretRequest
 };
