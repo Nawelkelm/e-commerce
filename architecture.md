@@ -198,6 +198,45 @@ La identidad fiscal de un comprobante (punto de venta + tipo + número) tiene
 > Se descartó scrapear "Mis Comprobantes" del portal: no tiene web service
 > oficial y se rompe con cada cambio del sitio.
 
+## 6.d Migraciones de base de datos
+
+Los cambios de esquema van en `server/src/migrations/` como migraciones
+versionadas de `sequelize-cli`. El `.sequelizerc` de `server/` apunta ahí y a
+`src/config/sequelize-cli.js`, que lee la conexión de `DATABASE_URL` con
+`use_env_variable` (nunca credenciales en el archivo, que está versionado).
+
+```bash
+cd server
+npm run db:migrate:status   # qué está aplicado y qué falta
+npm run db:migrate          # aplica lo pendiente
+npm run db:migrate:undo     # revierte la última
+npm run db:baseline         # sólo una vez, ver abajo
+```
+
+### `db:baseline`: obligatorio en bases que ya estaban en uso
+
+El esquema de este proyecto lo construyó `sequelize.sync()`, no las
+migraciones. Por eso una base en uso tiene todas las tablas pero
+`SequelizeMeta` vacía: al correr `db:migrate` el CLI intenta aplicar
+migraciones viejas sobre un esquema que ya las tiene y **falla**
+(`column "averageRating" of relation "Products" already exists`).
+
+`npm run db:baseline` escribe ese historial faltante, marcando las
+migraciones actuales como aplicadas. Se corre **una sola vez por base**, y
+sólo en bases preexistentes. Admite `-- --dry` para ver qué haría.
+
+En una base vacía no hace falta: ahí las migraciones corren normalmente.
+
+### Limitación actual
+
+> Las 15 migraciones son **parches incrementales**: no hay ninguna que cree
+> `Users`, `Products`, `Orders` ni `Categories`. Una instalación nueva sigue
+> dependiendo de `sync()` para el esquema base, y las migraciones aplican los
+> cambios posteriores. Generar la migración inicial completa es V1.3.
+
+El SQL que se aplicaba a mano antes de todo esto quedó archivado en
+`docs/historico-sql/`, fuera del camino del CLI.
+
 ## 7. Seguridad
 
 **Sanitización de entrada:** `middleware/sanitize` limpia todos los strings de

@@ -53,13 +53,13 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 |---|-------|------|--------|
 | V1.1 | **Integrar Redis**: cache de productos/categorías/settings públicos | 🟠 | ⬜ |
 | V1.2 | **Colas Bull** sobre Redis para email y sync de tracking (sacar de cron inline) | 🟠 | ⬜ |
-| V1.3 | Reemplazar `sync({ alter: true })` + hack ENUM por migraciones versionadas | 🔴 | ⬜ |
+| V1.3 | Migración inicial que cree el esquema base desde cero (hoy no existe: las 15 migraciones son parches sobre un esquema creado por `sync()`) | 🔴 | ⬜ |
 | V1.4 | `sync` sólo en desarrollo; en prod `sync()` sin alter (hecho) + migraciones explícitas (pendiente) | 🟠 | 🔄 |
 | V1.5 | **Tests** de flujos críticos: auth, checkout, órdenes, pagos (Jest + Supertest) | 🟠 | ⬜ |
 | V1.6 | CI básico (GitHub Actions): lint + tests + build en cada push | 🟠 | ⬜ |
 | V1.7 | `/api/health` extendido (DB + Redis + versión) | 🟡 | ⬜ |
 | V1.8 | Healthcheck del frontend en Docker/Coolify | 🟢 | ⬜ |
-| V1.9 | **Arreglar `npm run db:migrate`** (ya hay una migración que lo necesita: `20260921120000-add-arca-sync-to-invoices`): no hay `.sequelizerc` ni config, así que sequelize-cli apunta a `server/migrations/` (SQL suelto) en vez de `server/src/migrations/`. Hoy el comando no corre. Bloquea V1.3 | 🔴 | ⬜ |
+| V1.9 | **Arreglar `npm run db:migrate`**: `.sequelizerc` + config por entorno + `db:baseline` para bases ya en uso. Las tres carpetas de migraciones quedaron consolidadas | 🔴 | ✅ |
 | V1.10 | Limpiar los 33 warnings de `react-hooks/exhaustive-deps` y volver a `--max-warnings 0` en el lint | 🟡 | ⬜ |
 | V1.11 | Quitar los overrides legacy de `.badge` en 4 hojas CSS del admin: son globales y pisan el badge del sistema de diseño (mismo problema que ya se corrigió en `.btn-primary`) | 🟡 | ⬜ |
 | V1.12 | Migrar las hojas CSS sueltas del admin a CSS Modules o a clases del sistema de diseño, para que dejen de filtrarse a toda la app | 🟡 | ⬜ |
@@ -85,7 +85,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 ## Deuda técnica registrada
 
 - `sequelize.sync({ alter: true })` + conversión ENUM→VARCHAR en cada arranque **sólo en desarrollo** (resuelto para producción en V1.4).
-- **Tres carpetas de migraciones distintas**: `migrations/` (raíz, 1 .sql), `server/migrations/` (8 .sql sueltos aplicados a mano) y `server/src/migrations/` (18 .js de sequelize-cli). Hay que consolidar (ver V1.9).
+- El esquema base lo sigue creando `sequelize.sync()`: **no hay migraciones que creen `Users`, `Products`, `Orders` ni `Categories`**. Las 15 migraciones son parches incrementales sobre un esquema que ya existe, así que una base vacía todavía necesita `sync()` para arrancar. Resolverlo es V1.3.
 - `bull` instalado pero sin uso real; Redis declarado y no aprovechado.
 - 0 tests pese a Jest/Supertest configurados.
 - 33 warnings de `react-hooks/exhaustive-deps` en el frontend.

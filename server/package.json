@@ -11,7 +11,10 @@
     "smoke:write": "node src/scripts/smokeTestWrite.js",
     "smoke:purchase": "node src/scripts/smokeTestPurchase.js",
     "db:migrate": "sequelize-cli db:migrate",
-    "db:seed": "sequelize-cli db:seed:all"
+    "db:seed": "sequelize-cli db:seed:all",
+    "db:migrate:status": "sequelize-cli db:migrate:status",
+    "db:migrate:undo": "sequelize-cli db:migrate:undo",
+    "db:baseline": "node src/scripts/dbBaseline.js"
   },
   "dependencies": {
     "@afipsdk/afip.js": "^1.2.1",

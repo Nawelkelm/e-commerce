@@ -1,0 +1,13 @@
+// Rutas para sequelize-cli.
+//
+// Sin este archivo el CLI busca en `server/migrations/` (donde sólo había SQL
+// suelto aplicado a mano) y en `config/config.json`, que no existe. Resultado:
+// `npm run db:migrate` no corría.
+const path = require('path');
+
+module.exports = {
+  config:            path.resolve(__dirname, 'src', 'config', 'sequelize-cli.js'),
+  'models-path':     path.resolve(__dirname, 'src', 'models'),
+  'migrations-path': path.resolve(__dirname, 'src', 'migrations'),
+  'seeders-path':    path.resolve(__dirname, 'src', 'seeders')
+};

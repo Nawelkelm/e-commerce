@@ -28,6 +28,11 @@ cd server && npm start          # producción
 cd server && npm test           # Jest (aún sin tests; ver ROADMAP V1.5)
 cd server && node --check src/index.js   # chequeo de sintaxis rápido
 
+# Migraciones (ver architecture.md 6.d)
+cd server && npm run db:migrate:status   # qué está aplicado
+cd server && npm run db:migrate          # aplica lo pendiente
+cd server && npm run db:baseline         # UNA vez, en bases ya en uso
+
 # Frontend
 cd client && npm run build      # build producción
 cd client && npm run lint       # ESLint (config en client/.eslintrc.cjs)
