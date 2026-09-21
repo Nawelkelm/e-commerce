@@ -76,6 +76,8 @@ npm run docker:rebuild          # reconstruye
 1. Si la tarea es no trivial, presentá un plan breve antes de tocar código.
 2. Implementá una tarea a la vez (seguí el orden de `ROADMAP.md`).
 3. Tests verdes si aplica (`cd server && npm test`) o verificación manual documentada.
+   El CI (`.github/workflows/ci.yml`) corre sintaxis + tests del backend y lint + build
+   del frontend en Node 18 (la versión de producción) en cada push a `main` y cada PR.
 4. Actualizá la documentación del módulo afectado (`architecture.md` / docs).
 5. Generá un mensaje de commit convencional.
 

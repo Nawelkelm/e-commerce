@@ -1,0 +1,84 @@
+name: CI
+
+# Corre en cada push a main y en cada PR hacia main.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Si se pushea varias veces seguidas, cancela las corridas viejas de la misma
+# rama: no tiene sentido gastar minutos en un commit que ya quedó atrás.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend (lint de sintaxis + tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Node 18 para igualar el runtime de producción (server/Dockerfile usa
+      # node:18-alpine). Probar en otra versión no diría nada útil.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Chequeo de sintaxis
+        # node --check sobre todo el código, no sólo index.js: jest únicamente
+        # carga lo que los tests importan, así que un error de sintaxis en un
+        # controller sin tests pasaría inadvertido hasta el arranque.
+        run: |
+          fallos=0
+          while IFS= read -r archivo; do
+            if ! node --check "$archivo"; then
+              echo "::error file=server/$archivo::error de sintaxis"
+              fallos=$((fallos + 1))
+            fi
+          done < <(find src -name '*.js')
+          echo "Archivos con error de sintaxis: $fallos"
+          test "$fallos" -eq 0
+
+      - name: Tests
+        run: npm test
+
+  frontend:
+    name: Frontend (lint + build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: ESLint
+        # Los errores bloquean; los warnings de exhaustive-deps quedan a la
+        # vista sin frenar el build (ver V1.10 en ROADMAP.md).
+        run: npm run lint
+
+      - name: Build de producción
+        run: npm run build

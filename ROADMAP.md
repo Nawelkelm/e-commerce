@@ -56,7 +56,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | V1.3 | Migración inicial que cree el esquema base desde cero (hoy no existe: las 15 migraciones son parches sobre un esquema creado por `sync()`) | 🔴 | ⬜ |
 | V1.4 | `sync` sólo en desarrollo; en prod `sync()` sin alter (hecho) + migraciones explícitas (pendiente) | 🟠 | 🔄 |
 | V1.5 | **Tests** de flujos críticos: auth, checkout, órdenes, pagos (Jest + Supertest) | 🟠 | ⬜ |
-| V1.6 | CI básico (GitHub Actions): lint + tests + build en cada push | 🟠 | ⬜ |
+| V1.6 | CI básico (GitHub Actions): lint + tests + build en cada push a `main` y en cada PR | 🟠 | ✅ |
 | V1.7 | `/api/health` extendido (DB + Redis + versión) | 🟡 | ⬜ |
 | V1.8 | Healthcheck del frontend en Docker/Coolify | 🟢 | ⬜ |
 | V1.9 | **Arreglar `npm run db:migrate`**: `.sequelizerc` + config por entorno + `db:baseline` para bases ya en uso. Las tres carpetas de migraciones quedaron consolidadas | 🔴 | ✅ |
@@ -89,6 +89,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 - `bull` instalado pero sin uso real; Redis declarado y no aprovechado.
 - 0 tests pese a Jest/Supertest configurados.
 - 33 warnings de `react-hooks/exhaustive-deps` en el frontend.
+- El CI no levanta PostgreSQL: los 31 tests son de lógica pura y no lo necesitan. Cuando lleguen los tests de integración de V1.5 hay que agregar el servicio al workflow.
 - La primera sincronización con ARCA de un comercio con historial largo tarda varias noches (cupo de 150 comprobantes por corrida). No hay forma de acelerarla sin chocar con los límites de AFIP.
 - Hojas CSS del admin importadas sin scope (Vite las inyecta globales): siguen pisando `.badge` del sistema de diseño. Ver V1.11 / V1.12.
 - Bundle del frontend en un solo chunk de ~1 MB, sin code-splitting (ver V2.4).

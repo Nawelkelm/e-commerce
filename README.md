@@ -1,5 +1,7 @@
 # TiendaKit — Plataforma E-commerce para PyMEs
 
+[![CI](https://github.com/Nawelkelm/e-commerce/actions/workflows/ci.yml/badge.svg)](https://github.com/Nawelkelm/e-commerce/actions/workflows/ci.yml)
+
 Plataforma e-commerce B2C white-label lista para vender. React + Node.js + PostgreSQL + MercadoPago. Cada cliente despliega con su marca y dominio.
 
 ## 🚀 Características
