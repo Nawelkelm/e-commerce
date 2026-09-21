@@ -523,11 +523,9 @@ const Checkout = () => {
                 type="submit"
                 form="checkout-form"
                 disabled={loading}
-                className={`w-full mt-6 py-3 px-4 rounded-lg font-medium transition-colors ${
-                  loading
-                    ? 'bg-surface-400 cursor-not-allowed'
-                    : 'bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
-                } text-white`}
+                className={`btn-cta btn-lg w-full mt-6 ${
+                  loading ? 'opacity-60 cursor-not-allowed' : ''
+                }`}
               >
                 {loading ? 'Procesando...' : 'Realizar pedido'}
               </button>

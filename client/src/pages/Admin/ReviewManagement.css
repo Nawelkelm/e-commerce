@@ -426,7 +426,7 @@
 .dark .filters-section { background-color: #262626; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
 .dark .filter-icon { color: #737373; }
 .dark .filter-select { background-color: #1a1a1a; border-color: #404040; color: #fafafa; }
-.dark .filter-select:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.2); }
+.dark .filter-select:focus { border-color: #ab1f64; box-shadow: 0 0 0 3px rgba(124,58,237,0.2); }
 .dark .stat-label { color: #a3a3a3; }
 .dark .stat-value { color: #fafafa; }
 .dark .empty-state { background-color: #262626; color: #a3a3a3; }
@@ -438,7 +438,7 @@
 .dark .status-badge.approved { background-color: #052e16; color: #4ade80; }
 .dark .status-badge.pending { background-color: #451a03; color: #fbbf24; }
 .dark .review-user-info strong { color: #fafafa; }
-.dark .verified-badge { color: #a78bfa; }
+.dark .verified-badge { color: #f491be; }
 .dark .review-date { color: #737373; }
 .dark .review-title-admin { color: #fafafa; }
 .dark .review-comment-admin { color: #d4d4d4; }
@@ -450,18 +450,18 @@
 .dark .review-stats-row { color: #a3a3a3; }
 .dark .review-actions-admin { border-top-color: #404040; }
 .dark .action-button.approve { background-color: #052e16; border-color: #059669; color: #4ade80; }
-.dark .action-button.respond { background-color: #1e1b4b; border-color: #7c3aed; color: #c4b5fd; }
+.dark .action-button.respond { background-color: #1e1b4b; border-color: #ab1f64; color: #f9bde9; }
 .dark .action-button.delete { background-color: #450a0a; border-color: #dc2626; color: #f87171; }
 .dark .response-form { border-top-color: #404040; }
 .dark .response-textarea { background: #1a1a1a; border-color: #404040; color: #fafafa; }
-.dark .response-textarea:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.2); }
+.dark .response-textarea:focus { border-color: #ab1f64; box-shadow: 0 0 0 3px rgba(124,58,237,0.2); }
 .dark .cancel-response { background-color: #262626; border-color: #404040; color: #a3a3a3; }
 .dark .cancel-response:hover:not(:disabled) { background-color: #1a1a1a; }
-.dark .submit-response { background-color: #7c3aed; }
-.dark .submit-response:hover:not(:disabled) { background-color: #6d28d9; }
+.dark .submit-response { background-color: #ab1f64; }
+.dark .submit-response:hover:not(:disabled) { background-color: #801550; }
 .dark .pagination-admin { background-color: #262626; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
 .dark .pagination-button-admin { background-color: #1a1a1a; border-color: #404040; color: #e5e5e5; }
-.dark .pagination-button-admin:hover:not(:disabled) { background-color: #262626; border-color: #7c3aed; color: #a78bfa; }
+.dark .pagination-button-admin:hover:not(:disabled) { background-color: #262626; border-color: #ab1f64; color: #f491be; }
 .dark .pagination-info-admin { color: #a3a3a3; }
 
 /* Responsive */

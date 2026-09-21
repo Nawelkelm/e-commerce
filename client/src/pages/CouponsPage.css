@@ -9,7 +9,7 @@
 
 /* Hero Section */
 .coupons-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ab1f64 0%, #801550 100%);
   padding: 4rem 1rem;
   text-align: center;
   color: white;
@@ -17,7 +17,7 @@
 }
 
 :root.dark .coupons-hero {
-  background: linear-gradient(135deg, #4c51bf 0%, #553c9a 100%);
+  background: linear-gradient(135deg, #801550 0%, #5b1039 100%);
 }
 
 .hero-content {
@@ -144,7 +144,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ab1f64 0%, #801550 100%);
   color: white;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -187,11 +187,11 @@
 .coupon-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  border-color: #667eea;
+  border-color: #ab1f64;
 }
 
 .coupon-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ab1f64 0%, #801550 100%);
   padding: 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -455,7 +455,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ab1f64 0%, #801550 100%);
   color: white;
   font-size: 1.5rem;
   font-weight: 700;

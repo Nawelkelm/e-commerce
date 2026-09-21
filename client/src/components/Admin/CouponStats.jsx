@@ -101,7 +101,7 @@ const CouponStats = ({ couponId, onClose }) => {
           {/* Stats Grid */}
           <div className="stats-grid">
             <div className="stat-card">
-              <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+              <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #ab1f64 0%, #801550 100%)' }}>
                 <FaChartLine />
               </div>
               <div className="stat-content">

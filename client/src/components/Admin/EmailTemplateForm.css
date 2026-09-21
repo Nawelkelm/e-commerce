@@ -84,7 +84,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #ab1f64;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
@@ -119,7 +119,7 @@
 
 .btn-add {
   padding: 12px 20px;
-  background: #667eea;
+  background: #ab1f64;
   color: white;
   border: none;
   border-radius: 8px;
@@ -213,13 +213,13 @@
 .dark .form-group textarea { background: #1a1a1a; border-color: #404040; color: #fafafa; }
 .dark .form-group input:focus,
 .dark .form-group select:focus,
-.dark .form-group textarea:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.2); }
+.dark .form-group textarea:focus { border-color: #ab1f64; box-shadow: 0 0 0 3px rgba(124,58,237,0.2); }
 .dark .form-group input:disabled,
 .dark .form-group select:disabled,
 .dark .form-group textarea:disabled { background-color: #1a1a1a; color: #737373; }
 .dark .help-text { color: #737373; }
-.dark .btn-add { background: #7c3aed; }
-.dark .btn-add:hover:not(:disabled) { background: #6d28d9; }
+.dark .btn-add { background: #ab1f64; }
+.dark .btn-add:hover:not(:disabled) { background: #801550; }
 .dark .variable-tag { background: #404040; color: #e5e5e5; }
 .dark .remove-tag { color: #737373; }
 .dark .remove-tag:hover:not(:disabled) { background: #525252; color: #e5e5e5; }

@@ -82,7 +82,7 @@
 
 .search-box input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #ab1f64;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
@@ -132,7 +132,7 @@
 }
 
 .coupons-table thead {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ab1f64 0%, #801550 100%);
   color: white;
 }
 
@@ -179,7 +179,7 @@
   font-family: 'Courier New', monospace;
   font-weight: 700;
   font-size: 15px;
-  color: #667eea;
+  color: #ab1f64;
   letter-spacing: 1px;
 }
 
@@ -227,15 +227,6 @@
 }
 
 /* Badges */
-.badge {
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
 .badge-active {
   background: #d4edda;
   color: #155724;
@@ -360,7 +351,7 @@
   width: 50px;
   height: 50px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #667eea;
+  border-top: 4px solid #ab1f64;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 20px;
@@ -409,9 +400,9 @@
 }
 
 .pagination button:hover:not(:disabled) {
-  background: #667eea;
+  background: #ab1f64;
   color: white;
-  border-color: #667eea;
+  border-color: #ab1f64;
 }
 
 .pagination button:disabled {
@@ -498,8 +489,6 @@
 }
 
 /* ─── Dark Mode ─── */
-.dark .btn-secondary { background: #262626; color: #e5e5e5; border-color: #404040; }
-.dark .btn-secondary:hover { background: #404040; }
 .dark .btn-stats { background: #1e3a5f; color: #60a5fa; }
 .dark .btn-stats:hover { background: #2563eb; color: white; }
 .dark .btn-edit { background: #451a03; color: #fb923c; }
@@ -513,7 +502,7 @@
 .dark .empty-state h3 { color: #e5e5e5; }
 .dark .empty-state p { color: #737373; }
 .dark .empty-icon { color: #404040; }
-.dark .spinner { border-color: #404040; border-top-color: #8b5cf6; }
+.dark .spinner { border-color: #404040; border-top-color: #d4277a; }
 .dark .modal-content { background: #262626; }
 .dark .modal-header { border-bottom-color: #404040; }
 .dark .modal-header h2 { color: #fafafa; }
@@ -522,7 +511,7 @@
 .dark .btn-close { background: #404040; color: #a3a3a3; }
 .dark .btn-close:hover { background: #ef4444; color: white; }
 .dark .pagination button { background: #262626; border-color: #404040; color: #e5e5e5; }
-.dark .pagination button:hover:not(:disabled) { background: #7c3aed; color: white; border-color: #7c3aed; }
+.dark .pagination button:hover:not(:disabled) { background: #ab1f64; color: white; border-color: #ab1f64; }
 .dark .pagination span { color: #a3a3a3; }
 .dark .text-muted { color: #737373; }
 .dark .usage-cell { color: #e5e5e5; }

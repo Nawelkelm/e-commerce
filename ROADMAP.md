@@ -61,9 +61,9 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | V1.8 | Healthcheck del frontend en Docker/Coolify | 🟢 | ⬜ |
 | V1.9 | **Arreglar `npm run db:migrate`**: `.sequelizerc` + config por entorno + `db:baseline` para bases ya en uso. Las tres carpetas de migraciones quedaron consolidadas | 🔴 | ✅ |
 | V1.10 | Limpiar los 33 warnings de `react-hooks/exhaustive-deps` y volver a `--max-warnings 0` en el lint | 🟡 | ⬜ |
-| V1.11 | Quitar los overrides legacy de `.badge` en 4 hojas CSS del admin: son globales y pisan el badge del sistema de diseño (mismo problema que ya se corrigió en `.btn-primary`) | 🟡 | ⬜ |
-| V1.12 | Migrar las hojas CSS sueltas del admin a CSS Modules o a clases del sistema de diseño, para que dejen de filtrarse a toda la app | 🟡 | ⬜ |
-| V1.13 | Colores legacy sueltos en el checkout: el banner de cupón usa el degradado indigo viejo y "Realizar pedido" es verde en vez de usar un token de la paleta | 🟡 | ⬜ |
+| V1.11 | Quitar los overrides legacy que pisaban el sistema de diseño (`.badge`, `.badge-success`, `.badge-warning`, `.btn-secondary`): 14 reglas eliminadas | 🟡 | ✅ |
+| V1.12 | Migrar las hojas CSS sueltas a CSS Modules: **20 clases genéricas están definidas en más de una hoja** (10 pintan color), así que una página puede pintar a otra. Ej.: `.coupon-header` de CouponsPage pintaba la caja de cupón del checkout | 🟠 | ⬜ |
+| V1.13 | Colores legacy: 102 instancias de la paleta indigo/violeta vieja reemplazadas por Malbec; "Realizar pedido" pasa a `btn-cta` | 🟡 | ✅ |
 | V1.14 | Preparar el despliegue separado: frontend a Vercel (`vercel.json`, rewrites del SPA, `VITE_API_URL`) y `CORS_ORIGINS` del backend con el dominio de Vercel | 🟠 | ⬜ |
 
 ---
@@ -91,7 +91,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 - 33 warnings de `react-hooks/exhaustive-deps` en el frontend.
 - El CI no levanta PostgreSQL: los 31 tests son de lógica pura y no lo necesitan. Cuando lleguen los tests de integración de V1.5 hay que agregar el servicio al workflow.
 - La primera sincronización con ARCA de un comercio con historial largo tarda varias noches (cupo de 150 comprobantes por corrida). No hay forma de acelerarla sin chocar con los límites de AFIP.
-- Hojas CSS del admin importadas sin scope (Vite las inyecta globales): siguen pisando `.badge` del sistema de diseño. Ver V1.11 / V1.12.
+- Las hojas CSS sueltas no están en una `@layer`, así que **le ganan al sistema de diseño en la cascada sin importar la especificidad** (los estilos sin capa vencen a los de `@layer components`). Por eso una regla suelta pisaba el botón en toda la app. Ver V1.12.
 - Bundle del frontend en un solo chunk de ~1 MB, sin code-splitting (ver V2.4).
 - No existe módulo de blog (el enlace roto del footer ya se quitó).
 - `.env` local con claves OCA duplicadas (placeholders pisan valores reales).
