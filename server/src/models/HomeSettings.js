@@ -222,8 +222,7 @@ const HomeSettings = sequelize.define('HomeSettings', {
     type: DataTypes.JSONB,
     defaultValue: [
       { text: 'Sobre Nosotros', url: '/sobre-nosotros' },
-      { text: 'Contacto', url: '/contacto' },
-      { text: 'Blog', url: '/blog' }
+      { text: 'Contacto', url: '/contacto' }
     ]
   },
   footerColumn2Title: {

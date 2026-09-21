@@ -68,6 +68,9 @@ const Layout = () => {
   const navLinks = [
     { to: '/', label: 'Inicio' },
     { to: '/productos', label: 'Productos' },
+    // Obligatorio por la Res. 424/2020: el boton de arrepentimiento tiene que
+    // estar visible en el sitio, no solo en el footer.
+    { to: '/arrepentimiento', label: 'Arrepentimiento' },
   ]
 
   const isActive = (path) => location.pathname === path

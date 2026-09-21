@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { ordersAPI, paymentsAPI } from '../services/api'
 import { getImageUrl, PLACEHOLDER_IMAGE } from '../utils/imageHelpers'
@@ -21,18 +21,48 @@ const Checkout = () => {
       setShippingMethod(location.state.shippingMethod)
     }
   }, [location])
-  const [formData, setFormData] = useState({
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    email: user?.email || '',
-    phone: '',
-    street: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: 'Argentina',
-    customerNotes: ''
+  // El usuario puede tener una direccion de envio guardada en su perfil:
+  // se precarga para que no tenga que volver a tipearla en cada compra.
+  const [formData, setFormData] = useState(() => {
+    const guardada = user?.shippingAddress || {}
+    return {
+      firstName: guardada.firstName || user?.firstName || '',
+      lastName: guardada.lastName || user?.lastName || '',
+      email: user?.email || '',
+      phone: guardada.phone || user?.phone || '',
+      street: guardada.street || '',
+      city: guardada.city || '',
+      state: guardada.state || '',
+      postalCode: guardada.postalCode || '',
+      country: guardada.country || 'Argentina',
+      customerNotes: ''
+    }
   })
+
+  // El usuario puede llegar despues de que el store termine de hidratarse.
+  // Se completan solo los campos que sigan vacios, para no pisar lo tipeado.
+  useEffect(() => {
+    if (!user) return
+    const guardada = user.shippingAddress || {}
+    const relleno = {
+      firstName: guardada.firstName || user.firstName,
+      lastName: guardada.lastName || user.lastName,
+      email: user.email,
+      phone: guardada.phone || user.phone,
+      street: guardada.street,
+      city: guardada.city,
+      state: guardada.state,
+      postalCode: guardada.postalCode,
+      country: guardada.country
+    }
+    setFormData(prev => {
+      const siguiente = { ...prev }
+      for (const [campo, valor] of Object.entries(relleno)) {
+        if (!prev[campo] && valor) siguiente[campo] = valor
+      }
+      return siguiente
+    })
+  }, [user])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -503,7 +533,14 @@ const Checkout = () => {
               </button>
               
               <p className="mt-4 text-xs text-surface-500 dark:text-surface-400 text-center">
-                Al hacer clic en "Realizar pedido", aceptas nuestros términos y condiciones.
+                Al hacer clic en &quot;Realizar pedido&quot;, aceptás nuestros{' '}
+                <Link to="/terminos" className="underline underline-offset-2 hover:text-primary-600 dark:hover:text-primary-400">
+                  términos y condiciones
+                </Link>{' '}
+                y nuestra{' '}
+                <Link to="/privacidad" className="underline underline-offset-2 hover:text-primary-600 dark:hover:text-primary-400">
+                  política de privacidad
+                </Link>.
               </p>
             </div>
           </div>
