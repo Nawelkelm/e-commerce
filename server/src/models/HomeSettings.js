@@ -209,6 +209,36 @@ const HomeSettings = sequelize.define('HomeSettings', {
     type: DataTypes.STRING(200),
     defaultValue: ''
   },
+  // Datos del comercio (identidad legal).
+  // Los completa cada tienda desde el panel y alimentan las variables de las
+  // paginas institucionales ({{razonSocial}}, {{cuit}}, etc.), asi que no hay
+  // que escribirlos a mano en el texto de cada pagina.
+  legalBusinessName: {
+    type: DataTypes.STRING(200),
+    defaultValue: '',
+    comment: 'Razon social del comercio'
+  },
+  legalCuit: {
+    type: DataTypes.STRING(20),
+    defaultValue: '',
+    comment: 'CUIT del comercio'
+  },
+  legalTaxCategory: {
+    type: DataTypes.STRING(60),
+    defaultValue: '',
+    comment: 'Condicion fiscal: Responsable Inscripto, Monotributo, Exento...'
+  },
+  legalAddress: {
+    type: DataTypes.STRING(250),
+    defaultValue: '',
+    comment: 'Domicilio comercial o fiscal declarado'
+  },
+  legalJurisdiction: {
+    type: DataTypes.STRING(150),
+    defaultValue: '',
+    comment: 'Jurisdiccion competente ante controversias'
+  },
+
   // Footer Links Columns (up to 3 columns)
   footerLinksEnabled: {
     type: DataTypes.BOOLEAN,

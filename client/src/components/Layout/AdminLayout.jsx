@@ -21,6 +21,7 @@ import {
   ArrowUturnLeftIcon,
   KeyIcon,
   BuildingLibraryIcon,
+  BuildingOffice2Icon,
   ArrowRightOnRectangleIcon as LogoutIcon,
   Bars3Icon as MenuIcon,
   XMarkIcon as XIcon,
@@ -81,6 +82,7 @@ const AdminLayout = () => {
         { name: 'SMTP', href: '/admin/smtp', icon: CogIcon },
         { name: 'Reseñas', href: '/admin/resenas', icon: StarIcon },
         { name: 'Personalizar', href: '/admin/home', icon: PaintBrushIcon },
+        { name: 'Datos del comercio', href: '/admin/datos-comercio', icon: BuildingOffice2Icon },
         { name: 'Páginas', href: '/admin/paginas', icon: DocumentTextIcon },
       ]
     },

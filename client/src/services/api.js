@@ -160,10 +160,17 @@ export const contentPagesAPI = {
   getBySlug: (slug) => api.get(`/content-pages/${slug}`),
   // Administracion
   getAll: () => api.get('/content-pages/admin/all'),
+  getVariables: () => api.get('/content-pages/admin/variables'),
   getById: (id) => api.get(`/content-pages/admin/${id}`),
   create: (data) => api.post('/content-pages/admin', data),
   update: (id, data) => api.put(`/content-pages/admin/${id}`, data),
   delete: (id) => api.delete(`/content-pages/admin/${id}`),
+}
+
+// Configuracion del home y datos del comercio
+export const homeSettingsAPI = {
+  get: () => api.get('/home-settings'),
+  update: (data) => api.put('/home-settings', data),
 }
 
 // Boton de arrepentimiento (Res. 424/2020)

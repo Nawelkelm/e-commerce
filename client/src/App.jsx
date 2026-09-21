@@ -50,6 +50,7 @@ import EmailTemplateManagement from './pages/Admin/EmailTemplateManagement'
 import SmtpSettings from './pages/Admin/SmtpSettings'
 import ReviewManagement from './pages/Admin/ReviewManagement'
 import ContentPages from './pages/Admin/ContentPages'
+import StoreLegalData from './pages/Admin/StoreLegalData'
 import RegretRequests from './pages/Admin/RegretRequests'
 import StockDashboard from './pages/StockDashboard'
 
@@ -215,6 +216,7 @@ function App() {
               <Route path="stock" element={<StockDashboard />} />
               <Route path="analytics" element={<AdminAnalytics />} />
               <Route path="home" element={<AdminHomeSettings />} />
+              <Route path="datos-comercio" element={<StoreLegalData />} />
               <Route path="paginas" element={<ContentPages />} />
               <Route path="arrepentimientos" element={<RegretRequests />} />
               <Route path="settings" element={<AdminSettings />} />

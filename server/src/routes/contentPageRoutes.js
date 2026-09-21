@@ -40,6 +40,7 @@ router.get('/', contentPageController.getPublishedPages);
 
 // Rutas de administracion. Van antes de /:slug para que "admin" no se
 // interprete como el slug de una pagina.
+router.get('/admin/variables', adminAuth, requirePermission('settings.read'), contentPageController.getVariables);
 router.get('/admin/all', adminAuth, requirePermission('settings.read'), contentPageController.getAllPages);
 router.get('/admin/:id', adminAuth, requirePermission('settings.read'), contentPageController.getPageById);
 router.post('/admin', adminAuth, requirePermission('settings.update'), pageValidation, contentPageController.createPage);

@@ -33,6 +33,7 @@ const ContentPages = () => {
   const [editando, setEditando] = useState(null) // null = sin editor abierto
   const [form, setForm] = useState(VACIA)
   const [guardando, setGuardando] = useState(false)
+  const [variables, setVariables] = useState([])
 
   const cargar = async () => {
     try {
@@ -45,7 +46,13 @@ const ContentPages = () => {
     }
   }
 
-  useEffect(() => { cargar() }, [])
+  useEffect(() => {
+    cargar()
+    // Las variables se muestran como ayuda en el editor.
+    contentPagesAPI.getVariables()
+      .then(({ data }) => setVariables(data.variables || []))
+      .catch(() => setVariables([]))
+  }, [])
 
   const abrirNueva = () => {
     setForm(VACIA)
@@ -267,6 +274,44 @@ const ContentPages = () => {
                   Se admiten etiquetas como &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;strong&gt; y
                   &lt;a&gt;. Los scripts se eliminan al guardar.
                 </p>
+
+                {variables.length > 0 && (
+                  <div className="mt-3 rounded-lg bg-surface-100 p-3 dark:bg-surface-800">
+                    <p className="text-xs font-medium text-surface-700 dark:text-surface-300">
+                      Variables disponibles
+                    </p>
+                    <p className="mt-0.5 text-xs text-surface-500 dark:text-surface-400">
+                      Escribilas en el contenido y se reemplazan solas por los datos de
+                      tu tienda. Así no tenés que repetirlos en cada página.
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {variables.map(v => (
+                        <button
+                          key={v.key}
+                          type="button"
+                          onClick={() => setForm(prev => ({
+                            ...prev,
+                            content: `${prev.content}{{${v.key}}}`
+                          }))}
+                          title={v.valor ? `${v.label}: ${v.valor}` : `${v.label} — sin completar (${v.origen})`}
+                          className={`rounded px-2 py-1 font-mono text-[11px] transition-colors ${
+                            v.valor
+                              ? 'bg-surface-200 text-surface-700 hover:bg-surface-300 dark:bg-surface-700 dark:text-surface-200'
+                              : 'bg-warning-100 text-warning-700 hover:bg-warning-200 dark:bg-warning-500/20 dark:text-warning-400'
+                          }`}
+                        >
+                          {`{{${v.key}}}`}
+                        </button>
+                      ))}
+                    </div>
+                    {variables.some(v => !v.valor) && (
+                      <p className="mt-2 text-xs text-warning-700 dark:text-warning-400">
+                        Las resaltadas todavía no tienen valor. Cargalas en
+                        Datos del comercio.
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div>

@@ -19,8 +19,8 @@ const DEFAULT_PAGES = [
     excerpt: 'Condiciones de uso del sitio y de compra.',
     content: `
 <h2>1. Identificación del vendedor</h2>
-<p>Este sitio es operado por <strong>[RAZÓN SOCIAL]</strong>, CUIT <strong>[CUIT]</strong>,
-con domicilio en <strong>[DOMICILIO COMERCIAL]</strong>.</p>
+<p>Este sitio es operado por <strong>{{razonSocial}}</strong>, CUIT <strong>{{cuit}}</strong>,
+con domicilio en <strong>{{domicilioComercial}}</strong>.</p>
 
 <h2>2. Aceptación</h2>
 <p>Al navegar y comprar en este sitio aceptás estos Términos y Condiciones. Si no estás
@@ -38,10 +38,10 @@ perfeccionada cuando se acredita el pago. Si un producto no tuviera stock, te va
 contactar para ofrecerte un reemplazo o la devolución del importe.</p>
 
 <h2>5. Facturación</h2>
-<p>[RAZÓN SOCIAL] se encuentra inscripta como <strong>Responsable Inscripto</strong>
-ante la AFIP. Emitimos factura electrónica por cada compra: factura B a consumidor
-final y factura A a quienes informen su CUIT y condición de IVA. Para recibir factura A
-cargá esos datos en tu perfil antes de confirmar el pedido.</p>
+<p>{{razonSocial}} reviste la condición de <strong>{{condicionFiscal}}</strong> ante la
+AFIP. Emitimos factura electrónica por cada compra. Si necesitás que la factura salga a
+nombre de tu empresa, cargá tu CUIT y condición frente al IVA en tu perfil antes de
+confirmar el pedido.</p>
 
 <h2>6. Medios de pago</h2>
 <p>Aceptamos los medios de pago que se muestran en el checkout. Las operaciones con
@@ -65,15 +65,15 @@ Ley 24.240, además de la garantía del fabricante cuando corresponda.</p>
 
 <h2>10. Propiedad intelectual</h2>
 <p>Los contenidos del sitio (textos, imágenes, logos y diseño) son propiedad de
-[RAZÓN SOCIAL] o se utilizan con autorización, y no pueden reproducirse sin
+{{razonSocial}} o se utilizan con autorización, y no pueden reproducirse sin
 consentimiento previo.</p>
 
 <h2>11. Ley aplicable y jurisdicción</h2>
 <p>Estos términos se rigen por las leyes de la República Argentina. Ante cualquier
-controversia serán competentes los tribunales ordinarios de [JURISDICCIÓN].</p>
+controversia serán competentes los tribunales ordinarios de {{jurisdiccion}}.</p>
 
 <h2>12. Contacto</h2>
-<p>Por cualquier consulta escribinos a <strong>[EMAIL DE CONTACTO]</strong>.</p>
+<p>Por cualquier consulta escribinos a <strong>{{email}}</strong>.</p>
 `.trim()
   },
   {
@@ -82,7 +82,7 @@ controversia serán competentes los tribunales ordinarios de [JURISDICCIÓN].</p
     sortOrder: 20,
     excerpt: 'Qué datos recolectamos y cómo los usamos.',
     content: `
-<p>En <strong>[RAZÓN SOCIAL]</strong> (CUIT [CUIT]) protegemos tus datos personales
+<p>En <strong>{{razonSocial}}</strong> (CUIT {{cuit}}) protegemos tus datos personales
 conforme a la <strong>Ley 25.326 de Protección de Datos Personales</strong>.</p>
 
 <h2>1. Qué datos recolectamos</h2>
@@ -107,7 +107,7 @@ ni cedemos tus datos a terceros con fines publicitarios.</p>
 
 <h2>4. Tus derechos</h2>
 <p>Podés acceder, rectificar, actualizar o suprimir tus datos personales escribiendo a
-<strong>[EMAIL DE CONTACTO]</strong>. El titular de los datos tiene la facultad de
+<strong>{{email}}</strong>. El titular de los datos tiene la facultad de
 ejercer el derecho de acceso en forma gratuita a intervalos no inferiores a seis meses,
 salvo que acredite un interés legítimo (art. 14, inciso 3 de la Ley 25.326).</p>
 <p>La <strong>Agencia de Acceso a la Información Pública</strong>, en su carácter de
@@ -163,10 +163,15 @@ acreditación del pago.</p>
 <h2>Costos</h2>
 <p>El costo se calcula automáticamente al ingresar tu domicilio, antes de confirmar la
 compra, así que siempre sabés cuánto pagás antes de cerrar el pedido.</p>
+<p>[Si hacés envío gratis a partir de cierto monto, indicalo acá.]</p>
 
 <h2>Seguimiento</h2>
 <p>Cuando despachamos tu pedido te enviamos un correo con el número de seguimiento.
 También podés consultarlo desde <a href="/pedidos">Mis pedidos</a>.</p>
+
+<h2>Retiro sin cargo</h2>
+<p>[Si ofrecés retiro en un local o punto de entrega, detallá acá el domicilio, los días
+y el horario. Si sólo hacés envíos, borrá esta sección desde Admin &gt; Páginas.]</p>
 
 <h2>Si no estás cuando llega</h2>
 <p>El correo deja un aviso de visita e intenta una nueva entrega. Pasados los intentos,
@@ -185,6 +190,11 @@ que recibís el producto, sin justificar el motivo y sin ningún costo, según e
 34 de la Ley 24.240. El producto debe estar sin uso y con su embalaje original.</p>
 <p>Para iniciar el trámite usá el <a href="/arrepentimiento">Botón de arrepentimiento</a>.
 El costo de la devolución corre por nuestra cuenta.</p>
+
+<h2>Cambios</h2>
+<p>[Si aceptás cambios voluntarios además del arrepentimiento que exige la ley, indicá acá
+el plazo y las condiciones. Si sólo aplicás el plazo legal, borrá esta sección desde
+Admin &gt; Páginas.]</p>
 
 <h2>Producto fallado o equivocado</h2>
 <p>Si el producto llegó dañado, fallado o no es el que pediste, contactanos y lo
@@ -228,11 +238,11 @@ equivocado, lo resolvemos sin costo aunque ya hayan pasado esos 10 días. Ver
 <a href="/devoluciones">Cambios y Devoluciones</a>.</p>
 
 <h2>¿Emiten factura?</h2>
-<p>Sí, emitimos factura electrónica por cada compra. Si necesitás factura A, cargá tu
-CUIT y condición fiscal en tu perfil antes de comprar.</p>
+<p>Sí, emitimos factura electrónica por cada compra. Si necesitás que salga a nombre de
+tu empresa, cargá tu CUIT y condición frente al IVA en tu perfil antes de comprar.</p>
 
 <h2>¿Cómo los contacto?</h2>
-<p>Escribinos a <strong>[EMAIL DE CONTACTO]</strong> o desde la página de
+<p>Escribinos a <strong>{{email}}</strong> o desde la página de
 <a href="/contacto">Contacto</a>.</p>
 `.trim()
   },
@@ -253,8 +263,8 @@ diferencia. Dos o tres párrafos alcanzan.]</p>
 </ul>
 
 <h2>Cómo trabajamos</h2>
-<p>Vendemos exclusivamente online y enviamos a todo el país. No tenemos local a la
-calle, así que todo el catálogo y la atención pasan por este sitio.</p>
+<p>[Contá cómo operan: si venden sólo online, si tienen local a la calle, si atienden por
+WhatsApp. Si tenés local, sumá el domicilio y los horarios.]</p>
 `.trim()
   },
   {
@@ -267,9 +277,10 @@ calle, así que todo el catálogo y la atención pasan por este sitio.</p>
 
 <h2>Datos de contacto</h2>
 <ul>
-  <li><strong>Email:</strong> [EMAIL DE CONTACTO]</li>
-  <li><strong>Teléfono / WhatsApp:</strong> [TELÉFONO]</li>
-  <li><strong>Horario de atención:</strong> [HORARIO]</li>
+  <li><strong>Email:</strong> {{email}}</li>
+  <li><strong>Teléfono / WhatsApp:</strong> {{telefono}}</li>
+  <li><strong>Domicilio:</strong> {{domicilioComercial}}</li>
+  <li><strong>Horario de atención:</strong> {{horario}}</li>
 </ul>
 
 <h2>Consultas sobre un pedido</h2>

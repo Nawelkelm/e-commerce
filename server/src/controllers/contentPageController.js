@@ -1,5 +1,10 @@
 const { validationResult } = require('express-validator');
 const { ContentPage } = require('../models');
+const {
+  VARIABLES,
+  getContentVariables,
+  replaceContentVariables
+} = require('../services/contentVariables');
 const logger = require('../config/logger');
 
 /**
@@ -35,7 +40,34 @@ const getPageBySlug = async (req, res, next) => {
       return res.status(404).json({ message: 'Pagina no encontrada' });
     }
 
-    res.json(page);
+    // Al publico se le entrega el texto ya resuelto: {{razonSocial}} y demas
+    // se reemplazan por los datos que cargo el comercio.
+    const { valores } = await getContentVariables();
+    res.json({
+      ...page.toJSON(),
+      content: replaceContentVariables(page.content, valores),
+      title: replaceContentVariables(page.title, valores)
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Variables disponibles y cuales faltan completar. Alimenta la ayuda del
+ * editor y el aviso de datos incompletos en el panel.
+ */
+const getVariables = async (req, res, next) => {
+  try {
+    const { valores, faltantes } = await getContentVariables();
+    res.json({
+      variables: Object.entries(VARIABLES).map(([key, meta]) => ({
+        key,
+        ...meta,
+        valor: valores[key] || ''
+      })),
+      faltantes
+    });
   } catch (error) {
     next(error);
   }
@@ -154,6 +186,7 @@ const deletePage = async (req, res, next) => {
 module.exports = {
   getPublishedPages,
   getPageBySlug,
+  getVariables,
   getAllPages,
   getPageById,
   createPage,
