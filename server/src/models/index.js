@@ -24,6 +24,8 @@ const ShipmentTracking = require('./ShipmentTracking');
 const LogisticsCredentials = require('./LogisticsCredentials');
 const ShippingMethod = require('./ShippingMethod');
 const BankAccount = require('./BankAccount');
+const ContentPage = require('./ContentPage');
+const RegretRequest = require('./RegretRequest');
 
 // Import review and email models
 const Review = require('./Review');
@@ -176,6 +178,14 @@ Shipment.hasMany(ShipmentTracking, { foreignKey: 'shipmentId', as: 'trackingHist
 // ShipmentTracking associations
 ShipmentTracking.belongsTo(Shipment, { foreignKey: 'shipmentId' });
 
+// RegretRequest associations
+// Ambas son opcionales: la solicitud puede llegar de alguien sin sesion
+// iniciada y sin el numero de pedido a mano.
+RegretRequest.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+RegretRequest.belongsTo(Order, { foreignKey: 'orderId', as: 'order' });
+User.hasMany(RegretRequest, { foreignKey: 'userId', as: 'regretRequests' });
+Order.hasMany(RegretRequest, { foreignKey: 'orderId', as: 'regretRequests' });
+
 module.exports = {
   sequelize,
   User,
@@ -212,5 +222,7 @@ module.exports = {
   Review,
   ReviewHelpful,
   EmailTemplate,
-  EmailLog
+  EmailLog,
+  ContentPage,
+  RegretRequest
 };

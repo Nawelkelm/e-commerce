@@ -188,6 +188,8 @@ app.use('/api/shipments', shipmentRoutes);
 app.use('/api/logistics-credentials', logisticsCredentialsRoutes);
 app.use('/api/shipping-methods', shippingMethodRoutes);
 app.use('/api/bank-accounts', bankAccountRoutes);
+app.use('/api/content-pages', require('./routes/contentPageRoutes'));
+app.use('/api/regret-requests', require('./routes/regretRequestRoutes'));
 
 // Health check (verifica conectividad real con la base de datos)
 app.get('/api/health', async (req, res) => {
@@ -321,6 +323,15 @@ const startServer = async () => {
       await seedShippingMethods();
     } catch (error) {
       logger.error('Error seeding shipping methods:', error);
+      // Don't stop the server, but log the error
+    }
+
+    // Seed paginas institucionales y legales si no existen
+    try {
+      const seedContentPages = require('./scripts/seedContentPages');
+      await seedContentPages();
+    } catch (error) {
+      logger.error('Error seeding content pages:', error);
       // Don't stop the server, but log the error
     }
     
