@@ -318,9 +318,35 @@ class AfipService {
       'B': 6,  // Factura B
       'C': 11, // Factura C
       'E': 19, // Factura E (Exportación)
-      'M': 51  // Factura M
+      'M': 51, // Factura M
+      'NDA': 2,  // Nota de Débito A
+      'NDB': 7,  // Nota de Débito B
+      'NDC': 12, // Nota de Débito C
+      'NCA': 3,  // Nota de Crédito A
+      'NCB': 8,  // Nota de Crédito B
+      'NCC': 13  // Nota de Crédito C
     };
-    return types[invoiceType] || 6; // Default: Factura B
+
+    // Sin default silencioso: devolver 6 ante un tipo desconocido haria que,
+    // por ejemplo, una nota de crédito se consultara como factura B.
+    const code = types[invoiceType];
+    if (!code) {
+      throw new Error(`Tipo de comprobante desconocido: ${invoiceType}`);
+    }
+    return code;
+  }
+
+  /**
+   * Puntos de venta habilitados en ARCA para el CUIT configurado.
+   */
+  async getSalesPoints() {
+    try {
+      await this.initialize();
+      return await this.afipInstance.ElectronicBilling.getSalesPoints();
+    } catch (error) {
+      logger.debug('No se pudieron obtener los puntos de venta:', error.message);
+      throw error;
+    }
   }
 
   /**

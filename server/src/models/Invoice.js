@@ -14,7 +14,7 @@ const Invoice = sequelize.define('Invoice', {
   },
   orderId: {
     type: DataTypes.UUID,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: 'Orders',
       key: 'id'
@@ -23,7 +23,7 @@ const Invoice = sequelize.define('Invoice', {
   },
   userId: {
     type: DataTypes.UUID,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: 'Users',
       key: 'id'
@@ -37,7 +37,7 @@ const Invoice = sequelize.define('Invoice', {
   },
   customerEmail: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   customerPhone: {
     type: DataTypes.STRING,
@@ -68,14 +68,37 @@ const Invoice = sequelize.define('Invoice', {
     type: DataTypes.STRING,
     allowNull: false,
     defaultValue: 'B',
-    validate: { isIn: [['A', 'B', 'C', 'E', 'M']] },
-    comment: 'Tipo de comprobante fiscal'
+    validate: { isIn: [['A', 'B', 'C', 'E', 'M', 'NCA', 'NCB', 'NCC', 'NDA', 'NDB', 'NDC']] },
+    comment: 'Tipo de comprobante: factura (A/B/C/E/M) o nota de credito/debito (NC*/ND*)'
   },
   pointOfSale: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 1,
     comment: 'Punto de venta de AFIP'
+  },
+  // --- Sincronizacion con ARCA -------------------------------------------
+  origin: {
+    type: DataTypes.STRING(10),
+    allowNull: false,
+    defaultValue: 'store',
+    validate: { isIn: [['store', 'arca']] },
+    comment: 'store: emitida desde la tienda. arca: importada desde ARCA, solo lectura'
+  },
+  afipVoucherType: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    comment: 'Codigo de comprobante de AFIP (1=Fact A, 6=Fact B, 11=Fact C, 3/8/13=NC...)'
+  },
+  afipVoucherNumber: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    comment: 'Numero correlativo del comprobante dentro del punto de venta'
+  },
+  arcaSyncedAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    comment: 'Ultima vez que se trajo o confirmo este comprobante contra ARCA'
   },
   afipStatus: {
     type: DataTypes.STRING,
@@ -155,7 +178,7 @@ const Invoice = sequelize.define('Invoice', {
   // Información de pago
   paymentMethod: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     comment: 'MercadoPago, Transferencia, Efectivo, etc.'
   },
   paymentId: {
@@ -226,6 +249,19 @@ const Invoice = sequelize.define('Invoice', {
     allowNull: true
   }
 }, {
+  validate: {
+    // Los comprobantes propios sí necesitan pedido, usuario, email y medio
+    // de pago. Los importados desde ARCA se emitieron fuera de la tienda,
+    // así que no tienen nada de eso.
+    datosObligatoriosSiEsDeLaTienda() {
+      if (this.origin !== 'store') return;
+      const faltan = ['orderId', 'userId', 'customerEmail', 'paymentMethod']
+        .filter(campo => this[campo] === null || this[campo] === undefined);
+      if (faltan.length) {
+        throw new Error(`Una factura emitida por la tienda requiere: ${faltan.join(', ')}`);
+      }
+    }
+  },
   timestamps: true,
   indexes: [
     { fields: ['invoiceNumber'], unique: true },
@@ -233,7 +269,10 @@ const Invoice = sequelize.define('Invoice', {
     { fields: ['userId'] },
     { fields: ['status'] },
     { fields: ['issueDate'] },
-    { fields: ['createdAt'] }
+    { fields: ['createdAt'] },
+    // Identidad fiscal de un comprobante: no puede repetirse.
+    { fields: ['pointOfSale', 'afipVoucherType', 'afipVoucherNumber'], unique: true, name: 'invoices_afip_identity' },
+    { fields: ['origin'] }
   ]
 });
 

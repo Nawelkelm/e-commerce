@@ -317,6 +317,15 @@ const startServer = async () => {
       // Don't stop the server, but log the error
     }
 
+    // Sincronizacion de comprobantes emitidos en ARCA
+    try {
+      const { startArcaSyncCron } = require('./jobs/arcaSyncJob');
+      startArcaSyncCron();
+    } catch (error) {
+      logger.error('Error initializing ARCA invoice sync job:', error);
+      // Don't stop the server, but log the error
+    }
+
     // Seed métodos de envío por defecto si no existen
     try {
       const seedShippingMethods = require('./scripts/seedShippingMethods');

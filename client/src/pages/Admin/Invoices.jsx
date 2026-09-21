@@ -512,6 +512,15 @@ const Invoices = () => {
                 <tr key={invoice.id}>
                   <td className="invoice-number">
                     <strong>{invoice.invoiceNumber}</strong>
+                    {invoice.origin === 'arca' && (
+                      <span
+                        className="badge-info"
+                        style={{ marginLeft: 8, fontSize: 10 }}
+                        title="Emitida fuera de la tienda e importada desde ARCA. No tiene pedido asociado."
+                      >
+                        ARCA
+                      </span>
+                    )}
                   </td>
                   <td>
                     <div className="customer-info">
