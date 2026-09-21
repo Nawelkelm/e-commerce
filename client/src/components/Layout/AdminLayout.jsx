@@ -18,6 +18,7 @@ import {
   EnvelopeIcon,
   StarIcon,
   DocumentTextIcon,
+  ArrowUturnLeftIcon,
   KeyIcon,
   BuildingLibraryIcon,
   ArrowRightOnRectangleIcon as LogoutIcon,
@@ -56,6 +57,7 @@ const AdminLayout = () => {
       label: 'Ventas',
       items: [
         { name: 'Pedidos', href: '/admin/pedidos', icon: ClipboardDocumentListIcon },
+        { name: 'Arrepentimientos', href: '/admin/arrepentimientos', icon: ArrowUturnLeftIcon },
         { name: 'Cupones', href: '/admin/cupones', icon: TicketIcon },
         { name: 'Facturas', href: '/admin/facturas', icon: DocumentTextIcon },
         { name: 'AFIP', href: '/admin/afip', icon: ShieldCheckIcon },
@@ -79,6 +81,7 @@ const AdminLayout = () => {
         { name: 'SMTP', href: '/admin/smtp', icon: CogIcon },
         { name: 'Reseñas', href: '/admin/resenas', icon: StarIcon },
         { name: 'Personalizar', href: '/admin/home', icon: PaintBrushIcon },
+        { name: 'Páginas', href: '/admin/paginas', icon: DocumentTextIcon },
       ]
     },
   ]

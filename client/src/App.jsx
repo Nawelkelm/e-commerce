@@ -49,6 +49,8 @@ import CouponManagement from './pages/Admin/CouponManagement'
 import EmailTemplateManagement from './pages/Admin/EmailTemplateManagement'
 import SmtpSettings from './pages/Admin/SmtpSettings'
 import ReviewManagement from './pages/Admin/ReviewManagement'
+import ContentPages from './pages/Admin/ContentPages'
+import RegretRequests from './pages/Admin/RegretRequests'
 import StockDashboard from './pages/StockDashboard'
 
 // Páginas de pago
@@ -213,6 +215,8 @@ function App() {
               <Route path="stock" element={<StockDashboard />} />
               <Route path="analytics" element={<AdminAnalytics />} />
               <Route path="home" element={<AdminHomeSettings />} />
+              <Route path="paginas" element={<ContentPages />} />
+              <Route path="arrepentimientos" element={<RegretRequests />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
           </Routes>
