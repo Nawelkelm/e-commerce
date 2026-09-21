@@ -19,7 +19,7 @@ Estado: ⬜ pendiente · 🔄 en progreso · ✅ hecho
 | 0.5 | Eliminar archivos backup/duplicados versionados | 🟡 | ✅ |
 | 0.6 | `.env.example` actualizado (TiendaKit + Redis + nuevas vars) | 🟠 | ✅ |
 | 0.7 | Docs base: `architecture.md`, `ROADMAP.md`, `CLAUDE.md`, guía Coolify, skills | 🟠 | ✅ |
-| 0.8 | **Rotar contraseña de PostgreSQL** (la vieja quedó en el historial de git) | 🔴 | ⬜ (acción del dueño) |
+| 0.8 | **Borrar la PostgreSQL vieja de Render**. La contraseña está en el historial de git (`da668e5`) y **el repo es público**: `"private": false`. Antes se creía privado y sobre esa premisa se descartó reescribir el historial | 🔴 | ⬜ (acción del dueño, URGENTE) |
 | 0.9 | Quitar todas las URLs/referencias de Render del proyecto | 🟠 | ✅ |
 
 ---
