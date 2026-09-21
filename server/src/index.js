@@ -223,40 +223,58 @@ const startServer = async () => {
 
     await sequelize.authenticate();
     logger.info('Database connection established successfully.');
-    
-    // Convert ALL ENUM columns to VARCHAR before sync (ENUMs break alter)
-    try {
-      await sequelize.query(`
-        DO $$
-        DECLARE
-          r RECORD;
-        BEGIN
-          FOR r IN
-            SELECT c.table_name, c.column_name, c.column_default
-            FROM information_schema.columns c
-            WHERE c.table_schema = 'public'
-              AND c.data_type = 'USER-DEFINED'
-              AND c.udt_name LIKE 'enum_%'
-          LOOP
-            -- Drop default before type change
-            EXECUTE format('ALTER TABLE %I ALTER COLUMN %I DROP DEFAULT', r.table_name, r.column_name);
-            -- Convert ENUM to VARCHAR
-            EXECUTE format('ALTER TABLE %I ALTER COLUMN %I TYPE VARCHAR(255) USING %I::VARCHAR(255)', r.table_name, r.column_name, r.column_name);
-            -- Restore default if it existed
-            IF r.column_default IS NOT NULL THEN
-              EXECUTE format('ALTER TABLE %I ALTER COLUMN %I SET DEFAULT %s', r.table_name, r.column_name, r.column_default);
-            END IF;
-          END LOOP;
-        END $$;
-      `);
-      logger.info('All ENUM columns migrated to VARCHAR.');
-    } catch (err) {
-      logger.warn('ENUM migration skipped:', err.message);
+
+    // Estrategia de sincronización del esquema según el entorno:
+    // - Desarrollo: sync({ alter: true }) + conversión ENUM→VARCHAR, para que el
+    //   esquema siga automáticamente a los modelos mientras se desarrolla.
+    // - Producción: NUNCA alterar el esquema en cada arranque (riesgo de corromper
+    //   o perder datos de clientes). Sólo sync() — crea las tablas que falten en el
+    //   primer deploy y no toca las columnas existentes. Los cambios de esquema en
+    //   producción se aplican con migraciones versionadas (npm run db:migrate).
+    // Escape hatch: DB_SYNC_ALTER=true fuerza alter aunque NODE_ENV=production
+    // (usar sólo de forma puntual y con backup previo).
+    const isProduction = process.env.NODE_ENV === 'production';
+    const useAlter = process.env.DB_SYNC_ALTER === 'true' || !isProduction;
+
+    if (useAlter) {
+      // Convert ALL ENUM columns to VARCHAR before sync (ENUMs break alter)
+      try {
+        await sequelize.query(`
+          DO $$
+          DECLARE
+            r RECORD;
+          BEGIN
+            FOR r IN
+              SELECT c.table_name, c.column_name, c.column_default
+              FROM information_schema.columns c
+              WHERE c.table_schema = 'public'
+                AND c.data_type = 'USER-DEFINED'
+                AND c.udt_name LIKE 'enum_%'
+            LOOP
+              -- Drop default before type change
+              EXECUTE format('ALTER TABLE %I ALTER COLUMN %I DROP DEFAULT', r.table_name, r.column_name);
+              -- Convert ENUM to VARCHAR
+              EXECUTE format('ALTER TABLE %I ALTER COLUMN %I TYPE VARCHAR(255) USING %I::VARCHAR(255)', r.table_name, r.column_name, r.column_name);
+              -- Restore default if it existed
+              IF r.column_default IS NOT NULL THEN
+                EXECUTE format('ALTER TABLE %I ALTER COLUMN %I SET DEFAULT %s', r.table_name, r.column_name, r.column_default);
+              END IF;
+            END LOOP;
+          END $$;
+        `);
+        logger.info('All ENUM columns migrated to VARCHAR.');
+      } catch (err) {
+        logger.warn('ENUM migration skipped:', err.message);
+      }
+
+      // Sync database models (alter: true ensures schema matches models)
+      await sequelize.sync({ alter: true });
+      logger.warn('Database models synced with alter:true (development mode). Do NOT use in production.');
+    } else {
+      // Producción: crea sólo tablas faltantes, sin alterar columnas existentes.
+      await sequelize.sync();
+      logger.info('Database models synced (no alter). Schema changes in production go through migrations.');
     }
-    
-    // Sync database models (alter: true ensures schema matches models)
-    await sequelize.sync({ alter: true });
-    logger.info('Database models synced successfully.');
     
     // Initialize roles and permissions
     try {

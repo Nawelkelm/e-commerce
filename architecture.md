@@ -132,9 +132,14 @@ e-commerce/
 
 ## 6. Bootstrap del servidor (`server/src/index.js`)
 
-Al arrancar: conecta a la DB → (hack) convierte ENUM→VARCHAR → `sequelize.sync({ alter: true })` → inicializa roles/permisos → seeds → cron de stock → cron de tracking → seed de métodos de envío → `listen`.
+Al arrancar: conecta a la DB → sincroniza el esquema **según el entorno** (ver abajo) → inicializa roles/permisos → seeds → cron de stock → cron de tracking → seed de métodos de envío → `listen`.
 
-> ⚠️ **Deuda técnica:** `sync({ alter: true })` + el hack de ENUM en cada arranque es frágil y peligroso en producción. Plan: migrar a migraciones Sequelize versionadas y `sync` sólo en desarrollo. Ver `ROADMAP.md`.
+**Sincronización del esquema (a partir de 2026-06-26):**
+- **Desarrollo** (`NODE_ENV` ≠ `production`): convierte ENUM→VARCHAR y corre `sequelize.sync({ alter: true })` para que el esquema siga a los modelos.
+- **Producción** (`NODE_ENV=production`): sólo `sequelize.sync()` — crea tablas faltantes en el primer deploy y **no altera columnas existentes** (sin riesgo de corromper datos). Los cambios de esquema se aplican con migraciones (`npm run db:migrate`).
+- **Override:** `DB_SYNC_ALTER=true` fuerza `alter` aunque sea producción (usar puntualmente y con backup previo).
+
+> ⚠️ **Deuda técnica restante:** falta consolidar y versionar las migraciones (hay duplicados en `server/src/migrations/`) y adoptar `db:migrate` como mecanismo único de cambios de esquema en producción. Ver `ROADMAP.md` (V1.3 / M.8).
 
 ## 7. Seguridad
 

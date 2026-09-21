@@ -37,7 +37,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | M.4 | Guía y ejecución de deploy en Coolify (Oracle Free / Hetzner) | 🔴 | 🔄 |
 | M.5 | Configurar dominios en Cloudflare → Coolify (www + api) con SSL | 🔴 | ⬜ |
 | M.6 | Backups automáticos de PostgreSQL (Coolify → S3/Cloudflare R2) | 🟠 | ⬜ |
-| M.7 | Smoke test post-deploy (health, login, listar productos, checkout sandbox) | 🟠 | ⬜ |
+| M.7 | Smoke test post-deploy: script `npm run smoke` (health/DB, settings, categorías, productos, login admin, token, acceso admin). Checkout MP sandbox = manual. Falta correrlo contra prod | 🟠 | 🔄 |
 | M.8 | Limpiar migraciones duplicadas (coupons ×2, categoryIcons ×3) | 🟡 | ⬜ |
 
 ---
@@ -49,7 +49,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | V1.1 | **Integrar Redis**: cache de productos/categorías/settings públicos | 🟠 | ⬜ |
 | V1.2 | **Colas Bull** sobre Redis para email y sync de tracking (sacar de cron inline) | 🟠 | ⬜ |
 | V1.3 | Reemplazar `sync({ alter: true })` + hack ENUM por migraciones versionadas | 🔴 | ⬜ |
-| V1.4 | `sync` sólo en desarrollo; en prod correr migraciones explícitas | 🟠 | ⬜ |
+| V1.4 | `sync` sólo en desarrollo; en prod `sync()` sin alter (hecho) + migraciones explícitas (pendiente) | 🟠 | 🔄 |
 | V1.5 | **Tests** de flujos críticos: auth, checkout, órdenes, pagos (Jest + Supertest) | 🟠 | ⬜ |
 | V1.6 | CI básico (GitHub Actions): lint + tests + build en cada push | 🟠 | ⬜ |
 | V1.7 | `/api/health` extendido (DB + Redis + versión) | 🟡 | ⬜ |
