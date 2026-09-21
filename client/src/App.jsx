@@ -57,6 +57,11 @@ import PaymentFailure from './pages/Payment/Failure'
 import PaymentPending from './pages/Payment/Pending'
 import PaymentTransfer from './pages/PaymentTransfer'
 
+// Paginas institucionales, legales y 404
+import ContentPage from './pages/ContentPage'
+import Arrepentimiento from './pages/Arrepentimiento'
+import NotFound from './pages/NotFound'
+
 // Componentes de protección de rutas
 import ProtectedRoute from './components/Auth/ProtectedRoute'
 import AdminRoute from './components/Auth/AdminRoute'
@@ -168,6 +173,18 @@ function App() {
                   <Wishlist />
                 </ProtectedRoute>
               } />
+
+              {/* Boton de arrepentimiento (Res. 424/2020). Tiene su propia
+                  ruta porque ademas del texto legal lleva un formulario. */}
+              <Route path="arrepentimiento" element={<Arrepentimiento />} />
+
+              {/* Paginas institucionales y legales editables desde el admin:
+                  /terminos, /privacidad, /faq, /envios, /devoluciones, etc.
+                  Va al final para no tapar ninguna ruta fija. */}
+              <Route path=":slug" element={<ContentPage />} />
+
+              {/* Cualquier otra URL desconocida */}
+              <Route path="*" element={<NotFound />} />
             </Route>
 
             {/* Rutas de administración */}

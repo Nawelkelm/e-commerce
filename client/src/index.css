@@ -211,6 +211,48 @@
   .divider {
     @apply border-t border-surface-200 dark:border-surface-700;
   }
+
+  /* Cuerpo de las paginas institucionales y legales (ContentPage).
+     El HTML lo escribe un admin desde el panel, asi que el estilo se
+     aplica a las etiquetas y no a clases que ese HTML no va a tener. */
+  .content-page-body {
+    @apply text-surface-700 dark:text-surface-300 leading-relaxed;
+  }
+  .content-page-body h2 {
+    @apply mt-10 mb-3 text-xl font-semibold tracking-tight text-surface-900 dark:text-white;
+  }
+  .content-page-body h3 {
+    @apply mt-8 mb-2 text-lg font-semibold text-surface-900 dark:text-white;
+  }
+  .content-page-body p {
+    @apply my-4;
+  }
+  .content-page-body ul {
+    @apply my-4 list-disc space-y-1.5 pl-6;
+  }
+  .content-page-body ol {
+    @apply my-4 list-decimal space-y-1.5 pl-6;
+  }
+  .content-page-body a {
+    @apply text-primary-600 underline underline-offset-2 hover:text-primary-700
+           dark:text-primary-400 dark:hover:text-primary-300;
+  }
+  .content-page-body strong {
+    @apply font-semibold text-surface-900 dark:text-white;
+  }
+  .content-page-body table {
+    @apply my-6 w-full text-left text-sm;
+  }
+  .content-page-body th,
+  .content-page-body td {
+    @apply border-b border-surface-200 px-3 py-2 dark:border-surface-700;
+  }
+  .content-page-body blockquote {
+    @apply my-6 border-l-4 border-surface-300 pl-4 italic dark:border-surface-600;
+  }
+  .content-page-body img {
+    @apply my-6 rounded-xl;
+  }
 }
 
 /* ================================================================

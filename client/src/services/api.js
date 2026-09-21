@@ -154,6 +154,25 @@ export const bankAccountsAPI = {
   delete: (id) => api.delete(`/bank-accounts/${id}`),
 }
 
+// Content Pages API (paginas institucionales y legales)
+export const contentPagesAPI = {
+  getPublished: () => api.get('/content-pages'),
+  getBySlug: (slug) => api.get(`/content-pages/${slug}`),
+  // Administracion
+  getAll: () => api.get('/content-pages/admin/all'),
+  getById: (id) => api.get(`/content-pages/admin/${id}`),
+  create: (data) => api.post('/content-pages/admin', data),
+  update: (id, data) => api.put(`/content-pages/admin/${id}`, data),
+  delete: (id) => api.delete(`/content-pages/admin/${id}`),
+}
+
+// Boton de arrepentimiento (Res. 424/2020)
+export const regretRequestsAPI = {
+  create: (data) => api.post('/regret-requests', data),
+  getAll: (params) => api.get('/regret-requests', { params }),
+  update: (id, data) => api.put(`/regret-requests/${id}`, data),
+}
+
 // Upload payment proof
 export const uploadPaymentProof = (orderId, file) => {
   const formData = new FormData()

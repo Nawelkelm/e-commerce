@@ -1,5 +1,6 @@
 ﻿import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -149,8 +150,40 @@ const Footer = () => {
           )}
         </div>
 
+        {/* Informacion obligatoria para el comercio electronico argentino.
+            La Resolucion 424/2020 exige el Boton de arrepentimiento y el
+            enlace a Defensa de las y los Consumidores, asi que no dependen de
+            la configuracion del footer: siempre se muestran. */}
+        <div className="border-t border-surface-800 mt-12 pt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <Link
+            to="/arrepentimiento"
+            className="inline-flex items-center gap-2 rounded-lg border border-surface-700 px-3 py-2 text-sm font-medium text-surface-300 hover:border-primary-500 hover:text-primary-400 transition-colors"
+          >
+            <ArrowUturnLeftIcon className="h-4 w-4" />
+            Botón de arrepentimiento
+          </Link>
+
+          <a
+            href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-surface-400 hover:text-primary-400 transition-colors underline underline-offset-2"
+          >
+            Defensa de las y los Consumidores
+          </a>
+
+          <a
+            href="https://autogestion.produccion.gob.ar/consumidores"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-surface-400 hover:text-primary-400 transition-colors underline underline-offset-2"
+          >
+            Iniciar un reclamo
+          </a>
+        </div>
+
         {/* Copyright & Payment */}
-        <div className="border-t border-surface-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-surface-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-surface-500 dark:text-surface-400 text-sm">
             {footerSettings.footerCopyrightText || `Â© ${currentYear} TiendaKit. Todos los derechos reservados.`}
           </p>
