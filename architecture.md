@@ -167,6 +167,37 @@ footer y no dependen de la configuración, porque son obligatorios.
 > (`[RAZÓN SOCIAL]`, `[CUIT]`, `[DOMICILIO COMERCIAL]`) y **cada tienda los
 > tiene que completar** antes de salir a producción.
 
+## 6.c Sincronización de comprobantes con ARCA
+
+El cron `jobs/arcaSyncJob` (04:00 diario, configurable con `ARCA_SYNC_CRON`)
+trae los comprobantes emitidos que la tienda todavía no tiene.
+
+**Por qué funciona así:** ARCA no expone ningún método que devuelva todos los
+comprobantes. El web service `wsfe` sólo permite pedir el último número
+autorizado (`FECompUltimoAutorizado`) y consultar uno puntual
+(`FECompConsultar`). La única forma de traerlos es reconstruir la serie
+número por número.
+
+Consecuencias de diseño:
+- **Incremental:** sólo se pide el hueco entre el último local y el último de ARCA.
+- **Acotada por corrida** (150 comprobantes) con pausa entre llamadas, para no
+  chocar con los límites de frecuencia de AFIP. La primera carga de un comercio
+  con historial largo se completa en varias noches; es deliberado.
+- **De más nuevo a más viejo**, para que lo primero que aparezca en el panel
+  sea lo reciente si la carga inicial se corta.
+
+Se sincronizan 9 tipos: facturas A/B/C y sus notas de crédito y débito. Un
+comprobante que existe en ARCA pero no en la tienda se importa con
+`origin = "arca"`: es un registro de sólo lectura, sin pedido asociado, que
+sirve para que el listado refleje el total realmente emitido (incluye lo
+cargado a mano en el portal o desde otro sistema).
+
+La identidad fiscal de un comprobante (punto de venta + tipo + número) tiene
+índice único, así que no puede entrar dos veces.
+
+> Se descartó scrapear "Mis Comprobantes" del portal: no tiene web service
+> oficial y se rompe con cada cambio del sitio.
+
 ## 7. Seguridad
 
 **Sanitización de entrada:** `middleware/sanitize` limpia todos los strings de

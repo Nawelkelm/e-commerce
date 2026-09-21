@@ -43,6 +43,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | M.10 | **Completar los datos fiscales** de las páginas legales (razón social, CUIT, domicilio, jurisdicción) desde Admin > Páginas | 🔴 | ⬜ (acción del dueño) |
 | M.11 | Precargar la dirección guardada del perfil en el checkout + enlazar términos/privacidad antes de confirmar | 🟠 | ✅ |
 | M.12 | Eliminar páginas huérfanas sin ruta y el `Header.jsx` muerto | 🟡 | ✅ |
+| M.13 | **Sincronizar comprobantes desde ARCA**: cron diario que reconstruye la serie con `FECompUltimoAutorizado` + `FECompConsultar` e importa los emitidos fuera de la tienda | 🟠 | ✅ |
 
 ---
 
@@ -58,7 +59,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | V1.6 | CI básico (GitHub Actions): lint + tests + build en cada push | 🟠 | ⬜ |
 | V1.7 | `/api/health` extendido (DB + Redis + versión) | 🟡 | ⬜ |
 | V1.8 | Healthcheck del frontend en Docker/Coolify | 🟢 | ⬜ |
-| V1.9 | **Arreglar `npm run db:migrate`**: no hay `.sequelizerc` ni config, así que sequelize-cli apunta a `server/migrations/` (SQL suelto) en vez de `server/src/migrations/`. Hoy el comando no corre. Bloquea V1.3 | 🔴 | ⬜ |
+| V1.9 | **Arreglar `npm run db:migrate`** (ya hay una migración que lo necesita: `20260921120000-add-arca-sync-to-invoices`): no hay `.sequelizerc` ni config, así que sequelize-cli apunta a `server/migrations/` (SQL suelto) en vez de `server/src/migrations/`. Hoy el comando no corre. Bloquea V1.3 | 🔴 | ⬜ |
 | V1.10 | Limpiar los 33 warnings de `react-hooks/exhaustive-deps` y volver a `--max-warnings 0` en el lint | 🟡 | ⬜ |
 | V1.11 | Quitar los overrides legacy de `.badge` en 4 hojas CSS del admin: son globales y pisan el badge del sistema de diseño (mismo problema que ya se corrigió en `.btn-primary`) | 🟡 | ⬜ |
 | V1.12 | Migrar las hojas CSS sueltas del admin a CSS Modules o a clases del sistema de diseño, para que dejen de filtrarse a toda la app | 🟡 | ⬜ |
@@ -88,6 +89,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 - `bull` instalado pero sin uso real; Redis declarado y no aprovechado.
 - 0 tests pese a Jest/Supertest configurados.
 - 33 warnings de `react-hooks/exhaustive-deps` en el frontend.
+- La primera sincronización con ARCA de un comercio con historial largo tarda varias noches (cupo de 150 comprobantes por corrida). No hay forma de acelerarla sin chocar con los límites de AFIP.
 - Hojas CSS del admin importadas sin scope (Vite las inyecta globales): siguen pisando `.badge` del sistema de diseño. Ver V1.11 / V1.12.
 - Bundle del frontend en un solo chunk de ~1 MB, sin code-splitting (ver V2.4).
 - No existe módulo de blog (el enlace roto del footer ya se quitó).
