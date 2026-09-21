@@ -1,6 +1,6 @@
 # Roadmap & Backlog — TiendaKit
 
-> Estado: 2026-06-18. Prioridad acordada con el dueño: **OCA → Redis → Tests → Backups**.
+> Estado: 2026-09-21. Prioridad acordada con el dueño: **OCA → Redis → Tests → Backups**.
 > Convención: cada tarea se implementa de a una, con tests cuando aplique, docs y commit.
 
 Leyenda de prioridad: 🔴 crítica · 🟠 alta · 🟡 media · 🟢 baja
@@ -38,7 +38,7 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | M.5 | Configurar dominios en Cloudflare → Coolify (www + api) con SSL | 🔴 | ⬜ |
 | M.6 | Backups automáticos de PostgreSQL (Coolify → S3/Cloudflare R2) | 🟠 | ⬜ |
 | M.7 | Smoke test post-deploy: script `npm run smoke` (health/DB, settings, categorías, productos, login admin, token, acceso admin). Checkout MP sandbox = manual. Falta correrlo contra prod | 🟠 | 🔄 |
-| M.8 | Limpiar migraciones duplicadas (coupons ×2, categoryIcons ×3) | 🟡 | ⬜ |
+| M.8 | Limpiar migraciones duplicadas (coupons ×2, categoryIcons ×3) | 🟡 | ✅ |
 
 ---
 
@@ -54,6 +54,8 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | V1.6 | CI básico (GitHub Actions): lint + tests + build en cada push | 🟠 | ⬜ |
 | V1.7 | `/api/health` extendido (DB + Redis + versión) | 🟡 | ⬜ |
 | V1.8 | Healthcheck del frontend en Docker/Coolify | 🟢 | ⬜ |
+| V1.9 | **Arreglar `npm run db:migrate`**: no hay `.sequelizerc` ni config, así que sequelize-cli apunta a `server/migrations/` (SQL suelto) en vez de `server/src/migrations/`. Hoy el comando no corre. Bloquea V1.3 | 🔴 | ⬜ |
+| V1.10 | Limpiar los 33 warnings de `react-hooks/exhaustive-deps` y volver a `--max-warnings 0` en el lint | 🟡 | ⬜ |
 
 ---
 
@@ -73,12 +75,12 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 
 ## Deuda técnica registrada
 
-- `sequelize.sync({ alter: true })` + conversión ENUM→VARCHAR en cada arranque (`index.js`).
-- Migraciones duplicadas en `server/src/migrations/`.
+- `sequelize.sync({ alter: true })` + conversión ENUM→VARCHAR en cada arranque **sólo en desarrollo** (resuelto para producción en V1.4).
+- **Tres carpetas de migraciones distintas**: `migrations/` (raíz, 1 .sql), `server/migrations/` (8 .sql sueltos aplicados a mano) y `server/src/migrations/` (18 .js de sequelize-cli). Hay que consolidar (ver V1.9).
 - `bull` instalado pero sin uso real; Redis declarado y no aprovechado.
 - 0 tests pese a Jest/Supertest configurados.
+- 33 warnings de `react-hooks/exhaustive-deps` en el frontend.
 - `.env` local con claves OCA duplicadas (placeholders pisan valores reales).
-- `client/src/config/api.js` con fallback a URL de Render.
 - Mezcla de almacenamiento de imágenes (Cloudinary + disco local) sin criterio único.
 
 ## Definición de "hecho" (DoD) por tarea

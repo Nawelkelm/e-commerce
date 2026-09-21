@@ -30,7 +30,7 @@ cd server && node --check src/index.js   # chequeo de sintaxis rápido
 
 # Frontend
 cd client && npm run build      # build producción
-cd client && npm run lint       # ESLint (max-warnings 0)
+cd client && npm run lint       # ESLint (config en client/.eslintrc.cjs)
 
 # Docker
 npm run docker:up               # levanta stack completo
