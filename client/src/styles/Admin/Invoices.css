@@ -19,26 +19,6 @@
   color: #1a202c;
 }
 
-.page-header .btn-primary {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.page-header .btn-primary:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-}
-
 /* Stats Grid */
 .stats-grid {
   display: grid;
@@ -349,8 +329,6 @@
 
 /* ─── Dark Mode ─── */
 .dark .page-header h1 { color: #fafafa; }
-.dark .page-header .btn-primary { background: #7c3aed; }
-.dark .page-header .btn-primary:hover { background: #6d28d9; box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
 .dark .stat-card { background: #262626; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 .dark .stat-info h3 { color: #fafafa; }
 .dark .stat-info p { color: #a3a3a3; }
@@ -401,8 +379,6 @@
 .dark .modal-actions { background: #262626; border-top-color: #404040; }
 .dark .btn-secondary { background: #1a1a1a; color: #a3a3a3; border-color: #404040; }
 .dark .btn-secondary:hover { background: #262626; border-color: #525252; }
-.dark .modal-actions .btn-primary { background: #7c3aed; }
-.dark .modal-actions .btn-primary:hover { background: #6d28d9; }
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -697,42 +673,6 @@
   bottom: 0;
   background: white;
   border-radius: 0 0 16px 16px;
-}
-
-.btn-secondary {
-  padding: 0.75rem 1.5rem;
-  background: #f7fafc;
-  color: #4a5568;
-  border: 1px solid #cbd5e0;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-secondary:hover {
-  background: #edf2f7;
-  border-color: #a0aec0;
-}
-
-.modal-actions .btn-primary {
-  padding: 0.75rem 1.5rem;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.modal-actions .btn-primary:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 @media (max-width: 768px) {
