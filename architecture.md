@@ -283,6 +283,49 @@ Dos casos borde que tuvieron que resolverse explícitamente:
 `animation: none` porque cancelaría animaciones con estado final `both` y el
 contenido quedaría invisible.
 
+## 6.f Tests
+
+```bash
+cd server && npm test
+```
+
+- `tests/*.test.js` — lógica pura, sin base de datos.
+- `tests/integration/*.test.js` — montan la app con Supertest contra una
+  **PostgreSQL real**.
+
+### Por qué integración y no mocks
+
+Lo que hay que verificar en el checkout es que las consultas, las
+restricciones y las transacciones funcionen. Un mock del ORM sólo probaría
+que el mock hace lo que le dijimos.
+
+El esquema de la base de test se crea con la **misma migración que usa
+producción**, así que si esa migración se rompe, los tests lo detectan.
+
+### Cómo está armado
+
+- `app.js` está separado de `index.js` justamente para esto: antes,
+  importar el servidor levantaba el puerto, corría los seeds y arrancaba
+  los crons.
+- `tests/setup-env.js` prepara las variables **antes** de cargar cualquier
+  módulo, porque `config/database.js` aborta al importarse si falta
+  `DATABASE_URL`.
+- Los límites de rate limit se suben por variable de entorno, no tocando
+  código: así el middleware real sigue en el camino, pero el sexto login de
+  un archivo no devuelve 429.
+- `maxWorkers: 1`: los tests de integración comparten una base, y en
+  paralelo el `TRUNCATE` de un archivo borraría los datos de otro.
+
+### Base de datos local
+
+```bash
+docker exec ecommerce_postgres psql -U ecommerce -d postgres \
+  -c "CREATE DATABASE tiendakit_test;"
+```
+
+Se puede apuntar a otra con `TEST_DATABASE_URL`. En el CI la levanta un
+servicio de PostgreSQL del propio workflow.
+
 ## 7. Seguridad
 
 **Sanitización de entrada:** `middleware/sanitize` limpia todos los strings de

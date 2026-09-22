@@ -25,7 +25,7 @@ npm run dev
 
 # Backend
 cd server && npm start          # producción
-cd server && npm test           # Jest (aún sin tests; ver ROADMAP V1.5)
+cd server && npm test           # Jest: 57 tests (los de integración necesitan PostgreSQL)
 cd server && node --check src/index.js   # chequeo de sintaxis rápido
 
 # Migraciones (ver architecture.md 6.d)
@@ -46,7 +46,9 @@ npm run docker:rebuild          # reconstruye
 
 - `client/src/{components,pages,store,services,config,hooks,utils}` — frontend.
 - `server/src/{controllers,models,routes,middleware,services,jobs,migrations,scripts}` — backend.
+- `server/src/app.js` — la app Express (middleware + rutas). No abre el puerto.
 - `server/src/index.js` — bootstrap (DB, sync, seeds, crons, listen).
+- `server/tests/` — Jest. Los de `integration/` montan `app.js` con Supertest.
 - `server/src/config/database.js` — conexión Sequelize.
 - `docs/DEPLOYMENT-VERCEL.md` — despliegue del frontend y variables del backend.
 - `docs/DEPLOYMENT-COOLIFY.md` — despliegue del backend en un VPS.

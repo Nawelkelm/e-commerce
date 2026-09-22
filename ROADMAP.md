@@ -55,7 +55,8 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | V1.2 | **Colas Bull** sobre Redis para email y sync de tracking (sacar de cron inline) | 🟠 | ⬜ |
 | V1.3 | Migración inicial que crea el esquema base desde cero. Las 15 migraciones-parche quedaron superadas y archivadas | 🔴 | ✅ |
 | V1.4 | `sync` sólo en desarrollo; en prod `sync()` sin alter + migraciones explícitas | 🟠 | ✅ |
-| V1.5 | **Tests** de flujos críticos: auth, checkout, órdenes, pagos (Jest + Supertest) | 🟠 | ⬜ |
+| V1.5 | **Tests** de flujos críticos: auth, carrito, checkout y órdenes (Jest + Supertest contra PostgreSQL real, 57 tests) | 🟠 | ✅ |
+| V1.15 | Tests del flujo de pagos: webhooks de MercadoPago, acreditación y comprobantes de transferencia | 🟠 | ⬜ |
 | V1.6 | CI básico (GitHub Actions): lint + tests + build en cada push a `main` y en cada PR | 🟠 | ✅ |
 | V1.7 | `/api/health` extendido (DB + Redis + versión) | 🟡 | ⬜ |
 | V1.8 | Healthcheck del frontend en Docker/Coolify | 🟢 | ⬜ |

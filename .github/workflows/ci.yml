@@ -20,6 +20,26 @@ jobs:
   backend:
     name: Backend (lint de sintaxis + tests)
     runs-on: ubuntu-latest
+
+    # Los tests de integracion corren contra una PostgreSQL real: lo que hay
+    # que verificar es que las consultas y las restricciones funcionen, y un
+    # mock del ORM solo probaria que el mock hace lo que le dijimos.
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: ecommerce
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: tiendakit_test
+        ports:
+          - 5432:5432
+        # Sin el healthcheck, los tests arrancan antes de que Postgres acepte
+        # conexiones y fallan de forma intermitente.
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     defaults:
       run:
         working-directory: server
@@ -54,6 +74,11 @@ jobs:
           test "$fallos" -eq 0
 
       - name: Tests
+        env:
+          TEST_DATABASE_URL: postgresql://ecommerce:ci@localhost:5432/tiendakit_test
+          DB_SSL: "false"
+          JWT_SECRET: secreto-de-ci-no-usar-en-produccion
+          JWT_REFRESH_SECRET: refresh-de-ci-no-usar-en-produccion
         run: npm test
 
   frontend:

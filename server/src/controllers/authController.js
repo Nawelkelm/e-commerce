@@ -119,7 +119,20 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Credenciales inválidas' });
     }
 
-    // Check if email is verified
+    // La contraseña se valida ANTES del estado de verificación.
+    //
+    // Al revés, cualquiera podía enumerar cuentas: mandaba una contraseña
+    // cualquiera y el 403 "verificá tu email" confirmaba que ese email estaba
+    // registrado, mientras que uno inexistente devolvía 401. Con este orden,
+    // una contraseña incorrecta siempre responde 401, exista la cuenta o no.
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      await logFailedLogin(email, ipAddress, userAgent, 'Contraseña incorrecta');
+      return res.status(401).json({ message: 'Credenciales inválidas' });
+    }
+
+    // Con la contraseña correcta sí se puede informar que falta verificar:
+    // quien llegó hasta acá es el dueño de la cuenta.
     if (!user.emailVerified) {
       await logFailedLogin(email, ipAddress, userAgent, 'Email no verificado');
       return res.status(403).json({ 
@@ -127,13 +140,6 @@ const login = async (req, res) => {
         emailVerified: false,
         email: user.email
       });
-    }
-
-    // Check password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      await logFailedLogin(email, ipAddress, userAgent, 'Contraseña incorrecta');
-      return res.status(401).json({ message: 'Credenciales inválidas' });
     }
 
     // Check if user is active
