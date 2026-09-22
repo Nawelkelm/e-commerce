@@ -19,8 +19,9 @@ Estado: ⬜ pendiente · 🔄 en progreso · ✅ hecho
 | 0.5 | Eliminar archivos backup/duplicados versionados | 🟡 | ✅ |
 | 0.6 | `.env.example` actualizado (TiendaKit + Redis + nuevas vars) | 🟠 | ✅ |
 | 0.7 | Docs base: `architecture.md`, `ROADMAP.md`, `CLAUDE.md`, guía Coolify, skills | 🟠 | ✅ |
-| 0.8 | **Borrar la PostgreSQL vieja de Render**. La contraseña está en el historial de git (`da668e5`) y **el repo es público**: `"private": false`. Antes se creía privado y sobre esa premisa se descartó reescribir el historial | 🔴 | ⬜ (acción del dueño, URGENTE) |
+| 0.8 | **Credencial de Render neutralizada**: la PostgreSQL ya no existe (Render elimina las del plan gratuito al expirar), así que la contraseña del historial de git no abre nada. Verificado el 2026-09-22: en la cuenta sólo quedan los servicios `ecommerce-api` y `ecommerce-web` | 🔴 | ✅ |
 | 0.9 | Quitar todas las URLs/referencias de Render del proyecto | 🟠 | ✅ |
+| 0.10 | Eliminar los servicios `ecommerce-api` y `ecommerce-web` que quedaron en Render. No responden, pero conservan configuración de entorno y pueden volver a desplegar el repo | 🟡 | ⬜ (acción del dueño) |
 
 ---
 
