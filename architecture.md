@@ -326,6 +326,36 @@ docker exec ecommerce_postgres psql -U ecommerce -d postgres \
 Se puede apuntar a otra con `TEST_DATABASE_URL`. En el CI la levanta un
 servicio de PostgreSQL del propio workflow.
 
+## 6.g Webhook de pagos (MercadoPago)
+
+`POST /api/payments/webhook` es **público**: MercadoPago no envía
+credenciales al notificar.
+
+### Por qué ser público no lo vuelve falsificable
+
+El handler **no confía en el cuerpo de la notificación**. Toma sólo el id
+del pago y vuelve a pedirle el estado real a la API de MercadoPago
+(`Payment.get`). Aunque alguien envíe una notificación diciendo
+`"approved"`, el pedido se actualiza con lo que responde MercadoPago.
+
+Esa propiedad está fijada por un test: se manda un cuerpo que dice
+`approved` mientras la API devuelve `rejected`, y el pedido tiene que
+quedar rechazado.
+
+### Lo que falta
+
+> No se valida la firma del webhook. `MERCADOPAGO_WEBHOOK_SECRET` está
+> declarada en `.env.example` pero no se usa en ningún lado. El riesgo es
+> acotado por lo anterior —no se puede falsificar un pago— pero cualquiera
+> puede disparar consultas a la API de MercadoPago desde ese endpoint.
+> Registrado como V1.16.
+
+### Reintentos
+
+MercadoPago reenvía las notificaciones que no responden a tiempo, así que
+el handler tiene que tolerar recibir la misma dos veces. La generación de
+la factura verifica primero si ya existe una para ese pedido.
+
 ## 7. Seguridad
 
 **Sanitización de entrada:** `middleware/sanitize` limpia todos los strings de

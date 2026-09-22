@@ -57,7 +57,9 @@ Objetivo: web funcional, segura y desplegada en Coolify con dominio + SSL + back
 | V1.3 | Migración inicial que crea el esquema base desde cero. Las 15 migraciones-parche quedaron superadas y archivadas | 🔴 | ✅ |
 | V1.4 | `sync` sólo en desarrollo; en prod `sync()` sin alter + migraciones explícitas | 🟠 | ✅ |
 | V1.5 | **Tests** de flujos críticos: auth, carrito, checkout y órdenes (Jest + Supertest contra PostgreSQL real, 57 tests) | 🟠 | ✅ |
-| V1.15 | Tests del flujo de pagos: webhooks de MercadoPago, acreditación y comprobantes de transferencia | 🟠 | ⬜ |
+| V1.15 | Tests del webhook de MercadoPago: 12 casos (aprobado, rechazado, pendiente, reembolso, notificaciones a ignorar, reintentos) | 🟠 | ✅ |
+| V1.16 | **Validar la firma del webhook de MercadoPago**. `MERCADOPAGO_WEBHOOK_SECRET` está en `.env.example` pero no se usa. Mitigado porque el handler consulta el estado real a la API y no confía en el cuerpo, pero cualquiera puede disparar consultas | 🟡 | ⬜ |
+| V1.17 | Tests de los comprobantes de transferencia: subida, validación de archivo y aprobación desde el panel | 🟡 | ⬜ |
 | V1.6 | CI básico (GitHub Actions): lint + tests + build en cada push a `main` y en cada PR | 🟠 | ✅ |
 | V1.7 | `/api/health` extendido (DB + Redis + versión) | 🟡 | ⬜ |
 | V1.8 | Healthcheck del frontend en Docker/Coolify | 🟢 | ⬜ |

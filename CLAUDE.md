@@ -25,7 +25,7 @@ npm run dev
 
 # Backend
 cd server && npm start          # producción
-cd server && npm test           # Jest: 57 tests (los de integración necesitan PostgreSQL)
+cd server && npm test           # Jest: 69 tests (los de integración necesitan PostgreSQL)
 cd server && node --check src/index.js   # chequeo de sintaxis rápido
 
 # Migraciones (ver architecture.md 6.d)
