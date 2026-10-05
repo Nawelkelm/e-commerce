@@ -247,7 +247,7 @@ const ShippingMethods = () => {
       </div>
 
       {/* Methods Table */}
-      <div className="bg-white dark:bg-surface-800 shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-white dark:bg-surface-800 shadow overflow-x-auto sm:rounded-lg">
         <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
           <thead className="bg-surface-50 dark:bg-surface-900">
             <tr>

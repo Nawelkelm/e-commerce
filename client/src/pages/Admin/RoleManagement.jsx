@@ -276,7 +276,7 @@ const RoleManagement = () => {
         </div>
       )}
 
-      <div className="bg-white dark:bg-surface-800 shadow rounded-lg overflow-hidden">
+      <div className="bg-white dark:bg-surface-800 shadow rounded-lg overflow-x-auto">
         <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
           <thead className="bg-surface-50 dark:bg-surface-900">
             <tr>

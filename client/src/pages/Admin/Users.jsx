@@ -412,7 +412,7 @@ const Users = () => {
         )}
       </div>
 
-      <div className="card overflow-hidden">
+      <div className="card overflow-x-auto">
         <table className="min-w-full divide-y divide-surface-200 dark:divide-surface-700">
           <thead className="bg-surface-50 dark:bg-surface-900 dark:bg-surface-700">
             <tr>
