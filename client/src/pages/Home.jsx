@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import CouponBanner from '../components/CouponBanner.jsx'
 import Reveal from '../components/Reveal'
+import HomeSkeleton from '../components/Skeletons/HomeSkeleton'
 import useReveal from '../hooks/useReveal'
 import {
   ChevronLeftIcon, ChevronRightIcon,
@@ -117,13 +118,9 @@ const Home = () => {
     toast.success(`${product.name} agregado al carrito`, { duration: 2000, position: 'bottom-right' })
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="loading-spinner h-10 w-10" />
-      </div>
-    )
-  }
+  // Esqueleto en vez de un spinner centrado: reserva el espacio de cada
+  // bloque, así que al llegar los datos nada salta de lugar.
+  if (loading) return <HomeSkeleton />
 
   const metaTitle = homeSettings?.metaTitle || 'TiendaKit — Tu tienda online'
   const metaDescription = homeSettings?.metaDescription || 'Encontrá los mejores productos al mejor precio'
@@ -330,15 +327,21 @@ const Home = () => {
                   <Link
                     key={cat.id}
                     to={`/productos?categoria=${cat.id}`}
-                    className="group flex items-center gap-4 py-4 border-b border-surface-200 dark:border-surface-800 hover:bg-white dark:hover:bg-surface-900 transition-colors -mx-3 px-3"
+                    className="group relative -mx-3 flex items-center gap-5 overflow-hidden border-b border-surface-200 px-3 py-5 transition-colors hover:bg-white dark:border-surface-800 dark:hover:bg-surface-900"
                   >
-                    <span className="text-[11px] font-mono text-surface-300 dark:text-surface-600 flex-shrink-0 w-5 text-right">
+                    {/* Barra que crece desde la izquierda al pasar por encima:
+                        da señal de interacción sin mover el texto de lugar. */}
+                    <span
+                      aria-hidden="true"
+                      className="absolute bottom-0 left-0 h-px w-0 bg-primary-600 transition-all duration-500 ease-smooth group-hover:w-full dark:bg-primary-500"
+                    />
+                    <span className="w-7 flex-shrink-0 text-right font-mono text-lg font-bold leading-none text-surface-200 transition-colors group-hover:text-primary-500 dark:text-surface-700">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="flex-1 text-sm font-semibold text-surface-800 dark:text-surface-200 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
+                    <span className="flex-1 text-base font-semibold tracking-tight text-surface-800 transition-transform duration-300 ease-smooth group-hover:translate-x-1 group-hover:text-primary-700 dark:text-surface-200 dark:group-hover:text-primary-300">
                       {cat.name}
                     </span>
-                    <ArrowRightIcon className="h-3.5 w-3.5 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                    <ArrowRightIcon className="h-4 w-4 flex-shrink-0 text-surface-300 transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary-500 dark:text-surface-600" />
                   </Link>
                 ))}
               </Reveal>

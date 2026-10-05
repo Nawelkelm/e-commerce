@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { StarIcon as StarSolid } from '@heroicons/react/24/solid'
 import { useAuthStore } from '../../store/authStore'
+import useReveal from '../../hooks/useReveal'
 import { getProductImageUrl, PLACEHOLDER_IMAGE } from '../../utils/imageHelpers'
 import { toast } from 'react-hot-toast'
 
@@ -49,6 +50,11 @@ const derivarDatos = (product) => {
 const ProductGrid = ({ products }) => {
   const { addToCart } = useAuthStore()
 
+  // Las tarjetas entran escalonadas al aparecer en pantalla. El contenedor
+  // sólo hace de disparador; los que se animan son los hijos (.reveal-stagger
+  // en index.css). Con prefers-reduced-motion aparecen todas visibles.
+  const { ref, visible } = useReveal()
+
   const handleAddToCart = (e, product) => {
     e.preventDefault()
     e.stopPropagation()
@@ -68,7 +74,10 @@ const ProductGrid = ({ products }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div
+      ref={ref}
+      className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 reveal-stagger ${visible ? 'reveal-in' : ''}`}
+    >
       {products.map((product) => {
         const d = derivarDatos(product)
 
