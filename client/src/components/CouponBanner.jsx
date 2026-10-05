@@ -1,159 +1,165 @@
-import { useState, useEffect } from 'react';
-import { FaTag, FaCopy, FaCheckCircle } from 'react-icons/fa';
-import '../styles/CouponBanner.css';
+import { useState, useEffect } from 'react'
+import { TagIcon, ClipboardDocumentIcon, CheckIcon } from '@heroicons/react/24/outline'
+
+/**
+ * Cupones vigentes en el home.
+ *
+ * Escrito con el sistema de diseño y el lenguaje editorial del resto del home
+ * (label en versalitas + regla, bloques planos, paleta Malbec). Antes tenía su
+ * propia hoja de 290 líneas con un coral fuera de paleta y tarjetas con sombra
+ * que chocaban con todo lo demás; esa hoja además era global y pisaba clases
+ * de otras páginas.
+ */
+
+const pesos = (n) => `$${Number(n).toLocaleString('es-AR', { maximumFractionDigits: 0 })}`
+
+const formatearDescuento = (cupon) => {
+  if (cupon.discountType === 'percentage') return `${parseInt(cupon.discountValue, 10)}%`
+  if (cupon.discountType === 'fixed') return pesos(cupon.discountValue)
+  if (cupon.discountType === 'freeShipping') return 'Envío gratis'
+  return ''
+}
+
+const formatearFecha = (iso) =>
+  new Date(iso).toLocaleDateString('es-AR', { day: 'numeric', month: 'short' })
 
 const CouponBanner = () => {
-  const [coupons, setCoupons] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [copiedCode, setCopiedCode] = useState(null);
+  const [coupons, setCoupons] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [copiedCode, setCopiedCode] = useState(null)
   const [settings, setSettings] = useState({
     couponBannerEnabled: true,
     couponBannerTitle: '¡Ofertas Especiales!',
     couponBannerSubtitle: 'Aprovecha estos cupones de descuento',
     couponBannerMaxCoupons: 3
-  });
+  })
 
   useEffect(() => {
-    fetchSettings();
-    fetchPublicCoupons();
-  }, []);
-
-  const fetchSettings = async () => {
-    try {
-      const response = await fetch('/api/home-settings');
-      const data = await response.json();
-      if (data) {
-        setSettings({
-          couponBannerEnabled: data.couponBannerEnabled !== undefined ? data.couponBannerEnabled : true,
-          couponBannerTitle: data.couponBannerTitle || '¡Ofertas Especiales!',
-          couponBannerSubtitle: data.couponBannerSubtitle || 'Aprovecha estos cupones de descuento',
-          couponBannerMaxCoupons: data.couponBannerMaxCoupons || 3
-        });
+    const cargarSettings = async () => {
+      try {
+        const res = await fetch('/api/home-settings')
+        const data = await res.json()
+        if (data) {
+          setSettings((prev) => ({
+            couponBannerEnabled: data.couponBannerEnabled ?? prev.couponBannerEnabled,
+            couponBannerTitle: data.couponBannerTitle || prev.couponBannerTitle,
+            couponBannerSubtitle: data.couponBannerSubtitle || prev.couponBannerSubtitle,
+            couponBannerMaxCoupons: data.couponBannerMaxCoupons || prev.couponBannerMaxCoupons
+          }))
+        }
+      } catch {
+        // Si falla, quedan los valores por defecto.
       }
-    } catch (error) {
-      console.error('Error fetching settings:', error);
     }
-  };
 
-  const fetchPublicCoupons = async () => {
-    try {
-      const response = await fetch('/api/coupons/public');
-      const data = await response.json();
-      setCoupons(data.coupons || []);
-    } catch (error) {
-      console.error('Error fetching coupons:', error);
-      setCoupons([]);
-    } finally {
-      setLoading(false);
+    const cargarCupones = async () => {
+      try {
+        const res = await fetch('/api/coupons/public')
+        const data = await res.json()
+        setCoupons(data.coupons || [])
+      } catch {
+        setCoupons([])
+      } finally {
+        setLoading(false)
+      }
     }
-  };
 
-  const copyToClipboard = (code) => {
-    navigator.clipboard.writeText(code);
-    setCopiedCode(code);
-    setTimeout(() => setCopiedCode(null), 2000);
-  };
+    cargarSettings()
+    cargarCupones()
+  }, [])
 
-  const formatDiscount = (coupon) => {
-    if (coupon.discountType === 'percentage') {
-      return `${coupon.discountValue}% OFF`;
-    } else if (coupon.discountType === 'fixed') {
-      return `$${coupon.discountValue} OFF`;
-    } else if (coupon.discountType === 'freeShipping') {
-      return 'ENVÍO GRATIS';
-    }
-  };
-
-  const formatEndDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-ES', { 
-      day: 'numeric', 
-      month: 'short', 
-      year: 'numeric' 
-    });
-  };
-
-  if (loading) {
-    return (
-      <div className="coupon-banner-loading">
-        <div className="spinner"></div>
-      </div>
-    );
+  const copiar = (codigo) => {
+    navigator.clipboard.writeText(codigo)
+    setCopiedCode(codigo)
+    setTimeout(() => setCopiedCode(null), 2000)
   }
 
-  // No mostrar si está deshabilitado en settings
-  if (!settings.couponBannerEnabled) {
-    return null;
-  }
+  // Mientras carga no se reserva espacio: un esqueleto haría saltar el resto
+  // del home cuando no hay cupones, que es el caso más común.
+  if (loading) return null
+  if (!settings.couponBannerEnabled || coupons.length === 0) return null
 
-  if (coupons.length === 0) {
-    return null;
-  }
-
-  // Limitar cupones según la configuración
-  const displayedCoupons = coupons.slice(0, settings.couponBannerMaxCoupons);
+  const visibles = coupons.slice(0, settings.couponBannerMaxCoupons)
 
   return (
-    <div className="coupon-banner">
-      <div className="coupon-banner-header">
-        <FaTag className="banner-icon" />
-        <h2>{settings.couponBannerTitle}</h2>
-        <p>{settings.couponBannerSubtitle}</p>
-      </div>
-      
-      <div className="coupon-cards">
-        {displayedCoupons.map((coupon) => (
-          <div key={coupon.id} className="coupon-card">
-            <div className="coupon-card-header">
-              <span className="discount-badge">{formatDiscount(coupon)}</span>
-            </div>
-            
-            <div className="coupon-card-body">
-              <p className="coupon-description">{coupon.description}</p>
-              
-              {coupon.minPurchase > 0 && (
-                <p className="coupon-condition">
-                  Compra mínima: ${coupon.minPurchase}
-                </p>
-              )}
-              
-              {coupon.maxDiscount && coupon.discountType === 'percentage' && (
-                <p className="coupon-condition">
-                  Descuento máximo: ${coupon.maxDiscount}
-                </p>
-              )}
-              
-              <p className="coupon-expiry">
-                Válido hasta: {formatEndDate(coupon.endDate)}
-              </p>
-            </div>
-            
-            <div className="coupon-card-footer">
-              <div className="coupon-code-display">
-                <span className="code-label">Código:</span>
-                <span className="code-value">{coupon.code}</span>
-              </div>
-              
-              <button
-                className={`copy-btn ${copiedCode === coupon.code ? 'copied' : ''}`}
-                onClick={() => copyToClipboard(coupon.code)}
-              >
-                {copiedCode === coupon.code ? (
-                  <>
-                    <FaCheckCircle /> Copiado
-                  </>
-                ) : (
-                  <>
-                    <FaCopy /> Copiar
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+    <section className="border-y border-surface-200 bg-surface-50 py-14 dark:border-surface-800 dark:bg-surface-950">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Header editorial: label + regla, igual que las demás secciones */}
+        <div className="mb-8 flex items-center gap-3">
+          <span className="flex flex-shrink-0 items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary-600 dark:text-primary-500">
+            <TagIcon aria-hidden="true" className="h-3.5 w-3.5" />
+            {settings.couponBannerTitle}
+          </span>
+          <div className="h-px flex-1 bg-surface-200 dark:bg-surface-800" />
+          <span className="hidden flex-shrink-0 text-[10px] uppercase tracking-wider text-surface-400 sm:block">
+            {settings.couponBannerSubtitle}
+          </span>
+        </div>
 
-export default CouponBanner;
+        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-surface-200 bg-surface-200 sm:grid-cols-2 lg:grid-cols-3 dark:border-surface-800 dark:bg-surface-800">
+          {visibles.map((cupon) => {
+            const copiado = copiedCode === cupon.code
+            return (
+              <div
+                key={cupon.id}
+                className="flex flex-col gap-3 bg-white p-5 dark:bg-surface-900"
+              >
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-bold leading-none tracking-tight text-primary-700 dark:text-primary-400">
+                    {formatearDescuento(cupon)}
+                  </span>
+                  {cupon.discountType !== 'freeShipping' && (
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-surface-400">
+                      de descuento
+                    </span>
+                  )}
+                </div>
+
+                {cupon.description && (
+                  <p className="text-sm leading-snug text-surface-700 dark:text-surface-300">
+                    {cupon.description}
+                  </p>
+                )}
+
+                <ul className="space-y-0.5 text-[11px] text-surface-500 dark:text-surface-400">
+                  {cupon.minPurchase > 0 && (
+                    <li>Compra mínima {pesos(cupon.minPurchase)}</li>
+                  )}
+                  {cupon.maxDiscount && cupon.discountType === 'percentage' && (
+                    <li>Tope de descuento {pesos(cupon.maxDiscount)}</li>
+                  )}
+                  {cupon.endDate && <li>Válido hasta el {formatearFecha(cupon.endDate)}</li>}
+                </ul>
+
+                <div className="mt-auto flex items-center gap-2 pt-2">
+                  <code className="flex-1 truncate rounded-lg border border-dashed border-surface-300 bg-surface-50 px-3 py-2 font-mono text-sm font-semibold tracking-wider text-surface-900 dark:border-surface-700 dark:bg-surface-950 dark:text-white">
+                    {cupon.code}
+                  </code>
+                  <button
+                    onClick={() => copiar(cupon.code)}
+                    className="btn-outline btn-sm flex-shrink-0"
+                    aria-label={`Copiar el código ${cupon.code}`}
+                  >
+                    {copiado ? (
+                      <>
+                        <CheckIcon aria-hidden="true" className="h-4 w-4 text-success-600" />
+                        Copiado
+                      </>
+                    ) : (
+                      <>
+                        <ClipboardDocumentIcon aria-hidden="true" className="h-4 w-4" />
+                        Copiar
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default CouponBanner

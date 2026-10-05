@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import CouponBanner from '../components/CouponBanner.jsx'
@@ -64,6 +64,21 @@ const Home = () => {
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
+
+
+  // El bloque de destacados tiene un slot principal dominado por la imagen.
+  // Antes tomaba destacados[0], o sea el producto más reciente, sin mirar si
+  // estaba marcado como destacado ni si tenía foto: el lugar de honor podía
+  // terminar ocupado por un placeholder gris.
+  //
+  // Se ordena en el cliente y no pidiendo ?featured=true a la API para que
+  // degrade bien: si todavía no hay ninguno marcado, igual se muestran los
+  // productos más recientes.
+  const destacados = useMemo(() => {
+    const puntaje = (p) =>
+      (p.isFeatured ? 2 : 0) + (getProductImageUrl(p) !== PLACEHOLDER_IMAGE ? 1 : 0)
+    return [...products].sort((a, b) => puntaje(b) - puntaje(a))
+  }, [products])
 
   useEffect(() => { loadHomeData() }, [])
 
@@ -353,46 +368,46 @@ const Home = () => {
 
                   {/* Card destacada — imagen crece para llenar alto del grid */}
                   <Link
-                    to={`/productos/${products[0].slug}`}
+                    to={`/productos/${destacados[0].slug}`}
                     className="group lg:col-span-1 relative bg-white dark:bg-surface-900 flex flex-col overflow-hidden rounded-xl border border-surface-200 dark:border-surface-800 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-card-hover transition-all duration-200"
                   >
-                    {products[0].discount > 0 && (
+                    {destacados[0].discount > 0 && (
                       <span className="absolute top-3 left-3 z-10 bg-error-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded tracking-wide">
-                        -{products[0].discount}%
+                        -{destacados[0].discount}%
                       </span>
                     )}
-                    {products[0].stock > 0 && !products[0].discount && products[0].isNew && (
+                    {destacados[0].stock > 0 && !destacados[0].discount && destacados[0].isNew && (
                       <span className="absolute top-3 right-3 z-10 bg-primary-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded tracking-wide">
                         Nuevo
                       </span>
                     )}
                     <div className="relative flex-1 overflow-hidden bg-surface-100 dark:bg-surface-800" style={{ minHeight: '220px' }}>
                       <img
-                        src={getProductImageUrl(products[0])}
-                        alt={products[0].name}
+                        src={getProductImageUrl(destacados[0])}
+                        alt={destacados[0].name}
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-smooth"
                         onError={(e) => { e.target.src = PLACEHOLDER_IMAGE }}
                       />
                     </div>
                     <div className="p-5 flex flex-col gap-2">
-                      {products[0].Category && (
+                      {destacados[0].Category && (
                         <span className="text-[10px] font-bold text-primary-600 dark:text-primary-400 uppercase tracking-[0.12em]">
-                          {products[0].Category.name}
+                          {destacados[0].Category.name}
                         </span>
                       )}
                       <h3 className="text-base font-semibold text-surface-900 dark:text-white leading-snug line-clamp-2 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
-                        {products[0].name}
+                        {destacados[0].name}
                       </h3>
                       <div className="flex items-center justify-between mt-1 gap-2">
                         <span className="text-2xl font-bold text-accent-600 dark:text-accent-400">
-                          ${(products[0].discount
-                            ? parseFloat(products[0].price) * (1 - products[0].discount / 100)
-                            : parseFloat(products[0].price)
+                          ${(destacados[0].discount
+                            ? parseFloat(destacados[0].price) * (1 - destacados[0].discount / 100)
+                            : parseFloat(destacados[0].price)
                           ).toLocaleString('es-AR', { minimumFractionDigits: 0 })}
                         </span>
-                        {products[0].stock > 0 && (
+                        {destacados[0].stock > 0 && (
                           <button
-                            onClick={(e) => handleAddToCartHome(e, products[0])}
+                            onClick={(e) => handleAddToCartHome(e, destacados[0])}
                             className="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-2 bg-accent-500 hover:bg-accent-600 text-white text-xs font-semibold rounded-lg transition-colors"
                             aria-label="Agregar al carrito"
                           >
@@ -406,7 +421,7 @@ const Home = () => {
 
                   {/* Grid 2×2 de cards secundarias */}
                   <div className="lg:col-span-2 grid grid-cols-2 gap-4">
-                    {products.slice(1, 5).map((product) => {
+                    {destacados.slice(1, 5).map((product) => {
                       const displayPrice = product.discount
                         ? parseFloat(product.price) * (1 - product.discount / 100)
                         : parseFloat(product.price)
